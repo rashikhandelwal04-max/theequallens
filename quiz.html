@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Equal Lens | Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000; --card:#020617; --accent:#f97316; --accent2:#22c55e;
+      --text:#f9fafb; --muted:#9ca3af; --border:#1f2937;
+      --font:"Baloo 2",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;}
+    a{text-decoration:none;color:inherit;}
+    .shell{max-width:780px;margin:0 auto;padding:16px 16px 48px;}
+    header{border-bottom:1px solid rgba(148,163,184,0.25);position:sticky;top:0;z-index:20;background:rgba(0,0,0,0.94);backdrop-filter:blur(10px);}
+    .nav{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:12px;}
+    .logo{display:flex;align-items:center;gap:10px;}
+    .logo-badge{width:30px;height:30px;border-radius:12px;background:radial-gradient(circle at 30% 30%,#f97316,#e11d48);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;box-shadow:0 0 18px rgba(248,250,252,0.4);}
+    .logo-text-main{font-weight:700;font-size:15px;letter-spacing:0.06em;}
+    .logo-text-sub{font-size:11px;color:var(--muted);}
+    .nav-links{display:flex;flex-wrap:wrap;gap:10px;font-size:13px;}
+    .nav-links a{padding:4px 10px;border-radius:999px;color:var(--muted);border:1px solid transparent;}
+    .nav-links a:hover{border-color:rgba(148,163,184,0.7);color:var(--text);background:rgba(15,23,42,0.8);}
+    .nav-cta{background:var(--accent);color:#111827;font-weight:600;box-shadow:0 0 16px rgba(249,115,22,0.6);}
+    h1{font-size:24px;margin:20px 0 6px;}
+    .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+    .card{background:var(--card);border-radius:18px;border:1px solid var(--border);padding:14px;margin-bottom:16px;}
+    .question{margin-bottom:10px;}
+    .question h3{font-size:15px;margin-bottom:4px;}
+    .options{display:flex;flex-direction:column;gap:6px;}
+    .options button{
+      text-align:left;font-size:13px;border-radius:12px;padding:7px 10px;
+      border:1px solid rgba(148,163,184,0.6);background:rgba(15,23,42,0.8);
+      color:var(--muted);cursor:pointer;
+    }
+    .options button:hover{border-color:var(--accent);color:var(--text);}
+    .options button.selected{background:rgba(249,115,22,0.15);border-color:var(--accent);color:var(--text);}
+    .quiz-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--muted);}
+    .btn{padding:6px 12px;border-radius:999px;border:none;cursor:pointer;font-size:12px;}
+    .btn-primary{background:var(--accent);color:#111827;font-weight:600;}
+    .result{margin-top:10px;font-size:13px;min-height:24px;}
+    .good{color:var(--accent2);}
+    .ok{color:var(--accent);}
+    .bad{color:#f87171;}
+    footer{margin-top:32px;border-top:1px solid rgba(148,163,184,0.35);padding-top:10px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">=</div>
+        <div>
+          <div class="logo-text-main">THE EQUAL LENS</div>
+          <div class="logo-text-sub">Gender equality through play</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="activities.html">Games & Activities</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="pledge.html">Pledge</a>
+        <a href="schools.html" class="nav-cta">For schools</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <h1>Mini quiz ⚖️</h1>
+    <p class="sub">
+      Use this as a warm-up or closing exercise in a session. Let students answer first,
+      then talk about why they chose what they chose.
+    </p>
+
+    <div class="card" id="quiz-container"></div>
+    <div class="quiz-footer">
+      <span id="quiz-progress">Question 1 of 3</span>
+      <button class="btn btn-primary" id="quiz-next">Next</button>
+    </div>
+    <div class="result" id="quiz-result"></div>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> The Equal Lens</span>
+    <span><a href="index.html">Back to home</a></span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const quizData = [
+      {
+        question: "1. A teacher always asks girls to decorate and boys to move benches. What seems fair?",
+        options: [
+          "It’s fine, everyone is helping.",
+          "Rotate roles so everyone does both.",
+          "Only boys should move benches."
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "2. A boy wants to learn dance but friends tease him. What is a good response?",
+        options: [
+          "Join the teasing so he doesn’t feel alone.",
+          "Say dance is for everyone and back him up.",
+          "Tell him to pick a “boy-ish” hobby."
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "3. At home, only one sibling is asked to serve food daily. What’s a fairer idea?",
+        options: [
+          "Rotate the job between everyone.",
+          "Keep the same person, they’re used to it.",
+          "Ask a guest to do it."
+        ],
+        correctIndex: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    const container = document.getElementById("quiz-container");
+    const progress = document.getElementById("quiz-progress");
+    const result = document.getElementById("quiz-result");
+    const nextBtn = document.getElementById("quiz-next");
+
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      container.innerHTML = "";
+      result.textContent = "";
+      result.className = "result";
+
+      const wrap = document.createElement("div");
+      wrap.className = "question";
+
+      const title = document.createElement("h3");
+      title.textContent = q.question;
+      wrap.appendChild(title);
+
+      const opts = document.createElement("div");
+      opts.className = "options";
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.addEventListener("click", () => selectOption(idx, btn, opts));
+        opts.appendChild(btn);
+      });
+
+      wrap.appendChild(opts);
+      container.appendChild(wrap);
+
+      progress.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? "Finish" : "Next";
+      answered = false;
+    }
+
+    function selectOption(i, btn, opts) {
+      if (answered) return;
+      answered = true;
+      opts.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+
+      const q = quizData[currentQuestion];
+      if (i === q.correctIndex) {
+        score++;
+        result.textContent = "Nice! That answer moves things in a fairer direction.";
+        result.classList.add("good");
+      } else {
+        result.textContent = "Thanks for answering honestly. Let’s talk about what might feel fairer.";
+        result.classList.add("ok");
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!answered) {
+        result.textContent = "Pick an option first 🙂";
+        result.className = "result bad";
+        return;
+      }
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        const total = quizData.length;
+        const ratio = score / total;
+        let msg;
+        if (ratio === 1) {
+          msg = "You’re really tuned in to fairness already. Now it’s about practising this in real life.";
+        } else if (ratio >= 0.5) {
+          msg = "You’re on your way. Keep asking: “Is this fair for everyone here?”";
+        } else {
+          msg = "This isn’t a score, it’s a starting point. The big thing is staying curious and open to change.";
+        }
+        container.innerHTML = "";
+        result.textContent = `You chose ${score} of ${total} more equal options. ${msg}`;
+        result.className = "result good";
+        progress.textContent = "Quiz complete";
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Done";
+        nextBtn.classList.remove("btn-primary");
+      }
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>

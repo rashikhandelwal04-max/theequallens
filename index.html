@@ -1,697 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>The Equal Lens | Gender Equality Workshops</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>The Equal Lens | Gender Equality Through Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The Equal Lens runs playful, game-based gender equality workshops for children, schools and youth spaces.">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      --card: #020617;
-      --accent: #f97316;
-      --green: #22c55e;
-      --yellow: #eab308;
-      --text: #f9fafb;
-      --muted: #9ca3af;
-      --border: #1f2937;
+      --bg:#000;
+      --card:#020617;
+      --accent:#f97316;
+      --accent2:#22c55e;
+      --accent3:#eab308;
+      --text:#f9fafb;
+      --muted:#9ca3af;
+      --border:#1f2937;
+      --font:"Baloo 2",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      background:radial-gradient(circle at top,#111827 0,#000 50%);
+      color:var(--text);
+      font-family:var(--font);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit;}
+
+    .shell{max-width:980px;margin:0 auto;padding:16px 16px 60px;}
+
+    /* NAV */
+    header{
+      border-bottom:1px solid rgba(148,163,184,0.35);
+      position:sticky;top:0;z-index:20;
+      background:rgba(0,0,0,0.96);
+      backdrop-filter:blur(10px);
+    }
+    .nav{
+      max-width:980px;margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 16px;gap:12px;
+    }
+    .logo{
+      display:flex;align-items:center;gap:10px;
+    }
+    .logo-badge{
+      width:32px;height:32px;
+      border-radius:14px;
+      background:radial-gradient(circle at 30% 30%,#f97316,#e11d48);
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;font-weight:700;
+      box-shadow:0 0 18px rgba(248,250,252,0.5);
+    }
+    .logo-text-main{
+      font-weight:700;font-size:16px;letter-spacing:0.06em;
+    }
+    .logo-text-sub{
+      font-size:11px;color:var(--muted);
+    }
+    .nav-links{
+      display:flex;flex-wrap:wrap;gap:10px;font-size:13px;align-items:center;
+    }
+    .nav-links a{
+      padding:4px 10px;border-radius:999px;color:var(--muted);
+      border:1px solid transparent;
+    }
+    .nav-links a:hover{
+      border-color:rgba(148,163,184,0.7);
+      color:var(--text);
+      background:rgba(15,23,42,0.85);
+    }
+    .nav-cta{
+      background:var(--accent);
+      color:#111827;font-weight:600;
+      box-shadow:0 0 18px rgba(249,115,22,0.7);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      color: var(--text);
-      font-family: "Baloo 2", system-ui, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      /* animated background */
-      background: radial-gradient(circle at 0% 0%, #111827, #020617 40%, #000 70%);
-      background-size: 200% 200%;
-      animation: bgShift 20s ease-in-out infinite alternate;
-    }
-
-    @keyframes bgShift {
-      0%   { background-position: 0% 0%; }
-      50%  { background-position: 50% 50%; }
-      100% { background-position: 100% 0%; }
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* floating blobs */
-    .blobs {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .blob {
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      border-radius: 999px;
-      filter: blur(40px);
-      opacity: 0.45;
-      mix-blend-mode: screen;
-    }
-
-    .blob-1 {
-      top: -40px;
-      left: -60px;
-      background: #f97316;
-      animation: blobFloat1 18s infinite alternate ease-in-out;
-    }
-
-    .blob-2 {
-      bottom: -80px;
-      right: -50px;
-      background: #22c55e;
-      animation: blobFloat2 22s infinite alternate ease-in-out;
-    }
-
-    .blob-3 {
-      top: 40%;
-      left: 30%;
-      background: #eab308;
-      animation: blobFloat3 26s infinite alternate ease-in-out;
-    }
-
-    @keyframes blobFloat1 {
-      0%   { transform: translate(0,0) scale(1); }
-      50%  { transform: translate(40px,30px) scale(1.1); }
-      100% { transform: translate(10px,-20px) scale(0.95); }
-    }
-    @keyframes blobFloat2 {
-      0%   { transform: translate(0,0) scale(0.9); }
-      50%  { transform: translate(-30px,-10px) scale(1.05); }
-      100% { transform: translate(-10px,40px) scale(1); }
-    }
-    @keyframes blobFloat3 {
-      0%   { transform: translate(0,0) scale(1); }
-      50%  { transform: translate(20px,-30px) scale(1.1); }
-      100% { transform: translate(-20px,20px) scale(0.9); }
-    }
-
-    /* NAVBAR */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(0, 0, 0, 0.93);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-      backdrop-filter: blur(8px);
-    }
-
-    .nav {
-      max-width: 1100px;
-      margin: auto;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo {
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      font-size: 14px;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 4px 10px;
-      border: 1px solid transparent;
-    }
-
-    .nav-links a:hover {
-      color: #fff;
-      border-color: rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    /* LAYOUT / TYPOGRAPHY */
-    section {
-      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
-    }
-
-    .wrap {
-      max-width: 1100px;
-      margin: auto;
-      padding: 70px 18px;
-    }
-
-    h1 {
-      font-size: clamp(36px, 6vw, 50px);
-      line-height: 1.1;
-      margin-bottom: 14px;
-    }
-
-    h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    p.sub {
-      font-size: 15px;
-      color: var(--muted);
-      max-width: 620px;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 16px;
-      background: var(--accent);
-      color: #111827;
-      padding: 11px 20px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 14px;
-      box-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 0 22px rgba(249, 115, 22, 0.8);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 12px;
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--green);
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
-    }
+    main{padding-top:24px;}
 
     /* HERO */
-    .hero {
-      max-width: 1100px;
-      margin: auto;
-      padding: 80px 18px 50px;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 36px;
-      align-items: center;
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+      gap:24px;align-items:center;margin-bottom:32px;
+    }
+    .kicker{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:11px;padding:4px 8px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      color:var(--muted);margin-bottom:10px;
+    }
+    .kicker-dot{
+      width:8px;height:8px;border-radius:999px;
+      background:var(--accent2);box-shadow:0 0 10px rgba(34,197,94,0.8);
+    }
+    .hero-title{
+      font-size:clamp(30px,5vw,40px);
+      line-height:1.1;margin-bottom:10px;
+    }
+    .hero-title span{
+      color:var(--accent3);
+    }
+    .hero-sub{
+      font-size:14px;color:var(--muted);margin-bottom:16px;max-width:520px;
+    }
+    .hero-cta-row{
+      display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:7px 14px;border-radius:999px;
+      font-size:13px;border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.9);color:var(--text);cursor:pointer;
+      gap:6px;
+    }
+    .btn-primary{
+      background:var(--accent);color:#111827;
+      border-color:var(--accent);
+      font-weight:600;
+      box-shadow:0 0 18px rgba(249,115,22,0.7);
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 14px rgba(148,163,184,0.4);
+    }
+    .hero-note{
+      font-size:11px;color:var(--muted);
+    }
+    .hero-note span{color:var(--accent2);font-weight:600;}
+
+    .hero-panel{
+      position:relative;
+      background:#020617;
+      border-radius:18px;padding:14px;
+      border:1px solid rgba(148,163,184,0.4);
+      overflow:hidden;
+    }
+    .hero-panel::before{
+      content:"🧩";position:absolute;right:10px;top:4px;font-size:26px;opacity:0.4;
+    }
+    .hero-panel::after{
+      content:"🎲";position:absolute;left:10px;bottom:0;font-size:26px;opacity:0.4;
+    }
+    .hero-bullets{
+      font-size:13px;color:var(--muted);
+    }
+    .hero-bullets ul{margin-top:6px;padding-left:16px;}
+
+    /* SCROLLABLE IMAGE STRIP */
+    .strip-title{
+      margin-bottom:8px;font-size:15px;font-weight:600;
+    }
+    .strip-sub{
+      font-size:13px;color:var(--muted);margin-bottom:8px;
+    }
+    .strip{
+      display:flex;gap:10px;
+      overflow-x:auto;padding-bottom:6px;
+      scrollbar-width:thin;
+    }
+    .strip::-webkit-scrollbar{height:6px;}
+    .strip::-webkit-scrollbar-thumb{background:#4b5563;border-radius:999px;}
+    .strip-item{
+      min-width:180px;max-width:200px;
+      border-radius:16px;overflow:hidden;
+      background:#020617;border:1px solid #1f2937;
+      flex-shrink:0;
+    }
+    .strip-item img{
+      width:100%;height:110px;object-fit:cover;display:block;
+    }
+    .strip-caption{
+      padding:8px;font-size:11px;color:var(--muted);
     }
 
-    .hero-title span {
-      color: var(--yellow);
+    /* HOW A WORKSHOP WORKS */
+    .section{
+      margin-top:36px;
+    }
+    .section h2{
+      font-size:20px;margin-bottom:6px;
+    }
+    .section p.sub{
+      font-size:13px;color:var(--muted);max-width:640px;
+    }
+    .steps{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px;
+    }
+    .step-card{
+      background:var(--card);
+      border-radius:18px;
+      border:1px solid var(--border);
+      padding:12px;font-size:13px;
+      cursor:pointer;
+      transition:transform 0.12s ease,box-shadow 0.12s ease,border-color 0.12s ease;
+      position:relative;
+    }
+    .step-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(15,23,42,0.85);
+      border-color:rgba(249,115,22,0.7);
+    }
+    .step-badge{
+      position:absolute;top:8px;right:10px;
+      font-size:11px;color:var(--muted);
+    }
+    .step-title{
+      font-weight:600;margin-bottom:4px;font-size:14px;
+    }
+    .step-main{
+      color:var(--muted);
+    }
+    .step-more{
+      display:none;margin-top:6px;font-size:12px;color:var(--accent2);
+    }
+    .step-card.open .step-more{display:block;}
+    .step-card.open .step-main{color:var(--text);}
+
+    /* TESTIMONIAL CAROUSEL */
+    .testi{
+      margin-top:24px;
+      display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;
+      align-items:flex-start;
+    }
+    .testi-card{
+      background:var(--card);
+      border-radius:18px;border:1px solid var(--border);
+      padding:14px;font-size:13px;
+    }
+    .testi-quote{
+      font-size:14px;margin-bottom:8px;
+    }
+    .testi-meta{
+      font-size:11px;color:var(--muted);
+    }
+    .testi-controls{
+      display:flex;gap:8px;margin-top:8px;
+    }
+    .testi-controls button{
+      border-radius:999px;border:1px solid #374151;
+      background:#020617;color:var(--muted);
+      padding:4px 10px;font-size:11px;cursor:pointer;
+    }
+    .testi-controls button:hover{
+      border-color:var(--accent);color:var(--text);
     }
 
-    .hero-illustration {
-      background: radial-gradient(circle at top, rgba(249,115,22,0.4), rgba(15,23,42,0.98));
-      border-radius: 24px;
-      border: 1px solid rgba(148,163,184,0.4);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-      animation: floatCard 6s ease-in-out infinite alternate;
+    /* START HERE CARDS */
+    .cards-row{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px;
+    }
+    .card{
+      background:#020617;border-radius:18px;border:1px solid var(--border);
+      padding:12px;font-size:13px;
+    }
+    .card h3{
+      font-size:14px;margin-bottom:4px;
+    }
+    .tag{
+      font-size:11px;color:var(--muted);margin-bottom:4px;
     }
 
-    @keyframes floatCard {
-      0%   { transform: translate3d(0,0,0) scale(1); }
-      100% { transform: translate3d(0,-12px,0) scale(1.02); }
+    footer{
+      margin-top:40px;border-top:1px solid rgba(148,163,184,0.35);
+      padding-top:12px;font-size:11px;color:var(--muted);
+      display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;
     }
 
-    .hero-illustration-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 13px;
-    }
-
-    .hero-avatars {
-      display: flex;
-      gap: 6px;
-    }
-
-    .hero-avatar {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: #020617;
-      border: 1px solid rgba(148,163,184,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    .hero-quote {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .hero-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .hero-chip {
-      font-size: 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.8);
-      padding: 4px 8px;
-      background: rgba(15,23,42,0.9);
-      color: var(--muted);
-    }
-
-    .scroll-hint {
-      margin-top: 18px;
-      font-size: 13px;
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      animation: bounce 1.4s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(6px); }
-    }
-
-    /* GRID LAYOUTS */
-    .two {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 24px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 16px;
-      font-size: 14px;
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease,
-        background 0.25s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(249,115,22,0.22), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .card:hover::after {
-      opacity: 1;
-    }
-
-    .card:hover {
-      transform: translateY(-6px) rotate(-0.4deg);
-      border-color: rgba(249, 115, 22, 0.7);
-      box-shadow: 0 18px 40px rgba(249, 115, 22, 0.25);
-      background: rgba(15, 23, 42, 0.98);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .step {
-      background: #020617;
-      border-radius: 18px;
-      border: 1px dashed var(--border);
-      padding: 14px;
-      font-size: 13px;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .gallery img {
-      border-radius: 20px;
-      display: block;
-    }
-
-    .cta {
-      text-align: center;
-      max-width: 700px;
-      margin: auto;
-    }
-
-    /* MINI ACTIVITY */
-    .activity-note {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 10px;
-    }
-
-    #reflection {
-      margin-top: 16px;
-      font-size: 14px;
-      color: var(--green);
-      min-height: 20px;
-    }
-
-    .picked {
-      background: rgba(249, 115, 22, 0.18) !important;
-      border-color: rgba(249, 115, 22, 0.9) !important;
-    }
-
-    /* SCROLL ANIMATIONS */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px) scale(0.98);
-      transition: all 0.8s cubic-bezier(.2,.8,.2,1);
-    }
-    .fade-up.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .fade-left {
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: all 0.9s ease;
-    }
-    .fade-left.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    footer {
-      padding: 28px 18px 32px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 70px;
-      }
-      .two {
-        grid-template-columns: 1fr;
-      }
-      .cards {
-        grid-template-columns: 1fr;
-      }
-      .steps {
-        grid-template-columns: 1fr 1fr;
-      }
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .steps {
-        grid-template-columns: 1fr;
-      }
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    @media(max-width:860px){
+      .hero{grid-template-columns:minmax(0,1fr);}
+      .hero-panel{order:-1;}
+      .testi{grid-template-columns:minmax(0,1fr);}
+      .steps,.cards-row{grid-template-columns:minmax(0,1fr);}
+      .nav{flex-wrap:wrap;}
     }
   </style>
 </head>
-
 <body>
-  <!-- ANIMATED BLOBS -->
-  <div class="blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
   <!-- NAV -->
   <header>
     <nav class="nav">
-      <div class="logo">THE EQUAL LENS</div>
+      <a href="index.html" class="logo">
+        <div class="logo-badge">=</div>
+        <div>
+          <div class="logo-text-main">THE EQUAL LENS</div>
+          <div class="logo-text-sub">Gender equality through play</div>
+        </div>
+      </a>
       <div class="nav-links">
-        <a href="activities.html">Games</a>
+        <a href="activities.html">Activities</a>
         <a href="quiz.html">Quiz</a>
         <a href="pledge.html">Pledge</a>
-        <a href="schools.html">For Schools</a>
+        <a href="schools.html" class="nav-cta">For schools</a>
       </div>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section>
-    <div class="hero fade-up">
+  <main class="shell">
+    <!-- HERO -->
+    <section class="hero">
       <div>
-        <div class="badge">
-          <span class="badge-dot"></span>
-          Gender equality • Play • Conversation
+        <div class="kicker">
+          <span class="kicker-dot"></span>
+          Not a lecture. A workshop that feels like a game.
         </div>
         <h1 class="hero-title">
-          Gender equality<br>
-          learned <span>through play.</span>
+          Welcome to <span>The Equal Lens</span>.
         </h1>
-        <p class="sub">
-          The Equal Lens runs interactive workshops where children notice everyday
-          gender rules they usually don’t question — at home, in school, and with friends.
-          We talk, play, argue a little, laugh, and slowly begin to re-think what “fair” really looks like.
+        <p class="hero-sub">
+          We run playful gender equality workshops where children explore fairness, stereotypes
+          and respect using games, stories and conversations – not heavy speeches.
         </p>
-        <a class="btn" href="activities.html">See workshop games →</a>
-        <div class="scroll-hint">
-          Scroll to explore
-          <span>↓</span>
+        <div class="hero-cta-row">
+          <button class="btn btn-primary" onclick="location.href='activities.html'">
+            🎲 See sample activities
+          </button>
+          <button class="btn" onclick="location.href='quiz.html'">
+            ⚖️ Try a mini quiz
+          </button>
         </div>
+        <p class="hero-note">
+          Designed for ages <span>10–14</span> • Works in schools, NGOs, youth groups & care homes
+        </p>
       </div>
 
-      <!-- No external image, purely CSS "scene" -->
-      <div class="hero-illustration fade-up">
-        <div class="hero-illustration-header">
-          <span style="font-size:13px;">Workshop snapshot</span>
-          <div class="hero-avatars">
-            <div class="hero-avatar">🙂</div>
-            <div class="hero-avatar">🤔</div>
-            <div class="hero-avatar">😄</div>
+      <div class="hero-panel">
+        <div class="hero-bullets">
+          <strong>In a typical session, students:</strong>
+          <ul>
+            <li>Play a simple game about everyday rules.</li>
+            <li>Share stories of when something felt unfair.</li>
+            <li>Practise kinder ways of speaking and listening.</li>
+          </ul>
+        </div>
+        <div style="margin-top:10px;">
+          <span style="font-size:11px;color:var(--muted);">Facilitator toolbox:</span>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            <span style="font-size:11px;border-radius:999px;border:1px solid #4b5563;padding:2px 8px;">Role-play</span>
+            <span style="font-size:11px;border-radius:999px;border:1px solid #4b5563;padding:2px 8px;">Line games</span>
+            <span style="font-size:11px;border-radius:999px;border:1px solid #4b5563;padding:2px 8px;">Story cards</span>
+            <span style="font-size:11px;border-radius:999px;border:1px solid #4b5563;padding:2px 8px;">Silent gallery</span>
           </div>
         </div>
-        <div style="font-size:13px;">
-          “In this game, we realised that at home, the same people keep getting the same jobs.
-          It felt normal before. Now it feels… a little unfair.”
+      </div>
+    </section>
+
+    <!-- SCROLLABLE IMAGE STRIP (LOCAL IMAGES) -->
+    <section>
+      <div class="strip-title">Workshop moments 📸</div>
+      <p class="strip-sub">
+        Imagine a room full of movement, laughter and “wait… that’s not fair!” conversations.
+        These are the kinds of moments we aim for.
+      </p>
+      <div class="strip">
+        <div class="strip-item">
+          <img src="images/workshop-1.jpg" alt="Circle discussion">
+          <div class="strip-caption">Circle discussion on “who gets to speak?”</div>
         </div>
-        <div class="hero-quote">
-          A reflection from a mixed-gender group, ages 11–13.
+        <div class="strip-item">
+          <img src="images/workshop-2.jpg" alt="Students playing a game">
+          <div class="strip-caption">A line game about curfews and freedom.</div>
         </div>
-        <div class="hero-chip-row">
-          <div class="hero-chip">No slides</div>
-          <div class="hero-chip">Movement & stories</div>
-          <div class="hero-chip">Real-life examples</div>
+        <div class="strip-item">
+          <img src="images/group-discussion.jpg" alt="Small group reflection">
+          <div class="strip-caption">Small groups mapping chores at home.</div>
+        </div>
+        <div class="strip-item">
+          <img src="images/activities.jpg" alt="Students presenting ideas">
+          <div class="strip-caption">Presenting new, fairer “house rules”.</div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- WHAT HAPPENS IN A SESSION -->
-  <section>
-    <div class="wrap fade-left">
-      <h2>What happens in a session?</h2>
+    <!-- HOW A WORKSHOP WORKS (INTERACTIVE) -->
+    <section class="section">
+      <h2>How a workshop works 🎲</h2>
       <p class="sub">
-        A session doesn’t feel like a class. It feels like a safe space to try ideas out.
-        There’s no “right answer” — just honest reactions, small disagreements,
-        and moments where students realise, <em>“oh… this happens with me too.”</em>
+        Click on each step to see what actually happens in the room. This is the flow we follow
+        in most Equal Lens sessions.
       </p>
-
       <div class="steps">
-        <div class="step">🎲 A short game to loosen up and get everyone talking.</div>
-        <div class="step">💬 A story or situation that kids immediately recognise.</div>
-        <div class="step">🧠 Pausing to ask: “Why did that feel okay… or not?”</div>
-        <div class="step">🧡 Ending with one small thing they want to try differently.</div>
+        <div class="step-card">
+          <div class="step-badge">Step 1</div>
+          <div class="step-title">Warm-up & trust</div>
+          <div class="step-main">
+            Quick game to move, laugh and agree on “how we’ll treat each other today”.
+          </div>
+          <div class="step-more">
+            We set simple ground rules: listen, no personal attacks, okay to disagree.
+            Everyone shares one word about how they feel.
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">Step 2</div>
+          <div class="step-title">Game about gender</div>
+          <div class="step-main">
+            Line games, role-play, or story cards that bring out “boys vs girls” messages.
+          </div>
+          <div class="step-more">
+            Students move, vote with their feet, and react to everyday situations about chores,
+            safety, freedom, feelings and jokes.
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">Step 3</div>
+          <div class="step-title">Reflection & action</div>
+          <div class="step-main">
+            Guided questions + a small, do-able action each student chooses.
+          </div>
+          <div class="step-more">
+            They make a simple pledge: one thing they’ll try at home, with friends or in class.
+            No big speech – just real, tiny changes.
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- WHAT CHILDREN EXPLORE -->
-  <section>
-    <div class="wrap fade-up">
-      <h2>What children explore together</h2>
+    <!-- TESTIMONIAL STYLE QUOTES -->
+    <section class="section">
+      <h2>Voices from the room 💬</h2>
       <p class="sub">
-        Big ideas, broken into everyday moments they already recognise.
+        These are the kinds of reactions we hope to hear from students and adults
+        after a session.
       </p>
-
-      <div class="cards">
-        <div class="card">Who gets heard more in class — and who is interrupted?</div>
-        <div class="card">Who usually does cooking, cleaning or caring at home?</div>
-        <div class="card">When a joke feels funny to some, but uncomfortable to others.</div>
-        <div class="card">Rules we follow just because “it has always been like this”.</div>
-        <div class="card">How to disagree without being unkind.</div>
-        <div class="card">One small change I can actually make, starting today.</div>
+      <div class="testi">
+        <div class="testi-card">
+          <div id="testi-quote" class="testi-quote">
+            “I didn’t realise my sister does so much at home until we drew the house map.”
+          </div>
+          <div id="testi-meta" class="testi-meta">
+            — Student, Class 7
+          </div>
+          <div class="testi-controls">
+            <button id="testi-prev">← Back</button>
+            <button id="testi-next">Next →</button>
+          </div>
+        </div>
+        <div class="testi-card">
+          <h3 style="font-size:15px;margin-bottom:6px;">What we want students to leave with</h3>
+          <ul style="font-size:13px;color:var(--muted);padding-left:16px;">
+            <li>Language to name unfair rules without attacking people.</li>
+            <li>A sense that gender equality is about everyone, not just girls.</li>
+            <li>One small action they can actually try this week.</li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MINI ACTIVITY: TRY THIS -->
-  <section>
-    <div class="wrap fade-up">
-      <h2>Try this mini activity 👇</h2>
+    <!-- START HERE CARDS -->
+    <section class="section">
+      <h2>Start exploring 👇</h2>
       <p class="sub">
-        Click the roles you feel could be shared more fairly in most homes you know.
-        There’s no correct answer. We’re just noticing where the load often sits.
+        Use these pages as tools in your own classroom or youth space.
+        Everything works with low-tech setups and can be adapted to your context.
       </p>
-
-      <div class="cards" id="homeRoles">
-        <div class="card" onclick="toggleRole(this)">Cooking</div>
-        <div class="card" onclick="toggleRole(this)">Cleaning</div>
-        <div class="card" onclick="toggleRole(this)">Taking care of younger kids</div>
-        <div class="card" onclick="toggleRole(this)">Fixing things or repairs</div>
-        <div class="card" onclick="toggleRole(this)">Earning money</div>
-        <div class="card" onclick="toggleRole(this)">Making big family decisions</div>
-      </div>
-
-      <p class="activity-note">
-        In a workshop, children stand in different corners of the room or place stickers on a chart.
-      </p>
-      <p id="reflection"></p>
-    </div>
-  </section>
-
-  <!-- WORKSHOP IN ACTION -->
-  <section>
-    <div class="wrap fade-up">
-      <h2>Workshop in action</h2>
-      <p class="sub">Real classrooms. Real conversations.</p>
-
-      <div class="gallery">
-        <div class="card" style="cursor:default;">
-          🧠 “I never thought about who actually does all this at home.”
+      <div class="cards-row">
+        <div class="card">
+          <div class="tag">Play</div>
+          <h3>Games & activities</h3>
+          <p>
+            A small shelf of games you can run in class to start conversations about gender, fairness and power.
+          </p>
+          <button class="btn" style="margin-top:8px;" onclick="location.href='activities.html'">
+            Open activities →
+          </button>
         </div>
-        <div class="card" style="cursor:default;">
-          🗣️ “I didn’t know we were allowed to question these rules.”
+        <div class="card">
+          <div class="tag">Check-in</div>
+          <h3>Mini quiz</h3>
+          <p>
+            A short quiz on everyday situations. Great as an icebreaker or closing reflection.
+          </p>
+          <button class="btn" style="margin-top:8px;" onclick="location.href='quiz.html'">
+            Try the quiz →
+          </button>
         </div>
-        <div class="card" style="cursor:default;">
-          🤝 “We decided to try a ‘fair chores week’ at home.”
+        <div class="card">
+          <div class="tag">Commit</div>
+          <h3>Pledge wall</h3>
+          <p>
+            Let students generate their own short pledge and build a class charter for gender equality.
+          </p>
+          <button class="btn" style="margin-top:8px;" onclick="location.href='pledge.html'">
+            Make pledges →
+          </button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- STUDENT REACTIONS -->
-  <section>
-    <div class="wrap fade-up">
-      <h2>Things students often say</h2>
-
-      <div class="cards">
-        <div class="card">“Wait… this happens at my house too.”</div>
-        <div class="card">“Why are only girls asked to clean?”</div>
-        <div class="card">“I never thought about this before.”</div>
-        <div class="card">“But why is it always the same person?”</div>
-        <div class="card">“Can we change this rule?”</div>
-        <div class="card">“I want to try doing this differently.”</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section>
-    <div class="wrap fade-up">
-      <div class="cta">
-        <h2>Bring The Equal Lens to your school or group</h2>
-        <p class="sub">
-          If you work with children or young people and want these conversations
-          to begin early — we’d love to build something that fits your context.
-        </p>
-        <a class="btn" href="schools.html">Work with us →</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    © <span id="y"></span> The Equal Lens • hello@theequallens.com
-  </footer>
+    <!-- FOOTER -->
+    <footer>
+      <span>© <span id="year"></span> The Equal Lens</span>
+      <span>Contact: hello@theequallens.com</span>
+    </footer>
+  </main>
 
   <script>
-    // Footer year
-    document.getElementById("y").innerText = new Date().getFullYear();
-
-    // Scroll animations
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
+    // Step cards toggle
+    document.querySelectorAll(".step-card").forEach(card => {
+      card.addEventListener("click", () => {
+        card.classList.toggle("open");
       });
-    }, { threshold: 0.2 });
+    });
 
-    document.querySelectorAll(".fade-up, .fade-left").forEach(el => observer.observe(el));
-
-    // Mini activity logic
-    let clickedCount = 0;
-    function toggleRole(el) {
-      if (el.classList.contains("picked")) return; // no double counting
-      el.classList.add("picked");
-      clickedCount++;
-
-      const reflection = document.getElementById("reflection");
-      if (clickedCount === 1) {
-        reflection.textContent =
-          "Nice starting point. In workshops, lots of groups begin with the same 1–2 roles.";
-      } else if (clickedCount === 3) {
-        reflection.textContent =
-          "By now, students usually notice a pattern: the same few people carry most of these jobs.";
-      } else if (clickedCount >= 5) {
-        reflection.textContent =
-          "From here, we often map a ‘fair home’ together — what would it look like if this list was shared?";
+    // Testimonials carousel
+    const testiData = [
+      {
+        quote: "“I didn’t realise my sister does so much at home until we drew the house map.”",
+        meta: "— Student, Class 7"
+      },
+      {
+        quote: "“It was the first time boys in my class said it’s okay for boys to cry.”",
+        meta: "— Student, Class 8"
+      },
+      {
+        quote: "“The activities were simple but sharp. We kept talking about them in the staff room.”",
+        meta: "— Teacher, middle school"
       }
+    ];
+    let testiIndex = 0;
+    const quoteEl = document.getElementById("testi-quote");
+    const metaEl = document.getElementById("testi-meta");
+
+    function renderTestimonial() {
+      quoteEl.textContent = testiData[testiIndex].quote;
+      metaEl.textContent = testiData[testiIndex].meta;
     }
+
+    document.getElementById("testi-next").addEventListener("click", () => {
+      testiIndex = (testiIndex + 1) % testiData.length;
+      renderTestimonial();
+    });
+
+    document.getElementById("testi-prev").addEventListener("click", () => {
+      testiIndex = (testiIndex - 1 + testiData.length) % testiData.length;
+      renderTestimonial();
+    });
+
+    renderTestimonial();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

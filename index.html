@@ -29,6 +29,7 @@
       color: var(--text);
       font-family: "Baloo 2", system-ui, sans-serif;
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     a {
@@ -42,7 +43,61 @@
       display: block;
     }
 
-    /* NAVBAR */
+    /* =========================
+       BACKGROUND ANIMATIONS
+    ========================== */
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+      background: radial-gradient(circle at top, #020617 0, #000 50%);
+    }
+
+    .blob {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      filter: blur(50px);
+      opacity: 0.32;
+      mix-blend-mode: screen;
+      animation: floatBlob 24s infinite alternate ease-in-out;
+    }
+
+    .blob-1 {
+      top: -40px;
+      left: -60px;
+      background: #f97316;
+    }
+
+    .blob-2 {
+      top: 40%;
+      right: -80px;
+      background: #22c55e;
+      animation-delay: -8s;
+    }
+
+    .blob-3 {
+      bottom: -80px;
+      left: 30%;
+      background: #eab308;
+      animation-delay: -14s;
+    }
+
+    @keyframes floatBlob {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      30%  { transform: translate3d(20px, 30px, 0) scale(1.05); }
+      60%  { transform: translate3d(-20px, 50px, 0) scale(0.97); }
+      100% { transform: translate3d(10px, -10px, 0) scale(1.04); }
+    }
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
     header {
       position: sticky;
       top: 0;
@@ -68,12 +123,17 @@
       font-size: 14px;
     }
 
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
     .nav-links a {
-      margin-left: 14px;
       font-size: 13px;
       color: var(--muted);
       border-radius: 999px;
-      padding: 4px 8px;
+      padding: 4px 10px;
       border: 1px solid transparent;
     }
 
@@ -83,7 +143,10 @@
       background: rgba(15, 23, 42, 0.9);
     }
 
-    /* LAYOUT */
+    /* =========================
+       LAYOUT / TYPOGRAPHY
+    ========================== */
+
     section {
       border-bottom: 1px solid rgba(148, 163, 184, 0.15);
     }
@@ -123,10 +186,11 @@
       box-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
       border: none;
       cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-1px) scale(1.02);
       box-shadow: 0 0 22px rgba(249, 115, 22, 0.75);
     }
 
@@ -140,6 +204,7 @@
       border-radius: 999px;
       border: 1px solid var(--border);
       color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
     }
 
     .badge-dot {
@@ -150,7 +215,10 @@
       box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
     }
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================== */
+
     .hero {
       max-width: 1100px;
       margin: auto;
@@ -165,7 +233,22 @@
       color: var(--yellow);
     }
 
-    /* GRID LAYOUTS */
+    .hero-img-wrap {
+      position: relative;
+      transform-origin: center;
+      animation: floatImage 11s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatImage {
+      0%   { transform: translate3d(0,0,0) scale(1); }
+      50%  { transform: translate3d(0,-10px,0) scale(1.01); }
+      100% { transform: translate3d(0,5px,0) scale(0.99); }
+    }
+
+    /* =========================
+       GRID LAYOUTS
+    ========================== */
+
     .two {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -192,6 +275,21 @@
         border-color 0.25s ease,
         background 0.25s ease;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(249,115,22,0.12), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .card:hover::after {
+      opacity: 1;
     }
 
     .card:hover {
@@ -229,7 +327,10 @@
       margin: auto;
     }
 
-    /* MINI ACTIVITY */
+    /* =========================
+       MINI ACTIVITY
+    ========================== */
+
     .activity-note {
       font-size: 13px;
       color: var(--muted);
@@ -248,7 +349,10 @@
       border-color: rgba(249, 115, 22, 0.9) !important;
     }
 
-    /* SCROLL ANIMATIONS */
+    /* =========================
+       SCROLL ANIMATIONS
+    ========================== */
+
     .fade-up {
       opacity: 0;
       transform: translateY(40px) scale(0.98);
@@ -271,6 +375,10 @@
       transform: translateX(0);
     }
 
+    /* =========================
+       FOOTER
+    ========================== */
+
     footer {
       padding: 28px 18px 32px;
       text-align: center;
@@ -278,7 +386,10 @@
       color: var(--muted);
     }
 
-    /* RESPONSIVE */
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
@@ -311,18 +422,20 @@
         align-items: flex-start;
       }
       .nav-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
-      .nav-links a {
-        margin-left: 0;
+        justify-content: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
+  <!-- BACKGROUND ANIMATIONS -->
+  <div class="bg-layer" id="bgLayer">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
   <!-- NAV -->
   <header>
     <nav class="nav">
@@ -349,13 +462,14 @@
           learned <span>through play.</span>
         </h1>
         <p class="sub">
-          The Equal Lens runs interactive workshops where children explore fairness,
-          everyday gender rules and respect — by moving, talking, laughing and reflecting.
+          The Equal Lens runs interactive workshops where children notice everyday
+          gender rules they usually don’t question — at home, in school, and with friends.
+          We talk, play, argue a little, laugh, and slowly begin to re-think what “fair” really looks like.
         </p>
         <a class="btn" href="activities.html">See workshop games →</a>
       </div>
 
-      <div class="fade-up">
+      <div class="hero-img-wrap fade-up" id="heroImg">
         <img src="https://images.unsplash.com/photo-1604916287784-c324202b320b?auto=format&fit=crop&w=900&q=80"
              alt="Children in classroom activity">
       </div>
@@ -367,15 +481,16 @@
     <div class="wrap fade-left">
       <h2>What happens in a session?</h2>
       <p class="sub">
-        It feels more like a game lab than a lecture. Students don’t just listen – they try things,
-        notice patterns, and talk about real life.
+        A session doesn’t feel like a class. It feels like a safe space to try ideas out.
+        There’s no “right answer” — just honest reactions, small disagreements,
+        and moments where students realise, <em>“oh… this happens with me too.”</em>
       </p>
 
       <div class="steps">
-        <div class="step">🎲 Quick movement game to break the ice.</div>
-        <div class="step">💬 Small group or circle discussion around a story or situation.</div>
-        <div class="step">🧠 Reflection: “Why did it feel fair or unfair?”</div>
-        <div class="step">🧡 One small action to try at home or in class.</div>
+        <div class="step">🎲 A short game to loosen up and get everyone talking.</div>
+        <div class="step">💬 A story or situation that kids immediately recognise.</div>
+        <div class="step">🧠 Pausing to ask: “Why did that feel okay… or not?”</div>
+        <div class="step">🧡 Ending with one small thing they want to try differently.</div>
       </div>
     </div>
   </section>
@@ -389,12 +504,12 @@
       </p>
 
       <div class="cards">
-        <div class="card">Who speaks more in class — and who gets interrupted?</div>
-        <div class="card">Who does what kind of work at home – cooking, cleaning, earning?</div>
-        <div class="card">When jokes feel funny to some, but hurt someone else.</div>
-        <div class="card">“Boys vs girls” rules that feel normal, but aren’t really fair.</div>
-        <div class="card">How to disagree respectfully and still be friends.</div>
-        <div class="card">What each of us can change in small ways, starting today.</div>
+        <div class="card">Who gets heard more in class — and who is interrupted?</div>
+        <div class="card">Who usually does cooking, cleaning or caring at home?</div>
+        <div class="card">When a joke feels funny to some, but uncomfortable to others.</div>
+        <div class="card">Rules we follow just because “it has always been like this”.</div>
+        <div class="card">How to disagree without being unkind.</div>
+        <div class="card">One small change I can actually make, starting today.</div>
       </div>
     </div>
   </section>
@@ -404,7 +519,8 @@
     <div class="wrap fade-up">
       <h2>Try this mini activity 👇</h2>
       <p class="sub">
-        Click honestly. This is how many of our workshops actually start – with simple questions about home.
+        There’s no correct answer here. Just click what feels true for you.
+        This is often how our workshops begin — noticing patterns before judging them.
       </p>
 
       <div class="cards" id="homeRoles">
@@ -446,12 +562,12 @@
       <h2>Things students often say</h2>
 
       <div class="cards">
-        <div class="card">“I never noticed this before.”</div>
+        <div class="card">“Wait… this happens at my house too.”</div>
         <div class="card">“Why are only girls asked to clean?”</div>
-        <div class="card">“This happens at my house too.”</div>
-        <div class="card">“Can we talk about this more?”</div>
-        <div class="card">“I want to try sharing chores at home.”</div>
-        <div class="card">“I didn’t realise some jokes hurt this much.”</div>
+        <div class="card">“I never thought about this before.”</div>
+        <div class="card">“But why is it always the same person?”</div>
+        <div class="card">“Can we change this rule?”</div>
+        <div class="card">“I want to try doing this differently.”</div>
       </div>
     </div>
   </section>
@@ -462,7 +578,8 @@
       <div class="cta">
         <h2>Bring The Equal Lens to your school or group</h2>
         <p class="sub">
-          We work with schools, NGOs, care homes and youth groups.
+          If you work with children or young people and want these conversations
+          to begin early — we’d love to build something that fits your context.
         </p>
         <a class="btn" href="schools.html">Work with us →</a>
       </div>
@@ -497,13 +614,32 @@
 
       const reflection = document.getElementById("reflection");
       if (clickedCount === 1) {
-        reflection.textContent = "In workshops, we ask: who usually does this at home, and why?";
+        reflection.textContent =
+          "We usually pause here and ask: does the same answer come up again and again?";
       } else if (clickedCount === 3) {
-        reflection.textContent = "Patterns start to appear. Are the same people doing most of the work?";
+        reflection.textContent =
+          "At this point, students start noticing patterns — not because we point them out, but because they show up.";
       } else if (clickedCount >= 5) {
-        reflection.textContent = "This is where children begin to redesign a fairer version together.";
+        reflection.textContent =
+          "This is where the conversation turns to: what would a fairer version look like?";
       }
     }
+
+    // Mouse-move parallax for hero & blobs
+    const heroImg = document.getElementById("heroImg");
+    const bgLayer = document.getElementById("bgLayer");
+
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+
+      if (heroImg) {
+        heroImg.style.transform = `translate3d(${x * 10}px, ${y * 10}px, 0)`;
+      }
+      if (bgLayer) {
+        bgLayer.style.transform = `translate3d(${x * -20}px, ${y * -10}px, 0)`;
+      }
+    });
   </script>
 </body>
 </html>

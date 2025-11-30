@@ -35,15 +35,9 @@
     }
 
     @keyframes bgShift {
-      0% {
-        background-position: 0% 0%;
-      }
-      50% {
-        background-position: 50% 50%;
-      }
-      100% {
-        background-position: 100% 0%;
-      }
+      0%   { background-position: 0% 0%; }
+      50%  { background-position: 50% 50%; }
+      100% { background-position: 100% 0%; }
     }
 
     a {
@@ -51,13 +45,7 @@
       color: inherit;
     }
 
-    img {
-      width: 100%;
-      border-radius: 20px;
-      display: block;
-    }
-
-    /* floating blobs for obvious motion */
+    /* floating blobs */
     .blobs {
       position: fixed;
       inset: 0;
@@ -242,14 +230,66 @@
       color: var(--yellow);
     }
 
-    .hero-img-wrap {
+    .hero-illustration {
+      background: radial-gradient(circle at top, rgba(249,115,22,0.4), rgba(15,23,42,0.98));
+      border-radius: 24px;
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 18px;
       position: relative;
-      animation: floatImage 6s ease-in-out infinite alternate;
+      overflow: hidden;
+      animation: floatCard 6s ease-in-out infinite alternate;
     }
 
-    @keyframes floatImage {
+    @keyframes floatCard {
       0%   { transform: translate3d(0,0,0) scale(1); }
       100% { transform: translate3d(0,-12px,0) scale(1.02); }
+    }
+
+    .hero-illustration-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .hero-avatars {
+      display: flex;
+      gap: 6px;
+    }
+
+    .hero-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid rgba(148,163,184,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .hero-quote {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .hero-chip {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      padding: 4px 8px;
+      background: rgba(15,23,42,0.9);
+      color: var(--muted);
     }
 
     .scroll-hint {
@@ -340,6 +380,11 @@
       margin-top: 24px;
     }
 
+    .gallery img {
+      border-radius: 20px;
+      display: block;
+    }
+
     .cta {
       text-align: center;
       max-width: 700px;
@@ -426,7 +471,7 @@
 </head>
 
 <body>
-  <!-- OBVIOUS ANIMATED BLOBS -->
+  <!-- ANIMATED BLOBS -->
   <div class="blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -470,9 +515,28 @@
         </div>
       </div>
 
-      <div class="hero-img-wrap fade-up">
-        <img src="https://images.unsplash.com/photo-1604916287784-c324202b320b?auto=format&fit=crop&w=900&q=80"
-             alt="Children in classroom activity">
+      <!-- No external image, purely CSS "scene" -->
+      <div class="hero-illustration fade-up">
+        <div class="hero-illustration-header">
+          <span style="font-size:13px;">Workshop snapshot</span>
+          <div class="hero-avatars">
+            <div class="hero-avatar">🙂</div>
+            <div class="hero-avatar">🤔</div>
+            <div class="hero-avatar">😄</div>
+          </div>
+        </div>
+        <div style="font-size:13px;">
+          “In this game, we realised that at home, the same people keep getting the same jobs.
+          It felt normal before. Now it feels… a little unfair.”
+        </div>
+        <div class="hero-quote">
+          A reflection from a mixed-gender group, ages 11–13.
+        </div>
+        <div class="hero-chip-row">
+          <div class="hero-chip">No slides</div>
+          <div class="hero-chip">Movement & stories</div>
+          <div class="hero-chip">Real-life examples</div>
+        </div>
       </div>
     </div>
   </section>
@@ -520,21 +584,21 @@
     <div class="wrap fade-up">
       <h2>Try this mini activity 👇</h2>
       <p class="sub">
-        There’s no correct answer here. Just click what feels true for you.
-        This is often how our workshops begin — noticing patterns before judging them.
+        Click the roles you feel could be shared more fairly in most homes you know.
+        There’s no correct answer. We’re just noticing where the load often sits.
       </p>
 
       <div class="cards" id="homeRoles">
         <div class="card" onclick="toggleRole(this)">Cooking</div>
         <div class="card" onclick="toggleRole(this)">Cleaning</div>
-        <div class="card" onclick="toggleRole(this)">Earning money</div>
         <div class="card" onclick="toggleRole(this)">Taking care of younger kids</div>
-        <div class="card" onclick="toggleRole(this)">Fixing things or handling repairs</div>
+        <div class="card" onclick="toggleRole(this)">Fixing things or repairs</div>
+        <div class="card" onclick="toggleRole(this)">Earning money</div>
         <div class="card" onclick="toggleRole(this)">Making big family decisions</div>
       </div>
 
       <p class="activity-note">
-        In a workshop, students stand in different corners of the room or place stickers for each answer.
+        In a workshop, children stand in different corners of the room or place stickers on a chart.
       </p>
       <p id="reflection"></p>
     </div>
@@ -547,12 +611,15 @@
       <p class="sub">Real classrooms. Real conversations.</p>
 
       <div class="gallery">
-        <img src="https://images.unsplash.com/photo-1596496057370-1a9998d05e9b?auto=format&fit=crop&w=800&q=80"
-             alt="Children working together at a desk">
-        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80"
-             alt="Girl student raising hand">
-        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
-             alt="Children in discussion circle">
+        <div class="card" style="cursor:default;">
+          🧠 “I never thought about who actually does all this at home.”
+        </div>
+        <div class="card" style="cursor:default;">
+          🗣️ “I didn’t know we were allowed to question these rules.”
+        </div>
+        <div class="card" style="cursor:default;">
+          🤝 “We decided to try a ‘fair chores week’ at home.”
+        </div>
       </div>
     </div>
   </section>
@@ -609,20 +676,20 @@
     // Mini activity logic
     let clickedCount = 0;
     function toggleRole(el) {
-      if (el.classList.contains("picked")) return;
+      if (el.classList.contains("picked")) return; // no double counting
       el.classList.add("picked");
       clickedCount++;
 
       const reflection = document.getElementById("reflection");
       if (clickedCount === 1) {
         reflection.textContent =
-          "We usually pause here and ask: does the same answer come up again and again?";
+          "Nice starting point. In workshops, lots of groups begin with the same 1–2 roles.";
       } else if (clickedCount === 3) {
         reflection.textContent =
-          "At this point, students start noticing patterns — not because we point them out, but because they show up.";
+          "By now, students usually notice a pattern: the same few people carry most of these jobs.";
       } else if (clickedCount >= 5) {
         reflection.textContent =
-          "This is where the conversation turns to: what would a fairer version look like?";
+          "From here, we often map a ‘fair home’ together — what would it look like if this list was shared?";
       }
     }
   </script>

@@ -8,7 +8,6 @@
 
   <style>
     :root {
-      --bg: #000;
       --card: #020617;
       --accent: #f97316;
       --green: #22c55e;
@@ -25,11 +24,26 @@
     }
 
     body {
-      background: var(--bg);
       color: var(--text);
       font-family: "Baloo 2", system-ui, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
+      /* animated background */
+      background: radial-gradient(circle at 0% 0%, #111827, #020617 40%, #000 70%);
+      background-size: 200% 200%;
+      animation: bgShift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0% {
+        background-position: 0% 0%;
+      }
+      50% {
+        background-position: 50% 50%;
+      }
+      100% {
+        background-position: 100% 0%;
+      }
     }
 
     a {
@@ -43,17 +57,12 @@
       display: block;
     }
 
-    /* =========================
-       BACKGROUND ANIMATIONS
-    ========================== */
-
-    .bg-layer {
+    /* floating blobs for obvious motion */
+    .blobs {
       position: fixed;
       inset: 0;
-      overflow: hidden;
       pointer-events: none;
       z-index: -1;
-      background: radial-gradient(circle at top, #020617 0, #000 50%);
     }
 
     .blob {
@@ -61,43 +70,49 @@
       width: 260px;
       height: 260px;
       border-radius: 999px;
-      filter: blur(50px);
-      opacity: 0.32;
+      filter: blur(40px);
+      opacity: 0.45;
       mix-blend-mode: screen;
-      animation: floatBlob 24s infinite alternate ease-in-out;
     }
 
     .blob-1 {
       top: -40px;
       left: -60px;
       background: #f97316;
+      animation: blobFloat1 18s infinite alternate ease-in-out;
     }
 
     .blob-2 {
-      top: 40%;
-      right: -80px;
+      bottom: -80px;
+      right: -50px;
       background: #22c55e;
-      animation-delay: -8s;
+      animation: blobFloat2 22s infinite alternate ease-in-out;
     }
 
     .blob-3 {
-      bottom: -80px;
+      top: 40%;
       left: 30%;
       background: #eab308;
-      animation-delay: -14s;
+      animation: blobFloat3 26s infinite alternate ease-in-out;
     }
 
-    @keyframes floatBlob {
-      0%   { transform: translate3d(0, 0, 0) scale(1); }
-      30%  { transform: translate3d(20px, 30px, 0) scale(1.05); }
-      60%  { transform: translate3d(-20px, 50px, 0) scale(0.97); }
-      100% { transform: translate3d(10px, -10px, 0) scale(1.04); }
+    @keyframes blobFloat1 {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(40px,30px) scale(1.1); }
+      100% { transform: translate(10px,-20px) scale(0.95); }
+    }
+    @keyframes blobFloat2 {
+      0%   { transform: translate(0,0) scale(0.9); }
+      50%  { transform: translate(-30px,-10px) scale(1.05); }
+      100% { transform: translate(-10px,40px) scale(1); }
+    }
+    @keyframes blobFloat3 {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(20px,-30px) scale(1.1); }
+      100% { transform: translate(-20px,20px) scale(0.9); }
     }
 
-    /* =========================
-       NAVBAR
-    ========================== */
-
+    /* NAVBAR */
     header {
       position: sticky;
       top: 0;
@@ -143,10 +158,7 @@
       background: rgba(15, 23, 42, 0.9);
     }
 
-    /* =========================
-       LAYOUT / TYPOGRAPHY
-    ========================== */
-
+    /* LAYOUT / TYPOGRAPHY */
     section {
       border-bottom: 1px solid rgba(148, 163, 184, 0.15);
     }
@@ -190,8 +202,8 @@
     }
 
     .btn:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 0 22px rgba(249, 115, 22, 0.75);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 22px rgba(249, 115, 22, 0.8);
     }
 
     .badge {
@@ -215,14 +227,11 @@
       box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
     }
 
-    /* =========================
-       HERO
-    ========================== */
-
+    /* HERO */
     .hero {
       max-width: 1100px;
       margin: auto;
-      padding: 80px 18px 70px;
+      padding: 80px 18px 50px;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 36px;
@@ -235,20 +244,30 @@
 
     .hero-img-wrap {
       position: relative;
-      transform-origin: center;
-      animation: floatImage 11s ease-in-out infinite alternate;
+      animation: floatImage 6s ease-in-out infinite alternate;
     }
 
     @keyframes floatImage {
       0%   { transform: translate3d(0,0,0) scale(1); }
-      50%  { transform: translate3d(0,-10px,0) scale(1.01); }
-      100% { transform: translate3d(0,5px,0) scale(0.99); }
+      100% { transform: translate3d(0,-12px,0) scale(1.02); }
     }
 
-    /* =========================
-       GRID LAYOUTS
-    ========================== */
+    .scroll-hint {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      animation: bounce 1.4s infinite;
+    }
 
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(6px); }
+    }
+
+    /* GRID LAYOUTS */
     .two {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -283,7 +302,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top left, rgba(249,115,22,0.12), transparent 60%);
+      background: radial-gradient(circle at top left, rgba(249,115,22,0.22), transparent 60%);
       opacity: 0;
       transition: opacity 0.25s ease;
     }
@@ -293,9 +312,9 @@
     }
 
     .card:hover {
-      transform: translateY(-6px) rotate(-0.3deg);
+      transform: translateY(-6px) rotate(-0.4deg);
       border-color: rgba(249, 115, 22, 0.7);
-      box-shadow: 0 18px 40px rgba(249, 115, 22, 0.22);
+      box-shadow: 0 18px 40px rgba(249, 115, 22, 0.25);
       background: rgba(15, 23, 42, 0.98);
     }
 
@@ -327,10 +346,7 @@
       margin: auto;
     }
 
-    /* =========================
-       MINI ACTIVITY
-    ========================== */
-
+    /* MINI ACTIVITY */
     .activity-note {
       font-size: 13px;
       color: var(--muted);
@@ -349,16 +365,12 @@
       border-color: rgba(249, 115, 22, 0.9) !important;
     }
 
-    /* =========================
-       SCROLL ANIMATIONS
-    ========================== */
-
+    /* SCROLL ANIMATIONS */
     .fade-up {
       opacity: 0;
       transform: translateY(40px) scale(0.98);
       transition: all 0.8s cubic-bezier(.2,.8,.2,1);
     }
-
     .fade-up.show {
       opacity: 1;
       transform: translateY(0) scale(1);
@@ -369,15 +381,10 @@
       transform: translateX(-40px);
       transition: all 0.9s ease;
     }
-
     .fade-left.show {
       opacity: 1;
       transform: translateX(0);
     }
-
-    /* =========================
-       FOOTER
-    ========================== */
 
     footer {
       padding: 28px 18px 32px;
@@ -386,28 +393,21 @@
       color: var(--muted);
     }
 
-    /* =========================
-       RESPONSIVE
-    ========================== */
-
+    /* RESPONSIVE */
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
         padding-top: 70px;
       }
-
       .two {
         grid-template-columns: 1fr;
       }
-
       .cards {
         grid-template-columns: 1fr;
       }
-
       .steps {
         grid-template-columns: 1fr 1fr;
       }
-
       .gallery {
         grid-template-columns: 1fr;
       }
@@ -421,16 +421,13 @@
         flex-direction: column;
         align-items: flex-start;
       }
-      .nav-links {
-        justify-content: flex-start;
-      }
     }
   </style>
 </head>
 
 <body>
-  <!-- BACKGROUND ANIMATIONS -->
-  <div class="bg-layer" id="bgLayer">
+  <!-- OBVIOUS ANIMATED BLOBS -->
+  <div class="blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
@@ -467,9 +464,13 @@
           We talk, play, argue a little, laugh, and slowly begin to re-think what “fair” really looks like.
         </p>
         <a class="btn" href="activities.html">See workshop games →</a>
+        <div class="scroll-hint">
+          Scroll to explore
+          <span>↓</span>
+        </div>
       </div>
 
-      <div class="hero-img-wrap fade-up" id="heroImg">
+      <div class="hero-img-wrap fade-up">
         <img src="https://images.unsplash.com/photo-1604916287784-c324202b320b?auto=format&fit=crop&w=900&q=80"
              alt="Children in classroom activity">
       </div>
@@ -608,7 +609,7 @@
     // Mini activity logic
     let clickedCount = 0;
     function toggleRole(el) {
-      if (el.classList.contains("picked")) return; // prevent double counting
+      if (el.classList.contains("picked")) return;
       el.classList.add("picked");
       clickedCount++;
 
@@ -624,22 +625,6 @@
           "This is where the conversation turns to: what would a fairer version look like?";
       }
     }
-
-    // Mouse-move parallax for hero & blobs
-    const heroImg = document.getElementById("heroImg");
-    const bgLayer = document.getElementById("bgLayer");
-
-    document.addEventListener("mousemove", (e) => {
-      const x = (e.clientX / window.innerWidth) - 0.5;
-      const y = (e.clientY / window.innerHeight) - 0.5;
-
-      if (heroImg) {
-        heroImg.style.transform = `translate3d(${x * 10}px, ${y * 10}px, 0)`;
-      }
-      if (bgLayer) {
-        bgLayer.style.transform = `translate3d(${x * -20}px, ${y * -10}px, 0)`;
-      }
-    });
   </script>
 </body>
 </html>

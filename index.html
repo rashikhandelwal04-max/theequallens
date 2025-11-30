@@ -2,60 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>The Equal Lens | Gender Equality Through Play</title>
+  <title>The Equal Lens | Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The Equal Lens runs interactive, game-based workshops on gender equality for children, schools and youth spaces." />
+  <meta name="description" content="The Equal Lens is a playful gender equality initiative using games and workshops with children and schools.">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-soft: #111827;
-      --accent: #f97316;
-      --accent-soft: rgba(249, 115, 22, 0.08);
-      --accent-2: #22c55e;
-      --text: #e5e7eb;
-      --text-soft: #9ca3af;
+      --bg: #020617;
       --card: #020617;
+      --accent: #f97316;
+      --accent2: #22c55e;
+      --accent3: #eab308;
+      --text: #f9fafb;
+      --muted: #9ca3af;
       --border: #1f2937;
-      --danger: #ef4444;
-      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      scroll-behavior: smooth;
+      --font: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(circle at top, #1f2937 0, #020617 40%);
+      background: #000;
       color: var(--text);
       font-family: var(--font);
       line-height: 1.6;
     }
+    a { color: inherit; text-decoration: none; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
-      max-width: 1100px;
+    .shell {
+      max-width: 980px;
       margin: 0 auto;
-      padding: 16px 16px 80px;
+      padding: 16px 16px 48px;
     }
 
+    /* NAV */
     header {
+      border-bottom: 1px solid rgba(148,163,184,0.25);
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(to bottom, rgba(15,23,42,0.98), rgba(15,23,42,0.85));
-      border-bottom: 1px solid rgba(148,163,184,0.15);
+      background: rgba(0,0,0,0.94);
+      backdrop-filter: blur(10px);
     }
-
     .nav {
-      max-width: 1100px;
+      max-width: 980px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -63,566 +51,249 @@
       padding: 10px 16px;
       gap: 12px;
     }
-
     .logo {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
-    .logo-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #f97316, #a855f7);
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 30%, #f97316, #e11d48);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
-      color: white;
-      box-shadow: 0 0 18px rgba(248, 250, 252, 0.3);
+      box-shadow: 0 0 18px rgba(248,250,252,0.5);
     }
-
     .logo-text-main {
       font-weight: 700;
-      letter-spacing: 0.06em;
-      font-size: 14px;
-      text-transform: uppercase;
+      font-size: 16px;
+      letter-spacing: 0.05em;
     }
-
     .logo-text-sub {
       font-size: 11px;
-      color: var(--text-soft);
+      color: var(--muted);
     }
-
     .nav-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 10px;
       font-size: 13px;
       align-items: center;
     }
-
     .nav-links a {
-      padding: 4px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
-      color: var(--text-soft);
+      color: var(--muted);
       border: 1px solid transparent;
     }
-
     .nav-links a:hover {
+      border-color: rgba(148,163,184,0.7);
       color: var(--text);
-      border-color: rgba(148,163,184,0.4);
-      background: rgba(15,23,42,0.7);
+      background: rgba(15,23,42,0.8);
     }
-
     .nav-cta {
       background: var(--accent);
-      color: #111827 !important;
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-size: 12px;
+      color: #111827;
       font-weight: 600;
-      border: none !important;
-      box-shadow: 0 0 20px rgba(249, 115, 22, 0.45);
+      box-shadow: 0 0 16px rgba(249,115,22,0.6);
     }
 
-    main {
-      padding-top: 26px;
-    }
+    main { padding-top: 24px; }
 
+    /* HERO */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 28px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
       align-items: center;
-      margin-bottom: 40px;
     }
-
-    .hero-kicker {
+    .kicker {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 3px 9px;
-      border-radius: 999px;
+      gap: 6px;
       font-size: 11px;
-      background: rgba(15,23,42,0.8);
-      border: 1px solid rgba(148,163,184,0.4);
-      color: var(--text-soft);
-      margin-bottom: 12px;
-    }
-
-    .hero-kicker-dot {
-      width: 7px;
-      height: 7px;
+      padding: 4px 8px;
       border-radius: 999px;
-      background: var(--accent-2);
-      box-shadow: 0 0 8px rgba(34,197,94,0.8);
+      border: 1px solid rgba(148,163,184,0.6);
+      color: var(--muted);
+      margin-bottom: 10px;
     }
-
+    .kicker-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
     .hero-title {
       font-size: clamp(32px, 5vw, 40px);
       line-height: 1.1;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-
-    .hero-title span.highlight {
-      background: linear-gradient(to right, #f97316, #facc15);
-      -webkit-background-clip: text;
-      color: transparent;
+    .hero-title span {
+      color: var(--accent3);
     }
-
     .hero-sub {
       font-size: 14px;
-      color: var(--text-soft);
-      margin-bottom: 18px;
-      max-width: 520px;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
-
     .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
-
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      padding: 7px 14px;
       border-radius: 999px;
-      padding: 6px 14px;
       font-size: 13px;
-      font-weight: 500;
-      border: 1px solid transparent;
-      cursor: pointer;
-      background: transparent;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.7);
       color: var(--text);
+      cursor: pointer;
+      gap: 6px;
     }
-
     .btn-primary {
       background: var(--accent);
       color: #111827;
-      border-color: rgba(249, 115, 22, 0.1);
-      box-shadow: 0 0 22px rgba(249, 115, 22, 0.5);
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(249,115,22,0.7);
+      font-weight: 600;
     }
-
-    .btn-primary:hover {
-      filter: brightness(1.05);
+    .btn:hover {
       transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(148,163,184,0.4);
     }
-
-    .btn-ghost {
-      border-color: rgba(148,163,184,0.4);
-      background: rgba(15,23,42,0.7);
-    }
-
-    .btn-ghost:hover {
-      border-color: rgba(148,163,184,0.7);
-      background: rgba(15,23,42,0.9);
-    }
-
     .hero-note {
       font-size: 11px;
-      color: var(--text-soft);
+      color: var(--muted);
     }
-
     .hero-note span {
-      color: var(--accent-2);
+      color: var(--accent2);
       font-weight: 600;
     }
 
-    .hero-panel {
-      background: radial-gradient(circle at top, rgba(248,250,252,0.08), rgba(15,23,42,0.9));
-      border-radius: 16px;
-      border: 1px solid rgba(148,163,184,0.4);
+    .hero-board {
+      background: #020617;
+      border-radius: 18px;
       padding: 16px;
+      border: 1px solid rgba(148,163,184,0.5);
       position: relative;
-      box-shadow: 0 20px 50px rgba(15,23,42,0.9);
       overflow: hidden;
     }
-
-    .hero-panel::before {
-      content: "";
+    .hero-board::before {
+      content: "🎲";
       position: absolute;
-      inset: -1px;
-      background: radial-gradient(circle at 5% 0, rgba(244, 114, 182, 0.37), transparent 55%);
-      opacity: 0.5;
-      pointer-events: none;
+      right: 10px;
+      top: -4px;
+      font-size: 32px;
+      opacity: 0.4;
     }
-
+    .hero-board::after {
+      content: "💬";
+      position: absolute;
+      left: 6px;
+      bottom: -4px;
+      font-size: 28px;
+      opacity: 0.4;
+    }
     .hero-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      position: relative;
-      z-index: 1;
     }
-
     .hero-card {
-      background: rgba(2,6,23,0.96);
-      border-radius: 12px;
-      border: 1px solid rgba(148,163,184,0.35);
+      border-radius: 14px;
       padding: 10px;
+      background: #020617;
+      border: 1px dashed rgba(148,163,184,0.7);
       font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
     }
-
-    .hero-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-soft);
-    }
-
     .hero-card-title {
       font-weight: 600;
-      font-size: 13px;
+      margin-bottom: 4px;
     }
-
-    .hero-pills {
+    .hero-chip-row {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
       margin-top: 4px;
     }
-
-    .pill {
+    .chip {
       font-size: 10px;
-      padding: 2px 7px;
+      padding: 3px 7px;
       border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(148,163,184,0.4);
-      color: var(--text-soft);
+      border: 1px solid rgba(148,163,184,0.6);
+      color: var(--muted);
+      background: rgba(15,23,42,0.8);
     }
 
-    .pill strong {
-      color: var(--accent);
+    .section {
+      margin-top: 40px;
     }
-
-    .hero-badge {
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
-      background: rgba(15,23,42,0.9);
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 10px;
-      border: 1px solid rgba(148,163,184,0.5);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-soft);
-    }
-
-    .hero-badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent-2);
-      box-shadow: 0 0 10px rgba(34,197,94,0.9);
-    }
-
-    section {
-      margin-bottom: 40px;
-    }
-
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-      margin-bottom: 6px;
-    }
-
     .section-title {
       font-size: 20px;
-      margin-bottom: 12px;
-    }
-
-    .section-sub {
-      font-size: 13px;
-      color: var(--text-soft);
-      max-width: 650px;
-      margin-bottom: 18px;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
-      gap: 22px;
-      align-items: flex-start;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 14px;
-    }
-
-    .card h3 {
-      font-size: 15px;
       margin-bottom: 6px;
     }
-
-    .muted {
-      color: var(--text-soft);
+    .section-sub {
       font-size: 13px;
+      color: var(--muted);
+      max-width: 620px;
     }
 
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    .chip {
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      border: 1px solid rgba(148,163,184,0.5);
-      color: var(--text-soft);
-    }
-
-    .grid-3 {
+    .cards-row {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
+      margin-top: 16px;
     }
-
-    .activity-card {
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s;
+    .card {
+      background: #020617;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      padding: 12px;
+      font-size: 13px;
     }
-
-    .activity-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.85);
-      border-color: rgba(249,115,22,0.7);
-    }
-
-    .activity-tag {
-      font-size: 10px;
-      color: var(--text-soft);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .activity-title {
+    .card h3 {
       font-size: 14px;
       margin-bottom: 4px;
     }
-
-    .activity-body {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .activity-hidden {
-      display: none;
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--accent-2);
-    }
-
-    .activity-card.open .activity-hidden {
-      display: block;
-    }
-
-    .activity-card.open .activity-body {
-      color: var(--text);
-    }
-
-    .section-quiz {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 22px;
-      align-items: flex-start;
-    }
-
-    .quiz-question {
-      margin-bottom: 10px;
-    }
-
-    .quiz-question h3 {
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-
-    .quiz-options button {
-      text-align: left;
-      font-size: 12px;
-      border-radius: 10px;
-      padding: 6px 8px;
-      border: 1px solid rgba(148,163,184,0.5);
-      background: rgba(15,23,42,0.7);
-      color: var(--text-soft);
-      cursor: pointer;
-    }
-
-    .quiz-options button:hover {
-      border-color: rgba(249,115,22,0.7);
-      color: var(--text);
-    }
-
-    .quiz-options button.selected {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--text);
-    }
-
-    .quiz-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 8px;
+    .tag {
+      display: inline-block;
       font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .quiz-result {
-      margin-top: 8px;
-      font-size: 13px;
-      min-height: 20px;
-    }
-
-    .quiz-result.good {
-      color: var(--accent-2);
-    }
-
-    .quiz-result.ok {
-      color: var(--accent);
-    }
-
-    .quiz-result.bad {
-      color: var(--danger);
-    }
-
-    .pledge {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 22px;
-    }
-
-    .pledge-inputs label {
-      display: block;
-      font-size: 12px;
+      color: var(--muted);
       margin-bottom: 4px;
-      color: var(--text-soft);
-    }
-
-    .pledge-inputs input[type="text"] {
-      width: 100%;
-      padding: 6px 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(148,163,184,0.6);
-      background: rgba(15,23,42,0.8);
-      color: var(--text);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-
-    .pledge-options {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      margin-bottom: 10px;
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .pledge-options label {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      cursor: pointer;
-    }
-
-    .pledge-options input {
-      margin-top: 3px;
-    }
-
-    .pledge-output {
-      font-size: 13px;
-      color: var(--accent-2);
-      min-height: 22px;
     }
 
     footer {
-      border-top: 1px solid rgba(148,163,184,0.3);
       margin-top: 40px;
-      padding-top: 14px;
+      border-top: 1px solid rgba(148,163,184,0.35);
+      padding-top: 12px;
       font-size: 11px;
-      color: var(--text-soft);
+      color: var(--muted);
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
-      gap: 8px;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
-    footer a {
-      text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 3px;
-    }
-
-    /* Responsive */
     @media (max-width: 800px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .two-col,
-      .section-quiz,
-      .pledge {
+      .cards-row {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .hero-panel {
-        order: -1;
-      }
-
-      .grid-3 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
       .nav {
         flex-wrap: wrap;
-      }
-
-      .nav-links {
-        justify-content: flex-end;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .hero-title {
-        font-size: 28px;
-      }
-
-      .nav {
-        justify-content: space-between;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: flex-start;
       }
     }
   </style>
@@ -630,456 +301,131 @@
 <body>
   <header>
     <nav class="nav">
-      <div class="logo">
-        <div class="logo-icon">=</div>
+      <a href="index.html" class="logo">
+        <div class="logo-badge">=</div>
         <div>
           <div class="logo-text-main">THE EQUAL LENS</div>
-          <div class="logo-text-sub">Workshops • Games • Conversations</div>
+          <div class="logo-text-sub">Gender equality through play</div>
         </div>
-      </div>
+      </a>
       <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#activities">Activities</a>
-        <a href="#quiz">Quiz</a>
-        <a href="#pledge">Pledge</a>
-        <a href="#contact" class="nav-cta">For Schools</a>
+        <a href="activities.html">Games & Activities</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="pledge.html">Pledge</a>
+        <a href="schools.html" class="nav-cta">For schools</a>
       </div>
     </nav>
   </header>
 
-  <main class="page">
-    <!-- HERO -->
-    <section class="hero" id="top">
+  <main class="shell">
+    <section class="hero">
       <div>
-        <div class="hero-kicker">
-          <span class="hero-kicker-dot"></span>
-          Gender equality for curious minds
+        <div class="kicker">
+          <span class="kicker-dot"></span>
+          Not a lecture. A playful lab on gender equality.
         </div>
         <h1 class="hero-title">
-          <span class="highlight">The Equal Lens</span><br />
-          workshops through stories, games & reflection.
+          Welcome to <span>The Equal Lens</span>.
         </h1>
         <p class="hero-sub">
-          We design interactive, age-appropriate sessions that help children notice stereotypes,
-          question them safely, and practice respect in everyday life – in class, at home and online.
+          We run game-based, discussion-led workshops where children explore fairness, stereotypes,
+          and respect in a way that feels safe, fun and real – not heavy or preachy.
         </p>
         <div class="hero-cta-row">
-          <button class="btn btn-primary" data-scroll="#activities">
-            Explore sample activities
+          <button class="btn btn-primary" onclick="location.href='activities.html'">
+            🎲 See sample games
           </button>
-          <button class="btn btn-ghost" data-scroll="#quiz">
-            Try a quick quiz
+          <button class="btn" onclick="location.href='quiz.html'">
+            ⚖️ Try a mini quiz
           </button>
         </div>
         <p class="hero-note">
-          Designed for ages <span>10–14</span> • Flexible formats for schools, NGOs & youth spaces
+          Designed for ages <span>10–14</span> • Flexible formats for schools, NGOs & youth groups
         </p>
       </div>
-      <div class="hero-panel">
+      <div class="hero-board">
         <div class="hero-grid">
           <div class="hero-card">
-            <div class="hero-label">One session, many skills</div>
-            <div class="hero-card-title">Not a lecture. A lab.</div>
+            <div class="hero-card-title">What we use</div>
             <p class="muted" style="font-size:12px;">
-              Students learn to spot bias, speak up kindly, and listen to different experiences.
+              Roleplay, story cards, silent walks, yes/no corners, reflection prompts.
             </p>
-            <div class="hero-pills">
-              <div class="pill"><strong>30–60 min</strong> modules</div>
-              <div class="pill">Small or large groups</div>
+            <div class="hero-chip-row">
+              <span class="chip">No slides</span>
+              <span class="chip">No exams</span>
             </div>
           </div>
           <div class="hero-card">
-            <div class="hero-label">Formats we love</div>
-            <div class="hero-card-title">Play • Reflect • Act</div>
-            <div class="hero-pills">
-              <div class="pill">Role-play circles</div>
-              <div class="pill">Value ranking games</div>
-              <div class="pill">Story-based debates</div>
-              <div class="pill">Silent gallery walks</div>
-            </div>
-          </div>
-          <div class="hero-card">
-            <div class="hero-label">Topics we cover</div>
+            <div class="hero-card-title">What kids practise</div>
             <p class="muted" style="font-size:12px;">
-              Everyday gender rules, “boys vs girls” myths, unpaid care work, friendship & consent basics.
+              Speak up kindly, share chores, question “boys vs girls” rules, listen better.
             </p>
           </div>
           <div class="hero-card">
-            <div class="hero-label">Outcomes</div>
+            <div class="hero-card-title">Where it works</div>
             <p class="muted" style="font-size:12px;">
-              More questions. Kinder jokes. Shared chores. A class that feels a little fairer.
+              Schools, after-school clubs, orphanages, care homes, youth circles.
             </p>
           </div>
-        </div>
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          <span>Built for real classrooms, not just theory.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="section-label">About</div>
-      <h2 class="section-title">What is The Equal Lens?</h2>
-      <div class="two-col">
-        <div>
-          <p class="section-sub">
-            The Equal Lens is a youth initiative that uses games, stories and guided conversations
-            to make gender equality real and practical for children – not just a chapter in a book.
-          </p>
-          <p class="muted">
-            Instead of telling students what to think, we invite them to notice:
-          </p>
-          <ul class="muted" style="font-size:13px; margin-top:8px; padding-left:18px;">
-            <li>Who speaks more in class? Who is interrupted?</li>
-            <li>Who is expected to do what at home?</li>
-            <li>What jokes are “normal” – and who gets left out?</li>
-          </ul>
-          <p class="muted" style="margin-top:10px;">
-            Through simple activities, we help them try new, fairer ways of behaving –
-            without shame, blame or big speeches.
-          </p>
-        </div>
-        <div>
-          <div class="card">
-            <h3>For schools & organisations</h3>
-            <p class="muted">
-              We can adapt sessions for:
-            </p>
-            <div class="chips">
-              <div class="chip">Classes 5–9</div>
-              <div class="chip">School clubs</div>
-              <div class="chip">Residential care / orphanages</div>
-              <div class="chip">Youth groups</div>
-            </div>
-            <p class="muted" style="margin-top:10px;">
-              Sessions can be single workshops, short series, or part of a wider life-skills / SEL program.
+          <div class="hero-card">
+            <div class="hero-card-title">How it feels</div>
+            <p class="muted" style="font-size:12px;">
+              More questions. Kinder jokes. Small, concrete changes at home and in class.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ACTIVITIES -->
-    <section id="activities">
-      <div class="section-label">Sample activities</div>
-      <h2 class="section-title">What does an Equal Lens session feel like?</h2>
+    <section class="section">
+      <h2 class="section-title">Pick where you want to start 👇</h2>
       <p class="section-sub">
-        Some examples of low-tech games and prompts we might use in a workshop. Click on any card
-        to reveal how the activity connects back to gender equality.
+        You can explore The Equal Lens like a kid would – by clicking and trying things,
+        not reading a long PDF.
       </p>
-      <div class="grid-3">
-        <div class="card activity-card">
-          <div class="activity-tag">Game</div>
-          <div class="activity-title">“Who gets the chair?”</div>
-          <p class="activity-body">
-            Students stand in a circle with one less chair. The prompt changes each round:
-            “If you love blue, grab a chair”, “If you’ve ever been told ‘girls don’t…’ sit down”.
+      <div class="cards-row">
+        <div class="card">
+          <div class="tag">Play</div>
+          <h3>Games & Activities</h3>
+          <p>
+            See 3–5 concrete games you can run in any classroom with chart paper, chalk
+            and a bit of courage.
           </p>
-          <p class="activity-hidden">
-            We discuss who moves first, who hesitates, and how rules quietly push some people out.
-          </p>
-        </div>
-        <div class="card activity-card">
-          <div class="activity-tag">Story circle</div>
-          <div class="activity-title">“That’s not for you”</div>
-          <p class="activity-body">
-            Short story of two friends told twice – once with swapped genders.
-            Students note what feels “believable” and why.
-          </p>
-          <p class="activity-hidden">
-            We unpack how our ideas of “normal” are gendered, and where we learned those ideas.
-          </p>
-        </div>
-        <div class="card activity-card">
-          <div class="activity-tag">Reflection</div>
-          <div class="activity-title">Invisible work map</div>
-          <p class="activity-body">
-            Kids draw a simple map of their home and list all the daily tasks:
-            cooking, cleaning, earning, caring, fixing.
-          </p>
-          <p class="activity-hidden">
-            They mark who usually does what, then re-design a fairer version together.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUIZ -->
-    <section id="quiz">
-      <div class="section-label">Quick check-in</div>
-      <h2 class="section-title">A tiny gender equality quiz</h2>
-      <div class="section-quiz">
-        <div>
-          <p class="section-sub">
-            This is not an exam – just a nudge to notice how we think. You can use this in class
-            as a warm-up or closing activity, and invite students to explain their choices.
-          </p>
-          <div id="quiz-questions"></div>
-          <div class="quiz-footer">
-            <span id="quiz-progress">Question 1 of 3</span>
-            <button class="btn btn-primary" id="quiz-next">Next</button>
-          </div>
-          <div id="quiz-result" class="quiz-result"></div>
+          <button class="btn" style="margin-top:8px;" onclick="location.href='activities.html'">
+            Open the activity shelf →
+          </button>
         </div>
         <div class="card">
-          <h3>How to use this in a workshop</h3>
-          <ul class="muted" style="font-size:13px; padding-left:18px; margin-top:6px;">
-            <li>Ask students to answer silently first, then discuss.</li>
-            <li>Invite them to defend answers with “because…” rather than just “right/wrong”.</li>
-            <li>Connect every answer back to real-life situations they recognise.</li>
-            <li>End by asking: “What can we do differently from today?”</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- PLEDGE -->
-    <section id="pledge">
-      <div class="section-label">Take a small step</div>
-      <h2 class="section-title">The Equal Lens pledge</h2>
-      <p class="section-sub">
-        Change doesn’t start with a giant speech – it starts with one small, specific promise.
-        This pledge can be used at the end of a session, individually or as a class charter.
-      </p>
-      <div class="pledge">
-        <div class="card pledge-inputs">
-          <label for="pledge-name">My name</label>
-          <input id="pledge-name" type="text" placeholder="Type your first name (optional)" />
-          <p class="muted" style="margin-bottom:6px;">I want to practise:</p>
-          <div class="pledge-options">
-            <label>
-              <input type="checkbox" value="share chores at home more fairly" />
-              <span>Sharing chores at home more fairly.</span>
-            </label>
-            <label>
-              <input type="checkbox" value="avoid jokes that put girls, boys or any gender down" />
-              <span>Avoiding jokes that put girls, boys or any gender down.</span>
-            </label>
-            <label>
-              <input type="checkbox" value="listen without interrupting, especially when someone feels ignored" />
-              <span>Listening without interrupting, especially when someone feels ignored.</span>
-            </label>
-            <label>
-              <input type="checkbox" value="call out unfair rules politely when I notice them" />
-              <span>Calling out unfair rules politely when I notice them.</span>
-            </label>
-          </div>
-          <button class="btn btn-primary" id="pledge-submit">Create my pledge</button>
+          <div class="tag">Check-in</div>
+          <h3>Mini quiz</h3>
+          <p>
+            A tiny quiz you can share with students or friends to notice how you think about
+            fairness in everyday situations.
+          </p>
+          <button class="btn" style="margin-top:8px;" onclick="location.href='quiz.html'">
+            Take the quiz →
+          </button>
         </div>
         <div class="card">
-          <h3>Your pledge text</h3>
-          <p class="muted" style="font-size:13px; margin-bottom:6px;">
-            Once generated, this can be read aloud, written on sticky notes, or turned into a classroom poster.
+          <div class="tag">Commit</div>
+          <h3>Pledge wall</h3>
+          <p>
+            Create a simple, concrete pledge you can print, read aloud or turn into a class charter.
           </p>
-          <div id="pledge-output" class="pledge-output">
-            (Your personalised pledge will appear here.)
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="section-label">Contact</div>
-      <h2 class="section-title">Bring The Equal Lens to your space</h2>
-      <div class="two-col">
-        <div>
-          <p class="section-sub">
-            If you are a school, NGO, youth group or care home and would like to explore a pilot
-            workshop series, reach out with your context and preferred dates.
-          </p>
-          <p class="muted">
-            We’re happy to:
-          </p>
-          <ul class="muted" style="font-size:13px; margin-top:6px; padding-left:18px;">
-            <li>Share a sample session plan.</li>
-            <li>Adapt content to your students’ age and language.</li>
-            <li>Co-create a longer curriculum with your team.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <p class="muted" style="font-size:13px;">
-            Email: <a href="mailto:hello@theequallens.com">hello@theequallens.com</a><br />
-            (You can change this later.)
-          </p>
-          <p class="muted" style="font-size:13px; margin-top:8px;">
-            Include: school / organisation name, city, age group, and whether you prefer in-person
-            or online sessions.
-          </p>
+          <button class="btn" style="margin-top:8px;" onclick="location.href='pledge.html'">
+            Make a pledge →
+          </button>
         </div>
       </div>
     </section>
 
     <footer>
-      <span>© <span id="year"></span> The Equal Lens. All rights reserved.</span>
-      <span style="opacity:0.8;">Built with care, questions and a lot of sticky notes.</span>
+      <span>© <span id="year"></span> The Equal Lens</span>
+      <span>hello@theequallens.com</span>
     </footer>
   </main>
 
   <script>
-    // Smooth scroll for buttons with data-scroll
-    document.querySelectorAll("[data-scroll]").forEach(btn => {
-      btn.addEventListener("click", e => {
-        const target = btn.getAttribute("data-scroll");
-        const el = document.querySelector(target);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-
-    // Activity cards toggle
-    document.querySelectorAll(".activity-card").forEach(card => {
-      card.addEventListener("click", () => {
-        card.classList.toggle("open");
-      });
-    });
-
-    // Quiz logic
-    const quizData = [
-      {
-        question: "1. A teacher always asks girls to decorate the class and boys to move desks. What is the fairest response?",
-        options: [
-          "It’s fine, everyone is helping in some way.",
-          "Ask if tasks can be rotated so everyone tries both.",
-          "Only boys should move desks, they are stronger."
-        ],
-        correctIndex: 1
-      },
-      {
-        question: "2. A boy in class wants to learn dance but his friends tease him. What is a good way to respond?",
-        options: [
-          "Join the teasing so he doesn’t feel alone.",
-          "Ignore it, it’s just a joke.",
-          "Say that dance is for everyone and change the subject if needed."
-        ],
-        correctIndex: 2
-      },
-      {
-        question: "3. At home, only one sibling is asked to serve food and clear plates every day. What could be a fairer plan?",
-        options: [
-          "Rotate the task so everyone helps on different days.",
-          "Keep it the same, it’s tradition.",
-          "Ask someone outside the family to do it."
-        ],
-        correctIndex: 0
-      }
-    ];
-
-    let currentQuestion = 0;
-    let score = 0;
-    let answered = false;
-
-    const quizContainer = document.getElementById("quiz-questions");
-    const quizProgress = document.getElementById("quiz-progress");
-    const quizResult = document.getElementById("quiz-result");
-    const quizNext = document.getElementById("quiz-next");
-
-    function renderQuestion() {
-      quizResult.textContent = "";
-      const q = quizData[currentQuestion];
-      quizContainer.innerHTML = "";
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "quiz-question";
-
-      const title = document.createElement("h3");
-      title.textContent = q.question;
-      wrapper.appendChild(title);
-
-      const optionsDiv = document.createElement("div");
-      optionsDiv.className = "quiz-options";
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => selectOption(idx, btn, optionsDiv));
-        optionsDiv.appendChild(btn);
-      });
-
-      wrapper.appendChild(optionsDiv);
-      quizContainer.appendChild(wrapper);
-
-      quizProgress.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
-      quizNext.textContent = currentQuestion === quizData.length - 1 ? "Finish" : "Next";
-      answered = false;
-    }
-
-    function selectOption(index, button, container) {
-      if (answered) return;
-      answered = true;
-
-      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
-      button.classList.add("selected");
-
-      const q = quizData[currentQuestion];
-      if (index === q.correctIndex) {
-        score++;
-        quizResult.textContent = "Nice! That answer moves things in a fairer direction.";
-        quizResult.className = "quiz-result good";
-      } else {
-        quizResult.textContent = "Thanks for answering honestly. Talk about what might feel fairer for everyone.";
-        quizResult.className = "quiz-result ok";
-      }
-    }
-
-    quizNext.addEventListener("click", () => {
-      if (!answered) {
-        quizResult.textContent = "Choose an option first.";
-        quizResult.className = "quiz-result bad";
-        return;
-      }
-      if (currentQuestion < quizData.length - 1) {
-        currentQuestion++;
-        renderQuestion();
-      } else {
-        // Show final summary
-        const total = quizData.length;
-        let msg;
-        const ratio = score / total;
-        if (ratio === 1) {
-          msg = "You’re really tuned in to fairness already. The next step is practising these choices in real life.";
-        } else if (ratio >= 0.5) {
-          msg = "You’re on your way. Keep asking yourself: “Is this fair for everyone here?” in everyday moments.";
-        } else {
-          msg = "This is a starting point, not a score. The important part is staying curious and willing to change.";
-        }
-        quizContainer.innerHTML = "";
-        quizResult.textContent = `You chose ${score} out of ${total} answers that leaned towards more equality. ${msg}`;
-        quizResult.className = "quiz-result good";
-        quizProgress.textContent = "Quiz complete";
-        quizNext.disabled = true;
-        quizNext.classList.remove("btn-primary");
-        quizNext.classList.add("btn-ghost");
-        quizNext.textContent = "Done";
-      }
-    });
-
-    renderQuestion();
-
-    // Pledge logic
-    const pledgeNameEl = document.getElementById("pledge-name");
-    const pledgeOutput = document.getElementById("pledge-output");
-    const pledgeSubmit = document.getElementById("pledge-submit");
-
-    pledgeSubmit.addEventListener("click", () => {
-      const name = pledgeNameEl.value.trim();
-      const checks = Array.from(document.querySelectorAll(".pledge-options input:checked"));
-      if (checks.length === 0) {
-        pledgeOutput.textContent = "Choose at least one thing you want to practise.";
-        pledgeOutput.className = "pledge-output";
-        return;
-      }
-      const actions = checks.map(c => c.value);
-      const intro = name ? `${name} pledges to:` : "I pledge to:";
-      const listText = actions
-        .map((a, i) => (i === actions.length - 1 && i !== 0 ? " and " : i > 0 ? ", " : "") + a)
-        .join("");
-      pledgeOutput.textContent = `${intro} ${listText}.`;
-      pledgeOutput.className = "pledge-output";
-    });
-
-    // Year in footer
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>

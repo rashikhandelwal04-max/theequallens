@@ -1,220 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>The Equal Lens | Gender Equality Workshops</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>The Equal Lens | Gender Equality Workshops</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
 
-<style>
-:root{
---bg:#000;
---card:#020617;
---accent:#f97316;
---green:#22c55e;
---yellow:#eab308;
---text:#f9fafb;
---muted:#9ca3af;
---border:#1f2937;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-background:#000;color:var(--text);
-font-family:"Baloo 2",sans-serif;
-line-height:1.6;
-}
-a{text-decoration:none;color:inherit}
-img{width:100%;border-radius:20px}
+  <style>
+    :root {
+      --bg: #000;
+      --card: #020617;
+      --accent: #f97316;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+    }
 
-/* NAV */
-header{
-position:sticky;top:0;z-index:50;
-background:rgba(0,0,0,.93);
-border-bottom:1px solid rgba(148,163,184,.2);
-backdrop-filter:blur(8px);
-}
-.nav{
-max-width:1100px;margin:auto;
-padding:14px 18px;
-display:flex;justify-content:space-between;align-items:center;
-}
-.logo{font-weight:700;letter-spacing:.08em}
-.nav a{margin-left:14px;font-size:13px;color:var(--muted)}
-.nav a:hover{color:#fff}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* GLOBAL */
-.wrap{max-width:1100px;margin:auto;padding:80px 18px}
-section{border-bottom:1px solid rgba(148,163,184,.15)}
-h1{font-size:clamp(36px,6vw,50px);line-height:1.1;margin-bottom:14px}
-h2{font-size:28px;margin-bottom:10px}
-p.sub{font-size:15px;color:var(--muted);max-width:600px}
-.btn{
-display:inline-block;margin-top:16px;
-background:var(--accent);color:#111;
-padding:12px 20px;border-radius:999px;
-font-weight:600;
-box-shadow:0 0 18px rgba(249,115,22,.6)
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Baloo 2", system-ui, sans-serif;
+      line-height: 1.6;
+    }
 
-/* HERO */
-.hero{
-display:grid;grid-template-columns:1.2fr 1fr;
-gap:36px;align-items:center;
-}
-.badge{
-display:inline-block;margin-bottom:12px;
-font-size:12px;padding:4px 10px;
-border:1px solid var(--border);
-border-radius:999px;color:var(--muted);
-}
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-/* SCROLL FADE */
-.fade{
-opacity:0;transform:translateY(30px);
-transition:all .8s ease;
-}
-.fade.show{opacity:1;transform:none}
+    img {
+      width: 100%;
+      border-radius: 20px;
+      display: block;
+    }
 
-/* CARDS */
-.cards{
-display:grid;grid-template-columns:repeat(3,1fr);
-gap:18px;margin-top:30px;
-}
-.card{
-background:var(--card);border:1px solid var(--border);
-border-radius:20px;padding:18px;font-size:14px;
-transition:transform .2s;
-}
-.card:hover{transform:translateY(-4px)}
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(0, 0, 0, 0.93);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      backdrop-filter: blur(8px);
+    }
 
-/* STEPS */
-.steps{
-display:grid;grid-template-columns:repeat(4,1fr);
-gap:16px;margin-top:24px
-}
-.step{
-border:1px dashed var(--border);
-border-radius:18px;padding:14px;font-size:13px
-}
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
 
-/* GALLERY */
-.gallery{
-display:grid;grid-template-columns:repeat(3,1fr);
-gap:16px;margin-top:26px
-}
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 14px;
+    }
 
-/* CTA */
-.cta{
-text-align:center;padding:90px 18px
-}
+    .nav-links a {
+      margin-left: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+    }
 
-footer{
-padding:30px 18px;
-text-align:center;font-size:12px;color:var(--muted)
-}
+    .nav-links a:hover {
+      color: #fff;
+      border-color: rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+    }
 
-/* MOBILE */
-@media(max-width:900px){
-.hero{grid-template-columns:1fr}
-.cards,.steps,.gallery{grid-template-columns:1fr}
-}
-</style>
+    /* LAYOUT */
+    section {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+      padding: 70px 18px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 50px);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p.sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--accent);
+      color: #111827;
+      padding: 11px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 22px rgba(249, 115, 22, 0.75);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+    }
+
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 80px 18px 70px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-title span {
+      color: var(--yellow);
+    }
+
+    /* GRID LAYOUTS */
+    .two {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      font-size: 14px;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) rotate(-0.3deg);
+      border-color: rgba(249, 115, 22, 0.7);
+      box-shadow: 0 18px 40px rgba(249, 115, 22, 0.22);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .step {
+      background: #020617;
+      border-radius: 18px;
+      border: 1px dashed var(--border);
+      padding: 14px;
+      font-size: 13px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .cta {
+      text-align: center;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    /* MINI ACTIVITY */
+    .activity-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    #reflection {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--green);
+      min-height: 20px;
+    }
+
+    .picked {
+      background: rgba(249, 115, 22, 0.18) !important;
+      border-color: rgba(249, 115, 22, 0.9) !important;
+    }
+
+    /* SCROLL ANIMATIONS */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: all 0.8s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .fade-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: all 0.9s ease;
+    }
+
+    .fade-left.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    footer {
+      padding: 28px 18px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 70px;
+      }
+
+      .two {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .steps {
+        grid-template-columns: 1fr;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .nav-links a {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- NAV -->
+  <header>
+    <nav class="nav">
+      <div class="logo">THE EQUAL LENS</div>
+      <div class="nav-links">
+        <a href="activities.html">Games</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="pledge.html">Pledge</a>
+        <a href="schools.html">For Schools</a>
+      </div>
+    </nav>
+  </header>
 
-<header>
-<nav class="nav">
-<div class="logo">THE EQUAL LENS</div>
-<div>
-<a href="activities.html">Games</a>
-<a href="quiz.html">Quiz</a>
-<a href="pledge.html">Pledge</a>
-<a href="schools.html">For Schools</a>
-</div>
-</nav>
-</header>
+  <!-- HERO -->
+  <section>
+    <div class="hero fade-up">
+      <div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Gender equality • Play • Conversation
+        </div>
+        <h1 class="hero-title">
+          Gender equality<br>
+          learned <span>through play.</span>
+        </h1>
+        <p class="sub">
+          The Equal Lens runs interactive workshops where children explore fairness,
+          everyday gender rules and respect — by moving, talking, laughing and reflecting.
+        </p>
+        <a class="btn" href="activities.html">See workshop games →</a>
+      </div>
 
-<!-- HERO -->
-<section>
-<div class="wrap hero fade">
-<div>
-<span class="badge">Play • Conversation • Equality</span>
-<h1>Gender equality is<br><span style="color:var(--yellow)">learned together</span></h1>
-<p class="sub">
-The Equal Lens runs playful, discussion-led workshops where children
-explore fairness, roles and respect — without lectures or judgement.
-</p>
-<a href="activities.html" class="btn">See workshop activities →</a>
-</div>
-<img src="https://images.unsplash.com/photo-1604916287784-c324202b320b" alt="Indian children classroom activity">
-</div>
-</section>
+      <div class="fade-up">
+        <img src="https://images.unsplash.com/photo-1604916287784-c324202b320b?auto=format&fit=crop&w=900&q=80"
+             alt="Children in classroom activity">
+      </div>
+    </div>
+  </section>
 
-<!-- WHAT HAPPENS -->
-<section>
-<div class="wrap fade">
-<h2>What happens in a session?</h2>
-<p class="sub">A workshop feels more like a game lab than a class.</p>
+  <!-- WHAT HAPPENS IN A SESSION -->
+  <section>
+    <div class="wrap fade-left">
+      <h2>What happens in a session?</h2>
+      <p class="sub">
+        It feels more like a game lab than a lecture. Students don’t just listen – they try things,
+        notice patterns, and talk about real life.
+      </p>
 
-<div class="steps">
-<div class="step">🎲 Movement game</div>
-<div class="step">💬 Group discussion</div>
-<div class="step">🧠 Reflection</div>
-<div class="step">🧡 One small action</div>
-</div>
-</div>
-</section>
+      <div class="steps">
+        <div class="step">🎲 Quick movement game to break the ice.</div>
+        <div class="step">💬 Small group or circle discussion around a story or situation.</div>
+        <div class="step">🧠 Reflection: “Why did it feel fair or unfair?”</div>
+        <div class="step">🧡 One small action to try at home or in class.</div>
+      </div>
+    </div>
+  </section>
 
-<!-- WHAT KIDS EXPLORE -->
-<section>
-<div class="wrap fade">
-<h2>What children explore</h2>
-<div class="cards">
-<div class="card">Who speaks more in class — and why?</div>
-<div class="card">Who does what work at home?</div>
-<div class="card">When jokes hurt, even if unintended</div>
-<div class="card">Rules that feel “normal” but aren’t fair</div>
-<div class="card">How to disagree respectfully</div>
-<div class="card">What *I* can change starting today</div>
-</div>
-</div>
-</section>
+  <!-- WHAT CHILDREN EXPLORE -->
+  <section>
+    <div class="wrap fade-up">
+      <h2>What children explore together</h2>
+      <p class="sub">
+        Big ideas, broken into everyday moments they already recognise.
+      </p>
 
-<!-- GALLERY -->
-<section>
-<div class="wrap fade">
-<h2>Workshop in action</h2>
-<p class="sub">Real classrooms. Real conversations.</p>
+      <div class="cards">
+        <div class="card">Who speaks more in class — and who gets interrupted?</div>
+        <div class="card">Who does what kind of work at home – cooking, cleaning, earning?</div>
+        <div class="card">When jokes feel funny to some, but hurt someone else.</div>
+        <div class="card">“Boys vs girls” rules that feel normal, but aren’t really fair.</div>
+        <div class="card">How to disagree respectfully and still be friends.</div>
+        <div class="card">What each of us can change in small ways, starting today.</div>
+      </div>
+    </div>
+  </section>
 
-<div class="gallery">
-<img src="https://images.unsplash.com/photo-1596496050827-8299e0220de1">
-<img src="https://images.unsplash.com/photo-1588072432836-e10032774350">
-<img src="https://images.unsplash.com/photo-1577896851231-70ef18881754">
-</div>
-</div>
-</section>
+  <!-- MINI ACTIVITY: TRY THIS -->
+  <section>
+    <div class="wrap fade-up">
+      <h2>Try this mini activity 👇</h2>
+      <p class="sub">
+        Click honestly. This is how many of our workshops actually start – with simple questions about home.
+      </p>
 
-<!-- CTA -->
-<section>
-<div class="cta fade">
-<h2>Bring The Equal Lens to your school or group</h2>
-<p class="sub">For schools, NGOs, care homes & youth programmes.</p>
-<a href="schools.html" class="btn">Work with us →</a>
-</div>
-</section>
+      <div class="cards" id="homeRoles">
+        <div class="card" onclick="toggleRole(this)">Cooking</div>
+        <div class="card" onclick="toggleRole(this)">Cleaning</div>
+        <div class="card" onclick="toggleRole(this)">Earning money</div>
+        <div class="card" onclick="toggleRole(this)">Taking care of younger kids</div>
+        <div class="card" onclick="toggleRole(this)">Fixing things or handling repairs</div>
+        <div class="card" onclick="toggleRole(this)">Making big family decisions</div>
+      </div>
 
-<footer>
-© <span id="y"></span> The Equal Lens • hello@theequallens.com
-</footer>
+      <p class="activity-note">
+        In a workshop, students stand in different corners of the room or place stickers for each answer.
+      </p>
+      <p id="reflection"></p>
+    </div>
+  </section>
 
-<script>
-document.getElementById("y").innerText = new Date().getFullYear();
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")});
-},{threshold:.2});
-document.querySelectorAll(".fade").forEach(el=>observer.observe(el));
-</script>
+  <!-- WORKSHOP IN ACTION -->
+  <section>
+    <div class="wrap fade-up">
+      <h2>Workshop in action</h2>
+      <p class="sub">Real classrooms. Real conversations.</p>
 
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1596496057370-1a9998d05e9b?auto=format&fit=crop&w=800&q=80"
+             alt="Children working together at a desk">
+        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80"
+             alt="Girl student raising hand">
+        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80"
+             alt="Children in discussion circle">
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT REACTIONS -->
+  <section>
+    <div class="wrap fade-up">
+      <h2>Things students often say</h2>
+
+      <div class="cards">
+        <div class="card">“I never noticed this before.”</div>
+        <div class="card">“Why are only girls asked to clean?”</div>
+        <div class="card">“This happens at my house too.”</div>
+        <div class="card">“Can we talk about this more?”</div>
+        <div class="card">“I want to try sharing chores at home.”</div>
+        <div class="card">“I didn’t realise some jokes hurt this much.”</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="wrap fade-up">
+      <div class="cta">
+        <h2>Bring The Equal Lens to your school or group</h2>
+        <p class="sub">
+          We work with schools, NGOs, care homes and youth groups.
+        </p>
+        <a class="btn" href="schools.html">Work with us →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="y"></span> The Equal Lens • hello@theequallens.com
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById("y").innerText = new Date().getFullYear();
+
+    // Scroll animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll(".fade-up, .fade-left").forEach(el => observer.observe(el));
+
+    // Mini activity logic
+    let clickedCount = 0;
+    function toggleRole(el) {
+      if (el.classList.contains("picked")) return; // prevent double counting
+      el.classList.add("picked");
+      clickedCount++;
+
+      const reflection = document.getElementById("reflection");
+      if (clickedCount === 1) {
+        reflection.textContent = "In workshops, we ask: who usually does this at home, and why?";
+      } else if (clickedCount === 3) {
+        reflection.textContent = "Patterns start to appear. Are the same people doing most of the work?";
+      } else if (clickedCount >= 5) {
+        reflection.textContent = "This is where children begin to redesign a fairer version together.";
+      }
+    }
+  </script>
 </body>
 </html>

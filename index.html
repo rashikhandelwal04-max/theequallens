@@ -93,17 +93,23 @@
       background:rgba(15,23,42,0.9);
       border:1px solid rgba(148,163,184,0.4);
       backdrop-filter:blur(10px);
-      animation:bob 12s ease-in-out infinite alternate;
-      max-width:170px;
+      max-width:190px;
+      animation:bob 10s ease-in-out infinite alternate;
     }
     .thought-bubble.b-left1{top:30%;left:3%;}
-    .thought-bubble.b-left2{top:65%;left:6%;animation-delay:4s;}
-    .thought-bubble.b-right1{top:20%;right:5%;animation-delay:2s;}
+    .thought-bubble.b-left2{top:65%;left:6%;animation-delay:2s;}
+    .thought-bubble.b-right1{top:20%;right:5%;animation-delay:4s;}
     .thought-bubble.b-right2{top:75%;right:8%;animation-delay:6s;}
 
     @keyframes bob{
       0%{transform:translate3d(0,0,0);}
-      100%{transform:translate3d(0,-14px,0);}
+      50%{transform:translate3d(0,-18px,0);}
+      100%{transform:translate3d(0,-8px,0);}
+    }
+
+    .bubble-text{
+      display:inline-block;
+      transition:opacity .35s ease;
     }
 
     /* ---------- LAYOUT ---------- */
@@ -642,11 +648,19 @@
 <div class="blob b3"></div>
 <div class="grain"></div>
 
-<!-- floating thought bubbles -->
-<div class="thought-bubble b-left1">“Why do some jokes only target one gender?”</div>
-<div class="thought-bubble b-left2">“Who does more invisible work at home?”</div>
-<div class="thought-bubble b-right1">“What rules feel fair to everyone?”</div>
-<div class="thought-bubble b-right2">“Can I say ‘no’ when a rule feels wrong?”</div>
+<!-- floating thought bubbles with rotating gender equality lines -->
+<div class="thought-bubble b-left1">
+  <span class="bubble-text" id="bubble1Text">Everyone deserves a turn to speak.</span>
+</div>
+<div class="thought-bubble b-left2">
+  <span class="bubble-text" id="bubble2Text">Chores don’t have a gender.</span>
+</div>
+<div class="thought-bubble b-right1">
+  <span class="bubble-text" id="bubble3Text">Feelings are for all genders.</span>
+</div>
+<div class="thought-bubble b-right2">
+  <span class="bubble-text" id="bubble4Text">Respect is never “too sensitive”.</span>
+</div>
 
 <header>
   <nav class="nav">
@@ -952,6 +966,44 @@
   });
 
   renderQuiz();
+
+  // Rotating gender equality lines in thought bubbles
+  const bubblePhrases = [
+    "Everyone deserves a turn to speak.",
+    "Chores don’t have a gender.",
+    "Feelings are for all genders.",
+    "Respect is never “too sensitive”.",
+    "My dreams don’t have a gender.",
+    "Fair rules work for everyone.",
+    "Safety is not a luxury.",
+    "Listening is also power."
+  ];
+
+  const bubbleElements = [
+    document.getElementById("bubble1Text"),
+    document.getElementById("bubble2Text"),
+    document.getElementById("bubble3Text"),
+    document.getElementById("bubble4Text")
+  ];
+
+  let bubbleOffset = [0, 2, 4, 6];
+
+  function rotateBubbleText() {
+    bubbleElements.forEach((el, i) => {
+      if (!el) return;
+      // fade out
+      el.style.opacity = 0;
+      setTimeout(() => {
+        const phraseIndex = (bubbleOffset[i]) % bubblePhrases.length;
+        el.textContent = bubblePhrases[phraseIndex];
+        el.style.opacity = 1;
+        bubbleOffset[i] = (bubbleOffset[i] + 1) % bubblePhrases.length;
+      }, 200);
+    });
+  }
+
+  // start rotation
+  setInterval(rotateBubbleText, 4000);
 </script>
 
 </body>

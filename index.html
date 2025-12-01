@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -849,161 +849,174 @@
 </div>
 
 <script>
-  // Year
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Flow cards expand on click
-  document.querySelectorAll(".flow-card").forEach(card => {
-    card.addEventListener("click", () => {
-      card.classList.toggle("open");
-    });
-  });
-
-  // Pronoun / statement toggle
-  const toggleText = document.getElementById("toggleText");
-  const lines = {
-    "I am": "I am allowed to be fully myself.",
-    "I can": "I can question unfair rules, kindly.",
-    "I deserve": "I deserve safety, respect and chances."
-  };
-
-  document.querySelectorAll(".toggle-pill").forEach(pill => {
-    pill.addEventListener("click", () => {
-      document.querySelectorAll(".toggle-pill").forEach(p => p.classList.remove("active"));
-      pill.classList.add("active");
-      const word = pill.getAttribute("data-word");
-      toggleText.textContent = lines[word] || "";
-    });
-  });
-
-  // Home mini quiz
-  const quizData = [
-    {
-      q: "A friend says “It’s just a joke, don’t be so sensitive” after a gender-based joke. What’s a fair response?",
-      options: [
-        "Laugh along so it doesn’t become awkward.",
-        "Say calmly that some jokes can hurt, and ask them to stop.",
-        "Shout at them in front of everyone."
-      ],
-      correct: 1,
-      good: "Yes. It keeps the friendship but also clearly says the joke isn’t okay.",
-      bad: "Think about what keeps people safe and heard, not just what avoids awkwardness."
-    },
-    {
-      q: "At home, only one sibling is always asked to serve food. What’s a small fair step?",
-      options: [
-        "Rotate serving between everyone at home.",
-        "Keep it the same, they are used to it.",
-        "Stop serving food at all."
-      ],
-      correct: 0,
-      good: "Exactly. Rotating makes the invisible work more equal.",
-      bad: "Fairness usually means sharing work, not ignoring it."
-    },
-    {
-      q: "In class, a student is interrupted again and again when they speak. What can you try?",
-      options: [
-        "Say nothing, it’s not your problem.",
-        "Say, “Let’s hear them finish,” so they get space.",
-        "Interrupt them as well, so it’s equal."
-      ],
-      correct: 1,
-      good: "Yes. You’re using your voice to make space, not speak for them.",
-      bad: "Equality means everyone getting space, not everyone being cut off."
+  document.addEventListener("DOMContentLoaded", function () {
+    // Year
+    var yearEl = document.getElementById("year");
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
     }
-  ];
 
-  let currentQ = 0;
-  let answered = false;
-
-  const quizTag = document.getElementById("quizTag");
-  const quizQuestion = document.getElementById("quizQuestion");
-  const quizOptions = document.getElementById("quizOptions");
-  const quizFeedback = document.getElementById("quizFeedback");
-  const quizNext = document.getElementById("quizNext");
-
-  function renderQuiz() {
-    const item = quizData[currentQ];
-    quizTag.textContent = `Question ${currentQ + 1} of ${quizData.length}`;
-    quizQuestion.textContent = item.q;
-    quizOptions.innerHTML = "";
-    quizFeedback.textContent = "";
-    quizFeedback.className = "quiz-feedback";
-
-    item.options.forEach((opt, index) => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.className = "quiz-btn";
-      btn.addEventListener("click", () => selectOption(index, btn));
-      quizOptions.appendChild(btn);
+    // Flow cards expand on click
+    document.querySelectorAll(".flow-card").forEach(function(card) {
+      card.addEventListener("click", function() {
+        card.classList.toggle("open");
+      });
     });
-    answered = false;
-  }
 
-  function selectOption(index, btn) {
-    if (answered) return;
-    answered = true;
-    const item = quizData[currentQ];
-    const all = quizOptions.querySelectorAll(".quiz-btn");
-    all.forEach(b => { b.disabled = true; });
+    // Pronoun / statement toggle
+    const toggleText = document.getElementById("toggleText");
+    const lines = {
+      "I am": "I am allowed to be fully myself.",
+      "I can": "I can question unfair rules, kindly.",
+      "I deserve": "I deserve safety, respect and chances."
+    };
 
-    if (index === item.correct) {
-      btn.classList.add("correct");
-      quizFeedback.textContent = item.good;
-      quizFeedback.classList.add("good");
-    } else {
-      btn.classList.add("wrong");
-      quizFeedback.textContent = item.bad;
-      quizFeedback.classList.add("bad");
-      // highlight correct
-      all[item.correct].classList.add("correct");
+    document.querySelectorAll(".toggle-pill").forEach(function(pill) {
+      pill.addEventListener("click", function() {
+        document.querySelectorAll(".toggle-pill").forEach(function(p) { p.classList.remove("active"); });
+        pill.classList.add("active");
+        const word = pill.getAttribute("data-word");
+        if (toggleText) toggleText.textContent = lines[word] || "";
+      });
+    });
+
+    // Home mini quiz
+    const quizData = [
+      {
+        q: "A friend says “It’s just a joke, don’t be so sensitive” after a gender-based joke. What’s a fair response?",
+        options: [
+          "Laugh along so it doesn’t become awkward.",
+          "Say calmly that some jokes can hurt, and ask them to stop.",
+          "Shout at them in front of everyone."
+        ],
+        correct: 1,
+        good: "Yes. It keeps the friendship but also clearly says the joke isn’t okay.",
+        bad: "Think about what keeps people safe and heard, not just what avoids awkwardness."
+      },
+      {
+        q: "At home, only one sibling is always asked to serve food. What’s a small fair step?",
+        options: [
+          "Rotate serving between everyone at home.",
+          "Keep it the same, they are used to it.",
+          "Stop serving food at all."
+        ],
+        correct: 0,
+        good: "Exactly. Rotating makes the invisible work more equal.",
+        bad: "Fairness usually means sharing work, not ignoring it."
+      },
+      {
+        q: "In class, a student is interrupted again and again when they speak. What can you try?",
+        options: [
+          "Say nothing, it’s not your problem.",
+          "Say, “Let’s hear them finish,” so they get space.",
+          "Interrupt them as well, so it’s equal."
+        ],
+        correct: 1,
+        good: "Yes. You’re using your voice to make space, not speak for them.",
+        bad: "Equality means everyone getting space, not everyone being cut off."
+      }
+    ];
+
+    let currentQ = 0;
+    let answered = false;
+
+    const quizTag = document.getElementById("quizTag");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizOptions = document.getElementById("quizOptions");
+    const quizFeedback = document.getElementById("quizFeedback");
+    const quizNext = document.getElementById("quizNext");
+
+    function renderQuiz() {
+      const item = quizData[currentQ];
+      if (quizTag) quizTag.textContent = "Question " + (currentQ + 1) + " of " + quizData.length;
+      if (quizQuestion) quizQuestion.textContent = item.q;
+      if (quizOptions) quizOptions.innerHTML = "";
+      if (quizFeedback) {
+        quizFeedback.textContent = "";
+        quizFeedback.className = "quiz-feedback";
+      }
+
+      item.options.forEach(function(opt, index) {
+        if (!quizOptions) return;
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.className = "quiz-btn";
+        btn.addEventListener("click", function() { selectOption(index, btn); });
+        quizOptions.appendChild(btn);
+      });
+      answered = false;
     }
-  }
 
-  quizNext.addEventListener("click", () => {
-    currentQ = (currentQ + 1) % quizData.length;
+    function selectOption(index, btn) {
+      if (answered) return;
+      answered = true;
+      const item = quizData[currentQ];
+      const all = quizOptions ? quizOptions.querySelectorAll(".quiz-btn") : [];
+      all.forEach(function(b) { b.disabled = true; });
+
+      if (index === item.correct) {
+        btn.classList.add("correct");
+        if (quizFeedback) {
+          quizFeedback.textContent = item.good;
+          quizFeedback.classList.add("good");
+        }
+      } else {
+        btn.classList.add("wrong");
+        if (quizFeedback) {
+          quizFeedback.textContent = item.bad;
+          quizFeedback.classList.add("bad");
+        }
+        if (all[item.correct]) all[item.correct].classList.add("correct");
+      }
+    }
+
+    if (quizNext) {
+      quizNext.addEventListener("click", function() {
+        currentQ = (currentQ + 1) % quizData.length;
+        renderQuiz();
+      });
+    }
+
     renderQuiz();
+
+    // Rotating gender equality lines in thought bubbles
+    const bubblePhrases = [
+      "Everyone deserves a turn to speak.",
+      "Chores don’t have a gender.",
+      "Feelings are for all genders.",
+      "Respect is never “too sensitive”.",
+      "My dreams don’t have a gender.",
+      "Fair rules work for everyone.",
+      "Safety is not a luxury.",
+      "Listening is also power."
+    ];
+
+    const bubbleElements = [
+      document.getElementById("bubble1Text"),
+      document.getElementById("bubble2Text"),
+      document.getElementById("bubble3Text"),
+      document.getElementById("bubble4Text")
+    ];
+
+    let bubbleOffset = [0, 2, 4, 6];
+
+    function rotateBubbleText() {
+      bubbleElements.forEach(function(el, i) {
+        if (!el) return;
+        el.style.opacity = 0;
+        setTimeout(function() {
+          const phraseIndex = bubbleOffset[i] % bubblePhrases.length;
+          el.textContent = bubblePhrases[phraseIndex];
+          el.style.opacity = 1;
+          bubbleOffset[i] = (bubbleOffset[i] + 1) % bubblePhrases.length;
+        }, 200);
+      });
+    }
+
+    // run once immediately so you see it, then every 4s
+    rotateBubbleText();
+    setInterval(rotateBubbleText, 4000);
   });
-
-  renderQuiz();
-
-  // Rotating gender equality lines in thought bubbles
-  const bubblePhrases = [
-    "Everyone deserves a turn to speak.",
-    "Chores don’t have a gender.",
-    "Feelings are for all genders.",
-    "Respect is never “too sensitive”.",
-    "My dreams don’t have a gender.",
-    "Fair rules work for everyone.",
-    "Safety is not a luxury.",
-    "Listening is also power."
-  ];
-
-  const bubbleElements = [
-    document.getElementById("bubble1Text"),
-    document.getElementById("bubble2Text"),
-    document.getElementById("bubble3Text"),
-    document.getElementById("bubble4Text")
-  ];
-
-  let bubbleOffset = [0, 2, 4, 6];
-
-  function rotateBubbleText() {
-    bubbleElements.forEach((el, i) => {
-      if (!el) return;
-      // fade out
-      el.style.opacity = 0;
-      setTimeout(() => {
-        const phraseIndex = (bubbleOffset[i]) % bubblePhrases.length;
-        el.textContent = bubblePhrases[phraseIndex];
-        el.style.opacity = 1;
-        bubbleOffset[i] = (bubbleOffset[i] + 1) % bubblePhrases.length;
-      }, 200);
-    });
-  }
-
-  // start rotation
-  setInterval(rotateBubbleText, 4000);
 </script>
 
 </body>

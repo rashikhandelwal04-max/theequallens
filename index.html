@@ -13,6 +13,7 @@
       --accent:#f97316;
       --accent2:#22c55e;
       --accent3:#6366f1;
+      --accent4:#eab308;
       --text:#f9fafb;
       --muted:#9ca3af;
       --border:#1f2937;
@@ -33,7 +34,7 @@
     .bg-layer{
       position:fixed;
       inset:0;
-      z-index:-2;
+      z-index:-3;
       background:
         radial-gradient(circle at 10% 0%, rgba(244,63,94,0.35), transparent 55%),
         radial-gradient(circle at 90% 10%, rgba(56,189,248,0.28), transparent 55%),
@@ -50,6 +51,7 @@
       opacity:0.6;
       mix-blend-mode:screen;
       animation:float 18s ease-in-out infinite alternate;
+      z-index:-2;
     }
     .blob.b1{
       top:5%;left:-10%;
@@ -78,6 +80,30 @@
       mix-blend-mode:soft-light;
       z-index:-1;
       opacity:0.9;
+    }
+
+    /* ---------- FLOATING BUBBLES (TEXT THOUGHTS) ---------- */
+    .thought-bubble{
+      position:fixed;
+      z-index:-1;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:11px;
+      color:#e5e7eb;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.4);
+      backdrop-filter:blur(10px);
+      animation:bob 12s ease-in-out infinite alternate;
+      max-width:170px;
+    }
+    .thought-bubble.b-left1{top:30%;left:3%;}
+    .thought-bubble.b-left2{top:65%;left:6%;animation-delay:4s;}
+    .thought-bubble.b-right1{top:20%;right:5%;animation-delay:2s;}
+    .thought-bubble.b-right2{top:75%;right:8%;animation-delay:6s;}
+
+    @keyframes bob{
+      0%{transform:translate3d(0,0,0);}
+      100%{transform:translate3d(0,-14px,0);}
     }
 
     /* ---------- LAYOUT ---------- */
@@ -166,7 +192,7 @@
     main{
       max-width:1080px;
       margin:0 auto;
-      padding:120px 18px 80px;
+      padding:120px 18px 90px;
     }
 
     /* ---------- HERO ---------- */
@@ -238,9 +264,7 @@
       overflow:hidden;
       transition:transform .15s, box-shadow .15s, border-color .15s;
     }
-    .btn span.icon{
-      font-size:14px;
-    }
+    .btn span.icon{font-size:14px;}
     .btn-primary{
       background:linear-gradient(135deg,#f97316,#e11d48);
       border-color:transparent;
@@ -299,18 +323,21 @@
     .hero-panel h3{
       font-size:14px;
       margin-bottom:6px;
+      position:relative;z-index:1;
     }
     .hero-panel ul{
       font-size:12px;
       color:var(--muted);
       margin-left:14px;
       margin-top:4px;
+      position:relative;z-index:1;
     }
     .hero-tags{
       margin-top:10px;
       display:flex;
       flex-wrap:wrap;
       gap:6px;
+      position:relative;z-index:1;
     }
     .tag-chip{
       font-size:11px;
@@ -327,8 +354,9 @@
       border-radius:16px;
       padding:10px 12px;
       border:1px dashed rgba(148,163,184,0.65);
-      background:rgba(15,23,42,0.85);
+      background:rgba(15,23,42,0.9);
       font-size:12px;
+      position:relative;z-index:1;
     }
     .toggle-row{
       display:flex;
@@ -422,9 +450,91 @@
     }
     .flow-card.open .flow-more{display:block;}
 
+    /* ---------- HOME MINI QUIZ ---------- */
+    .quiz-section{
+      margin-top:60px;
+    }
+    .quiz-card{
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,0.55);
+      background:radial-gradient(circle at 0 0,rgba(248,250,252,0.06),rgba(15,23,42,0.98));
+      padding:16px;
+      font-size:13px;
+      max-width:700px;
+    }
+    .quiz-tag{
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    .quiz-q{
+      font-size:14px;
+      margin-bottom:8px;
+    }
+    .quiz-options{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:6px;
+    }
+    .quiz-btn{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.9);
+      color:var(--muted);
+      font-size:13px;
+      padding:7px 11px;
+      text-align:left;
+      cursor:pointer;
+      transition:background .15s,border-color .15s,transform .12s;
+    }
+    .quiz-btn:hover{
+      transform:translateY(-1px);
+      border-color:var(--accent4);
+      color:var(--text);
+    }
+    .quiz-btn.correct{
+      border-color:var(--accent2);
+      background:rgba(22,163,74,0.18);
+      color:var(--text);
+    }
+    .quiz-btn.wrong{
+      border-color:#f97373;
+      background:rgba(239,68,68,0.15);
+      color:var(--text);
+    }
+    .quiz-feedback{
+      margin-top:8px;
+      font-size:12px;
+      min-height:20px;
+    }
+    .quiz-feedback.good{color:var(--accent2);}
+    .quiz-feedback.bad{color:#fca5a5;}
+
+    .quiz-footer-row{
+      margin-top:8px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:11px;
+      color:var(--muted);
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .quiz-next-btn{
+      border-radius:999px;
+      border:none;
+      padding:6px 12px;
+      font-size:12px;
+      cursor:pointer;
+      background:linear-gradient(135deg,#22c55e,#38bdf8);
+      color:#020617;
+      font-weight:600;
+    }
+
     /* ---------- START CARDS ---------- */
     .start-grid{
-      margin-top:20px;
+      margin-top:24px;
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:16px;
@@ -437,6 +547,7 @@
       font-size:13px;
       position:relative;
       overflow:hidden;
+      cursor:pointer;
     }
     .start-card::before{
       content:"";
@@ -461,6 +572,37 @@
       margin-bottom:4px;
     }
     .start-card:hover::before{opacity:1;}
+
+    /* ---------- FLOATING QUIZ BUBBLE BUTTON ---------- */
+    .floating-quiz-btn{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:45;
+      width:56px;
+      height:56px;
+      border-radius:999px;
+      border:2px solid rgba(248,250,252,0.25);
+      background:radial-gradient(circle at 30% 0%,#f97316,#e11d48);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      color:#111827;
+      font-size:11px;
+      text-align:center;
+      cursor:pointer;
+      box-shadow:0 18px 45px rgba(0,0,0,0.8);
+      animation:bounce 2.4s ease-in-out infinite;
+    }
+    .floating-quiz-btn span.icon{
+      font-size:18px;
+      margin-bottom:2px;
+    }
+    @keyframes bounce{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-7px);}
+    }
 
     footer{
       margin-top:60px;
@@ -499,6 +641,12 @@
 <div class="blob b2"></div>
 <div class="blob b3"></div>
 <div class="grain"></div>
+
+<!-- floating thought bubbles -->
+<div class="thought-bubble b-left1">“Why do some jokes only target one gender?”</div>
+<div class="thought-bubble b-left2">“Who does more invisible work at home?”</div>
+<div class="thought-bubble b-right1">“What rules feel fair to everyone?”</div>
+<div class="thought-bubble b-right2">“Can I say ‘no’ when a rule feels wrong?”</div>
 
 <header>
   <nav class="nav">
@@ -539,7 +687,7 @@
           <span class="icon">🎲</span> Explore activities
         </button>
         <button class="btn" onclick="location.href='quiz.html'">
-          <span class="icon">⚖️</span> Try a mini quiz
+          <span class="icon">⚖️</span> Go to full quiz page
         </button>
       </div>
       <p class="hero-note">
@@ -574,7 +722,7 @@
     </div>
   </section>
 
-  <!-- FLOW -->
+  <!-- FLOW / HOW IT WORKS -->
   <section class="section">
     <h2 class="section-title">How learning unfolds</h2>
     <p class="section-sub">
@@ -618,6 +766,29 @@
     </div>
   </section>
 
+  <!-- MINI QUIZ ON HOME PAGE -->
+  <section class="section quiz-section">
+    <h2 class="section-title">Try a quick question 🧠</h2>
+    <p class="section-sub">
+      A tiny taste of the kind of thinking we invite. Click an option and see what it opens up.
+    </p>
+
+    <div class="quiz-card">
+      <div class="quiz-tag" id="quizTag">Question 1 of 3</div>
+      <div class="quiz-q" id="quizQuestion">
+        A friend says “It’s just a joke, don’t be so sensitive” after a gender-based joke. What’s a fair response?
+      </div>
+      <div class="quiz-options" id="quizOptions">
+        <!-- buttons injected by JS -->
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div class="quiz-footer-row">
+        <span id="quizHint">Tap an answer to see why.</span>
+        <button class="quiz-next-btn" id="quizNext">Next question →</button>
+      </div>
+    </div>
+  </section>
+
   <!-- START HERE -->
   <section class="section">
     <h2 class="section-title">Start exploring 👇</h2>
@@ -657,6 +828,12 @@
   </footer>
 </main>
 
+<!-- floating quiz bubble -->
+<div class="floating-quiz-btn" onclick="location.href='quiz.html'">
+  <span class="icon">⚡</span>
+  Quiz
+</div>
+
 <script>
   // Year
   document.getElementById("year").textContent = new Date().getFullYear();
@@ -684,6 +861,97 @@
       toggleText.textContent = lines[word] || "";
     });
   });
+
+  // Home mini quiz
+  const quizData = [
+    {
+      q: "A friend says “It’s just a joke, don’t be so sensitive” after a gender-based joke. What’s a fair response?",
+      options: [
+        "Laugh along so it doesn’t become awkward.",
+        "Say calmly that some jokes can hurt, and ask them to stop.",
+        "Shout at them in front of everyone."
+      ],
+      correct: 1,
+      good: "Yes. It keeps the friendship but also clearly says the joke isn’t okay.",
+      bad: "Think about what keeps people safe and heard, not just what avoids awkwardness."
+    },
+    {
+      q: "At home, only one sibling is always asked to serve food. What’s a small fair step?",
+      options: [
+        "Rotate serving between everyone at home.",
+        "Keep it the same, they are used to it.",
+        "Stop serving food at all."
+      ],
+      correct: 0,
+      good: "Exactly. Rotating makes the invisible work more equal.",
+      bad: "Fairness usually means sharing work, not ignoring it."
+    },
+    {
+      q: "In class, a student is interrupted again and again when they speak. What can you try?",
+      options: [
+        "Say nothing, it’s not your problem.",
+        "Say, “Let’s hear them finish,” so they get space.",
+        "Interrupt them as well, so it’s equal."
+      ],
+      correct: 1,
+      good: "Yes. You’re using your voice to make space, not speak for them.",
+      bad: "Equality means everyone getting space, not everyone being cut off."
+    }
+  ];
+
+  let currentQ = 0;
+  let answered = false;
+
+  const quizTag = document.getElementById("quizTag");
+  const quizQuestion = document.getElementById("quizQuestion");
+  const quizOptions = document.getElementById("quizOptions");
+  const quizFeedback = document.getElementById("quizFeedback");
+  const quizNext = document.getElementById("quizNext");
+
+  function renderQuiz() {
+    const item = quizData[currentQ];
+    quizTag.textContent = `Question ${currentQ + 1} of ${quizData.length}`;
+    quizQuestion.textContent = item.q;
+    quizOptions.innerHTML = "";
+    quizFeedback.textContent = "";
+    quizFeedback.className = "quiz-feedback";
+
+    item.options.forEach((opt, index) => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.className = "quiz-btn";
+      btn.addEventListener("click", () => selectOption(index, btn));
+      quizOptions.appendChild(btn);
+    });
+    answered = false;
+  }
+
+  function selectOption(index, btn) {
+    if (answered) return;
+    answered = true;
+    const item = quizData[currentQ];
+    const all = quizOptions.querySelectorAll(".quiz-btn");
+    all.forEach(b => { b.disabled = true; });
+
+    if (index === item.correct) {
+      btn.classList.add("correct");
+      quizFeedback.textContent = item.good;
+      quizFeedback.classList.add("good");
+    } else {
+      btn.classList.add("wrong");
+      quizFeedback.textContent = item.bad;
+      quizFeedback.classList.add("bad");
+      // highlight correct
+      all[item.correct].classList.add("correct");
+    }
+  }
+
+  quizNext.addEventListener("click", () => {
+    currentQ = (currentQ + 1) % quizData.length;
+    renderQuiz();
+  });
+
+  renderQuiz();
 </script>
 
 </body>

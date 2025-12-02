@@ -4,16 +4,12 @@
 <meta charset="UTF-8">
 <title>The Equal Lens | Seeing Equality Differently</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --c1:249,115,22;
-  --c2:34,197,94;
-  --c3:234,179,8;
   --text:#f9fafb;
-  --muted:#9ca3af;
+  --muted:#e5e7eb;
   --border:#1f2937;
   --font:"Baloo 2",sans-serif;
 }
@@ -24,21 +20,21 @@ html{
   scroll-behavior:smooth;
 }
 body{
-  background:#000;
-  color:var(--text);
   font-family:var(--font);
+  color:var(--text);
   overflow-x:hidden;
+  background:#000;
 }
 a{text-decoration:none;color:inherit}
 
-/* ───────── Progress Tracker ───────── */
+/* Progress tracker */
 .progress{
   position:fixed;
   right:14px;
   top:50%;
   width:4px;
-  height:200px;
-  background:rgba(255,255,255,.1);
+  height:220px;
+  background:rgba(15,23,42,.7);
   border-radius:999px;
   transform:translateY(-50%);
   z-index:60;
@@ -47,154 +43,202 @@ a{text-decoration:none;color:inherit}
   display:block;
   width:100%;
   height:0%;
-  background:#fff;
+  background:#f9fafb;
   border-radius:999px;
-  transition:height .2s ease;
+  transition:height .25s ease;
 }
 
-/* ───────── Cursor Glow ───────── */
+/* Cursor glow */
 .cursor{
   position:fixed;
-  width:240px;
-  height:240px;
+  width:220px;
+  height:220px;
   border-radius:50%;
   pointer-events:none;
-  background:radial-gradient(circle,rgba(249,115,22,.2),transparent 70%);
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
   transform:translate(-50%,-50%);
+  mix-blend-mode:screen;
   z-index:5;
 }
 
-/* ───────── Header ───────── */
+/* Header */
 header{
   position:fixed;
   top:0;left:0;right:0;
   height:64px;
-  background:rgba(0,0,0,.7);
+  background:rgba(3,7,18,.85);
   backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(148,163,184,.4);
   z-index:70;
 }
 .nav{
-  max-width:1100px;
+  max-width:1080px;
   margin:auto;
   height:64px;
   padding:0 18px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 .logo{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  font-weight:700;
-  letter-spacing:.08em;
+  display:flex;align-items:center;gap:10px;
+  font-weight:700;letter-spacing:.08em;
 }
-.badge{
+.logo-badge{
   width:34px;height:34px;
-  background:radial-gradient(circle,#f97316,#e11d48);
   border-radius:14px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  background:radial-gradient(circle at top left,#f97316,#ec4899);
+  display:flex;align-items:center;justify-content:center;
 }
-.nav a{
+.nav-links a{
   font-size:13px;
-  color:var(--muted);
+  color:#e5e7eb;
   margin-left:14px;
+  opacity:.8;
 }
-.nav a:hover{color:#fff}
+.nav-links a:hover{opacity:1}
 
-/* ───────── Sections ───────── */
+/* Sections base */
 section{
   scroll-snap-align:start;
   min-height:100vh;
-  padding:120px 18px 60px;
+  padding:120px 18px 64px;
   display:flex;
   align-items:center;
   position:relative;
-  transition:background 1s ease;
 }
 .wrap{
-  max-width:1000px;
+  max-width:1080px;
   margin:auto;
 }
 
-/* ambient color moods */
+/* Different colour moods per topic */
 .s1{
-  background:radial-gradient(circle at center,rgba(var(--c1),.18),transparent 55%);
+  background:radial-gradient(circle at top left,#020617 0,#020617 30%,#111827 60%,#db2777 120%);
 }
 .s2{
-  background:radial-gradient(circle at center,rgba(var(--c2),.18),transparent 55%);
-}
-.deep{
-  background:radial-gradient(circle at center,rgba(255,255,255,.06),transparent 60%);
-}
-.choose{
-  background:radial-gradient(circle at center,rgba(148,163,184,.18),transparent 60%);
+  background:radial-gradient(circle at top right,#020617 0,#022c22 30%,#065f46 70%,#22c55e 120%);
 }
 .s3{
-  background:radial-gradient(circle at center,rgba(var(--c3),.18),transparent 55%);
+  background:radial-gradient(circle at bottom left,#020617 0,#312e81 30%,#1d4ed8 70%,#38bdf8 120%);
+}
+.s4{
+  background:radial-gradient(circle at top,#020617 0,#78350f 30%,#f59e0b 70%,#fde047 130%);
+}
+.s5{
+  background:radial-gradient(circle at center,#020617 0,#4b5563 40%,#111827 90%);
 }
 
-/* ───────── Text ───────── */
+/* Topic headers & text */
 .pill{
-  font-size:11px;
-  color:var(--muted);
-  border:1px solid #374151;
-  border-radius:999px;
-  padding:6px 12px;
   display:inline-flex;
-  gap:8px;
   align-items:center;
-  margin-bottom:18px;
+  gap:8px;
+  font-size:11px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid rgba(249,250,251,.7);
+  background:rgba(15,23,42,.4);
+  margin-bottom:16px;
 }
 .dot{
-  width:8px;height:8px;
-  background:#22c55e;
-  border-radius:50%;
-  box-shadow:0 0 10px #22c55e;
+  width:8px;height:8px;border-radius:50%;
 }
+.dot.pink{background:#fb7185;box-shadow:0 0 10px #f472b6;}
+.dot.green{background:#4ade80;box-shadow:0 0 10px #4ade80;}
+.dot.blue{background:#60a5fa;box-shadow:0 0 10px #60a5fa;}
+.dot.yellow{background:#facc15;box-shadow:0 0 10px #facc15;}
+.dot.gray{background:#e5e7eb;box-shadow:0 0 10px #e5e7eb;}
+
 h1{
-  font-size:clamp(36px,6vw,52px);
+  font-size:clamp(32px,5vw,44px);
   line-height:1.05;
-  margin-bottom:18px;
+  margin-bottom:12px;
 }
-h1 span{color:#eab308}
-p{
+h1 span{opacity:.95;}
+p.lead{
   font-size:15px;
   color:var(--muted);
   max-width:620px;
-  margin-bottom:24px;
+  margin-bottom:20px;
 }
 
-/* ───────── Buttons + ripple ───────── */
-.btn{
-  padding:10px 22px;
+/* Pointers list */
+.points{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  margin-top:10px;
+}
+.point{
+  background:rgba(15,23,42,.7);
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.5);
+  padding:12px 14px;
   font-size:13px;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+  transition:.25s ease;
+}
+.point:before{
+  content:"•";
+  position:absolute;
+  left:10px;top:8px;
+  font-size:18px;
+  opacity:.6;
+}
+.point span.label{
+  display:block;
+  font-weight:600;
+  margin-left:14px;
+  margin-bottom:4px;
+}
+.point span.text{
+  margin-left:14px;
+  color:#e5e7eb;
+  opacity:.9;
+  font-size:13px;
+}
+.point:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(15,23,42,.8);
+  border-color:rgba(248,250,252,.9);
+}
+
+/* Buttons + ripple */
+.btn-row{
+  margin-top:24px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.btn{
+  padding:9px 18px;
   border-radius:999px;
-  cursor:pointer;
   border:none;
+  font-size:13px;
+  cursor:pointer;
   position:relative;
   overflow:hidden;
 }
-.primary{
+.btn-primary{
   background:#f97316;
-  color:#111;
+  color:#111827;
   font-weight:700;
-  box-shadow:0 0 24px rgba(249,115,22,.6);
+  box-shadow:0 0 22px rgba(249,115,22,.7);
 }
-.ghost{
-  background:transparent;
-  border:1px solid #374151;
-  color:#fff;
+.btn-ghost{
+  background:rgba(15,23,42,.7);
+  border:1px solid rgba(248,250,252,.7);
+  color:#f9fafb;
 }
 .btn:after{
   content:"";
   position:absolute;
-  width:20px;height:20px;
+  width:18px;height:18px;
   border-radius:50%;
-  background:rgba(255,255,255,.4);
+  background:rgba(255,255,255,.5);
   transform:scale(0);
   opacity:0;
 }
@@ -202,110 +246,36 @@ p{
   animation:ripple .6s ease-out;
 }
 @keyframes ripple{
-  to{transform:scale(14);opacity:0}
+  to{transform:scale(14);opacity:0;}
 }
 
-/* ───────── Pause & Reflect card ───────── */
-.reflect{
-  margin-top:40px;
-  max-width:520px;
-  padding:22px;
-  border-radius:24px;
-  border:1px solid var(--border);
-  background:rgba(2,6,23,.9);
-  opacity:0;
-  transform:translateY(20px);
-  transition:.6s ease;
-}
-.reflect.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ───────── Deep scroll section ───────── */
-.layers{
-  margin-top:40px;
-  height:70vh;
-  overflow-y:auto;
-  scroll-snap-type:y mandatory;
-  border-left:2px solid rgba(255,255,255,.12);
-  padding-left:20px;
-}
-.layer{
-  scroll-snap-align:start;
-  min-height:40vh;
-  font-size:26px;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  color:rgba(255,255,255,.82);
-  opacity:.45;
-  transition:.35s;
-}
-.layer:hover{
-  opacity:1;
-  color:#eab308;
-}
-
-/* ───────── Choices section ───────── */
-.choices{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-.choice{
-  padding:40px 20px;
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.15);
-  text-align:center;
-  font-size:18px;
-  cursor:pointer;
-  transition:.3s;
-}
-.choice:hover{
-  transform:translateY(-6px);
-  background:rgba(255,255,255,.03);
-  box-shadow:0 40px 80px rgba(0,0,0,.6);
-  border-color:#f97316;
-}
-.choice.selected{
-  border-color:#22c55e;
-  box-shadow:0 0 30px rgba(34,197,94,.6);
-}
-
-/* ───────── Footer ───────── */
+/* Footer */
 footer{
   font-size:11px;
-  color:var(--muted);
-  margin-top:60px;
-  border-top:1px solid #374151;
-  padding-top:14px;
+  color:#e5e7eb;
+  margin-top:30px;
+  opacity:.85;
 }
 
-/* ───────── Mobile ───────── */
-@media(max-width:900px){
-  .progress{display:none}
-  .choices{grid-template-columns:1fr}
-  .layers{height:60vh}
-  .layer{min-height:35vh;font-size:22px}
+/* Responsive */
+@media(max-width:800px){
+  .points{grid-template-columns:1fr;}
+  .progress{display:none;}
 }
 </style>
 </head>
-
 <body>
 
 <div class="cursor" id="cursor"></div>
-
 <div class="progress"><span></span></div>
 
 <header>
   <nav class="nav">
     <div class="logo">
-      <div class="badge">=</div>
-      THE EQUAL LENS
+      <div class="logo-badge">=</div>
+      <span>THE EQUAL LENS</span>
     </div>
-    <div>
+    <div class="nav-links">
       <a href="activities.html">Activities</a>
       <a href="quiz.html">Quiz</a>
       <a href="pledge.html">Pledge</a>
@@ -314,123 +284,187 @@ footer{
   </nav>
 </header>
 
-<!-- 1. OBJECT / OBSERVE -->
+<!-- SECTION 1: What we are -->
 <section class="s1">
   <div class="wrap">
-    <div class="pill"><span class="dot"></span> Observe</div>
-    <h1>What do you<br><span>notice?</span></h1>
-    <p>
-      Gender rules sit quietly inside daily life — who speaks, who adjusts, who is taken seriously.
-      We begin by noticing the patterns.
-    </p>
-    <button class="btn primary" onclick="window.scrollBy({top:window.innerHeight,behavior:'smooth'})">
-      Scroll to continue
-    </button>
-  </div>
-</section>
-
-<!-- 2. MESSAGE / REFLECT -->
-<section class="s2" id="reflect-section">
-  <div class="wrap">
-    <div class="pill"><span class="dot"></span> Reflect</div>
-    <h1>Who decided<br><span>this?</span></h1>
-    <p>
-      Instead of giving answers, The Equal Lens creates space for questions.
-      Who benefits from this rule? Who shrinks themselves to fit?
+    <div class="pill"><span class="dot pink"></span> Overview</div>
+    <h1>Seeing gender<br><span>differently</span></h1>
+    <p class="lead">
+      The Equal Lens is a playful initiative that helps young people notice gender, power and fairness
+      in everyday life — without turning it into a heavy lecture.
     </p>
 
-    <div class="reflect" id="reflect">
-      Pause here.<br><br>
-      Think of one rule you’ve never really questioned — at home, in school, or online.
-      Who does it protect? Who does it limit? What would happen if it changed slightly?
+    <div class="points">
+      <div class="point">
+        <span class="label">Visual-first</span>
+        <span class="text">We start with pictures, prompts and stories instead of long explanations.</span>
+      </div>
+      <div class="point">
+        <span class="label">Low-tech</span>
+        <span class="text">All activities work with just chart paper, pens and a bit of space.</span>
+      </div>
+      <div class="point">
+        <span class="label">Age 10+</span>
+        <span class="text">Designed for middle-schoolers and mixed youth groups.</span>
+      </div>
+      <div class="point">
+        <span class="label">No shaming</span>
+        <span class="text">We focus on curiosity and reflection, not blaming individuals.</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="location.href='activities.html'">See activities</button>
+      <button class="btn btn-ghost" onclick="location.href='quiz.html'">Try a quick quiz</button>
     </div>
   </div>
 </section>
 
-<!-- 3. DEEPER LAYERS / SCROLL INSIDE -->
-<section class="deep">
+<!-- SECTION 2: What sessions do -->
+<section class="s2">
   <div class="wrap">
-    <div class="pill"><span class="dot"></span> Look closer</div>
-    <h1>It shows up<br><span>everywhere</span></h1>
-    <p>Scroll inside this space. Each layer is an everyday question you can carry with you.</p>
+    <div class="pill"><span class="dot green"></span> In a session</div>
+    <h1>What young people<br><span>actually do</span></h1>
+    <p class="lead">
+      A session is not a speech. It feels like a mix of games, group work and honest conversations.
+    </p>
 
-    <div class="layers">
-      <div class="layer">Who is allowed to be loud?</div>
-      <div class="layer">Who is expected to compromise first?</div>
-      <div class="layer">Whose safety is planned for automatically?</div>
-      <div class="layer">Whose pain is brushed off as “overreacting”?</div>
-      <div class="layer">Who is told to “ignore it, that’s how it is”?</div>
-      <div class="layer">Who gets to be fully themselves without apology?</div>
+    <div class="points">
+      <div class="point">
+        <span class="label">Play</span>
+        <span class="text">Line games, sorting exercises and role-plays that surface silent rules.</span>
+      </div>
+      <div class="point">
+        <span class="label">Notice</span>
+        <span class="text">Map who does which chores, who gets curfews and who is “allowed” to feel.</span>
+      </div>
+      <div class="point">
+        <span class="label">Listen</span>
+        <span class="text">Hear classmates share experiences they usually keep inside.</span>
+      </div>
+      <div class="point">
+        <span class="label">Name it</span>
+        <span class="text">Find simple, honest words for fairness, respect and boundaries.</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 4. CHOOSE A PATH -->
-<section class="choose">
-  <div class="wrap">
-    <div class="pill"><span class="dot"></span> Choose</div>
-    <h1>Where do you<br><span>see it first?</span></h1>
-    <p>There is no right answer. Choose the space that feels most familiar to you right now.</p>
-
-    <div class="choices">
-      <div class="choice">At home 🏠</div>
-      <div class="choice">In classrooms 🎒</div>
-      <div class="choice">With friends 👥</div>
-      <div class="choice">Online 🌐</div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. ACTION -->
+<!-- SECTION 3: Where it shows up -->
 <section class="s3">
   <div class="wrap">
-    <div class="pill"><span class="dot"></span> Act</div>
-    <h1>What could<br><span>change?</span></h1>
-    <p>
-      Equality grows through small, believable actions — one sentence, one boundary,
-      one decision to speak up or listen differently.
+    <div class="pill"><span class="dot blue"></span> Everyday spaces</div>
+    <h1>Where patterns<br><span>show up</span></h1>
+    <p class="lead">
+      The Equal Lens helps students connect big words like “gender equality” to ordinary places in their own lives.
     </p>
 
-    <button class="btn primary" onclick="location.href='pledge.html'">Make a pledge</button>
-    <button class="btn ghost" onclick="location.href='activities.html'">Explore activities</button>
+    <div class="points">
+      <div class="point">
+        <span class="label">At home</span>
+        <span class="text">Who cooks, who “helps”, who decides what is safe or unsafe?</span>
+      </div>
+      <div class="point">
+        <span class="label">In school</span>
+        <span class="text">Who is interrupted, who is picked as leader, who is teased for being “different”?</span>
+      </div>
+      <div class="point">
+        <span class="label">With friends</span>
+        <span class="text">Who gets called “bossy”, “weak”, “too emotional” or “too much”?</span>
+      </div>
+      <div class="point">
+        <span class="label">Online</span>
+        <span class="text">How jokes, memes and comments quietly teach us what is “normal”.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: What changes -->
+<section class="s4">
+  <div class="wrap">
+    <div class="pill"><span class="dot yellow"></span> What can shift</div>
+    <h1>What we hope<br><span>opens up</span></h1>
+    <p class="lead">
+      The goal is not perfection. It’s one small mindset shift, one tiny action that feels possible this week.
+    </p>
+
+    <div class="points">
+      <div class="point">
+        <span class="label">Language</span>
+        <span class="text">Students learn kinder, clearer ways to say “this feels unfair”.</span>
+      </div>
+      <div class="point">
+        <span class="label">Confidence</span>
+        <span class="text">Quieter voices find more room; louder voices learn to make space.</span>
+      </div>
+      <div class="point">
+        <span class="label">Shared work</span>
+        <span class="text">Chores, care work and responsibilities become a bit more balanced.</span>
+      </div>
+      <div class="point">
+        <span class="label">Empathy</span>
+        <span class="text">Students see gender as everyone’s issue, not just a “girls’ topic”.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: How to start -->
+<section class="s5">
+  <div class="wrap">
+    <div class="pill"><span class="dot gray"></span> Start here</div>
+    <h1>Bring The Equal Lens<br><span>into your space</span></h1>
+    <p class="lead">
+      Whether you’re a school, NGO, youth group or just one motivated adult, you can start small and try one thing.
+    </p>
+
+    <div class="points">
+      <div class="point">
+        <span class="label">For schools</span>
+        <span class="text">Use a single activity in a life-skills period or as part of a theme day.</span>
+      </div>
+      <div class="point">
+        <span class="label">For NGOs</span>
+        <span class="text">Blend Equal Lens tools into your existing gender or adolescent programmes.</span>
+      </div>
+      <div class="point">
+        <span class="label">For youth clubs</span>
+        <span class="text">Run one game + discussion in any safe space where young people hang out.</span>
+      </div>
+      <div class="point">
+        <span class="label">For individuals</span>
+        <span class="text">Try the quiz, make a pledge, or adapt a question for your own context.</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="location.href='schools.html'">For schools & NGOs</button>
+      <button class="btn btn-ghost" onclick="location.href='pledge.html'">Make a pledge</button>
+    </div>
 
     <footer>
-      © <span id="y"></span> The Equal Lens · hello@theequallens.com
+      © <span id="year"></span> The Equal Lens · hello@theequallens.com
     </footer>
   </div>
 </section>
 
 <script>
 /* year */
-document.getElementById("y").innerText=new Date().getFullYear();
+document.getElementById("year").innerText = new Date().getFullYear();
 
-/* cursor glow follow */
-const cur=document.getElementById("cursor");
-window.addEventListener("mousemove",e=>{
-  cur.style.left=e.clientX+"px";
-  cur.style.top=e.clientY+"px";
+/* cursor glow */
+const cursor = document.getElementById("cursor");
+window.addEventListener("mousemove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
 });
 
 /* scroll progress */
-window.addEventListener("scroll",()=>{
-  const h=document.documentElement;
-  const sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);
-  document.querySelector(".progress span").style.height=(sc*100)+"%";
-});
-
-/* reflect reveal */
-const ref=document.getElementById("reflect");
-const obs=new IntersectionObserver(e=>{
-  if(e[0].isIntersecting) ref.classList.add("show");
-},{threshold:.6});
-obs.observe(document.getElementById("reflect-section"));
-
-/* choices selection */
-document.querySelectorAll(".choice").forEach(c=>{
-  c.addEventListener("click",()=>{
-    document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));
-    c.classList.add("selected");
-  });
+window.addEventListener("scroll", () => {
+  const h = document.documentElement;
+  const sc = h.scrollTop / (h.scrollHeight - h.clientHeight);
+  document.querySelector(".progress span").style.height = (sc * 100) + "%";
 });
 </script>
 

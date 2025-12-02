@@ -4,16 +4,14 @@
 <meta charset="UTF-8">
 <title>The Equal Lens | Seeing Equality Differently</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A visual-first initiative helping young people explore gender equality through observation, questioning and action.">
 
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#000;
-  --accent:#f97316;
-  --accent2:#22c55e;
-  --accent3:#eab308;
+  --c1:249,115,22;
+  --c2:34,197,94;
+  --c3:234,179,8;
   --text:#f9fafb;
   --muted:#9ca3af;
   --border:#1f2937;
@@ -33,33 +31,53 @@ body{
 }
 a{text-decoration:none;color:inherit}
 
-/* ---------- CURSOR GLOW ---------- */
+/* ───────── Progress Tracker ───────── */
+.progress{
+  position:fixed;
+  right:14px;
+  top:50%;
+  width:4px;
+  height:200px;
+  background:rgba(255,255,255,.1);
+  border-radius:999px;
+  transform:translateY(-50%);
+  z-index:60;
+}
+.progress span{
+  display:block;
+  width:100%;
+  height:0%;
+  background:#fff;
+  border-radius:999px;
+  transition:height .2s ease;
+}
+
+/* ───────── Cursor Glow ───────── */
 .cursor{
   position:fixed;
-  width:220px;
-  height:220px;
+  width:240px;
+  height:240px;
   border-radius:50%;
   pointer-events:none;
-  background:radial-gradient(circle,rgba(249,115,22,.18),transparent 70%);
+  background:radial-gradient(circle,rgba(249,115,22,.2),transparent 70%);
   transform:translate(-50%,-50%);
-  transition:background .3s;
   z-index:5;
 }
 
-/* ---------- NAV ---------- */
+/* ───────── Header ───────── */
 header{
   position:fixed;
-  inset:0 0 auto 0;
+  top:0;left:0;right:0;
   height:64px;
-  z-index:50;
   background:rgba(0,0,0,.7);
   backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(255,255,255,.08);
+  z-index:70;
 }
 .nav{
   max-width:1100px;
-  height:64px;
   margin:auto;
+  height:64px;
   padding:0 18px;
   display:flex;
   justify-content:space-between;
@@ -72,92 +90,100 @@ header{
   font-weight:700;
   letter-spacing:.08em;
 }
-.logo-badge{
+.badge{
   width:34px;height:34px;
   background:radial-gradient(circle,#f97316,#e11d48);
   border-radius:14px;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
-.nav-links a{
+.nav a{
   font-size:13px;
   color:var(--muted);
-  margin-left:12px;
+  margin-left:14px;
 }
-.nav-links a:hover{color:#fff}
+.nav a:hover{color:#fff}
 
-/* ---------- SNAP SECTIONS ---------- */
+/* ───────── Sections ───────── */
 section{
   scroll-snap-align:start;
   min-height:100vh;
   padding:120px 18px 60px;
   display:flex;
   align-items:center;
+  position:relative;
+  transition:background 1s ease;
 }
 .wrap{
-  max-width:1100px;
+  max-width:1000px;
   margin:auto;
 }
 
-/* ---------- STORY ---------- */
+/* color moods */
+.s1{
+  background:radial-gradient(circle at center,rgba(var(--c1),.18),transparent 55%);
+}
+.s2{
+  background:radial-gradient(circle at center,rgba(var(--c2),.18),transparent 55%);
+}
+.s3{
+  background:radial-gradient(circle at center,rgba(var(--c3),.18),transparent 55%);
+}
+
+/* ───────── Text ───────── */
 .pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
   font-size:11px;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid #374151;
   color:var(--muted);
-  margin-bottom:16px;
+  border:1px solid #374151;
+  border-radius:999px;
+  padding:6px 12px;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  margin-bottom:18px;
 }
 .dot{
   width:8px;height:8px;
+  background:#22c55e;
   border-radius:50%;
-  background:var(--accent2);
-  box-shadow:0 0 10px var(--accent2);
+  box-shadow:0 0 10px #22c55e;
 }
-
 h1{
-  font-size:clamp(34px,5vw,46px);
+  font-size:clamp(36px,6vw,52px);
   line-height:1.05;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
-h1 span{color:var(--accent3)}
-
+h1 span{color:#eab308}
 p{
   font-size:15px;
   color:var(--muted);
-  max-width:600px;
-  margin-bottom:20px;
+  max-width:620px;
+  margin-bottom:24px;
 }
 
-/* ---------- BUTTONS ---------- */
+/* ───────── Buttons + ripple ───────── */
 .btn{
-  position:relative;
-  overflow:hidden;
-  border:none;
-  cursor:pointer;
-  padding:10px 20px;
+  padding:10px 22px;
   font-size:13px;
   border-radius:999px;
-  margin-right:10px;
+  cursor:pointer;
+  border:none;
+  position:relative;
+  overflow:hidden;
 }
 .primary{
-  background:var(--accent);
+  background:#f97316;
   color:#111;
   font-weight:700;
-  box-shadow:0 0 24px rgba(249,115,22,.5);
+  box-shadow:0 0 24px rgba(249,115,22,.6);
 }
 .ghost{
   background:transparent;
   border:1px solid #374151;
   color:#fff;
 }
-
-/* ---------- RIPPLE ---------- */
-.btn::after{
+.btn:after{
   content:"";
   position:absolute;
   width:20px;height:20px;
@@ -166,58 +192,42 @@ p{
   transform:scale(0);
   opacity:0;
 }
-.btn:active::after{
+.btn:active:after{
   animation:ripple .6s ease-out;
 }
 @keyframes ripple{
-  0%{transform:scale(0);opacity:.4}
-  100%{transform:scale(12);opacity:0}
+  to{transform:scale(14);opacity:0}
 }
 
-/* ---------- STEPS ---------- */
-.steps{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-  margin-top:30px;
-}
-.step{
-  background:rgba(2,6,23,.9);
+/* ───────── Pause & Reflect ───────── */
+.reflect{
+  margin-top:40px;
+  max-width:520px;
+  padding:22px;
+  border-radius:24px;
   border:1px solid var(--border);
-  border-radius:22px;
-  padding:20px;
-  cursor:pointer;
-  transition:.3s;
+  background:rgba(2,6,23,.9);
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s ease;
 }
-.step:hover{
-  transform:translateY(-6px);
-  border-color:var(--accent);
-  box-shadow:0 30px 60px rgba(0,0,0,.7);
+.reflect.show{
+  opacity:1;
+  transform:translateY(0);
 }
-.step h3{
-  font-size:16px;
-  margin-bottom:6px;
-}
-.step .more{
-  display:none;
-  font-size:13px;
-  color:var(--accent2);
-  margin-top:8px;
-}
-.step.open .more{display:block}
 
-/* ---------- FOOTER ---------- */
+/* ───────── Footer ───────── */
 footer{
   font-size:11px;
   color:var(--muted);
-  display:flex;
-  justify-content:space-between;
+  margin-top:60px;
   border-top:1px solid #374151;
   padding-top:14px;
 }
 
+/* ───────── Mobile ───────── */
 @media(max-width:900px){
-  .steps{grid-template-columns:1fr}
+  .progress{display:none}
 }
 </style>
 </head>
@@ -226,103 +236,96 @@ footer{
 
 <div class="cursor" id="cursor"></div>
 
+<div class="progress"><span></span></div>
+
 <header>
   <nav class="nav">
     <div class="logo">
-      <div class="logo-badge">=</div>
+      <div class="badge">=</div>
       THE EQUAL LENS
     </div>
-    <div class="nav-links">
+    <div>
       <a href="activities.html">Activities</a>
       <a href="quiz.html">Quiz</a>
       <a href="pledge.html">Pledge</a>
-      <a href="schools.html">For Schools</a>
+      <a href="schools.html">For schools</a>
     </div>
   </nav>
 </header>
 
 <!-- OBJECT -->
-<section>
+<section class="s1">
   <div class="wrap">
     <div class="pill"><span class="dot"></span> Observe</div>
     <h1>What do you<br><span>notice?</span></h1>
     <p>
-      Gender rules are everywhere — in jokes, chores, freedoms, and fears.
-      We start by <strong>seeing</strong> what usually goes unnoticed.
+      Gender rules exist quietly inside daily life —
+      who speaks, who stays quiet, who adjusts.
     </p>
-    <button class="btn primary">Scroll to continue</button>
   </div>
 </section>
 
 <!-- MESSAGE -->
-<section>
+<section class="s2" id="reflect-section">
   <div class="wrap">
-    <div class="pill"><span class="dot"></span> Question</div>
+    <div class="pill"><span class="dot"></span> Reflect</div>
     <h1>Who decided<br><span>this?</span></h1>
     <p>
-      Instead of telling students what is right or wrong, we ask questions.
-      Who benefits? Who adjusts? Who stays silent?
+      Instead of answers, we create space for questions.
+      Not blame — understanding.
     </p>
 
-    <div class="steps">
-      <div class="step">
-        <h3>Unseen rules</h3>
-        Not all rules are written.
-        <div class="more">Some are inherited, repeated and never questioned.</div>
-      </div>
-      <div class="step">
-        <h3>Everyday choices</h3>
-        Fairness lives in daily moments.
-        <div class="more">At home, school, friendships and play.</div>
-      </div>
-      <div class="step">
-        <h3>No blame</h3>
-        Systems, not individuals.
-        <div class="more">Understanding replaces defensiveness.</div>
-      </div>
+    <div class="reflect" id="reflect">
+      Pause here.<br><br>
+      Think of one rule you’ve never questioned.
+      Who does it protect? Who does it limit?
     </div>
   </div>
 </section>
 
 <!-- ACTION -->
-<section>
+<section class="s3">
   <div class="wrap">
     <div class="pill"><span class="dot"></span> Act</div>
     <h1>What could<br><span>change?</span></h1>
     <p>
-      Equality grows through small, believable actions —
-      one sentence, one choice, one pause at a time.
+      Real equality grows through small choices —
+      one sentence, one pause, one action.
     </p>
 
-    <button class="btn primary" onclick="location.href='pledge.html'">
-      Make a pledge
-    </button>
-    <button class="btn ghost" onclick="location.href='activities.html'">
-      Explore activities
-    </button>
+    <button class="btn primary" onclick="location.href='pledge.html'">Make a pledge</button>
+    <button class="btn ghost" onclick="location.href='activities.html'">Explore activities</button>
 
-    <footer style="margin-top:60px">
-      <span>© <span id="year"></span> The Equal Lens</span>
-      <span>hello@theequallens.com</span>
+    <footer>
+      © <span id="y"></span> The Equal Lens · hello@theequallens.com
     </footer>
   </div>
 </section>
 
 <script>
-/* YEAR */
-document.getElementById("year").innerText = new Date().getFullYear();
+/* year */
+document.getElementById("y").innerText=new Date().getFullYear();
 
-/* STEP TOGGLE */
-document.querySelectorAll(".step").forEach(s=>{
-  s.addEventListener("click",()=>s.classList.toggle("open"));
-});
-
-/* CURSOR FOLLOW */
-const cursor=document.getElementById("cursor");
+/* cursor */
+const cur=document.getElementById("cursor");
 window.addEventListener("mousemove",e=>{
-  cursor.style.left=e.clientX+"px";
-  cursor.style.top=e.clientY+"px";
+  cur.style.left=e.clientX+"px";
+  cur.style.top=e.clientY+"px";
 });
+
+/* progress */
+window.addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  const sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);
+  document.querySelector(".progress span").style.height=(sc*100)+"%";
+});
+
+/* reflect reveal */
+const ref=document.getElementById("reflect");
+const obs=new IntersectionObserver(e=>{
+  if(e[0].isIntersecting) ref.classList.add("show");
+},{threshold:.6});
+obs.observe(document.getElementById("reflect-section"));
 </script>
 
 </body>

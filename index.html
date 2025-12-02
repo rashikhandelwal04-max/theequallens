@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <title>The Equal Lens | Seeing Equality Differently</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --text:#f9fafb;
   --muted:#e5e7eb;
   --border:#1f2937;
-  --font:"Baloo 2",sans-serif;
+  --font: Helvetica, Arial, sans-serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -21,9 +20,10 @@ html{
 }
 body{
   font-family:var(--font);
+  background:#000;
   color:var(--text);
   overflow-x:hidden;
-  background:#000;
+  letter-spacing:0.01em;
 }
 a{text-decoration:none;color:inherit}
 
@@ -82,7 +82,8 @@ header{
 }
 .logo{
   display:flex;align-items:center;gap:10px;
-  font-weight:700;letter-spacing:.08em;
+  font-weight:700;
+  letter-spacing:.08em;
 }
 .logo-badge{
   width:34px;height:34px;
@@ -94,25 +95,24 @@ header{
   font-size:13px;
   color:#e5e7eb;
   margin-left:14px;
-  opacity:.8;
+  opacity:.85;
 }
 .nav-links a:hover{opacity:1}
 
-/* Sections base */
+/* Sections */
 section{
   scroll-snap-align:start;
   min-height:100vh;
   padding:120px 18px 64px;
   display:flex;
   align-items:center;
-  position:relative;
 }
 .wrap{
   max-width:1080px;
   margin:auto;
 }
 
-/* Different colour moods per topic */
+/* Color themes */
 .s1{
   background:radial-gradient(circle at top left,#020617 0,#020617 30%,#111827 60%,#db2777 120%);
 }
@@ -129,7 +129,7 @@ section{
   background:radial-gradient(circle at center,#020617 0,#4b5563 40%,#111827 90%);
 }
 
-/* Topic headers & text */
+/* Text */
 .pill{
   display:inline-flex;
   align-items:center;
@@ -154,8 +154,8 @@ h1{
   font-size:clamp(32px,5vw,44px);
   line-height:1.05;
   margin-bottom:12px;
+  letter-spacing:-0.015em;
 }
-h1 span{opacity:.95;}
 p.lead{
   font-size:15px;
   color:var(--muted);
@@ -163,50 +163,32 @@ p.lead{
   margin-bottom:20px;
 }
 
-/* Pointers list */
+/* Pointer cards */
 .points{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:14px;
-  margin-top:10px;
 }
 .point{
   background:rgba(15,23,42,.7);
   border-radius:18px;
   border:1px solid rgba(148,163,184,.5);
-  padding:12px 14px;
+  padding:14px 16px;
   font-size:13px;
-  position:relative;
-  overflow:hidden;
-  cursor:default;
   transition:.25s ease;
-}
-.point:before{
-  content:"•";
-  position:absolute;
-  left:10px;top:8px;
-  font-size:18px;
-  opacity:.6;
-}
-.point span.label{
-  display:block;
-  font-weight:600;
-  margin-left:14px;
-  margin-bottom:4px;
-}
-.point span.text{
-  margin-left:14px;
-  color:#e5e7eb;
-  opacity:.9;
-  font-size:13px;
 }
 .point:hover{
   transform:translateY(-4px);
   box-shadow:0 18px 40px rgba(15,23,42,.8);
   border-color:rgba(248,250,252,.9);
 }
+.point span.label{
+  display:block;
+  font-weight:600;
+  margin-bottom:4px;
+}
 
-/* Buttons + ripple */
+/* Buttons */
 .btn-row{
   margin-top:24px;
   display:flex;
@@ -219,41 +201,22 @@ p.lead{
   border:none;
   font-size:13px;
   cursor:pointer;
-  position:relative;
-  overflow:hidden;
 }
 .btn-primary{
   background:#f97316;
   color:#111827;
   font-weight:700;
-  box-shadow:0 0 22px rgba(249,115,22,.7);
 }
 .btn-ghost{
   background:rgba(15,23,42,.7);
   border:1px solid rgba(248,250,252,.7);
   color:#f9fafb;
 }
-.btn:after{
-  content:"";
-  position:absolute;
-  width:18px;height:18px;
-  border-radius:50%;
-  background:rgba(255,255,255,.5);
-  transform:scale(0);
-  opacity:0;
-}
-.btn:active:after{
-  animation:ripple .6s ease-out;
-}
-@keyframes ripple{
-  to{transform:scale(14);opacity:0;}
-}
 
 /* Footer */
 footer{
-  font-size:11px;
-  color:#e5e7eb;
   margin-top:30px;
+  font-size:11px;
   opacity:.85;
 }
 
@@ -264,6 +227,7 @@ footer{
 }
 </style>
 </head>
+
 <body>
 
 <div class="cursor" id="cursor"></div>
@@ -273,7 +237,7 @@ footer{
   <nav class="nav">
     <div class="logo">
       <div class="logo-badge">=</div>
-      <span>THE EQUAL LENS</span>
+      THE EQUAL LENS
     </div>
     <div class="nav-links">
       <a href="activities.html">Activities</a>
@@ -284,187 +248,73 @@ footer{
   </nav>
 </header>
 
-<!-- SECTION 1: What we are -->
+<!-- SECTION 1 -->
 <section class="s1">
   <div class="wrap">
     <div class="pill"><span class="dot pink"></span> Overview</div>
-    <h1>Seeing gender<br><span>differently</span></h1>
-    <p class="lead">
-      The Equal Lens is a playful initiative that helps young people notice gender, power and fairness
-      in everyday life — without turning it into a heavy lecture.
-    </p>
-
-    <div class="points">
-      <div class="point">
-        <span class="label">Visual-first</span>
-        <span class="text">We start with pictures, prompts and stories instead of long explanations.</span>
-      </div>
-      <div class="point">
-        <span class="label">Low-tech</span>
-        <span class="text">All activities work with just chart paper, pens and a bit of space.</span>
-      </div>
-      <div class="point">
-        <span class="label">Age 10+</span>
-        <span class="text">Designed for middle-schoolers and mixed youth groups.</span>
-      </div>
-      <div class="point">
-        <span class="label">No shaming</span>
-        <span class="text">We focus on curiosity and reflection, not blaming individuals.</span>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="location.href='activities.html'">See activities</button>
-      <button class="btn btn-ghost" onclick="location.href='quiz.html'">Try a quick quiz</button>
-    </div>
+    <h1>Seeing gender<br>differently</h1>
+    <p class="lead">A visual, playful way for young people to notice fairness in everyday life.</p>
   </div>
 </section>
 
-<!-- SECTION 2: What sessions do -->
+<!-- SECTION 2 -->
 <section class="s2">
   <div class="wrap">
     <div class="pill"><span class="dot green"></span> In a session</div>
-    <h1>What young people<br><span>actually do</span></h1>
-    <p class="lead">
-      A session is not a speech. It feels like a mix of games, group work and honest conversations.
-    </p>
-
-    <div class="points">
-      <div class="point">
-        <span class="label">Play</span>
-        <span class="text">Line games, sorting exercises and role-plays that surface silent rules.</span>
-      </div>
-      <div class="point">
-        <span class="label">Notice</span>
-        <span class="text">Map who does which chores, who gets curfews and who is “allowed” to feel.</span>
-      </div>
-      <div class="point">
-        <span class="label">Listen</span>
-        <span class="text">Hear classmates share experiences they usually keep inside.</span>
-      </div>
-      <div class="point">
-        <span class="label">Name it</span>
-        <span class="text">Find simple, honest words for fairness, respect and boundaries.</span>
-      </div>
-    </div>
+    <h1>What youth<br>actually do</h1>
+    <p class="lead">Games, reflection and conversation — not lectures.</p>
   </div>
 </section>
 
-<!-- SECTION 3: Where it shows up -->
+<!-- SECTION 3 -->
 <section class="s3">
   <div class="wrap">
     <div class="pill"><span class="dot blue"></span> Everyday spaces</div>
-    <h1>Where patterns<br><span>show up</span></h1>
-    <p class="lead">
-      The Equal Lens helps students connect big words like “gender equality” to ordinary places in their own lives.
-    </p>
-
-    <div class="points">
-      <div class="point">
-        <span class="label">At home</span>
-        <span class="text">Who cooks, who “helps”, who decides what is safe or unsafe?</span>
-      </div>
-      <div class="point">
-        <span class="label">In school</span>
-        <span class="text">Who is interrupted, who is picked as leader, who is teased for being “different”?</span>
-      </div>
-      <div class="point">
-        <span class="label">With friends</span>
-        <span class="text">Who gets called “bossy”, “weak”, “too emotional” or “too much”?</span>
-      </div>
-      <div class="point">
-        <span class="label">Online</span>
-        <span class="text">How jokes, memes and comments quietly teach us what is “normal”.</span>
-      </div>
-    </div>
+    <h1>Where patterns<br>show up</h1>
+    <p class="lead">Home, school, friendships and online spaces.</p>
   </div>
 </section>
 
-<!-- SECTION 4: What changes -->
+<!-- SECTION 4 -->
 <section class="s4">
   <div class="wrap">
-    <div class="pill"><span class="dot yellow"></span> What can shift</div>
-    <h1>What we hope<br><span>opens up</span></h1>
-    <p class="lead">
-      The goal is not perfection. It’s one small mindset shift, one tiny action that feels possible this week.
-    </p>
-
-    <div class="points">
-      <div class="point">
-        <span class="label">Language</span>
-        <span class="text">Students learn kinder, clearer ways to say “this feels unfair”.</span>
-      </div>
-      <div class="point">
-        <span class="label">Confidence</span>
-        <span class="text">Quieter voices find more room; louder voices learn to make space.</span>
-      </div>
-      <div class="point">
-        <span class="label">Shared work</span>
-        <span class="text">Chores, care work and responsibilities become a bit more balanced.</span>
-      </div>
-      <div class="point">
-        <span class="label">Empathy</span>
-        <span class="text">Students see gender as everyone’s issue, not just a “girls’ topic”.</span>
-      </div>
-    </div>
+    <div class="pill"><span class="dot yellow"></span> What shifts</div>
+    <h1>What begins<br>to change</h1>
+    <p class="lead">Language, confidence and small daily actions.</p>
   </div>
 </section>
 
-<!-- SECTION 5: How to start -->
+<!-- SECTION 5 -->
 <section class="s5">
   <div class="wrap">
-    <div class="pill"><span class="dot gray"></span> Start here</div>
-    <h1>Bring The Equal Lens<br><span>into your space</span></h1>
-    <p class="lead">
-      Whether you’re a school, NGO, youth group or just one motivated adult, you can start small and try one thing.
-    </p>
-
-    <div class="points">
-      <div class="point">
-        <span class="label">For schools</span>
-        <span class="text">Use a single activity in a life-skills period or as part of a theme day.</span>
-      </div>
-      <div class="point">
-        <span class="label">For NGOs</span>
-        <span class="text">Blend Equal Lens tools into your existing gender or adolescent programmes.</span>
-      </div>
-      <div class="point">
-        <span class="label">For youth clubs</span>
-        <span class="text">Run one game + discussion in any safe space where young people hang out.</span>
-      </div>
-      <div class="point">
-        <span class="label">For individuals</span>
-        <span class="text">Try the quiz, make a pledge, or adapt a question for your own context.</span>
-      </div>
-    </div>
+    <div class="pill"><span class="dot gray"></span> Start</div>
+    <h1>Bring The Equal Lens<br>into your space</h1>
+    <p class="lead">Schools, NGOs, youth groups, or just curious adults.</p>
 
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="location.href='schools.html'">For schools & NGOs</button>
-      <button class="btn btn-ghost" onclick="location.href='pledge.html'">Make a pledge</button>
+      <button class="btn btn-primary">Get started</button>
+      <button class="btn btn-ghost">Make a pledge</button>
     </div>
 
-    <footer>
-      © <span id="year"></span> The Equal Lens · hello@theequallens.com
-    </footer>
+    <footer>© <span id="year"></span> The Equal Lens</footer>
   </div>
 </section>
 
 <script>
-/* year */
-document.getElementById("year").innerText = new Date().getFullYear();
+document.getElementById("year").innerText=new Date().getFullYear();
 
 /* cursor glow */
-const cursor = document.getElementById("cursor");
-window.addEventListener("mousemove", e => {
-  cursor.style.left = e.clientX + "px";
-  cursor.style.top = e.clientY + "px";
+const cursor=document.getElementById("cursor");
+window.addEventListener("mousemove",e=>{
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
 });
 
 /* scroll progress */
-window.addEventListener("scroll", () => {
-  const h = document.documentElement;
-  const sc = h.scrollTop / (h.scrollHeight - h.clientHeight);
-  document.querySelector(".progress span").style.height = (sc * 100) + "%";
+window.addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);
+  document.querySelector(".progress span").style.height=(sc*100)+"%";
 });
 </script>
 

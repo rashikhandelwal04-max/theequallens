@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>The Equal Lens | Seeing Equality Differently</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A visual-first initiative helping young people explore gender equality through observation, play and reflection.">
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>The Equal Lens | Seeing Equality Differently</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A visual-first initiative helping young people explore gender equality through observation, questioning and action.">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#000;
-  --card:#020617;
   --accent:#f97316;
   --accent2:#22c55e;
   --accent3:#eab308;
@@ -20,8 +20,11 @@
   --font:"Baloo 2",sans-serif;
 }
 
-/* ---------- BASE ---------- */
 *{margin:0;padding:0;box-sizing:border-box}
+html{
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+}
 body{
   background:#000;
   color:var(--text);
@@ -30,126 +33,122 @@ body{
 }
 a{text-decoration:none;color:inherit}
 
+/* ---------- CURSOR GLOW ---------- */
+.cursor{
+  position:fixed;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,rgba(249,115,22,.18),transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:background .3s;
+  z-index:5;
+}
+
 /* ---------- NAV ---------- */
 header{
   position:fixed;
-  top:0;left:0;right:0;
+  inset:0 0 auto 0;
+  height:64px;
   z-index:50;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 .nav{
   max-width:1100px;
+  height:64px;
   margin:auto;
-  padding:12px 18px;
+  padding:0 18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 .logo{
-  display:flex;align-items:center;gap:10px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-weight:700;
+  letter-spacing:.08em;
 }
-.logo-circle{
+.logo-badge{
   width:34px;height:34px;
   background:radial-gradient(circle,#f97316,#e11d48);
   border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.logo-text{font-size:15px;font-weight:700;letter-spacing:.08em}
 .nav-links a{
-  font-size:13px;color:var(--muted);margin-left:12px;
+  font-size:13px;
+  color:var(--muted);
+  margin-left:12px;
 }
 .nav-links a:hover{color:#fff}
 
-/* ---------- BACKGROUND VISUALS ---------- */
-.visual-layer{
-  position:fixed;inset:0;z-index:-2;overflow:hidden;
+/* ---------- SNAP SECTIONS ---------- */
+section{
+  scroll-snap-align:start;
+  min-height:100vh;
+  padding:120px 18px 60px;
+  display:flex;
+  align-items:center;
 }
-.visual{
-  position:absolute;
-  width:280px;
-  opacity:.18;
-  animation:float 18s ease-in-out infinite alternate;
-}
-.v1{top:10%;left:5%}
-.v2{top:55%;left:10%;animation-delay:5s}
-.v3{top:25%;right:8%;animation-delay:3s}
-.v4{bottom:10%;right:15%;animation-delay:8s}
-
-@keyframes float{
-  from{transform:translateY(0)}
-  to{transform:translateY(-30px)}
-}
-
-.grain{
-  position:fixed;inset:0;
-  background:repeating-radial-gradient(circle,rgba(255,255,255,.03),transparent 40px);
-  pointer-events:none;
-  z-index:-1;
-}
-
-/* ---------- CONTENT ---------- */
-main{
+.wrap{
   max-width:1100px;
   margin:auto;
-  padding:120px 18px 80px;
 }
 
-.hero{
-  max-width:700px;
-}
-
-/* ---------- SCROLL ANIMATION ---------- */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:all .8s ease;
-}
-.reveal.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ---------- HERO ---------- */
+/* ---------- STORY ---------- */
 .pill{
-  display:inline-flex;gap:6px;
+  display:inline-flex;
   align-items:center;
+  gap:8px;
   font-size:11px;
-  padding:5px 10px;
+  padding:6px 12px;
   border-radius:999px;
   border:1px solid #374151;
   color:var(--muted);
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 .dot{
   width:8px;height:8px;
-  background:var(--accent2);
   border-radius:50%;
-  box-shadow:0 0 8px var(--accent2);
+  background:var(--accent2);
+  box-shadow:0 0 10px var(--accent2);
 }
-.hero h1{
+
+h1{
   font-size:clamp(34px,5vw,46px);
   line-height:1.05;
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
-.hero h1 span{color:var(--accent3)}
-.hero p{
-  font-size:15px;color:var(--muted);
-  margin-bottom:22px;
+h1 span{color:var(--accent3)}
+
+p{
+  font-size:15px;
+  color:var(--muted);
+  max-width:600px;
+  margin-bottom:20px;
 }
-.cta button{
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  position:relative;
+  overflow:hidden;
   border:none;
   cursor:pointer;
-  padding:9px 18px;
-  border-radius:999px;
+  padding:10px 20px;
   font-size:13px;
+  border-radius:999px;
+  margin-right:10px;
 }
 .primary{
   background:var(--accent);
+  color:#111;
   font-weight:700;
-  box-shadow:0 0 22px rgba(249,115,22,.6);
+  box-shadow:0 0 24px rgba(249,115,22,.5);
 }
 .ghost{
   background:transparent;
@@ -157,43 +156,58 @@ main{
   color:#fff;
 }
 
-/* ---------- SECTIONS ---------- */
-section{margin-top:90px}
-section h2{font-size:22px;margin-bottom:10px}
-section p{font-size:14px;color:var(--muted);max-width:640px}
+/* ---------- RIPPLE ---------- */
+.btn::after{
+  content:"";
+  position:absolute;
+  width:20px;height:20px;
+  border-radius:50%;
+  background:rgba(255,255,255,.4);
+  transform:scale(0);
+  opacity:0;
+}
+.btn:active::after{
+  animation:ripple .6s ease-out;
+}
+@keyframes ripple{
+  0%{transform:scale(0);opacity:.4}
+  100%{transform:scale(12);opacity:0}
+}
 
 /* ---------- STEPS ---------- */
 .steps{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:16px;
-  margin-top:24px;
+  margin-top:30px;
 }
 .step{
   background:rgba(2,6,23,.9);
   border:1px solid var(--border);
-  border-radius:20px;
-  padding:18px;
+  border-radius:22px;
+  padding:20px;
   cursor:pointer;
-  transition:.3s ease;
+  transition:.3s;
 }
 .step:hover{
-  transform:translateY(-6px) scale(1.01);
+  transform:translateY(-6px);
   border-color:var(--accent);
-  box-shadow:0 30px 60px rgba(0,0,0,.6);
+  box-shadow:0 30px 60px rgba(0,0,0,.7);
 }
-.step h3{font-size:15px;margin-bottom:6px}
+.step h3{
+  font-size:16px;
+  margin-bottom:6px;
+}
 .step .more{
   display:none;
-  color:var(--accent2);
   font-size:13px;
+  color:var(--accent2);
   margin-top:8px;
 }
 .step.open .more{display:block}
 
 /* ---------- FOOTER ---------- */
 footer{
-  margin-top:120px;
   font-size:11px;
   color:var(--muted);
   display:flex;
@@ -210,20 +224,13 @@ footer{
 
 <body>
 
-<!-- BACKGROUND -->
-<div class="visual-layer">
-  <img src="images/equality-1.jpg" class="visual v1">
-  <img src="images/equality-2.jpg" class="visual v2">
-  <img src="images/equality-3.jpg" class="visual v3">
-  <img src="images/equality-4.jpg" class="visual v4">
-</div>
-<div class="grain"></div>
+<div class="cursor" id="cursor"></div>
 
 <header>
   <nav class="nav">
     <div class="logo">
-      <div class="logo-circle">=</div>
-      <div class="logo-text">THE EQUAL LENS</div>
+      <div class="logo-badge">=</div>
+      THE EQUAL LENS
     </div>
     <div class="nav-links">
       <a href="activities.html">Activities</a>
@@ -234,71 +241,88 @@ footer{
   </nav>
 </header>
 
-<main>
-
-  <div class="hero reveal">
-    <div class="pill">
-      <span class="dot"></span> Visual-first learning
-    </div>
-    <h1>Gender equality,<br><span>seen differently</span></h1>
+<!-- OBJECT -->
+<section>
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span> Observe</div>
+    <h1>What do you<br><span>notice?</span></h1>
     <p>
-      We use visuals, questions and play to help young people notice invisible gender rules —
-      and imagine fairer ones.
+      Gender rules are everywhere — in jokes, chores, freedoms, and fears.
+      We start by <strong>seeing</strong> what usually goes unnoticed.
     </p>
-    <div class="cta">
-      <button class="primary" onclick="location.href='activities.html'">Explore activities</button>
-      <button class="ghost" onclick="location.href='quiz.html'">Try a quick quiz</button>
-    </div>
+    <button class="btn primary">Scroll to continue</button>
   </div>
+</section>
 
-  <section class="reveal">
-    <h2>How learning unfolds</h2>
-    <p>Nothing is taught as a lecture. Understanding grows by noticing, questioning and trying.</p>
+<!-- MESSAGE -->
+<section>
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span> Question</div>
+    <h1>Who decided<br><span>this?</span></h1>
+    <p>
+      Instead of telling students what is right or wrong, we ask questions.
+      Who benefits? Who adjusts? Who stays silent?
+    </p>
+
     <div class="steps">
       <div class="step">
-        <h3>Observe</h3>
-        Students react to visuals and stories.
-        <div class="more">What feels normal? What feels unfair?</div>
+        <h3>Unseen rules</h3>
+        Not all rules are written.
+        <div class="more">Some are inherited, repeated and never questioned.</div>
       </div>
       <div class="step">
-        <h3>Question</h3>
-        We ask who decides and why.
-        <div class="more">Rules become visible, without blame.</div>
+        <h3>Everyday choices</h3>
+        Fairness lives in daily moments.
+        <div class="more">At home, school, friendships and play.</div>
       </div>
       <div class="step">
-        <h3>Experiment</h3>
-        One small action to try.
-        <div class="more">Ideas move into real life.</div>
+        <h3>No blame</h3>
+        Systems, not individuals.
+        <div class="more">Understanding replaces defensiveness.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer class="reveal">
-    <span>© <span id="y"></span> The Equal Lens</span>
-    <span>hello@theequallens.com</span>
-  </footer>
+<!-- ACTION -->
+<section>
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span> Act</div>
+    <h1>What could<br><span>change?</span></h1>
+    <p>
+      Equality grows through small, believable actions —
+      one sentence, one choice, one pause at a time.
+    </p>
 
-</main>
+    <button class="btn primary" onclick="location.href='pledge.html'">
+      Make a pledge
+    </button>
+    <button class="btn ghost" onclick="location.href='activities.html'">
+      Explore activities
+    </button>
+
+    <footer style="margin-top:60px">
+      <span>© <span id="year"></span> The Equal Lens</span>
+      <span>hello@theequallens.com</span>
+    </footer>
+  </div>
+</section>
 
 <script>
 /* YEAR */
-document.getElementById("y").innerText = new Date().getFullYear();
+document.getElementById("year").innerText = new Date().getFullYear();
 
 /* STEP TOGGLE */
 document.querySelectorAll(".step").forEach(s=>{
   s.addEventListener("click",()=>s.classList.toggle("open"));
 });
 
-/* SCROLL REVEAL */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-},{threshold:0.15});
-
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+/* CURSOR FOLLOW */
+const cursor=document.getElementById("cursor");
+window.addEventListener("mousemove",e=>{
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
+});
 </script>
 
 </body>

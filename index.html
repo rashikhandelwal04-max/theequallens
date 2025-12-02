@@ -10,16 +10,16 @@
   --text:#f9fafb;
   --muted:#e5e7eb;
   --border:#1f2937;
-  --font: Helvetica, Arial, sans-serif;
 }
 
+/* GLOBAL RESET + FONT */
 *{margin:0;padding:0;box-sizing:border-box}
 html{
   scroll-snap-type:y mandatory;
   scroll-behavior:smooth;
 }
 body{
-  font-family:var(--font);
+  font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   background:#000;
   color:var(--text);
   overflow-x:hidden;
@@ -84,12 +84,15 @@ header{
   display:flex;align-items:center;gap:10px;
   font-weight:700;
   letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:13px;
 }
 .logo-badge{
   width:34px;height:34px;
   border-radius:14px;
   background:radial-gradient(circle at top left,#f97316,#ec4899);
   display:flex;align-items:center;justify-content:center;
+  font-weight:700;
 }
 .nav-links a{
   font-size:13px;
@@ -112,7 +115,7 @@ section{
   margin:auto;
 }
 
-/* Color themes */
+/* Colour themes per topic */
 .s1{
   background:radial-gradient(circle at top left,#020617 0,#020617 30%,#111827 60%,#db2777 120%);
 }
@@ -168,6 +171,7 @@ p.lead{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:14px;
+  margin-top:10px;
 }
 .point{
   background:rgba(15,23,42,.7);
@@ -206,6 +210,7 @@ p.lead{
   background:#f97316;
   color:#111827;
   font-weight:700;
+  box-shadow:0 0 22px rgba(249,115,22,.7);
 }
 .btn-ghost{
   background:rgba(15,23,42,.7);
@@ -248,73 +253,181 @@ footer{
   </nav>
 </header>
 
-<!-- SECTION 1 -->
+<!-- SECTION 1: Overview -->
 <section class="s1">
   <div class="wrap">
     <div class="pill"><span class="dot pink"></span> Overview</div>
     <h1>Seeing gender<br>differently</h1>
-    <p class="lead">A visual, playful way for young people to notice fairness in everyday life.</p>
+    <p class="lead">
+      The Equal Lens is a playful initiative that helps young people notice gender, power and fairness
+      in everyday life — without turning it into a heavy lecture.
+    </p>
+
+    <div class="points">
+      <div class="point">
+        <span class="label">Visual-first</span>
+        We start with pictures, prompts and stories instead of long explanations.
+      </div>
+      <div class="point">
+        <span class="label">Low-tech</span>
+        All activities work with just chart paper, pens and a bit of space.
+      </div>
+      <div class="point">
+        <span class="label">Age 10+</span>
+        Designed for middle-schoolers and mixed youth groups.
+      </div>
+      <div class="point">
+        <span class="label">No shaming</span>
+        We focus on curiosity and reflection, not blaming individuals.
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- SECTION 2 -->
+<!-- SECTION 2: In a session -->
 <section class="s2">
   <div class="wrap">
     <div class="pill"><span class="dot green"></span> In a session</div>
-    <h1>What youth<br>actually do</h1>
-    <p class="lead">Games, reflection and conversation — not lectures.</p>
+    <h1>What young people<br>actually do</h1>
+    <p class="lead">
+      A session is not a speech. It feels like a mix of games, group work and honest conversations.
+    </p>
+
+    <div class="points">
+      <div class="point">
+        <span class="label">Play</span>
+        Line games, sorting exercises and role-plays that surface silent rules.
+      </div>
+      <div class="point">
+        <span class="label">Notice</span>
+        Map who does which chores, who gets curfews and who is “allowed” to feel.
+      </div>
+      <div class="point">
+        <span class="label">Listen</span>
+        Hear classmates share experiences they usually keep inside.
+      </div>
+      <div class="point">
+        <span class="label">Name it</span>
+        Find simple, honest words for fairness, respect and boundaries.
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- SECTION 3 -->
+<!-- SECTION 3: Spaces -->
 <section class="s3">
   <div class="wrap">
     <div class="pill"><span class="dot blue"></span> Everyday spaces</div>
     <h1>Where patterns<br>show up</h1>
-    <p class="lead">Home, school, friendships and online spaces.</p>
+    <p class="lead">
+      The Equal Lens helps students connect big words like “gender equality” to ordinary places in their own lives.
+    </p>
+
+    <div class="points">
+      <div class="point">
+        <span class="label">At home</span>
+        Who cooks, who “helps”, who decides what is safe or unsafe?
+      </div>
+      <div class="point">
+        <span class="label">In school</span>
+        Who is interrupted, who is picked as leader, who is teased for being “different”?
+      </div>
+      <div class="point">
+        <span class="label">With friends</span>
+        Who gets called “bossy”, “weak”, “too emotional” or “too much”?
+      </div>
+      <div class="point">
+        <span class="label">Online</span>
+        How jokes, memes and comments quietly teach us what is “normal”.
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- SECTION 4 -->
+<!-- SECTION 4: What shifts -->
 <section class="s4">
   <div class="wrap">
-    <div class="pill"><span class="dot yellow"></span> What shifts</div>
-    <h1>What begins<br>to change</h1>
-    <p class="lead">Language, confidence and small daily actions.</p>
+    <div class="pill"><span class="dot yellow"></span> What can shift</div>
+    <h1>What we hope<br>opens up</h1>
+    <p class="lead">
+      The goal is not perfection. It’s one small mindset shift, one tiny action that feels possible this week.
+    </p>
+
+    <div class="points">
+      <div class="point">
+        <span class="label">Language</span>
+        Students learn kinder, clearer ways to say “this feels unfair”.
+      </div>
+      <div class="point">
+        <span class="label">Confidence</span>
+        Quieter voices find more room; louder voices learn to make space.
+      </div>
+      <div class="point">
+        <span class="label">Shared work</span>
+        Chores, care work and responsibilities become a bit more balanced.
+      </div>
+      <div class="point">
+        <span class="label">Empathy</span>
+        Students see gender as everyone’s issue, not just a “girls’ topic”.
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- SECTION 5 -->
+<!-- SECTION 5: Start -->
 <section class="s5">
   <div class="wrap">
-    <div class="pill"><span class="dot gray"></span> Start</div>
+    <div class="pill"><span class="dot gray"></span> Start here</div>
     <h1>Bring The Equal Lens<br>into your space</h1>
-    <p class="lead">Schools, NGOs, youth groups, or just curious adults.</p>
+    <p class="lead">
+      Whether you’re a school, NGO, youth group or just one motivated adult, you can start small and try one thing.
+    </p>
 
-    <div class="btn-row">
-      <button class="btn btn-primary">Get started</button>
-      <button class="btn btn-ghost">Make a pledge</button>
+    <div class="points">
+      <div class="point">
+        <span class="label">For schools</span>
+        Use a single activity in a life-skills period or as part of a theme day.
+      </div>
+      <div class="point">
+        <span class="label">For NGOs</span>
+        Blend Equal Lens tools into your existing gender or adolescent programmes.
+      </div>
+      <div class="point">
+        <span class="label">For youth clubs</span>
+        Run one game + discussion in any safe space where young people hang out.
+      </div>
+      <div class="point">
+        <span class="label">For individuals</span>
+        Try the quiz, make a pledge, or adapt a question for your own context.
+      </div>
     </div>
 
-    <footer>© <span id="year"></span> The Equal Lens</footer>
+    <div class="btn-row" style="margin-top:24px;">
+      <button class="btn btn-primary" onclick="location.href='schools.html'">For schools & NGOs</button>
+      <button class="btn btn-ghost" onclick="location.href='pledge.html'">Make a pledge</button>
+    </div>
+
+    <footer>
+      © <span id="year"></span> The Equal Lens · hello@theequallens.com
+    </footer>
   </div>
 </section>
 
 <script>
-document.getElementById("year").innerText=new Date().getFullYear();
+document.getElementById("year").innerText = new Date().getFullYear();
 
 /* cursor glow */
-const cursor=document.getElementById("cursor");
-window.addEventListener("mousemove",e=>{
-  cursor.style.left=e.clientX+"px";
-  cursor.style.top=e.clientY+"px";
+const cursor = document.getElementById("cursor");
+window.addEventListener("mousemove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
 });
 
 /* scroll progress */
-window.addEventListener("scroll",()=>{
-  const h=document.documentElement;
-  const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);
-  document.querySelector(".progress span").style.height=(sc*100)+"%";
+window.addEventListener("scroll", () => {
+  const h = document.documentElement;
+  const sc = h.scrollTop / (h.scrollHeight - h.clientHeight);
+  document.querySelector(".progress span").style.height = (sc * 100) + "%";
 });
 </script>
 

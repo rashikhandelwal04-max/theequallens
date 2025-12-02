@@ -120,12 +120,18 @@ section{
   margin:auto;
 }
 
-/* color moods */
+/* ambient color moods */
 .s1{
   background:radial-gradient(circle at center,rgba(var(--c1),.18),transparent 55%);
 }
 .s2{
   background:radial-gradient(circle at center,rgba(var(--c2),.18),transparent 55%);
+}
+.deep{
+  background:radial-gradient(circle at center,rgba(255,255,255,.06),transparent 60%);
+}
+.choose{
+  background:radial-gradient(circle at center,rgba(148,163,184,.18),transparent 60%);
 }
 .s3{
   background:radial-gradient(circle at center,rgba(var(--c3),.18),transparent 55%);
@@ -199,7 +205,7 @@ p{
   to{transform:scale(14);opacity:0}
 }
 
-/* ───────── Pause & Reflect ───────── */
+/* ───────── Pause & Reflect card ───────── */
 .reflect{
   margin-top:40px;
   max-width:520px;
@@ -216,6 +222,58 @@ p{
   transform:translateY(0);
 }
 
+/* ───────── Deep scroll section ───────── */
+.layers{
+  margin-top:40px;
+  height:70vh;
+  overflow-y:auto;
+  scroll-snap-type:y mandatory;
+  border-left:2px solid rgba(255,255,255,.12);
+  padding-left:20px;
+}
+.layer{
+  scroll-snap-align:start;
+  min-height:40vh;
+  font-size:26px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  color:rgba(255,255,255,.82);
+  opacity:.45;
+  transition:.35s;
+}
+.layer:hover{
+  opacity:1;
+  color:#eab308;
+}
+
+/* ───────── Choices section ───────── */
+.choices{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+.choice{
+  padding:40px 20px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.15);
+  text-align:center;
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
+}
+.choice:hover{
+  transform:translateY(-6px);
+  background:rgba(255,255,255,.03);
+  box-shadow:0 40px 80px rgba(0,0,0,.6);
+  border-color:#f97316;
+}
+.choice.selected{
+  border-color:#22c55e;
+  box-shadow:0 0 30px rgba(34,197,94,.6);
+}
+
 /* ───────── Footer ───────── */
 footer{
   font-size:11px;
@@ -228,6 +286,9 @@ footer{
 /* ───────── Mobile ───────── */
 @media(max-width:900px){
   .progress{display:none}
+  .choices{grid-template-columns:1fr}
+  .layers{height:60vh}
+  .layer{min-height:35vh;font-size:22px}
 }
 </style>
 </head>
@@ -253,44 +314,81 @@ footer{
   </nav>
 </header>
 
-<!-- OBJECT -->
+<!-- 1. OBJECT / OBSERVE -->
 <section class="s1">
   <div class="wrap">
     <div class="pill"><span class="dot"></span> Observe</div>
     <h1>What do you<br><span>notice?</span></h1>
     <p>
-      Gender rules exist quietly inside daily life —
-      who speaks, who stays quiet, who adjusts.
+      Gender rules sit quietly inside daily life — who speaks, who adjusts, who is taken seriously.
+      We begin by noticing the patterns.
     </p>
+    <button class="btn primary" onclick="window.scrollBy({top:window.innerHeight,behavior:'smooth'})">
+      Scroll to continue
+    </button>
   </div>
 </section>
 
-<!-- MESSAGE -->
+<!-- 2. MESSAGE / REFLECT -->
 <section class="s2" id="reflect-section">
   <div class="wrap">
     <div class="pill"><span class="dot"></span> Reflect</div>
     <h1>Who decided<br><span>this?</span></h1>
     <p>
-      Instead of answers, we create space for questions.
-      Not blame — understanding.
+      Instead of giving answers, The Equal Lens creates space for questions.
+      Who benefits from this rule? Who shrinks themselves to fit?
     </p>
 
     <div class="reflect" id="reflect">
       Pause here.<br><br>
-      Think of one rule you’ve never questioned.
-      Who does it protect? Who does it limit?
+      Think of one rule you’ve never really questioned — at home, in school, or online.
+      Who does it protect? Who does it limit? What would happen if it changed slightly?
     </div>
   </div>
 </section>
 
-<!-- ACTION -->
+<!-- 3. DEEPER LAYERS / SCROLL INSIDE -->
+<section class="deep">
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span> Look closer</div>
+    <h1>It shows up<br><span>everywhere</span></h1>
+    <p>Scroll inside this space. Each layer is an everyday question you can carry with you.</p>
+
+    <div class="layers">
+      <div class="layer">Who is allowed to be loud?</div>
+      <div class="layer">Who is expected to compromise first?</div>
+      <div class="layer">Whose safety is planned for automatically?</div>
+      <div class="layer">Whose pain is brushed off as “overreacting”?</div>
+      <div class="layer">Who is told to “ignore it, that’s how it is”?</div>
+      <div class="layer">Who gets to be fully themselves without apology?</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CHOOSE A PATH -->
+<section class="choose">
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span> Choose</div>
+    <h1>Where do you<br><span>see it first?</span></h1>
+    <p>There is no right answer. Choose the space that feels most familiar to you right now.</p>
+
+    <div class="choices">
+      <div class="choice">At home 🏠</div>
+      <div class="choice">In classrooms 🎒</div>
+      <div class="choice">With friends 👥</div>
+      <div class="choice">Online 🌐</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ACTION -->
 <section class="s3">
   <div class="wrap">
     <div class="pill"><span class="dot"></span> Act</div>
     <h1>What could<br><span>change?</span></h1>
     <p>
-      Real equality grows through small choices —
-      one sentence, one pause, one action.
+      Equality grows through small, believable actions — one sentence, one boundary,
+      one decision to speak up or listen differently.
     </p>
 
     <button class="btn primary" onclick="location.href='pledge.html'">Make a pledge</button>
@@ -306,14 +404,14 @@ footer{
 /* year */
 document.getElementById("y").innerText=new Date().getFullYear();
 
-/* cursor */
+/* cursor glow follow */
 const cur=document.getElementById("cursor");
 window.addEventListener("mousemove",e=>{
   cur.style.left=e.clientX+"px";
   cur.style.top=e.clientY+"px";
 });
 
-/* progress */
+/* scroll progress */
 window.addEventListener("scroll",()=>{
   const h=document.documentElement;
   const sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);
@@ -326,6 +424,14 @@ const obs=new IntersectionObserver(e=>{
   if(e[0].isIntersecting) ref.classList.add("show");
 },{threshold:.6});
 obs.observe(document.getElementById("reflect-section"));
+
+/* choices selection */
+document.querySelectorAll(".choice").forEach(c=>{
+  c.addEventListener("click",()=>{
+    document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));
+    c.classList.add("selected");
+  });
+});
 </script>
 
 </body>

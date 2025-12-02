@@ -1,1022 +1,304 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>The Equal Lens | Seeing Equality Differently</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The Equal Lens is a playful, visual-first initiative helping young people explore gender equality through observation, play and reflection.">
+  <meta name="description" content="A visual-first initiative helping young people explore gender equality through observation, play and reflection.">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg:#020617;
-      --accent:#f97316;
-      --accent2:#22c55e;
-      --accent3:#6366f1;
-      --accent4:#eab308;
-      --text:#f9fafb;
-      --muted:#9ca3af;
-      --border:#1f2937;
-      --card:#020617;
-      --font:"Baloo 2",system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
-    }
+<style>
+:root{
+  --bg:#000;
+  --card:#020617;
+  --accent:#f97316;
+  --accent2:#22c55e;
+  --accent3:#eab308;
+  --text:#f9fafb;
+  --muted:#9ca3af;
+  --border:#1f2937;
+  --font:"Baloo 2",sans-serif;
+}
 
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:var(--font);
-      background:#000;
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    a{text-decoration:none;color:inherit;}
+/* ---------- BASE ---------- */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#000;
+  color:var(--text);
+  font-family:var(--font);
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
 
-    /* ---------- BACKGROUND GRADIENT UNIVERSE ---------- */
-    .bg-layer{
-      position:fixed;
-      inset:0;
-      z-index:-3;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(244,63,94,0.35), transparent 55%),
-        radial-gradient(circle at 90% 10%, rgba(56,189,248,0.28), transparent 55%),
-        radial-gradient(circle at 50% 100%, rgba(250,204,21,0.25), transparent 55%),
-        #020617;
-      filter:saturate(1.1);
-    }
-    .blob{
-      position:fixed;
-      width:280px;
-      height:280px;
-      border-radius:999px;
-      filter:blur(40px);
-      opacity:0.6;
-      mix-blend-mode:screen;
-      animation:float 18s ease-in-out infinite alternate;
-      z-index:-2;
-    }
-    .blob.b1{
-      top:5%;left:-10%;
-      background:conic-gradient(from 45deg, #f97316, #ec4899, #22c55e, #f97316);
-    }
-    .blob.b2{
-      top:60%;left:60%;
-      background:conic-gradient(from 110deg, #22c55e, #38bdf8, #a855f7, #22c55e);
-      animation-delay:4s;
-    }
-    .blob.b3{
-      top:30%;right:-12%;
-      background:conic-gradient(from -30deg, #eab308, #f97316, #22c55e, #eab308);
-      animation-delay:8s;
-    }
-    @keyframes float{
-      0%{transform:translate3d(0,0,0) scale(1);}
-      100%{transform:translate3d(30px,-30px,0) scale(1.1);}
-    }
+/* ---------- NAV ---------- */
+header{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:50;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav{
+  max-width:1100px;
+  margin:auto;
+  padding:12px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+}
+.logo-circle{
+  width:34px;height:34px;
+  background:radial-gradient(circle,#f97316,#e11d48);
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:.08em}
+.nav-links a{
+  font-size:13px;color:var(--muted);margin-left:12px;
+}
+.nav-links a:hover{color:#fff}
 
-    .grain{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
-      mix-blend-mode:soft-light;
-      z-index:-1;
-      opacity:0.9;
-    }
+/* ---------- BACKGROUND VISUALS ---------- */
+.visual-layer{
+  position:fixed;inset:0;z-index:-2;overflow:hidden;
+}
+.visual{
+  position:absolute;
+  width:280px;
+  opacity:.18;
+  animation:float 18s ease-in-out infinite alternate;
+}
+.v1{top:10%;left:5%}
+.v2{top:55%;left:10%;animation-delay:5s}
+.v3{top:25%;right:8%;animation-delay:3s}
+.v4{bottom:10%;right:15%;animation-delay:8s}
 
-    /* ---------- FLOATING BUBBLES (TEXT THOUGHTS) ---------- */
-    .thought-bubble{
-      position:fixed;
-      z-index:-1;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:11px;
-      color:#e5e7eb;
-      background:rgba(15,23,42,0.9);
-      border:1px solid rgba(148,163,184,0.4);
-      backdrop-filter:blur(10px);
-      max-width:190px;
-      animation:bob 10s ease-in-out infinite alternate;
-    }
-    .thought-bubble.b-left1{top:30%;left:3%;}
-    .thought-bubble.b-left2{top:65%;left:6%;animation-delay:2s;}
-    .thought-bubble.b-right1{top:20%;right:5%;animation-delay:4s;}
-    .thought-bubble.b-right2{top:75%;right:8%;animation-delay:6s;}
+@keyframes float{
+  from{transform:translateY(0)}
+  to{transform:translateY(-30px)}
+}
 
-    @keyframes bob{
-      0%{transform:translate3d(0,0,0);}
-      50%{transform:translate3d(0,-18px,0);}
-      100%{transform:translate3d(0,-8px,0);}
-    }
+.grain{
+  position:fixed;inset:0;
+  background:repeating-radial-gradient(circle,rgba(255,255,255,.03),transparent 40px);
+  pointer-events:none;
+  z-index:-1;
+}
 
-    .bubble-text{
-      display:inline-block;
-      transition:opacity .35s ease;
-    }
+/* ---------- CONTENT ---------- */
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:120px 18px 80px;
+}
 
-    /* ---------- LAYOUT ---------- */
-    header{
-      position:fixed;
-      inset-inline:0;
-      top:0;
-      z-index:40;
-      backdrop-filter:blur(18px);
-      background:linear-gradient(to bottom, rgba(15,23,42,0.9), transparent);
-      border-bottom:1px solid rgba(148,163,184,0.25);
-    }
-    .nav{
-      max-width:1080px;
-      margin:0 auto;
-      padding:10px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .logo-orb{
-      width:34px;height:34px;
-      border-radius:16px;
-      background:conic-gradient(from 120deg,#f97316,#ec4899,#22c55e,#38bdf8,#f97316);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size:18px;
-      box-shadow:0 0 24px rgba(248,250,252,0.7);
-      animation:spin-slow 14s linear infinite;
-    }
-    .logo-text-main{
-      font-size:15px;
-      letter-spacing:0.08em;
-      font-weight:700;
-    }
-    .logo-text-sub{
-      font-size:11px;
-      color:var(--muted);
-    }
-    @keyframes spin-slow{
-      0%{transform:rotate(0deg);}
-      100%{transform:rotate(360deg);}
-    }
+.hero{
+  max-width:700px;
+}
 
-    .nav-links{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      font-size:13px;
-      flex-wrap:wrap;
-    }
-    .nav-links a{
-      padding:5px 11px;
-      border-radius:999px;
-      color:var(--muted);
-      border:1px solid transparent;
-      position:relative;
-      overflow:hidden;
-    }
-    .nav-links a::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at 0 0, rgba(248,250,252,0.18), transparent 60%);
-      opacity:0;
-      transition:opacity .18s;
-    }
-    .nav-links a:hover{
-      color:var(--text);
-      border-color:rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.9);
-    }
-    .nav-links a:hover::before{opacity:1;}
-    .nav-cta{
-      background:linear-gradient(135deg,#f97316,#eab308);
-      color:#111827;
-      font-weight:600;
-      box-shadow:0 0 22px rgba(249,115,22,0.7);
-    }
+/* ---------- SCROLL ANIMATION ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition:all .8s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+}
 
-    main{
-      max-width:1080px;
-      margin:0 auto;
-      padding:120px 18px 90px;
-    }
+/* ---------- HERO ---------- */
+.pill{
+  display:inline-flex;gap:6px;
+  align-items:center;
+  font-size:11px;
+  padding:5px 10px;
+  border-radius:999px;
+  border:1px solid #374151;
+  color:var(--muted);
+  margin-bottom:14px;
+}
+.dot{
+  width:8px;height:8px;
+  background:var(--accent2);
+  border-radius:50%;
+  box-shadow:0 0 8px var(--accent2);
+}
+.hero h1{
+  font-size:clamp(34px,5vw,46px);
+  line-height:1.05;
+  margin-bottom:14px;
+}
+.hero h1 span{color:var(--accent3)}
+.hero p{
+  font-size:15px;color:var(--muted);
+  margin-bottom:22px;
+}
+.cta button{
+  border:none;
+  cursor:pointer;
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:13px;
+}
+.primary{
+  background:var(--accent);
+  font-weight:700;
+  box-shadow:0 0 22px rgba(249,115,22,.6);
+}
+.ghost{
+  background:transparent;
+  border:1px solid #374151;
+  color:#fff;
+}
 
-    /* ---------- HERO ---------- */
-    .hero{
-      display:grid;
-      grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
-      gap:28px;
-      align-items:center;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:5px 11px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      font-size:11px;
-      color:var(--muted);
-      background:rgba(15,23,42,0.85);
-      backdrop-filter:blur(12px);
-      margin-bottom:10px;
-    }
-    .pill-dot{
-      width:8px;height:8px;border-radius:999px;
-      background:var(--accent2);
-      box-shadow:0 0 10px rgba(34,197,94,0.9);
-    }
-    .hero-title{
-      font-size:clamp(32px,5vw,46px);
-      line-height:1.03;
-      margin-bottom:10px;
-    }
-    .hero-title span{
-      background:linear-gradient(120deg,#f97316,#eab308,#22c55e,#38bdf8);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-      animation:gradient-move 8s ease-in-out infinite alternate;
-    }
-    @keyframes gradient-move{
-      0%{background-position:0% 50%;}
-      100%{background-position:100% 50%;}
-    }
-    .hero-sub{
-      font-size:14px;
-      color:var(--muted);
-      max-width:540px;
-      margin-bottom:18px;
-    }
+/* ---------- SECTIONS ---------- */
+section{margin-top:90px}
+section h2{font-size:22px;margin-bottom:10px}
+section p{font-size:14px;color:var(--muted);max-width:640px}
 
-    .hero-cta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .btn{
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.9);
-      color:var(--text);
-      font-size:13px;
-      padding:8px 15px;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      cursor:pointer;
-      position:relative;
-      overflow:hidden;
-      transition:transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .btn span.icon{font-size:14px;}
-    .btn-primary{
-      background:linear-gradient(135deg,#f97316,#e11d48);
-      border-color:transparent;
-      color:#111827;
-      font-weight:600;
-      box-shadow:0 0 22px rgba(248,113,113,0.75);
-    }
-    .btn::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:conic-gradient(from 0deg,rgba(248,250,252,0.3),transparent,transparent);
-      opacity:0;
-      transform:rotate(0deg);
-      transition:opacity .15s;
-    }
-    .btn:hover{
-      transform:translateY(-1px);
-      box-shadow:0 15px 30px rgba(15,23,42,0.9);
-      border-color:rgba(148,163,184,0.9);
-    }
-    .btn:hover::before{
-      opacity:1;
-      animation:spin 1.4s linear infinite;
-    }
-    @keyframes spin{
-      0%{transform:rotate(0deg);}
-      100%{transform:rotate(360deg);}
-    }
+/* ---------- STEPS ---------- */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-top:24px;
+}
+.step{
+  background:rgba(2,6,23,.9);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  cursor:pointer;
+  transition:.3s ease;
+}
+.step:hover{
+  transform:translateY(-6px) scale(1.01);
+  border-color:var(--accent);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
+}
+.step h3{font-size:15px;margin-bottom:6px}
+.step .more{
+  display:none;
+  color:var(--accent2);
+  font-size:13px;
+  margin-top:8px;
+}
+.step.open .more{display:block}
 
-    .hero-note{
-      font-size:11px;
-      color:var(--muted);
-    }
-    .hero-note span{
-      color:var(--accent2);
-      font-weight:600;
-    }
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:120px;
+  font-size:11px;
+  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
+  border-top:1px solid #374151;
+  padding-top:14px;
+}
 
-    .hero-panel{
-      border-radius:22px;
-      padding:16px;
-      border:1px solid rgba(148,163,184,0.5);
-      background:linear-gradient(145deg,rgba(15,23,42,0.95),rgba(15,23,42,0.7));
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-panel::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:radial-gradient(circle at 0 0,rgba(248,250,252,0.18),transparent 55%);
-      mix-blend-mode:soft-light;
-      opacity:0.7;
-    }
-    .hero-panel h3{
-      font-size:14px;
-      margin-bottom:6px;
-      position:relative;z-index:1;
-    }
-    .hero-panel ul{
-      font-size:12px;
-      color:var(--muted);
-      margin-left:14px;
-      margin-top:4px;
-      position:relative;z-index:1;
-    }
-    .hero-tags{
-      margin-top:10px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      position:relative;z-index:1;
-    }
-    .tag-chip{
-      font-size:11px;
-      border-radius:999px;
-      padding:3px 8px;
-      border:1px solid rgba(148,163,184,0.7);
-      color:var(--muted);
-      background:rgba(15,23,42,0.8);
-    }
-
-    /* ---------- PRONOUN / STATEMENT TOGGLE ---------- */
-    .toggle-card{
-      margin-top:14px;
-      border-radius:16px;
-      padding:10px 12px;
-      border:1px dashed rgba(148,163,184,0.65);
-      background:rgba(15,23,42,0.9);
-      font-size:12px;
-      position:relative;z-index:1;
-    }
-    .toggle-row{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-top:6px;
-      flex-wrap:wrap;
-    }
-    .toggle-pill{
-      border-radius:999px;
-      padding:4px 10px;
-      font-size:11px;
-      border:1px solid rgba(148,163,184,0.7);
-      color:var(--muted);
-      cursor:pointer;
-      background:rgba(15,23,42,0.9);
-    }
-    .toggle-pill.active{
-      border-color:var(--accent3);
-      color:var(--text);
-      box-shadow:0 0 14px rgba(129,140,248,0.8);
-    }
-    .toggle-text{
-      font-weight:600;
-      font-size:13px;
-    }
-
-    /* ---------- FLOW CARDS ---------- */
-    .section{
-      margin-top:60px;
-    }
-    .section-title{
-      font-size:20px;
-      margin-bottom:6px;
-    }
-    .section-sub{
-      font-size:13px;
-      color:var(--muted);
-      max-width:640px;
-    }
-
-    .flow-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
-      margin-top:18px;
-    }
-    .flow-card{
-      position:relative;
-      border-radius:20px;
-      padding:14px;
-      background:radial-gradient(circle at top left,rgba(248,250,252,0.05),rgba(15,23,42,0.98));
-      border:1px solid var(--border);
-      font-size:13px;
-      overflow:hidden;
-      cursor:pointer;
-      transition:transform .18s, box-shadow .18s, border-color .18s;
-    }
-    .flow-card::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:radial-gradient(circle at 0 0,rgba(248,113,113,0.16),transparent 60%);
-      opacity:0;
-      transition:opacity .25s;
-      mix-blend-mode:screen;
-    }
-    .flow-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 22px 40px rgba(0,0,0,0.65);
-      border-color:rgba(249,115,22,0.8);
-    }
-    .flow-card:hover::before{opacity:1;}
-    .flow-step-label{
-      font-size:11px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      margin-bottom:4px;
-    }
-    .flow-title{
-      font-size:14px;
-      margin-bottom:4px;
-      font-weight:600;
-    }
-    .flow-more{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--accent2);
-      display:none;
-    }
-    .flow-card.open .flow-more{display:block;}
-
-    /* ---------- HOME MINI QUIZ ---------- */
-    .quiz-section{
-      margin-top:60px;
-    }
-    .quiz-card{
-      border-radius:20px;
-      border:1px solid rgba(148,163,184,0.55);
-      background:radial-gradient(circle at 0 0,rgba(248,250,252,0.06),rgba(15,23,42,0.98));
-      padding:16px;
-      font-size:13px;
-      max-width:700px;
-    }
-    .quiz-tag{
-      font-size:11px;
-      color:var(--muted);
-      margin-bottom:4px;
-    }
-    .quiz-q{
-      font-size:14px;
-      margin-bottom:8px;
-    }
-    .quiz-options{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      margin-top:6px;
-    }
-    .quiz-btn{
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.9);
-      color:var(--muted);
-      font-size:13px;
-      padding:7px 11px;
-      text-align:left;
-      cursor:pointer;
-      transition:background .15s,border-color .15s,transform .12s;
-    }
-    .quiz-btn:hover{
-      transform:translateY(-1px);
-      border-color:var(--accent4);
-      color:var(--text);
-    }
-    .quiz-btn.correct{
-      border-color:var(--accent2);
-      background:rgba(22,163,74,0.18);
-      color:var(--text);
-    }
-    .quiz-btn.wrong{
-      border-color:#f97373;
-      background:rgba(239,68,68,0.15);
-      color:var(--text);
-    }
-    .quiz-feedback{
-      margin-top:8px;
-      font-size:12px;
-      min-height:20px;
-    }
-    .quiz-feedback.good{color:var(--accent2);}
-    .quiz-feedback.bad{color:#fca5a5;}
-
-    .quiz-footer-row{
-      margin-top:8px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-size:11px;
-      color:var(--muted);
-      gap:8px;
-      flex-wrap:wrap;
-    }
-    .quiz-next-btn{
-      border-radius:999px;
-      border:none;
-      padding:6px 12px;
-      font-size:12px;
-      cursor:pointer;
-      background:linear-gradient(135deg,#22c55e,#38bdf8);
-      color:#020617;
-      font-weight:600;
-    }
-
-    /* ---------- START CARDS ---------- */
-    .start-grid{
-      margin-top:24px;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
-    }
-    .start-card{
-      border-radius:18px;
-      border:1px solid var(--border);
-      background:rgba(15,23,42,0.9);
-      padding:12px 13px;
-      font-size:13px;
-      position:relative;
-      overflow:hidden;
-      cursor:pointer;
-    }
-    .start-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg,rgba(249,115,22,0.18),rgba(56,189,248,0.18));
-      opacity:0;
-      mix-blend-mode:soft-light;
-      transition:opacity .18s;
-    }
-    .start-card-inner{
-      position:relative;
-      z-index:1;
-    }
-    .start-tag{
-      font-size:11px;
-      color:var(--muted);
-      margin-bottom:3px;
-    }
-    .start-title{
-      font-size:14px;
-      margin-bottom:4px;
-    }
-    .start-card:hover::before{opacity:1;}
-
-    /* ---------- FLOATING QUIZ BUBBLE BUTTON ---------- */
-    .floating-quiz-btn{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:45;
-      width:56px;
-      height:56px;
-      border-radius:999px;
-      border:2px solid rgba(248,250,252,0.25);
-      background:radial-gradient(circle at 30% 0%,#f97316,#e11d48);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      color:#111827;
-      font-size:11px;
-      text-align:center;
-      cursor:pointer;
-      box-shadow:0 18px 45px rgba(0,0,0,0.8);
-      animation:bounce 2.4s ease-in-out infinite;
-    }
-    .floating-quiz-btn span.icon{
-      font-size:18px;
-      margin-bottom:2px;
-    }
-    @keyframes bounce{
-      0%,100%{transform:translateY(0);}
-      50%{transform:translateY(-7px);}
-    }
-
-    footer{
-      margin-top:60px;
-      border-top:1px solid rgba(148,163,184,0.4);
-      padding-top:10px;
-      font-size:11px;
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    @media(max-width:900px){
-      .hero{
-        grid-template-columns:minmax(0,1fr);
-      }
-      .flow-grid,
-      .start-grid{
-        grid-template-columns:minmax(0,1fr);
-      }
-      main{
-        padding-inline:14px;
-      }
-      .nav{
-        padding-inline:14px;
-        flex-wrap:wrap;
-      }
-    }
-  </style>
+@media(max-width:900px){
+  .steps{grid-template-columns:1fr}
+}
+</style>
 </head>
+
 <body>
 
-<div class="bg-layer"></div>
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
+<!-- BACKGROUND -->
+<div class="visual-layer">
+  <img src="images/equality-1.jpg" class="visual v1">
+  <img src="images/equality-2.jpg" class="visual v2">
+  <img src="images/equality-3.jpg" class="visual v3">
+  <img src="images/equality-4.jpg" class="visual v4">
+</div>
 <div class="grain"></div>
-
-<!-- floating thought bubbles with rotating gender equality lines -->
-<div class="thought-bubble b-left1">
-  <span class="bubble-text" id="bubble1Text">Everyone deserves a turn to speak.</span>
-</div>
-<div class="thought-bubble b-left2">
-  <span class="bubble-text" id="bubble2Text">Chores don’t have a gender.</span>
-</div>
-<div class="thought-bubble b-right1">
-  <span class="bubble-text" id="bubble3Text">Feelings are for all genders.</span>
-</div>
-<div class="thought-bubble b-right2">
-  <span class="bubble-text" id="bubble4Text">Respect is never “too sensitive”.</span>
-</div>
 
 <header>
   <nav class="nav">
-    <a href="index.html" class="logo">
-      <div class="logo-orb">=</div>
-      <div>
-        <div class="logo-text-main">THE EQUAL LENS</div>
-        <div class="logo-text-sub">Gender equality, made understandable</div>
-      </div>
-    </a>
+    <div class="logo">
+      <div class="logo-circle">=</div>
+      <div class="logo-text">THE EQUAL LENS</div>
+    </div>
     <div class="nav-links">
       <a href="activities.html">Activities</a>
       <a href="quiz.html">Quiz</a>
       <a href="pledge.html">Pledge</a>
-      <a href="schools.html" class="nav-cta">For schools</a>
+      <a href="schools.html">For Schools</a>
     </div>
   </nav>
 </header>
 
 <main>
-  <!-- HERO -->
-  <section class="hero">
-    <div>
-      <div class="pill">
-        <span class="pill-dot"></span>
-        A playful, visual-first initiative for ages 10–14
-      </div>
-      <h1 class="hero-title">
-        Gender equality,<br />
-        <span>seen differently</span>.
-      </h1>
-      <p class="hero-sub">
-        The Equal Lens helps young people notice the quiet rules around gender –
-        through visuals, games and questions that feel like real life, not a lecture.
-      </p>
-      <div class="hero-cta">
-        <button class="btn btn-primary" onclick="location.href='activities.html'">
-          <span class="icon">🎲</span> Explore activities
-        </button>
-        <button class="btn" onclick="location.href='quiz.html'">
-          <span class="icon">⚖️</span> Go to full quiz page
-        </button>
-      </div>
-      <p class="hero-note">
-        Works in schools, NGOs & youth groups • Best for ages <span>10–14</span>
-      </p>
+
+  <div class="hero reveal">
+    <div class="pill">
+      <span class="dot"></span> Visual-first learning
     </div>
-
-    <div class="hero-panel">
-      <h3>What happens in an Equal Lens space?</h3>
-      <ul>
-        <li>Students react to visuals or short stories about everyday situations.</li>
-        <li>We gently ask, “Who decides this? Who feels safe? Who doesn’t?”</li>
-        <li>Everyone chooses one tiny action they can try in their own life.</li>
-      </ul>
-
-      <!-- interactive pronoun / statement toggle -->
-      <div class="toggle-card">
-        <div style="font-size:11px;color:var(--muted);">A line we want every student to feel:</div>
-        <div class="toggle-row">
-          <div class="toggle-pill active" data-word="I am">I am</div>
-          <div class="toggle-pill" data-word="I can">I can</div>
-          <div class="toggle-pill" data-word="I deserve">I deserve</div>
-          <span class="toggle-text" id="toggleText">I am allowed to be fully myself.</span>
-        </div>
-      </div>
-
-      <div class="hero-tags">
-        <span class="tag-chip">Low-tech, high-conversation</span>
-        <span class="tag-chip">No preaching</span>
-        <span class="tag-chip">Co-created with students</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- FLOW / HOW IT WORKS -->
-  <section class="section">
-    <h2 class="section-title">How learning unfolds</h2>
-    <p class="section-sub">
-      Understanding doesn’t come from being told what’s right. It comes from
-      noticing, questioning and trying things out in small, safe ways.
+    <h1>Gender equality,<br><span>seen differently</span></h1>
+    <p>
+      We use visuals, questions and play to help young people notice invisible gender rules —
+      and imagine fairer ones.
     </p>
-
-    <div class="flow-grid">
-      <article class="flow-card">
-        <div class="flow-step-label">Step 1</div>
-        <div class="flow-title">Pause & notice</div>
-        <div>
-          Students look at a situation: a rule, a joke, a “boys do / girls do” moment.
-        </div>
-        <div class="flow-more">
-          We ask: who is comfortable here, who is not, and what message is being sent?
-        </div>
-      </article>
-
-      <article class="flow-card">
-        <div class="flow-step-label">Step 2</div>
-        <div class="flow-title">Name the rule</div>
-        <div>
-          Together we find the hidden rule: “girls should…”, “boys can’t…”, “they shouldn’t…”.
-        </div>
-        <div class="flow-more">
-          The goal is understanding, not blame. We look at where these rules come from.
-        </div>
-      </article>
-
-      <article class="flow-card">
-        <div class="flow-step-label">Step 3</div>
-        <div class="flow-title">Test a new way</div>
-        <div>
-          Students design tiny experiments: a fairer way to share chores, speak up, or listen.
-        </div>
-        <div class="flow-more">
-          These become pledges, class agreements or home experiments to try for a week.
-        </div>
-      </article>
+    <div class="cta">
+      <button class="primary" onclick="location.href='activities.html'">Explore activities</button>
+      <button class="ghost" onclick="location.href='quiz.html'">Try a quick quiz</button>
     </div>
-  </section>
+  </div>
 
-  <!-- MINI QUIZ ON HOME PAGE -->
-  <section class="section quiz-section">
-    <h2 class="section-title">Try a quick question 🧠</h2>
-    <p class="section-sub">
-      A tiny taste of the kind of thinking we invite. Click an option and see what it opens up.
-    </p>
-
-    <div class="quiz-card">
-      <div class="quiz-tag" id="quizTag">Question 1 of 3</div>
-      <div class="quiz-q" id="quizQuestion">
-        A friend says “It’s just a joke, don’t be so sensitive” after a gender-based joke. What’s a fair response?
+  <section class="reveal">
+    <h2>How learning unfolds</h2>
+    <p>Nothing is taught as a lecture. Understanding grows by noticing, questioning and trying.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Observe</h3>
+        Students react to visuals and stories.
+        <div class="more">What feels normal? What feels unfair?</div>
       </div>
-      <div class="quiz-options" id="quizOptions">
-        <!-- buttons injected by JS -->
+      <div class="step">
+        <h3>Question</h3>
+        We ask who decides and why.
+        <div class="more">Rules become visible, without blame.</div>
       </div>
-      <div class="quiz-feedback" id="quizFeedback"></div>
-      <div class="quiz-footer-row">
-        <span id="quizHint">Tap an answer to see why.</span>
-        <button class="quiz-next-btn" id="quizNext">Next question →</button>
+      <div class="step">
+        <h3>Experiment</h3>
+        One small action to try.
+        <div class="more">Ideas move into real life.</div>
       </div>
     </div>
   </section>
 
-  <!-- START HERE -->
-  <section class="section">
-    <h2 class="section-title">Start exploring 👇</h2>
-    <p class="section-sub">
-      The Equal Lens is built like a toolkit. You can dip into one part, or
-      combine them into a short series depending on your space.
-    </p>
-
-    <div class="start-grid">
-      <div class="start-card" onclick="location.href='activities.html'">
-        <div class="start-card-inner">
-          <div class="start-tag">Play</div>
-          <div class="start-title">Activities</div>
-          <p>Ready-to-use ideas using circles, lines, stories and movement.</p>
-        </div>
-      </div>
-      <div class="start-card" onclick="location.href='quiz.html'">
-        <div class="start-card-inner">
-          <div class="start-tag">Check-in</div>
-          <div class="start-title">Mini quiz</div>
-          <p>Short questions to spark reflection or end a session.</p>
-        </div>
-      </div>
-      <div class="start-card" onclick="location.href='pledge.html'">
-        <div class="start-card-inner">
-          <div class="start-tag">Commit</div>
-          <div class="start-title">Pledge wall</div>
-          <p>Turn insights into small, concrete promises students choose.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <span>© <span id="year"></span> The Equal Lens</span>
+  <footer class="reveal">
+    <span>© <span id="y"></span> The Equal Lens</span>
     <span>hello@theequallens.com</span>
   </footer>
+
 </main>
 
-<!-- floating quiz bubble -->
-<div class="floating-quiz-btn" onclick="location.href='quiz.html'">
-  <span class="icon">⚡</span>
-  Quiz
-</div>
-
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Year
-    var yearEl = document.getElementById("year");
-    if (yearEl) {
-      yearEl.textContent = new Date().getFullYear();
+/* YEAR */
+document.getElementById("y").innerText = new Date().getFullYear();
+
+/* STEP TOGGLE */
+document.querySelectorAll(".step").forEach(s=>{
+  s.addEventListener("click",()=>s.classList.toggle("open"));
+});
+
+/* SCROLL REVEAL */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
     }
-
-    // Flow cards expand on click
-    document.querySelectorAll(".flow-card").forEach(function(card) {
-      card.addEventListener("click", function() {
-        card.classList.toggle("open");
-      });
-    });
-
-    // Pronoun / statement toggle
-    const toggleText = document.getElementById("toggleText");
-    const lines = {
-      "I am": "I am allowed to be fully myself.",
-      "I can": "I can question unfair rules, kindly.",
-      "I deserve": "I deserve safety, respect and chances."
-    };
-
-    document.querySelectorAll(".toggle-pill").forEach(function(pill) {
-      pill.addEventListener("click", function() {
-        document.querySelectorAll(".toggle-pill").forEach(function(p) { p.classList.remove("active"); });
-        pill.classList.add("active");
-        const word = pill.getAttribute("data-word");
-        if (toggleText) toggleText.textContent = lines[word] || "";
-      });
-    });
-
-    // Home mini quiz
-    const quizData = [
-      {
-        q: "A friend says “It’s just a joke, don’t be so sensitive” after a gender-based joke. What’s a fair response?",
-        options: [
-          "Laugh along so it doesn’t become awkward.",
-          "Say calmly that some jokes can hurt, and ask them to stop.",
-          "Shout at them in front of everyone."
-        ],
-        correct: 1,
-        good: "Yes. It keeps the friendship but also clearly says the joke isn’t okay.",
-        bad: "Think about what keeps people safe and heard, not just what avoids awkwardness."
-      },
-      {
-        q: "At home, only one sibling is always asked to serve food. What’s a small fair step?",
-        options: [
-          "Rotate serving between everyone at home.",
-          "Keep it the same, they are used to it.",
-          "Stop serving food at all."
-        ],
-        correct: 0,
-        good: "Exactly. Rotating makes the invisible work more equal.",
-        bad: "Fairness usually means sharing work, not ignoring it."
-      },
-      {
-        q: "In class, a student is interrupted again and again when they speak. What can you try?",
-        options: [
-          "Say nothing, it’s not your problem.",
-          "Say, “Let’s hear them finish,” so they get space.",
-          "Interrupt them as well, so it’s equal."
-        ],
-        correct: 1,
-        good: "Yes. You’re using your voice to make space, not speak for them.",
-        bad: "Equality means everyone getting space, not everyone being cut off."
-      }
-    ];
-
-    let currentQ = 0;
-    let answered = false;
-
-    const quizTag = document.getElementById("quizTag");
-    const quizQuestion = document.getElementById("quizQuestion");
-    const quizOptions = document.getElementById("quizOptions");
-    const quizFeedback = document.getElementById("quizFeedback");
-    const quizNext = document.getElementById("quizNext");
-
-    function renderQuiz() {
-      const item = quizData[currentQ];
-      if (quizTag) quizTag.textContent = "Question " + (currentQ + 1) + " of " + quizData.length;
-      if (quizQuestion) quizQuestion.textContent = item.q;
-      if (quizOptions) quizOptions.innerHTML = "";
-      if (quizFeedback) {
-        quizFeedback.textContent = "";
-        quizFeedback.className = "quiz-feedback";
-      }
-
-      item.options.forEach(function(opt, index) {
-        if (!quizOptions) return;
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.className = "quiz-btn";
-        btn.addEventListener("click", function() { selectOption(index, btn); });
-        quizOptions.appendChild(btn);
-      });
-      answered = false;
-    }
-
-    function selectOption(index, btn) {
-      if (answered) return;
-      answered = true;
-      const item = quizData[currentQ];
-      const all = quizOptions ? quizOptions.querySelectorAll(".quiz-btn") : [];
-      all.forEach(function(b) { b.disabled = true; });
-
-      if (index === item.correct) {
-        btn.classList.add("correct");
-        if (quizFeedback) {
-          quizFeedback.textContent = item.good;
-          quizFeedback.classList.add("good");
-        }
-      } else {
-        btn.classList.add("wrong");
-        if (quizFeedback) {
-          quizFeedback.textContent = item.bad;
-          quizFeedback.classList.add("bad");
-        }
-        if (all[item.correct]) all[item.correct].classList.add("correct");
-      }
-    }
-
-    if (quizNext) {
-      quizNext.addEventListener("click", function() {
-        currentQ = (currentQ + 1) % quizData.length;
-        renderQuiz();
-      });
-    }
-
-    renderQuiz();
-
-    // Rotating gender equality lines in thought bubbles
-    const bubblePhrases = [
-      "Everyone deserves a turn to speak.",
-      "Chores don’t have a gender.",
-      "Feelings are for all genders.",
-      "Respect is never “too sensitive”.",
-      "My dreams don’t have a gender.",
-      "Fair rules work for everyone.",
-      "Safety is not a luxury.",
-      "Listening is also power."
-    ];
-
-    const bubbleElements = [
-      document.getElementById("bubble1Text"),
-      document.getElementById("bubble2Text"),
-      document.getElementById("bubble3Text"),
-      document.getElementById("bubble4Text")
-    ];
-
-    let bubbleOffset = [0, 2, 4, 6];
-
-    function rotateBubbleText() {
-      bubbleElements.forEach(function(el, i) {
-        if (!el) return;
-        el.style.opacity = 0;
-        setTimeout(function() {
-          const phraseIndex = bubbleOffset[i] % bubblePhrases.length;
-          el.textContent = bubblePhrases[phraseIndex];
-          el.style.opacity = 1;
-          bubbleOffset[i] = (bubbleOffset[i] + 1) % bubblePhrases.length;
-        }, 200);
-      });
-    }
-
-    // run once immediately so you see it, then every 4s
-    rotateBubbleText();
-    setInterval(rotateBubbleText, 4000);
   });
+},{threshold:0.15});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 </script>
 
 </body>

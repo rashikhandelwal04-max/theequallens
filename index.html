@@ -17,7 +17,7 @@
   --pink:#ff80bf;
   --blue:#7dd3fc;
   --green:#6ee7b7;
-  --yellow:#ffeb3b;
+  --yellow:#ffeb3b; /* brighter yellow */
   --white:#ffffff;
 }
 
@@ -116,6 +116,128 @@ p.lead{
   margin-bottom:12px;
 }
 
+/* CHIPS */
+.chips{
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.chip{
+  font-size:11px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:var(--yellow);
+  border:2px solid var(--ink);
+}
+
+/* PROBLEM CARDS */
+.problems{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.problem-card{
+  background:var(--white);
+  border-radius:18px;
+  border:3px solid var(--ink);
+  padding:12px 14px;
+  font-size:13px;
+  cursor:pointer;
+  transition:.2s;
+}
+.problem-card:hover{
+  transform:translateY(-6px) rotate(-1deg);
+  box-shadow:6px 6px 0 rgba(0,0,0,.15);
+}
+.problem-card:active{
+  transform:scale(0.97);
+}
+.problem-card .title{
+  font-weight:700;
+  margin-bottom:4px;
+}
+.problem-card .more{
+  display:none;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+}
+.problem-card.open .more{
+  display:block;
+}
+
+/* WORKSHOP STEPS */
+.steps{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.step{
+  background:var(--white);
+  border-radius:18px;
+  border:3px solid var(--ink);
+  padding:14px 14px;
+  font-size:13px;
+  transition:.2s;
+}
+.step:hover{
+  transform:translateY(-4px);
+  box-shadow:6px 6px 0 rgba(0,0,0,.15);
+}
+.step span.num{
+  display:inline-block;
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+/* AFTER EFFECTS LIST */
+.cols{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  font-size:13px;
+}
+.cols h3{
+  font-size:14px;
+  margin-bottom:6px;
+}
+.cols ul{
+  padding-left:18px;
+}
+.cols li{
+  margin-bottom:4px;
+}
+
+/* BUTTONS */
+.buttons{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.btn{
+  padding:10px 22px;
+  border-radius:999px;
+  border:4px solid var(--ink);
+  background:var(--white);
+  font-size:13px;
+  cursor:pointer;
+  font-weight:700;
+}
+.btn.main{background:var(--green)}
+.btn.secondary{background:var(--blue)}
+
+/* FOOTER */
+footer{
+  margin-top:30px;
+  font-size:12px;
+  color:var(--muted);
+}
+
 /* PINNED SWAP STORY */
 .swap-section{
   display:flex;
@@ -125,7 +247,7 @@ p.lead{
 .swap-inner{
   width:100%;
   max-width:900px;
-  height:240px;
+  height:260px;
   position:relative;
 }
 .swap-line{
@@ -146,40 +268,27 @@ p.lead{
   transform:none;
 }
 .swap-line.emphasis{
-  font-family:"Poppins",sans-serif;
+  font-family:'Poppins',sans-serif;
   font-weight:700;
-  letter-spacing:.12em;
+  letter-spacing:.15em;
   text-transform:uppercase;
 }
 
-/* BUTTONS */
-.buttons{
-  margin-top:24px;
-  display:flex;
-  gap:12px;
-}
-.btn{
-  padding:10px 22px;
-  border-radius:999px;
-  border:4px solid var(--ink);
-  background:var(--white);
-  font-weight:700;
-  cursor:pointer;
-}
-.btn.main{background:var(--green)}
-.btn.secondary{background:var(--blue)}
-
-/* FOOTER */
-footer{
-  margin-top:30px;
-  font-size:12px;
-  color:var(--muted);
+/* PARALLAX CARDS */
+.parallax{
+  /* base styles already on .card; this class is just for JS targeting */
 }
 
 /* RESPONSIVE */
+@media(max-width:900px){
+  .problems{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .cols{grid-template-columns:1fr;}
+}
 @media(max-width:600px){
-  section{padding:110px 14px}
-  .swap-inner{height:300px}
+  section{padding:110px 14px 50px;}
+  .card{padding:20px;}
+  .swap-inner{height:320px;}
 }
 </style>
 </head>
@@ -191,6 +300,12 @@ footer{
     <div class="logo">
       <div class="logo-box"></div>
       THE EQUAL LENS
+    </div>
+    <div>
+      <a href="#problem">Problem</a>
+      <a href="#workshops">Workshops</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact">Contact</a>
     </div>
   </nav>
 </header>
@@ -211,55 +326,144 @@ footer{
   </div>
 </section>
 
-<!-- PINK SECTION -->
+<!-- PINK SECTION: OVERVIEW -->
 <section class="s1">
   <div class="wrap">
     <div class="card parallax">
-      <div class="tag">Grassroots problem</div>
-      <h1>We listen to everyday rules kids grow up with.</h1>
+      <div class="tag">Grassroots problem · Playful response</div>
+      <h1>We start where gender actually shows up.</h1>
       <p class="lead">
-        The Equal Lens works at the root — homes, classrooms and peer spaces — turning unspoken
-        gender rules into conversations kids can question.
+        The Equal Lens listens to what kids already know — curfews, chores, jokes, “safety” rules —
+        and turns those realities into honest, age-appropriate conversations.
       </p>
+      <div class="chips">
+        <div class="chip">Ages 10–16</div>
+        <div class="chip">60–90 minute sessions</div>
+        <div class="chip">Schools & NGOs</div>
+        <div class="chip">Games · stories · reflection</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BLUE SECTION -->
-<section class="s2">
+<!-- BLUE SECTION: PROBLEM WE SEE -->
+<section class="s2" id="problem">
   <div class="wrap">
     <div class="card parallax">
-      <div class="tag">How we work</div>
-      <h1>Workshops that feel like play, not lectures.</h1>
+      <div class="tag">What we keep hearing</div>
+      <h1>Two sets of rules. Very little room to question.</h1>
       <p class="lead">
-        Games, drawing, movement and discussion help students spot patterns they’ve never
-        been asked to notice.
+        In classrooms and community rooms, the details change, but the patterns don’t. Tap a card:
       </p>
+
+      <div class="problems">
+        <div class="problem-card">
+          <div class="title">Different rules at home</div>
+          <div>Same house, different freedoms.</div>
+          <div class="more">
+            “Bhai can stay out late.” “She should learn how to manage a home.”
+            No one sits everyone down to ask if this feels fair.
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="title">Silence in classrooms</div>
+          <div>Some voices shrink, some fill the room.</div>
+          <div class="more">
+            A few students talk over others. Some never raise their hand.
+            Teachers see it, but it feels “normal”, so it continues.
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="title">Jokes that stick</div>
+          <div>“It’s just a joke” becomes a rule.</div>
+          <div class="more">
+            Nicknames, comments on clothes, “don’t be so emotional” —
+            these jokes quietly teach everyone who is allowed to feel what.
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- GREEN SECTION -->
-<section class="s3">
+<!-- GREEN SECTION: WORKSHOPS -->
+<section class="s3" id="workshops">
   <div class="wrap">
     <div class="card parallax">
-      <div class="tag">What shifts</div>
-      <h1>Small pauses. Big questions.</h1>
+      <div class="tag">Inside a session</div>
+      <h1>It feels more like a game than a lecture.</h1>
       <p class="lead">
-        We’re not trying to fix everything. Just helping young people pause before repeating
-        a rule they never questioned.
+        We move through three simple moves in every workshop:
       </p>
+
+      <div class="steps">
+        <div class="step">
+          <span class="num">1 · Notice</span>
+          <p>Line games, drawing, simple mapping — students spot who gets which rules.</p>
+        </div>
+        <div class="step">
+          <span class="num">2 · Question</span>
+          <p>We ask: who benefits, who adjusts, who feels small? No one person is “the villain”.</p>
+        </div>
+        <div class="step">
+          <span class="num">3 · Try</span>
+          <p>Each group picks one tiny change to test at home, in class or with friends.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="s5">
+<!-- YELLOW SECTION: IMPACT -->
+<section class="s4" id="impact">
   <div class="wrap">
     <div class="card parallax">
-      <h1>Bring The Equal Lens to your school or community.</h1>
-      <p class="lead">One room. One hour. A conversation that stays.</p>
-      <footer>© <span id="year"></span> The Equal Lens</footer>
+      <div class="tag">What shifts afterward</div>
+      <h1>We’re aiming for small, noticeable nudges.</h1>
+
+      <div class="cols">
+        <div>
+          <h3>Young people start to…</h3>
+          <ul>
+            <li>Notice when rules feel unfair, not just “how it is”.</li>
+            <li>Use clearer language to explain what feels off.</li>
+            <li>Back each other up in small, everyday moments.</li>
+            <li>See gender as everyone’s topic, not “just for girls”.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Adults tell us they see…</h3>
+          <ul>
+            <li>More students speaking up in class.</li>
+            <li>Different kids taking leadership roles.</li>
+            <li>Fewer cruel “jokes” passed off as fun.</li>
+            <li>More questions asked at home about fairness.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHITE SECTION: CTA -->
+<section class="s5" id="contact">
+  <div class="wrap">
+    <div class="card parallax">
+      <div class="tag">Bring The Equal Lens to your space</div>
+      <h1>One room. One hour. A conversation that stays.</h1>
+      <p class="lead">
+        We work with schools, NGOs and youth groups. Start with a single pilot session and
+        see how your students respond.
+      </p>
+
+      <div class="buttons">
+        <button class="btn main">For schools & NGOs</button>
+        <button class="btn secondary">Sample activities</button>
+      </div>
+
+      <footer>
+        © <span id="year"></span> The Equal Lens · hello@theequallens.com
+      </footer>
     </div>
   </div>
 </section>
@@ -271,12 +475,19 @@ footer{
 <script>
 document.getElementById("year").innerText = new Date().getFullYear();
 
-if(typeof gsap !== "undefined"){
+/* expand problem cards */
+document.querySelectorAll(".problem-card").forEach(card=>{
+  card.addEventListener("click",()=>{
+    card.classList.toggle("open");
+  });
+});
+
+if(typeof gsap!=="undefined"){
   gsap.registerPlugin(ScrollTrigger);
 
-  /* Pinned swap animation */
+  /* pinned yellow story */
   const lines = gsap.utils.toArray(".swap-line");
-  gsap.set(lines.slice(1), {opacity:0, y:30});
+  gsap.set(lines.slice(1), {opacity:0, y:30}); // keep first visible
 
   const tl = gsap.timeline({
     scrollTrigger:{
@@ -293,11 +504,12 @@ if(typeof gsap !== "undefined"){
       .to(line,{opacity:0,y:-30,duration:0.4}, "+=0.6");
   });
 
-  /* Parallax scroll for other sections */
+  /* parallax-style scroll for all .parallax cards */
   gsap.utils.toArray(".parallax").forEach(card=>{
     gsap.from(card,{
       y:80,
       opacity:0,
+      ease:"power3.out",
       scrollTrigger:{
         trigger:card,
         start:"top 85%",

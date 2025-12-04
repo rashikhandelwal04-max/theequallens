@@ -82,9 +82,9 @@ section{
 }
 
 /* FLAT COLOUR BACKGROUNDS */
+.swap-section{background:var(--yellow);}
 .s1{background:var(--pink);}
 .s2{background:var(--blue);}
-.swap-section{background:var(--yellow);}
 .s3{background:var(--green);}
 .s4{background:var(--yellow);}
 .s5{background:var(--white);}
@@ -264,9 +264,8 @@ footer{
   align-items:center;
   justify-content:center;
   text-align:center;
-  font-size:clamp(28px,5vw,46px);
+  font-size:clamp(26px,4.6vw,44px);
   font-weight:600;
-  /* visible by default so if JS fails, content still shows (overlapping, but visible) */
 }
 .swap-line.emphasis{
   font-weight:700;
@@ -302,6 +301,22 @@ footer{
     </div>
   </nav>
 </header>
+
+<!-- PINNED SCROLL STORY (NOW FIRST) -->
+<section class="swap-section">
+  <div class="swap-inner">
+    <div class="swap-line">Kids don’t need a chapter on gender.</div>
+    <div class="swap-line">They already know the rules.</div>
+    <div class="swap-line">No one ever told them.</div>
+    <div class="swap-line">They hear them at home.</div>
+    <div class="swap-line">In classrooms.</div>
+    <div class="swap-line">On playgrounds.</div>
+    <div class="swap-line">Online.</div>
+    <div class="swap-line emphasis">That silence teaches.</div>
+    <div class="swap-line emphasis">We don’t lecture.</div>
+    <div class="swap-line emphasis">We help them notice.</div>
+  </div>
+</section>
 
 <!-- SECTION 1: PROBLEM + MISSION -->
 <section class="s1">
@@ -372,21 +387,6 @@ footer{
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- PINNED SCROLL STORY (MADAM SPEAKER STYLE) -->
-<section class="swap-section">
-  <div class="swap-inner">
-    <div class="swap-line">Kids already know the rules.</div>
-    <div class="swap-line">No one ever told them.</div>
-    <div class="swap-line">They hear them at home.</div>
-    <div class="swap-line">In classrooms.</div>
-    <div class="swap-line">On playgrounds.</div>
-    <div class="swap-line">Online.</div>
-    <div class="swap-line emphasis">That silence teaches.</div>
-    <div class="swap-line emphasis">We don’t lecture.</div>
-    <div class="swap-line emphasis">We help them notice.</div>
   </div>
 </section>
 
@@ -499,31 +499,35 @@ document.querySelectorAll(".problem-card").forEach(card=>{
 if (typeof gsap !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 
-  // HERO CARD – entrance on load
-  gsap.from(".section-hero", {
-    y: 80,
+  // HERO SECTION – more animated, like a scene
+  gsap.from(".section-hero .tag, .section-hero h1, .section-hero .lead, .section-hero .chips, .section-hero .buttons", {
+    y: 60,
     opacity: 0,
-    duration: 1,
-    ease: "power3.out"
+    duration: 0.9,
+    ease: "power3.out",
+    stagger: 0.12,
+    scrollTrigger: {
+      trigger: ".s1",
+      start: "top 75%"
+    }
   });
 
-  // SECTION 2 – problem card
-  gsap.from(".section-problem", {
+  // PROBLEM SECTION – card + cards stagger
+  gsap.from(".section-problem .tag, .section-problem h1, .section-problem .lead", {
+    y: 60,
+    opacity: 0,
+    duration: 0.9,
+    ease: "power3.out",
     scrollTrigger: {
       trigger: ".s2",
-      start: "top 70%"
-    },
-    y: 80,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
+      start: "top 75%"
+    }
   });
 
-  // Animate individual problem cards
   gsap.from(".problems .problem-card", {
     scrollTrigger: {
       trigger: ".s2",
-      start: "top 65%"
+      start: "top 70%"
     },
     y: 50,
     opacity: 0,
@@ -532,7 +536,7 @@ if (typeof gsap !== "undefined") {
     stagger: 0.1
   });
 
-  // PINNED SWAP SECTION
+  // PINNED SWAP SECTION – “kids don’t…” story
   const lines = gsap.utils.toArray(".swap-line");
   gsap.set(lines, {opacity:0, y:30});
 
@@ -546,7 +550,7 @@ if (typeof gsap !== "undefined") {
     }
   });
 
-  lines.forEach((line, i) => {
+  lines.forEach((line) => {
     swapTl.to(line, {
       opacity:1,
       y:0,
@@ -560,15 +564,15 @@ if (typeof gsap !== "undefined") {
   });
 
   // WORKSHOPS SECTION
-  gsap.from(".section-workshops", {
-    scrollTrigger: {
-      trigger: ".s3",
-      start: "top 75%"
-    },
-    y: 80,
+  gsap.from(".section-workshops .tag, .section-workshops h1, .section-workshops .lead", {
+    y: 70,
     opacity: 0,
     duration: 0.9,
-    ease: "power3.out"
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".s3",
+      start: "top 80%"
+    }
   });
 
   gsap.from(".steps .step", {
@@ -584,27 +588,40 @@ if (typeof gsap !== "undefined") {
   });
 
   // IMPACT SECTION
-  gsap.from(".section-impact", {
+  gsap.from(".section-impact .tag, .section-impact h1", {
     scrollTrigger: {
       trigger: ".s4",
-      start: "top 75%"
+      start: "top 80%"
     },
-    y: 80,
+    y: 70,
     opacity: 0,
     duration: 0.9,
     ease: "power3.out"
   });
 
+  gsap.from(".section-impact .cols > div", {
+    scrollTrigger: {
+      trigger: ".s4",
+      start: "top 70%"
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.7,
+    ease: "power3.out",
+    stagger: 0.15
+  });
+
   // CTA SECTION
-  gsap.from(".section-cta", {
+  gsap.from(".section-cta .tag, .section-cta h1, .section-cta .lead, .section-cta .buttons, .section-cta footer", {
     scrollTrigger: {
       trigger: ".s5",
       start: "top 80%"
     },
-    y: 80,
+    y: 70,
     opacity: 0,
     duration: 1,
-    ease: "power3.out"
+    ease: "power3.out",
+    stagger: 0.12
   });
 }
 </script>

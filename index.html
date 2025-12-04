@@ -23,7 +23,7 @@
 /* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 html{
-  scroll-behavior:smooth; /* normal scroll, no snap */
+  scroll-behavior:smooth;   /* removed scroll-snap to play nicer with GSAP pin */
 }
 body{
   font-family:'Poppins',sans-serif;
@@ -263,17 +263,6 @@ footer{
   box-shadow:8px 8px 0 rgba(0,0,0,.15);
 }
 
-/* SIMPLE REVEAL ANIMATION (CSS ONLY, JS TRIGGERS CLASS) */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-}
-.reveal.show{
-  opacity:1;
-  transform:translateY(0);
-  transition:all .7s cubic-bezier(.2,.8,.2,1);
-}
-
 /* RESPONSIVE */
 @media(max-width:900px){
   .problems{grid-template-columns:1fr;}
@@ -308,7 +297,7 @@ footer{
 <!-- SECTION 1: PROBLEM + MISSION -->
 <section class="s1">
   <div class="wrap">
-    <div class="card reveal">
+    <div class="card section-hero">
       <div class="tag">Grassroots problem · Playful solution</div>
       <h1>We listen to the “that’s just how it is” rules<br>kids grow up with — and gently challenge them.</h1>
       <p class="lead">
@@ -339,7 +328,7 @@ footer{
 <!-- SECTION 2: PROBLEM WE SEE -->
 <section class="s2" id="problem">
   <div class="wrap">
-    <div class="card reveal">
+    <div class="card section-problem">
       <div class="tag">What we see on the ground</div>
       <h1>Kids are growing up with two sets of rules<br>and almost no space to question them.</h1>
       <p class="lead">
@@ -377,10 +366,10 @@ footer{
   </div>
 </section>
 
-<!-- PAUSE SECTION -->
+<!-- PAUSE SECTION (PINNED) -->
 <section class="pause">
   <div class="wrap">
-    <div class="pause-box reveal">
+    <div class="pause-box">
       No one in the room says “this is a gender rule”.<br><br>
       But everyone already knows who must adjust.
     </div>
@@ -390,7 +379,7 @@ footer{
 <!-- SECTION 3: HOW OUR WORKSHOPS WORK -->
 <section class="s3" id="workshops">
   <div class="wrap">
-    <div class="card reveal">
+    <div class="card section-workshops">
       <div class="tag">How The Equal Lens responds</div>
       <h1>We turn these patterns into structured,<br>playful workshops.</h1>
       <p class="lead">
@@ -422,7 +411,7 @@ footer{
 <!-- SECTION 4: WHAT CHANGES -->
 <section class="s4">
   <div class="wrap">
-    <div class="card reveal">
+    <div class="card section-impact">
       <div class="tag">What shifts after a workshop</div>
       <h1>We’re not promising a revolution.<br>We’re aiming for noticeable nudges.</h1>
 
@@ -453,7 +442,7 @@ footer{
 <!-- SECTION 5: CALL TO ACTION -->
 <section class="s5">
   <div class="wrap">
-    <div class="card reveal">
+    <div class="card section-cta">
       <div class="tag">Bring The Equal Lens to your space</div>
       <h1>One room. One hour.<br>And a conversation that doesn’t feel like a lecture.</h1>
       <p class="lead">
@@ -477,6 +466,10 @@ footer{
   </div>
 </section>
 
+<!-- GSAP + ScrollTrigger from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
 <script>
 /* Year */
 document.getElementById("year").innerText = new Date().getFullYear();
@@ -488,17 +481,112 @@ document.querySelectorAll(".problem-card").forEach(card=>{
   });
 });
 
-/* Simple scroll reveal with IntersectionObserver */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:0.2});
+/* Only run animations if GSAP loaded */
+if (typeof gsap !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+  // HERO CARD – entrance on load
+  gsap.from(".section-hero", {
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
+
+  // SECTION 2 – problem card with slight rotate
+  gsap.from(".section-problem", {
+    scrollTrigger: {
+      trigger: ".s2",
+      start: "top 70%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
+
+  // Animate individual problem cards slightly
+  gsap.from(".problems .problem-card", {
+    scrollTrigger: {
+      trigger: ".s2",
+      start: "top 65%"
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.6,
+    ease: "power3.out",
+    stagger: 0.1
+  });
+
+  // PAUSE SECTION – pin + gentle scale/opacity
+  ScrollTrigger.create({
+    trigger: ".pause",
+    start: "top top",
+    end: "+=150%",   // keep it for 1.5 screen heights
+    pin: true,
+    scrub: true
+  });
+
+  gsap.from(".pause-box", {
+    scrollTrigger: {
+      trigger: ".pause",
+      start: "top center",
+      end: "bottom center",
+      scrub: true
+    },
+    scale: 0.92,
+    opacity: 0.1,
+    ease: "power2.out"
+  });
+
+  // WORKSHOPS SECTION
+  gsap.from(".section-workshops", {
+    scrollTrigger: {
+      trigger: ".s3",
+      start: "top 75%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 0.9,
+    ease: "power3.out"
+  });
+
+  gsap.from(".steps .step", {
+    scrollTrigger: {
+      trigger: ".s3",
+      start: "top 70%"
+    },
+    y: 60,
+    opacity: 0,
+    duration: 0.7,
+    ease: "power3.out",
+    stagger: 0.15
+  });
+
+  // IMPACT SECTION
+  gsap.from(".section-impact", {
+    scrollTrigger: {
+      trigger: ".s4",
+      start: "top 75%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 0.9,
+    ease: "power3.out"
+  });
+
+  // CTA SECTION
+  gsap.from(".section-cta", {
+    scrollTrigger: {
+      trigger: ".s5",
+      start: "top 80%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
+}
 </script>
 
 </body>

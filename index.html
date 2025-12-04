@@ -5,18 +5,18 @@
 <title>The Equal Lens | Seeing Equality Differently</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --ink:#1f2937;
+  --ink:#111827;
   --muted:#374151;
 
-  --pink:#ff8ccf;
+  --pink:#ff80bf;
   --blue:#7dd3fc;
   --green:#6ee7b7;
   --yellow:#fde68a;
   --white:#ffffff;
-
-  --bg:#fffefe;
 }
 
 /* RESET */
@@ -26,18 +26,17 @@ html{
   scroll-behavior:smooth;
 }
 body{
-  font-family:-apple-system, BlinkMacSystemFont,
-  "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background:var(--bg);
+  font-family:'Poppins', sans-serif;
+  background:#ffffff;
   color:var(--ink);
 }
 
-/* Header */
+/* HEADER */
 header{
   position:fixed;
   top:0;left:0;right:0;
-  background:rgba(255,255,255,.9);
-  border-bottom:2px solid #e5e7eb;
+  background:white;
+  border-bottom:3px solid var(--ink);
   z-index:50;
 }
 .nav{
@@ -46,36 +45,27 @@ header{
   height:64px;
   padding:0 18px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 .logo{
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:800;
+  font-weight:700;
   letter-spacing:.08em;
-  font-size:13px;
 }
-.logo-badge{
-  width:34px;height:34px;
-  border-radius:12px;
-  background:conic-gradient(from 120deg,
-    var(--pink),
-    var(--yellow),
-    var(--green),
-    var(--blue),
-    var(--pink)
-  );
+.logo-box{
+  width:32px;height:32px;
+  background:var(--yellow);
+  border:3px solid var(--ink);
 }
-.nav-links a{
-  font-size:13px;
-  color:var(--muted);
+.nav a{
+  font-size:14px;
   margin-left:16px;
 }
-.nav-links a:hover{color:var(--ink)}
 
-/* Sections */
+/* SECTIONS */
 section{
   scroll-snap-align:start;
   min-height:100vh;
@@ -88,114 +78,90 @@ section{
   margin:auto;
 }
 
-/* BRIGHT BACKGROUNDS */
-.s1{
-  background:
-    radial-gradient(circle at 10% 20%,var(--pink),transparent 45%),
-    radial-gradient(circle at 90% 80%,var(--blue),transparent 45%),
-    var(--white);
-}
-.s2{
-  background:
-    radial-gradient(circle at 90% 10%,var(--green),transparent 45%),
-    radial-gradient(circle at 10% 80%,var(--yellow),transparent 45%),
-    var(--white);
-}
-.s3{
-  background:
-    radial-gradient(circle at 15% 75%,var(--blue),transparent 45%),
-    radial-gradient(circle at 85% 30%,var(--pink),transparent 45%),
-    var(--white);
-}
-.s4{
-  background:
-    radial-gradient(circle at 20% 20%,var(--yellow),transparent 45%),
-    radial-gradient(circle at 80% 80%,var(--green),transparent 45%),
-    var(--white);
-}
-.s5{
-  background:
-    radial-gradient(circle at 50% 10%,var(--pink),transparent 55%),
-    var(--white);
+/* FLAT COLOUR SECTIONS */
+.s1{background:var(--pink);}
+.s2{background:var(--blue);}
+.s3{background:var(--green);}
+.s4{background:var(--yellow);}
+.s5{background:white;}
+
+/* CARD */
+.card{
+  background:white;
+  border:4px solid var(--ink);
+  border-radius:24px;
+  padding:28px;
+  box-shadow:10px 10px 0 rgba(0,0,0,.15);
 }
 
-/* Little pill */
-.pill{
-  display:inline-flex;
-  gap:8px;
+/* TAG */
+.tag{
+  display:inline-block;
+  background:white;
+  border:3px solid var(--ink);
   padding:6px 14px;
   border-radius:999px;
-  background:var(--white);
-  border:2px solid var(--ink);
-  font-size:11px;
+  font-size:12px;
   margin-bottom:14px;
+  font-weight:600;
 }
 
-/* Headings */
+/* TEXT */
 h1{
-  font-size:clamp(34px,5vw,48px);
-  line-height:1.05;
+  font-size:clamp(32px,5vw,48px);
+  line-height:1.1;
   margin-bottom:12px;
 }
 p{
   font-size:16px;
-  max-width:680px;
-  color:var(--muted);
+  max-width:700px;
 }
 
-/* EAVESDROPPING CARDS */
-.bubbles{
+/* QUOTES */
+.quotes{
   margin-top:24px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:16px;
 }
-.bubble{
+.quote{
   background:white;
-  border-radius:22px;
   border:3px solid var(--ink);
-  padding:14px 16px;
+  padding:16px;
+  border-radius:20px;
   font-size:14px;
-  box-shadow:6px 6px 0 rgba(0,0,0,.08);
 }
-.bubble span{
-  display:block;
-  margin-top:8px;
-  font-size:11px;
-  color:#6b7280;
+.quote span{
+  font-size:12px;
+  opacity:.7;
 }
 
-/* Buttons */
-.btn-row{
-  margin-top:26px;
+/* BUTTONS */
+.buttons{
+  margin-top:28px;
   display:flex;
-  gap:14px;
+  gap:16px;
 }
 .btn{
-  padding:10px 22px;
-  border-radius:999px;
-  border:3px solid var(--ink);
-  background:white;
-  font-size:14px;
-  cursor:pointer;
+  padding:12px 26px;
   font-weight:700;
+  border:4px solid var(--ink);
+  border-radius:999px;
+  background:white;
+  cursor:pointer;
 }
-.btn.primary{
-  background:var(--pink);
-}
-.btn.secondary{
-  background:var(--green);
-}
+.btn.pink{background:var(--pink);}
+.btn.green{background:var(--green);}
 
-/* Footer */
+/* FOOTER */
 footer{
   margin-top:32px;
-  font-size:12px;
+  font-size:13px;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media(max-width:800px){
-  .bubbles{grid-template-columns:1fr}
+  .quotes{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -205,80 +171,95 @@ footer{
 <header>
   <nav class="nav">
     <div class="logo">
-      <div class="logo-badge"></div>
+      <div class="logo-box"></div>
       THE EQUAL LENS
     </div>
-    <div class="nav-links">
+    <div>
       <a href="activities.html">Activities</a>
       <a href="quiz.html">Quiz</a>
       <a href="pledge.html">Pledge</a>
-      <a href="schools.html">For schools</a>
+      <a href="schools.html">Schools</a>
     </div>
   </nav>
 </header>
 
+<!-- SECTION 1 -->
 <section class="s1">
   <div class="wrap">
-    <div class="pill">Things we overhear</div>
-    <h1>“Why can he stay out late,<br>but I can’t?”</h1>
-    <p>Gender ideas don’t come from textbooks — they come from sentences we hear every day.</p>
+    <div class="card">
+      <div class="tag">Things we overhear</div>
+      <h1>“Why can he stay out late,<br>but I can’t?”</h1>
+      <p>Gender rules don’t come from books. They come from everyday sentences.</p>
 
-    <div class="bubbles">
-      <div class="bubble">“Boys will be boys.” <span>— said casually</span></div>
-      <div class="bubble">“Don’t sit like that, you’re a girl.” <span>— somewhere at home</span></div>
-      <div class="bubble">“Man up.” <span>— playground classic</span></div>
-      <div class="bubble">“She’s too ambitious.” <span>— behind closed doors</span></div>
+      <div class="quotes">
+        <div class="quote">“Boys will be boys.”<br><span>— said casually</span></div>
+        <div class="quote">“Don’t sit like that.”<br><span>— somewhere at home</span></div>
+        <div class="quote">“Man up.”<br><span>— playground classic</span></div>
+        <div class="quote">“She’s too ambitious.”<br><span>— whispered</span></div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- SECTION 2 -->
 <section class="s2">
   <div class="wrap">
-    <div class="pill">Inside a session</div>
-    <h1>“Wait… we all do this?”</h1>
-    <p>Workshops feel like games + conversations + sudden realisations.</p>
+    <div class="card">
+      <div class="tag">Inside a session</div>
+      <h1>“Wait… we all do this?”</h1>
+      <p>Sessions feel like games, conversations, and sudden realisations.</p>
 
-    <div class="bubbles">
-      <div class="bubble">“My sister actually does more work.”</div>
-      <div class="bubble">“That joke isn’t funny anymore.”</div>
-      <div class="bubble">“I never thought about it this way.”</div>
-      <div class="bubble">“I want to try one change.”</div>
+      <div class="quotes">
+        <div class="quote">“My sister does more work.”</div>
+        <div class="quote">“That joke isn’t funny anymore.”</div>
+        <div class="quote">“I didn’t notice this before.”</div>
+        <div class="quote">“I want to try one change.”</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- SECTION 3 -->
 <section class="s3">
   <div class="wrap">
-    <div class="pill">Everyday places</div>
-    <h1>Equality lives everywhere</h1>
-    <p>At home. In school. With friends. Online.</p>
+    <div class="card">
+      <div class="tag">Everyday life</div>
+      <h1>Equality lives everywhere</h1>
+      <p>At home. In classrooms. With friends. Online.</p>
+    </div>
   </div>
 </section>
 
+<!-- SECTION 4 -->
 <section class="s4">
   <div class="wrap">
-    <div class="pill">Tiny changes</div>
-    <h1>Small shifts matter</h1>
-    <p>No big speeches. Just better questions and fairer habits.</p>
+    <div class="card">
+      <div class="tag">Tiny shifts</div>
+      <h1>Small changes count</h1>
+      <p>No big speeches. Just fairer habits.</p>
+    </div>
   </div>
 </section>
 
+<!-- SECTION 5 -->
 <section class="s5">
   <div class="wrap">
-    <div class="pill">Start here</div>
-    <h1>One room. One hour.<br>One conversation.</h1>
+    <div class="card">
+      <div class="tag">Start here</div>
+      <h1>One room.<br>One hour.<br>One conversation.</h1>
 
-    <div class="btn-row">
-      <button class="btn primary">For schools & NGOs</button>
-      <button class="btn secondary">Explore activities</button>
+      <div class="buttons">
+        <button class="btn pink">For schools & NGOs</button>
+        <button class="btn green">Explore activities</button>
+      </div>
+
+      <footer>© <span id="year"></span> The Equal Lens</footer>
     </div>
-
-    <footer>© <span id="year"></span> The Equal Lens</footer>
   </div>
 </section>
 
 <script>
-document.getElementById("year").innerText=new Date().getFullYear();
+document.getElementById("year").innerText = new Date().getFullYear();
 </script>
 
 </body>

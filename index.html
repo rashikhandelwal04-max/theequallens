@@ -86,6 +86,7 @@ section{
 /* FLAT COLOUR BACKGROUNDS */
 .s1{background:var(--pink);}
 .s2{background:var(--blue);}
+.pause{background:var(--yellow);}
 .s3{background:var(--green);}
 .s4{background:var(--yellow);}
 .s5{background:var(--white);}
@@ -123,6 +124,8 @@ p.lead{
   max-width:700px;
   margin-bottom:14px;
 }
+
+/* CHIPS */
 .chips{
   margin-top:10px;
   display:flex;
@@ -154,8 +157,11 @@ p.lead{
   transition:.2s;
 }
 .problem-card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px) rotate(-1deg);
   box-shadow:6px 6px 0 rgba(0,0,0,.15);
+}
+.problem-card:active{
+  transform:scale(0.97);
 }
 .problem-card .title{
   font-weight:700;
@@ -241,16 +247,50 @@ footer{
   color:var(--muted);
 }
 
+/* PAUSE SECTION */
+.pause{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.pause-box{
+  max-width:640px;
+  font-size:30px;
+  font-weight:700;
+  border:4px solid var(--ink);
+  border-radius:22px;
+  background:var(--white);
+  padding:26px;
+  box-shadow:8px 8px 0 rgba(0,0,0,.15);
+}
+
 /* SCROLL REVEAL */
 .reveal{
   opacity:0;
-  transform:translateY(30px);
-  transition:.6s ease;
+  transform:translateY(40px) scale(0.97);
+  transition:all .7s cubic-bezier(.2,.8,.2,1);
 }
 .reveal.show{
   opacity:1;
-  transform:translateY(0);
+  transform:translateY(0) scale(1);
 }
+
+/* STAGGERED CHILDREN */
+.reveal .delay{
+  opacity:0;
+  transform:translateY(20px);
+}
+.reveal.show .delay{
+  opacity:1;
+  transform:translateY(0);
+  transition:.6s ease;
+}
+.reveal.show .delay:nth-child(1){transition-delay:.1s}
+.reveal.show .delay:nth-child(2){transition-delay:.2s}
+.reveal.show .delay:nth-child(3){transition-delay:.3s}
+.reveal.show .delay:nth-child(4){transition-delay:.3s}
+.reveal.show .delay:nth-child(5){transition-delay:.4s}
 
 /* RESPONSIVE */
 @media(max-width:900px){
@@ -261,6 +301,7 @@ footer{
 @media(max-width:600px){
   section{padding:110px 14px 50px;}
   .card{padding:20px;}
+  .pause-box{font-size:24px;}
 }
 </style>
 </head>
@@ -286,22 +327,22 @@ footer{
 <section class="s1">
   <div class="wrap">
     <div class="card reveal">
-      <div class="tag">Grassroots gender problem → playful workshops</div>
-      <h1>We listen to the “that’s just how it is” rules<br>kids grow up with — and gently challenge them.</h1>
-      <p class="lead">
+      <div class="tag delay">Grassroots problem · Playful solution</div>
+      <h1 class="delay">We listen to the “that’s just how it is” rules<br>kids grow up with — and gently challenge them.</h1>
+      <p class="lead delay">
         The Equal Lens works with schools and NGOs to spot everyday gender rules in homes,
         classrooms and chats, then turns them into fun, structured workshops that nudge things
         towards fairness.
       </p>
 
-      <div class="chips">
+      <div class="chips delay">
         <div class="chip">Ages 10–16</div>
         <div class="chip">60–90 min sessions</div>
         <div class="chip">For schools & NGOs</div>
         <div class="chip">Games · discussion · tiny actions</div>
       </div>
 
-      <div class="buttons">
+      <div class="buttons delay">
         <button class="btn main" onclick="document.getElementById('problem').scrollIntoView({behavior:'smooth'})">
           What problem do we see?
         </button>
@@ -317,14 +358,14 @@ footer{
 <section class="s2" id="problem">
   <div class="wrap">
     <div class="card reveal">
-      <div class="tag">What we see on the ground</div>
-      <h1>Kids are growing up with two sets of rules,<br>and almost no space to question them.</h1>
-      <p class="lead">
+      <div class="tag delay">What we see on the ground</div>
+      <h1 class="delay">Kids are growing up with two sets of rules<br>and almost no space to question them.</h1>
+      <p class="lead delay">
         When we sit in classrooms and community rooms, we keep hearing the same patterns.
-        Click a card to see how it sounds in real life:
+        Tap a card to see how it sounds in real life:
       </p>
 
-      <div class="problems">
+      <div class="problems delay">
         <div class="problem-card">
           <div class="title">Different rules at home</div>
           <div>Same house, different freedoms.</div>
@@ -338,7 +379,7 @@ footer{
           <div>Some voices shrink, some fill the room.</div>
           <div class="more">
             A few students talk over others. Some never raise their hand.
-            Teachers see it, but it feels normal, so it continues.
+            Teachers see it, but it feels “normal”, so it continues.
           </div>
         </div>
         <div class="problem-card">
@@ -354,17 +395,27 @@ footer{
   </div>
 </section>
 
+<!-- PAUSE SECTION -->
+<section class="pause">
+  <div class="wrap">
+    <div class="pause-box reveal">
+      No one in the room says “this is a gender rule”.<br><br>
+      But everyone already knows who must adjust.
+    </div>
+  </div>
+</section>
+
 <!-- SECTION 3: HOW OUR WORKSHOPS WORK -->
 <section class="s3" id="workshops">
   <div class="wrap">
     <div class="card reveal">
-      <div class="tag">How The Equal Lens responds</div>
-      <h1>We turn these patterns into structured,<br>playful workshops.</h1>
-      <p class="lead">
+      <div class="tag delay">How The Equal Lens responds</div>
+      <h1 class="delay">We turn these patterns into structured,<br>playful workshops.</h1>
+      <p class="lead delay">
         No long speeches. Just three simple moves inside every session:
       </p>
 
-      <div class="steps">
+      <div class="steps delay">
         <div class="step">
           <span class="num">1 · Notice</span>
           <p>Games, drawings and quick activities help students see who gets which rules.</p>
@@ -379,7 +430,7 @@ footer{
         </div>
       </div>
 
-      <p class="lead" style="margin-top:18px;">
+      <p class="lead delay" style="margin-top:18px;">
         Sessions are designed so that even if we only meet a group once, something sticks.
       </p>
     </div>
@@ -390,14 +441,14 @@ footer{
 <section class="s4">
   <div class="wrap">
     <div class="card reveal">
-      <div class="tag">What shifts after a workshop</div>
-      <h1>We’re not promising a revolution.<br>We’re aiming for noticeable nudges.</h1>
+      <div class="tag delay">What shifts after a workshop</div>
+      <h1 class="delay">We’re not promising a revolution.<br>We’re aiming for noticeable nudges.</h1>
 
-      <div class="cols">
+      <div class="cols delay">
         <div>
           <h3>Young people start to…</h3>
           <ul>
-            <li>Notice when rules are unfair, not “normal”.</li>
+            <li>Notice when rules are unfair, not just “how it is”.</li>
             <li>Use clearer language to say what feels off.</li>
             <li>Back each other up in small, everyday moments.</li>
             <li>See gender as everyone’s topic, not just “for girls”.</li>
@@ -421,14 +472,14 @@ footer{
 <section class="s5">
   <div class="wrap">
     <div class="card reveal">
-      <div class="tag">Bring The Equal Lens to your space</div>
-      <h1>One room. One hour.<br>And a conversation that doesn’t feel like a lecture.</h1>
-      <p class="lead">
+      <div class="tag delay">Bring The Equal Lens to your space</div>
+      <h1 class="delay">One room. One hour.<br>And a conversation that doesn’t feel like a lecture.</h1>
+      <p class="lead delay">
         Whether you’re a school, NGO or youth group, we can adapt a workshop to your context.
         Start with a simple “pilot session” and see how your students respond.
       </p>
 
-      <div class="buttons">
+      <div class="buttons delay">
         <button class="btn main" onclick="location.href='schools.html'">
           For schools & NGOs
         </button>
@@ -437,7 +488,7 @@ footer{
         </button>
       </div>
 
-      <footer>
+      <footer class="delay">
         © <span id="year"></span> The Equal Lens · hello@theequallens.com
       </footer>
     </div>

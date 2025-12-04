@@ -275,9 +275,7 @@ footer{
 }
 
 /* PARALLAX CARDS */
-.parallax{
-  /* marker class for JS */
-}
+.parallax{}
 
 /* RESPONSIVE */
 @media(max-width:900px){
@@ -487,8 +485,7 @@ if(typeof gsap!=="undefined"){
 
   /* pinned yellow story */
   const lines = gsap.utils.toArray(".swap-line");
-  // keep first visible initially, hide others
-  gsap.set(lines.slice(1), {opacity:0, y:30});
+  gsap.set(lines.slice(1), {opacity:0, y:30}); // keep first visible initially
 
   const tl = gsap.timeline({
     scrollTrigger:{
@@ -500,15 +497,18 @@ if(typeof gsap!=="undefined"){
     }
   });
 
-  // first line: just fade out after a short hold
+  // first line: visible, then fade out
   tl.to(lines[0], {opacity:1, y:0, duration:0.1})
     .to(lines[0], {opacity:0, y:-30, duration:0.4}, "+=0.6");
 
-  // rest of the lines: fade in then out
-  for(let i=1;i<lines.length;i++){
+  // middle lines: fade in + fade out
+  for(let i=1;i<lines.length-1;i++){
     tl.to(lines[i], {opacity:1, y:0, duration:0.4})
       .to(lines[i], {opacity:0, y:-30, duration:0.4}, "+=0.6");
   }
+
+  // last line: fade in and STAY (no fade out)
+  tl.to(lines[lines.length-1], {opacity:1, y:0, duration:0.4});
 
   /* parallax-style scroll for all .parallax cards */
   gsap.utils.toArray(".parallax").forEach(card=>{

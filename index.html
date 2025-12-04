@@ -23,8 +23,7 @@
 /* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 html{
-  scroll-snap-type:y mandatory;
-  scroll-behavior:smooth;
+  scroll-behavior:smooth; /* normal scroll, no snap */
 }
 body{
   font-family:'Poppins',sans-serif;
@@ -72,7 +71,6 @@ header{
 
 /* SECTIONS */
 section{
-  scroll-snap-align:start;
   min-height:100vh;
   padding:120px 20px 64px;
   display:flex;
@@ -265,9 +263,15 @@ footer{
   box-shadow:8px 8px 0 rgba(0,0,0,.15);
 }
 
-/* REVEAL CLASS – DO NOT HIDE CONTENT BY DEFAULT */
+/* SIMPLE REVEAL ANIMATION (CSS ONLY, JS TRIGGERS CLASS) */
 .reveal{
-  /* we keep it visible by default */
+  opacity:0;
+  transform:translateY(40px);
+}
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+  transition:all .7s cubic-bezier(.2,.8,.2,1);
 }
 
 /* RESPONSIVE */
@@ -473,10 +477,6 @@ footer{
   </div>
 </section>
 
-<!-- GSAP + ScrollTrigger from CDN -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-
 <script>
 /* Year */
 document.getElementById("year").innerText = new Date().getFullYear();
@@ -488,90 +488,17 @@ document.querySelectorAll(".problem-card").forEach(card=>{
   });
 });
 
-/* If GSAP fails to load for some reason, stop here */
-if (typeof gsap !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-
-  // HERO CARD – animate on load
-  gsap.from(".s1 .card", {
-    y: 80,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
+/* Simple scroll reveal with IntersectionObserver */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+      observer.unobserve(entry.target);
+    }
   });
+},{threshold:0.2});
 
-  // SECTION 2 – problem card
-  gsap.from(".s2 .card", {
-    scrollTrigger: {
-      trigger: ".s2",
-      start: "top 70%"
-    },
-    y: 80,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
-  });
-
-  // PAUSE BOX
-  gsap.from(".pause-box", {
-    scrollTrigger: {
-      trigger: ".pause",
-      start: "top 75%"
-    },
-    scale: 0.9,
-    opacity: 0,
-    duration: 0.8,
-    ease: "back.out(1.7)"
-  });
-
-  // SECTION 3 – workshop card + steps
-  gsap.from(".s3 .card", {
-    scrollTrigger: {
-      trigger: ".s3",
-      start: "top 75%"
-    },
-    y: 80,
-    opacity: 0,
-    duration: 0.9,
-    ease: "power3.out"
-  });
-
-  gsap.from(".steps .step", {
-    scrollTrigger: {
-      trigger: ".s3",
-      start: "top 70%"
-    },
-    y: 60,
-    opacity: 0,
-    duration: 0.7,
-    ease: "power3.out",
-    stagger: 0.15
-  });
-
-  // SECTION 4 – impact card
-  gsap.from(".s4 .card", {
-    scrollTrigger: {
-      trigger: ".s4",
-      start: "top 75%"
-    },
-    y: 80,
-    opacity: 0,
-    duration: 0.9,
-    ease: "power3.out"
-  });
-
-  // SECTION 5 – CTA
-  gsap.from(".s5 .card", {
-    scrollTrigger: {
-      trigger: ".s5",
-      start: "top 80%"
-    },
-    y: 80,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
-  });
-}
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 </script>
 
 </body>

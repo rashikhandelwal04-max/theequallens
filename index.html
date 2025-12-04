@@ -265,9 +265,9 @@ footer{
   box-shadow:8px 8px 0 rgba(0,0,0,.15);
 }
 
-/* REVEAL BASE STATE (for GSAP to animate from) */
+/* REVEAL CLASS – DO NOT HIDE CONTENT BY DEFAULT */
 .reveal{
-  opacity:0;
+  /* we keep it visible by default */
 }
 
 /* RESPONSIVE */
@@ -488,88 +488,90 @@ document.querySelectorAll(".problem-card").forEach(card=>{
   });
 });
 
-/* GSAP animations */
-gsap.registerPlugin(ScrollTrigger);
+/* If GSAP fails to load for some reason, stop here */
+if (typeof gsap !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 
-// HERO CARD – animate on load
-gsap.from(".s1 .card", {
-  y: 80,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out"
-});
+  // HERO CARD – animate on load
+  gsap.from(".s1 .card", {
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
 
-// SECTION 2 – problem card
-gsap.from(".s2 .card", {
-  scrollTrigger: {
-    trigger: ".s2",
-    start: "top 70%"
-  },
-  y: 80,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out"
-});
+  // SECTION 2 – problem card
+  gsap.from(".s2 .card", {
+    scrollTrigger: {
+      trigger: ".s2",
+      start: "top 70%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
 
-// PAUSE BOX
-gsap.from(".pause-box", {
-  scrollTrigger: {
-    trigger: ".pause",
-    start: "top 75%"
-  },
-  scale: 0.9,
-  opacity: 0,
-  duration: 0.8,
-  ease: "back.out(1.7)"
-});
+  // PAUSE BOX
+  gsap.from(".pause-box", {
+    scrollTrigger: {
+      trigger: ".pause",
+      start: "top 75%"
+    },
+    scale: 0.9,
+    opacity: 0,
+    duration: 0.8,
+    ease: "back.out(1.7)"
+  });
 
-// SECTION 3 – steps stagger
-gsap.from(".s3 .card", {
-  scrollTrigger: {
-    trigger: ".s3",
-    start: "top 75%"
-  },
-  y: 80,
-  opacity: 0,
-  duration: 0.9,
-  ease: "power3.out"
-});
+  // SECTION 3 – workshop card + steps
+  gsap.from(".s3 .card", {
+    scrollTrigger: {
+      trigger: ".s3",
+      start: "top 75%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 0.9,
+    ease: "power3.out"
+  });
 
-gsap.from(".steps .step", {
-  scrollTrigger: {
-    trigger: ".s3",
-    start: "top 70%"
-  },
-  y: 60,
-  opacity: 0,
-  duration: 0.7,
-  ease: "power3.out",
-  stagger: 0.15
-});
+  gsap.from(".steps .step", {
+    scrollTrigger: {
+      trigger: ".s3",
+      start: "top 70%"
+    },
+    y: 60,
+    opacity: 0,
+    duration: 0.7,
+    ease: "power3.out",
+    stagger: 0.15
+  });
 
-// SECTION 4 – impact card
-gsap.from(".s4 .card", {
-  scrollTrigger: {
-    trigger: ".s4",
-    start: "top 75%"
-  },
-  y: 80,
-  opacity: 0,
-  duration: 0.9,
-  ease: "power3.out"
-});
+  // SECTION 4 – impact card
+  gsap.from(".s4 .card", {
+    scrollTrigger: {
+      trigger: ".s4",
+      start: "top 75%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 0.9,
+    ease: "power3.out"
+  });
 
-// SECTION 5 – CTA
-gsap.from(".s5 .card", {
-  scrollTrigger: {
-    trigger: ".s5",
-    start: "top 80%"
-  },
-  y: 80,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out"
-});
+  // SECTION 5 – CTA
+  gsap.from(".s5 .card", {
+    scrollTrigger: {
+      trigger: ".s5",
+      start: "top 80%"
+    },
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
+}
 </script>
 
 </body>

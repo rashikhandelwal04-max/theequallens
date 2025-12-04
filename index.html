@@ -5,12 +5,13 @@
 <title>The Equal Lens | Seeing Equality Differently</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Friendly, vibrant font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --ink:#111827;
-  --muted:#374151;
+  --muted:#4b5563;
 
   --pink:#ff80bf;
   --blue:#7dd3fc;
@@ -26,8 +27,8 @@ html{
   scroll-behavior:smooth;
 }
 body{
-  font-family:'Poppins', sans-serif;
-  background:#ffffff;
+  font-family:'Poppins',sans-serif;
+  background:var(--white);
   color:var(--ink);
 }
 
@@ -35,7 +36,7 @@ body{
 header{
   position:fixed;
   top:0;left:0;right:0;
-  background:white;
+  background:var(--white);
   border-bottom:3px solid var(--ink);
   z-index:50;
 }
@@ -54,22 +55,26 @@ header{
   gap:10px;
   font-weight:700;
   letter-spacing:.08em;
+  font-size:13px;
 }
 .logo-box{
   width:32px;height:32px;
   background:var(--yellow);
+  border-radius:10px;
   border:3px solid var(--ink);
 }
 .nav a{
   font-size:14px;
   margin-left:16px;
+  color:var(--muted);
 }
+.nav a:hover{color:var(--ink)}
 
 /* SECTIONS */
 section{
   scroll-snap-align:start;
   min-height:100vh;
-  padding:120px 20px 60px;
+  padding:120px 20px 64px;
   display:flex;
   align-items:center;
 }
@@ -78,90 +83,184 @@ section{
   margin:auto;
 }
 
-/* FLAT COLOUR SECTIONS */
+/* FLAT COLOUR BACKGROUNDS */
 .s1{background:var(--pink);}
 .s2{background:var(--blue);}
 .s3{background:var(--green);}
 .s4{background:var(--yellow);}
-.s5{background:white;}
+.s5{background:var(--white);}
 
-/* CARD */
+/* CARDS */
 .card{
-  background:white;
+  background:var(--white);
+  border-radius:22px;
   border:4px solid var(--ink);
-  border-radius:24px;
-  padding:28px;
-  box-shadow:10px 10px 0 rgba(0,0,0,.15);
+  padding:26px;
+  box-shadow:8px 8px 0 rgba(0,0,0,.15);
 }
 
-/* TAG */
+/* TAG / PILL */
 .tag{
   display:inline-block;
-  background:white;
-  border:3px solid var(--ink);
   padding:6px 14px;
   border-radius:999px;
+  border:3px solid var(--ink);
   font-size:12px;
-  margin-bottom:14px;
   font-weight:600;
-}
-
-/* TEXT */
-h1{
-  font-size:clamp(32px,5vw,48px);
-  line-height:1.1;
+  background:var(--white);
   margin-bottom:12px;
 }
-p{
-  font-size:16px;
+
+/* HEADINGS & TEXT */
+h1{
+  font-size:clamp(30px,5vw,46px);
+  line-height:1.1;
+  margin-bottom:10px;
+}
+p.lead{
+  font-size:15px;
+  color:var(--muted);
   max-width:700px;
+  margin-bottom:14px;
+}
+.chips{
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.chip{
+  font-size:11px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:var(--yellow);
+  border:2px solid var(--ink);
 }
 
-/* QUOTES */
-.quotes{
-  margin-top:24px;
+/* PROBLEM CARDS (CLICK TO EXPAND) */
+.problems{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.problem-card{
+  background:var(--white);
+  border-radius:18px;
+  border:3px solid var(--ink);
+  padding:12px 14px;
+  font-size:13px;
+  cursor:pointer;
+  transition:.2s;
+}
+.problem-card:hover{
+  transform:translateY(-4px);
+  box-shadow:6px 6px 0 rgba(0,0,0,.15);
+}
+.problem-card .title{
+  font-weight:700;
+  margin-bottom:4px;
+}
+.problem-card .more{
+  display:none;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+}
+.problem-card.open .more{
+  display:block;
+}
+
+/* WORKSHOP STEPS */
+.steps{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.step{
+  background:var(--white);
+  border-radius:18px;
+  border:3px solid var(--ink);
+  padding:14px 14px;
+  font-size:13px;
+  transition:.2s;
+}
+.step:hover{
+  transform:translateY(-4px);
+  box-shadow:6px 6px 0 rgba(0,0,0,.15);
+}
+.step span.num{
+  display:inline-block;
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+/* AFTER EFFECTS LIST */
+.cols{
+  margin-top:18px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:16px;
+  font-size:13px;
 }
-.quote{
-  background:white;
-  border:3px solid var(--ink);
-  padding:16px;
-  border-radius:20px;
+.cols h3{
   font-size:14px;
+  margin-bottom:6px;
 }
-.quote span{
-  font-size:12px;
-  opacity:.7;
+.cols ul{
+  padding-left:18px;
+}
+.cols li{
+  margin-bottom:4px;
 }
 
 /* BUTTONS */
 .buttons{
-  margin-top:28px;
+  margin-top:24px;
   display:flex;
-  gap:16px;
+  gap:12px;
+  flex-wrap:wrap;
 }
 .btn{
-  padding:12px 26px;
-  font-weight:700;
-  border:4px solid var(--ink);
+  padding:10px 22px;
   border-radius:999px;
-  background:white;
+  border:4px solid var(--ink);
+  background:var(--white);
+  font-size:13px;
   cursor:pointer;
+  font-weight:700;
 }
-.btn.pink{background:var(--pink);}
-.btn.green{background:var(--green);}
+.btn.main{background:var(--green);}
+.btn.secondary{background:var(--blue);}
 
 /* FOOTER */
 footer{
-  margin-top:32px;
-  font-size:13px;
+  margin-top:28px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* SCROLL REVEAL */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:.6s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* RESPONSIVE */
-@media(max-width:800px){
-  .quotes{grid-template-columns:1fr;}
+@media(max-width:900px){
+  .problems{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .cols{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  section{padding:110px 14px 50px;}
+  .card{padding:20px;}
 }
 </style>
 </head>
@@ -183,83 +282,189 @@ footer{
   </nav>
 </header>
 
-<!-- SECTION 1 -->
+<!-- SECTION 1: PROBLEM + MISSION -->
 <section class="s1">
   <div class="wrap">
-    <div class="card">
-      <div class="tag">Things we overhear</div>
-      <h1>“Why can he stay out late,<br>but I can’t?”</h1>
-      <p>Gender rules don’t come from books. They come from everyday sentences.</p>
+    <div class="card reveal">
+      <div class="tag">Grassroots gender problem → playful workshops</div>
+      <h1>We listen to the “that’s just how it is” rules<br>kids grow up with — and gently challenge them.</h1>
+      <p class="lead">
+        The Equal Lens works with schools and NGOs to spot everyday gender rules in homes,
+        classrooms and chats, then turns them into fun, structured workshops that nudge things
+        towards fairness.
+      </p>
 
-      <div class="quotes">
-        <div class="quote">“Boys will be boys.”<br><span>— said casually</span></div>
-        <div class="quote">“Don’t sit like that.”<br><span>— somewhere at home</span></div>
-        <div class="quote">“Man up.”<br><span>— playground classic</span></div>
-        <div class="quote">“She’s too ambitious.”<br><span>— whispered</span></div>
+      <div class="chips">
+        <div class="chip">Ages 10–16</div>
+        <div class="chip">60–90 min sessions</div>
+        <div class="chip">For schools & NGOs</div>
+        <div class="chip">Games · discussion · tiny actions</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 2 -->
-<section class="s2">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Inside a session</div>
-      <h1>“Wait… we all do this?”</h1>
-      <p>Sessions feel like games, conversations, and sudden realisations.</p>
-
-      <div class="quotes">
-        <div class="quote">“My sister does more work.”</div>
-        <div class="quote">“That joke isn’t funny anymore.”</div>
-        <div class="quote">“I didn’t notice this before.”</div>
-        <div class="quote">“I want to try one change.”</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 3 -->
-<section class="s3">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Everyday life</div>
-      <h1>Equality lives everywhere</h1>
-      <p>At home. In classrooms. With friends. Online.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 4 -->
-<section class="s4">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Tiny shifts</div>
-      <h1>Small changes count</h1>
-      <p>No big speeches. Just fairer habits.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 5 -->
-<section class="s5">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Start here</div>
-      <h1>One room.<br>One hour.<br>One conversation.</h1>
 
       <div class="buttons">
-        <button class="btn pink">For schools & NGOs</button>
-        <button class="btn green">Explore activities</button>
+        <button class="btn main" onclick="document.getElementById('problem').scrollIntoView({behavior:'smooth'})">
+          What problem do we see?
+        </button>
+        <button class="btn secondary" onclick="document.getElementById('workshops').scrollIntoView({behavior:'smooth'})">
+          How our workshops work
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: PROBLEM WE SEE -->
+<section class="s2" id="problem">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="tag">What we see on the ground</div>
+      <h1>Kids are growing up with two sets of rules,<br>and almost no space to question them.</h1>
+      <p class="lead">
+        When we sit in classrooms and community rooms, we keep hearing the same patterns.
+        Click a card to see how it sounds in real life:
+      </p>
+
+      <div class="problems">
+        <div class="problem-card">
+          <div class="title">Different rules at home</div>
+          <div>Same house, different freedoms.</div>
+          <div class="more">
+            “Bhai can stay out late.” “She should learn how to manage a home.”
+            No one sits everyone down to ask if this feels fair.
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="title">Silence in classrooms</div>
+          <div>Some voices shrink, some fill the room.</div>
+          <div class="more">
+            A few students talk over others. Some never raise their hand.
+            Teachers see it, but it feels normal, so it continues.
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="title">Jokes that stick</div>
+          <div>“It’s just a joke” becomes a rule.</div>
+          <div class="more">
+            Nicknames, comments on clothes, “don’t be so emotional” —
+            these jokes quietly teach everyone who is allowed to feel what.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: HOW OUR WORKSHOPS WORK -->
+<section class="s3" id="workshops">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="tag">How The Equal Lens responds</div>
+      <h1>We turn these patterns into structured,<br>playful workshops.</h1>
+      <p class="lead">
+        No long speeches. Just three simple moves inside every session:
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <span class="num">1 · Notice</span>
+          <p>Games, drawings and quick activities help students see who gets which rules.</p>
+        </div>
+        <div class="step">
+          <span class="num">2 · Question</span>
+          <p>We ask: who benefits, who adjusts, who feels small? No one person is “the villain”.</p>
+        </div>
+        <div class="step">
+          <span class="num">3 · Try</span>
+          <p>Each group picks one tiny change to try at home, in class or with friends.</p>
+        </div>
       </div>
 
-      <footer>© <span id="year"></span> The Equal Lens</footer>
+      <p class="lead" style="margin-top:18px;">
+        Sessions are designed so that even if we only meet a group once, something sticks.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: WHAT CHANGES -->
+<section class="s4">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="tag">What shifts after a workshop</div>
+      <h1>We’re not promising a revolution.<br>We’re aiming for noticeable nudges.</h1>
+
+      <div class="cols">
+        <div>
+          <h3>Young people start to…</h3>
+          <ul>
+            <li>Notice when rules are unfair, not “normal”.</li>
+            <li>Use clearer language to say what feels off.</li>
+            <li>Back each other up in small, everyday moments.</li>
+            <li>See gender as everyone’s topic, not just “for girls”.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Adults tell us they see…</h3>
+          <ul>
+            <li>More students speaking up in class.</li>
+            <li>Different kids taking leadership roles.</li>
+            <li>Fewer cruel “jokes” passed off as fun.</li>
+            <li>More questions asked at home about fairness.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: CALL TO ACTION -->
+<section class="s5">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="tag">Bring The Equal Lens to your space</div>
+      <h1>One room. One hour.<br>And a conversation that doesn’t feel like a lecture.</h1>
+      <p class="lead">
+        Whether you’re a school, NGO or youth group, we can adapt a workshop to your context.
+        Start with a simple “pilot session” and see how your students respond.
+      </p>
+
+      <div class="buttons">
+        <button class="btn main" onclick="location.href='schools.html'">
+          For schools & NGOs
+        </button>
+        <button class="btn secondary" onclick="location.href='activities.html'">
+          See sample activities
+        </button>
+      </div>
+
+      <footer>
+        © <span id="year"></span> The Equal Lens · hello@theequallens.com
+      </footer>
     </div>
   </div>
 </section>
 
 <script>
+/* Year */
 document.getElementById("year").innerText = new Date().getFullYear();
+
+/* Scroll reveal */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:0.2});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+/* Click-to-expand problem cards */
+document.querySelectorAll(".problem-card").forEach(card=>{
+  card.addEventListener("click",()=>{
+    card.classList.toggle("open");
+  });
+});
 </script>
 
 </body>

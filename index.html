@@ -81,57 +81,52 @@ section{
   margin:auto;
 }
 
-/* --------------- PINNED STORY SECTION --------------- */
+/* =============== PINNED TILE STORY (NO BOX) =============== */
 .story-section{
+  position:relative;
   background:var(--yellow);
   display:flex;
   align-items:center;
   justify-content:center;
-}
-.story-frame{
-  position:relative;
-  width:min(1000px, 100%);
-  aspect-ratio:16/9;
-  margin:auto;
-  border-radius:26px;
-  border:4px solid var(--ink);
-  background:rgba(255,255,255,0.75);
-  box-shadow:0 20px 60px rgba(0,0,0,0.18);
   overflow:hidden;
 }
-
-/* grid of tiles */
-.story-grid{
-  position:absolute;
-  inset:0;
-  padding:18px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,1fr);
-  gap:14px;
+.story-canvas{
+  position:relative;
+  width:100%;
+  max-width:1100px;
+  height:70vh;
+  min-height:420px;
 }
+
+/* floating tiles */
 .story-tile{
+  position:absolute;
   border-radius:18px;
   border:3px solid var(--ink);
   background:var(--white);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:12px;
+  padding:12px 14px;
   text-align:center;
-  transform-style:preserve-3d;
-  box-shadow:6px 6px 0 rgba(0,0,0,0.18);
+  box-shadow:6px 6px 0 rgba(0,0,0,0.2);
   opacity:0;
-  transform:scale(0.8) translateY(20px);
+  transform-style:preserve-3d;
 }
 .story-tile span{
   font-family:"Playfair Display",serif;
-  font-size:clamp(16px,2.1vw,22px);
+  font-size:clamp(14px,2.1vw,18px);
   font-weight:600;
-  line-height:1.15;
+  line-height:1.18;
 }
 
-/* fun background colours per tile */
+/* desktop positions – scattered */
+.story-tile[data-step="0"]{top:10%; left:6%; width:38%;}
+.story-tile[data-step="1"]{top:18%; right:6%; width:36%;}
+.story-tile[data-step="2"]{top:42%; left:10%; width:32%;}
+.story-tile[data-step="3"]{top:58%; right:10%; width:40%;}
+.story-tile[data-step="4"]{top:32%; left:42%; width:26%;}
+.story-tile[data-step="5"]{top:66%; left:22%; width:34%;}
+.story-tile[data-step="6"]{top:4%; left:46%; width:30%;}
+
+/* colours per tile */
 .story-tile[data-step="0"]{background:#fee2e2;}
 .story-tile[data-step="1"]{background:#e0f2fe;}
 .story-tile[data-step="2"]{background:#dcfce7;}
@@ -141,11 +136,11 @@ section{
 .story-tile[data-step="6"]{background:#bae6fd;}
 
 .story-tile.faded{
-  opacity:0.3;
+  opacity:0.35;
   box-shadow:none;
 }
 
-/* overlayed center text (for silence/lecture/notice) */
+/* center lines (after tiles) */
 .story-center{
   position:absolute;
   inset:0;
@@ -159,19 +154,18 @@ section{
   max-width:70%;
   text-align:center;
   font-family:"Playfair Display",serif;
-  font-size:clamp(26px,3.2vw,34px);
+  font-size:clamp(20px,3.6vw,28px);
   font-weight:600;
   opacity:0;
-  transform:translateY(20px);
 }
 .center-line.emphasis{
   font-family:'Poppins',sans-serif;
   text-transform:uppercase;
   letter-spacing:0.12em;
-  font-size:clamp(18px,2vw,20px);
+  font-size:clamp(14px,2.4vw,18px);
 }
 
-/* --------------- OTHER SECTIONS --------------- */
+/* =============== OTHER SECTIONS =============== */
 
 .s1{background:var(--pink);}
 .s2{background:var(--blue);}
@@ -198,7 +192,7 @@ section{
 }
 
 h2{
-  font-size:clamp(26px,4vw,36px);
+  font-size:clamp(24px,4vw,34px);
   line-height:1.1;
   margin-bottom:10px;
 }
@@ -305,12 +299,8 @@ footer{
   color:var(--muted);
 }
 
-/* responsive */
+/* =============== MOBILE TWEAKS =============== */
 @media(max-width:900px){
-  .story-frame{
-    width:100%;
-    border-radius:0;
-  }
   .problems{grid-template-columns:1fr;}
   .steps{grid-template-columns:1fr;}
   .cols{grid-template-columns:1fr;}
@@ -318,6 +308,27 @@ footer{
 @media(max-width:600px){
   section{padding:110px 14px 50px;}
   .card{padding:20px;}
+
+  .story-canvas{
+    height:80vh;
+    min-height:420px;
+  }
+  .story-tile{
+    left:50% !important;
+    top:50% !important;
+    width:82% !important;
+    transform:translate(-50%,0);
+  }
+  .story-tile span{
+    font-size:15px;
+  }
+  .center-line{
+    max-width:82%;
+    font-size:20px;
+  }
+  .center-line.emphasis{
+    font-size:14px;
+  }
 }
 </style>
 </head>
@@ -339,36 +350,33 @@ footer{
   </nav>
 </header>
 
-<!-- ------------- PINNED TILE STORY (PAGE STAYS HERE) ------------- -->
+<!-- =============== PINNED TILE STORY (FULL-SCREEN YELLOW) =============== -->
 <section class="story-section">
-  <div class="story-frame" id="story-frame">
-    <div class="story-grid">
-      <div class="story-tile" data-step="0">
-        <span>Kids don’t need a chapter on gender.</span>
-      </div>
-      <div class="story-tile" data-step="1">
-        <span>They already know the rules.</span>
-      </div>
-      <div class="story-tile" data-step="2">
-        <span>No one ever told them.</span>
-      </div>
-      <div class="story-tile" data-step="3">
-        <span>They hear them at home.</span>
-      </div>
-      <div class="story-tile" data-step="4">
-        <span>In classrooms.</span>
-      </div>
-      <div class="story-tile" data-step="5">
-        <span>On playgrounds.</span>
-      </div>
-      <div class="story-tile" data-step="6">
-        <span>Online.</span>
-      </div>
-      <!-- 2 empty cells so grid stays 3x3 -->
-      <div class="story-tile" data-step="empty"></div>
-      <div class="story-tile" data-step="empty"></div>
+  <div class="story-canvas">
+    <!-- floating tiles -->
+    <div class="story-tile" data-step="0">
+      <span>Kids don’t need a chapter on gender.</span>
+    </div>
+    <div class="story-tile" data-step="1">
+      <span>They already know the rules.</span>
+    </div>
+    <div class="story-tile" data-step="2">
+      <span>No one ever told them.</span>
+    </div>
+    <div class="story-tile" data-step="3">
+      <span>They hear them at home.</span>
+    </div>
+    <div class="story-tile" data-step="4">
+      <span>In classrooms.</span>
+    </div>
+    <div class="story-tile" data-step="5">
+      <span>On playgrounds.</span>
+    </div>
+    <div class="story-tile" data-step="6">
+      <span>Online.</span>
     </div>
 
+    <!-- center lines -->
     <div class="story-center">
       <div class="center-line" data-center="0">That silence teaches.</div>
       <div class="center-line emphasis" data-center="1">We don’t lecture.</div>
@@ -377,7 +385,7 @@ footer{
   </div>
 </section>
 
-<!-- ------------- SECTION 1: PROBLEM ------------- -->
+<!-- =============== SECTION 1: PROBLEM =============== -->
 <section class="s1" id="problem">
   <div class="wrap">
     <div class="card">
@@ -417,7 +425,7 @@ footer{
   </div>
 </section>
 
-<!-- ------------- SECTION 2: WORKSHOPS ------------- -->
+<!-- =============== SECTION 2: WORKSHOPS =============== -->
 <section class="s2" id="workshops">
   <div class="wrap">
     <div class="card">
@@ -445,7 +453,7 @@ footer{
   </div>
 </section>
 
-<!-- ------------- SECTION 3: IMPACT ------------- -->
+<!-- =============== SECTION 3: IMPACT =============== -->
 <section class="s3" id="impact">
   <div class="wrap">
     <div class="card">
@@ -476,7 +484,7 @@ footer{
   </div>
 </section>
 
-<!-- ------------- SECTION 4: CTA ------------- -->
+<!-- =============== SECTION 4: CTA =============== -->
 <section class="s4" id="contact">
   <div class="wrap">
     <div class="card">
@@ -514,13 +522,12 @@ document.querySelectorAll(".problem-card").forEach(card=>{
 if (typeof gsap !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 
-  /* ---------------- PINNED STORY TIMELINE ---------------- */
-
-  const tiles = gsap.utils.toArray(".story-tile").filter(t => t.dataset.step !== "empty");
+  /* -------- PINNED TILE STORY (only tiles + text move) -------- */
+  const tiles = gsap.utils.toArray(".story-tile");
   const centers = gsap.utils.toArray(".center-line");
 
   // initial states
-  gsap.set(tiles, {opacity:0, scale:0.8, y:20});
+  gsap.set(tiles, {opacity:0, scale:0.8, y:30});
   gsap.set(tiles[0], {opacity:1, scale:1, y:0}); // first tile visible on load
   gsap.set(centers, {opacity:0, y:20});
 
@@ -536,7 +543,7 @@ if (typeof gsap !== "undefined") {
     }
   });
 
-  // Tiles: reveal 2..n one by one, previous tiles stay (become slightly faded)
+  // tiles sequence
   for(let i=1; i<tiles.length; i++){
     storyTl
       .to(tiles[i], {
@@ -556,8 +563,7 @@ if (typeof gsap !== "undefined") {
       }, "<");
   }
 
-  // Center lines after tiles
-  // First one appears
+  // center messages sequence
   storyTl.to(centers[0], {
     opacity:1,
     y:0,
@@ -565,7 +571,6 @@ if (typeof gsap !== "undefined") {
     ease:"power2.out"
   }, "+=0.7");
 
-  // then swap 0 -> 1 -> 2
   for(let i=1; i<centers.length; i++){
     storyTl
       .to(centers[i-1], {
@@ -584,7 +589,7 @@ if (typeof gsap !== "undefined") {
 
   /* simple scroll reveal for other cards */
   gsap.utils.toArray(".card").forEach(card=>{
-    if (card.closest(".story-section")) return; // skip story-frame
+    if (card.closest(".story-section")) return;
     gsap.from(card,{
       y:80,
       opacity:0,

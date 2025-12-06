@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>The Equal Lens | Seeing Equality Differently</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
 
 <style>
 :root{
@@ -69,7 +69,7 @@ header{
 }
 .nav a:hover{color:var(--ink)}
 
-/* SECTIONS */
+/* GENERIC SECTIONS */
 section{
   min-height:100vh;
   padding:120px 20px 64px;
@@ -81,80 +81,103 @@ section{
   margin:auto;
 }
 
-/* BACKGROUNDS */
-.hero-section{background:var(--yellow);}
-.s1{background:var(--pink);}
-.s2{background:var(--blue);}
-.s3{background:var(--green);}
-.s4{background:var(--white);}
-
-/* HERO TILE GRID */
-.hero-inner{
-  max-width:1000px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:32px;
+/* --------------- PINNED STORY SECTION --------------- */
+.story-section{
+  background:var(--yellow);
+  display:flex;
   align-items:center;
+  justify-content:center;
 }
-.hero-text small{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  border:3px solid var(--ink);
-  font-size:12px;
-  font-weight:600;
-  background:var(--white);
-  margin-bottom:12px;
-}
-.hero-text h1{
-  font-size:clamp(30px,4.8vw,46px);
-  line-height:1.05;
-  margin-bottom:10px;
-}
-.hero-text p{
-  font-size:15px;
-  color:var(--muted);
-  max-width:520px;
+.story-frame{
+  position:relative;
+  width:min(1000px, 100%);
+  aspect-ratio:16/9;
+  margin:auto;
+  border-radius:26px;
+  border:4px solid var(--ink);
+  background:rgba(255,255,255,0.75);
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  overflow:hidden;
 }
 
-/* TILE GRID PANEL */
-.tile-panel{
+/* grid of tiles */
+.story-grid{
+  position:absolute;
+  inset:0;
+  padding:18px;
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  grid-template-rows:repeat(2,minmax(0,160px));
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
   gap:14px;
-  perspective:1000px;
 }
 .story-tile{
-  position:relative;
   border-radius:18px;
   border:3px solid var(--ink);
   background:var(--white);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:16px;
+  padding:12px;
   text-align:center;
   transform-style:preserve-3d;
-  box-shadow:8px 8px 0 rgba(0,0,0,0.18);
+  box-shadow:6px 6px 0 rgba(0,0,0,0.18);
+  opacity:0;
+  transform:scale(0.8) translateY(20px);
 }
 .story-tile span{
   font-family:"Playfair Display",serif;
-  font-size:clamp(18px,2.3vw,24px);
+  font-size:clamp(16px,2.1vw,22px);
   font-weight:600;
+  line-height:1.15;
 }
-.story-tile[data-step="0"]{background:#fee2e2;} /* soft red */
-.story-tile[data-step="1"]{background:#e0f2fe;} /* soft blue */
-.story-tile[data-step="2"]{background:#dcfce7;} /* soft green */
-.story-tile[data-step="3"]{background:#fef3c7;} /* soft yellow */
+
+/* fun background colours per tile */
+.story-tile[data-step="0"]{background:#fee2e2;}
+.story-tile[data-step="1"]{background:#e0f2fe;}
+.story-tile[data-step="2"]{background:#dcfce7;}
+.story-tile[data-step="3"]{background:#fef3c7;}
+.story-tile[data-step="4"]{background:#e9d5ff;}
+.story-tile[data-step="5"]{background:#fecaca;}
+.story-tile[data-step="6"]{background:#bae6fd;}
 
 .story-tile.faded{
-  opacity:.25;
+  opacity:0.3;
   box-shadow:none;
 }
 
-/* GENERIC CARD SECTIONS */
+/* overlayed center text (for silence/lecture/notice) */
+.story-center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.center-line{
+  position:absolute;
+  max-width:70%;
+  text-align:center;
+  font-family:"Playfair Display",serif;
+  font-size:clamp(26px,3.2vw,34px);
+  font-weight:600;
+  opacity:0;
+  transform:translateY(20px);
+}
+.center-line.emphasis{
+  font-family:'Poppins',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  font-size:clamp(18px,2vw,20px);
+}
+
+/* --------------- OTHER SECTIONS --------------- */
+
+.s1{background:var(--pink);}
+.s2{background:var(--blue);}
+.s3{background:var(--green);}
+.s4{background:var(--white);}
+
 .card{
   background:var(--white);
   border-radius:22px;
@@ -162,6 +185,7 @@ section{
   padding:26px;
   box-shadow:8px 8px 0 rgba(0,0,0,.15);
 }
+
 .tag{
   display:inline-block;
   padding:6px 14px;
@@ -172,6 +196,7 @@ section{
   background:var(--white);
   margin-bottom:12px;
 }
+
 h2{
   font-size:clamp(26px,4vw,36px);
   line-height:1.1;
@@ -183,7 +208,7 @@ p.lead{
   max-width:700px;
 }
 
-/* PROBLEM CARDS */
+/* problem cards */
 .problems{
   margin-top:18px;
   display:grid;
@@ -217,7 +242,7 @@ p.lead{
   display:block;
 }
 
-/* STEPS */
+/* steps */
 .steps{
   margin-top:18px;
   display:grid;
@@ -237,7 +262,7 @@ p.lead{
   margin-bottom:4px;
 }
 
-/* COLUMNS */
+/* cols */
 .cols{
   margin-top:18px;
   display:grid;
@@ -280,14 +305,11 @@ footer{
   color:var(--muted);
 }
 
-/* RESPONSIVE */
+/* responsive */
 @media(max-width:900px){
-  .hero-inner{
-    grid-template-columns:1fr;
-    grid-template-rows:auto auto;
-  }
-  .tile-panel{
-    grid-template-rows:repeat(2,minmax(0,140px));
+  .story-frame{
+    width:100%;
+    border-radius:0;
   }
   .problems{grid-template-columns:1fr;}
   .steps{grid-template-columns:1fr;}
@@ -317,36 +339,45 @@ footer{
   </nav>
 </header>
 
-<!-- HERO: PINNED TILE STORY -->
-<section class="hero-section">
-  <div class="hero-inner" id="hero-pin">
-    <div class="hero-text">
-      <small>What we see on the ground</small>
-      <h1>Kids already live with gender rules.<br>Nobody calls them that.</h1>
-      <p>
-        The Equal Lens starts with what students already hear at home, in school and with friends.
-        Each tile is one piece of that story. As you scroll, more of it flips into view.
-      </p>
-    </div>
-
-    <div class="tile-panel">
+<!-- ------------- PINNED TILE STORY (PAGE STAYS HERE) ------------- -->
+<section class="story-section">
+  <div class="story-frame" id="story-frame">
+    <div class="story-grid">
       <div class="story-tile" data-step="0">
-        <span>Kids don’t need a gender lecture.</span>
+        <span>Kids don’t need a chapter on gender.</span>
       </div>
       <div class="story-tile" data-step="1">
-        <span>They already know<br>who gets which rules.</span>
+        <span>They already know the rules.</span>
       </div>
       <div class="story-tile" data-step="2">
-        <span>No one ever says “this is gender”.</span>
+        <span>No one ever told them.</span>
       </div>
       <div class="story-tile" data-step="3">
-        <span>We pause the rules<br>long enough to notice them.</span>
+        <span>They hear them at home.</span>
       </div>
+      <div class="story-tile" data-step="4">
+        <span>In classrooms.</span>
+      </div>
+      <div class="story-tile" data-step="5">
+        <span>On playgrounds.</span>
+      </div>
+      <div class="story-tile" data-step="6">
+        <span>Online.</span>
+      </div>
+      <!-- 2 empty cells so grid stays 3x3 -->
+      <div class="story-tile" data-step="empty"></div>
+      <div class="story-tile" data-step="empty"></div>
+    </div>
+
+    <div class="story-center">
+      <div class="center-line" data-center="0">That silence teaches.</div>
+      <div class="center-line emphasis" data-center="1">We don’t lecture.</div>
+      <div class="center-line emphasis" data-center="2">We help them notice.</div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 1: PROBLEM -->
+<!-- ------------- SECTION 1: PROBLEM ------------- -->
 <section class="s1" id="problem">
   <div class="wrap">
     <div class="card">
@@ -386,7 +417,7 @@ footer{
   </div>
 </section>
 
-<!-- SECTION 2: WORKSHOPS -->
+<!-- ------------- SECTION 2: WORKSHOPS ------------- -->
 <section class="s2" id="workshops">
   <div class="wrap">
     <div class="card">
@@ -414,7 +445,7 @@ footer{
   </div>
 </section>
 
-<!-- SECTION 3: IMPACT -->
+<!-- ------------- SECTION 3: IMPACT ------------- -->
 <section class="s3" id="impact">
   <div class="wrap">
     <div class="card">
@@ -445,7 +476,7 @@ footer{
   </div>
 </section>
 
-<!-- SECTION 4: CTA -->
+<!-- ------------- SECTION 4: CTA ------------- -->
 <section class="s4" id="contact">
   <div class="wrap">
     <div class="card">
@@ -477,54 +508,83 @@ document.getElementById("year").innerText = new Date().getFullYear();
 
 /* expand problem cards */
 document.querySelectorAll(".problem-card").forEach(card=>{
-  card.addEventListener("click",()=>{
-    card.classList.toggle("open");
-  });
+  card.addEventListener("click",()=>card.classList.toggle("open"));
 });
 
-if(typeof gsap!=="undefined"){
+if (typeof gsap !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 
-  /* HERO TILE SCROLL STORY */
-  const tiles = gsap.utils.toArray(".story-tile");
+  /* ---------------- PINNED STORY TIMELINE ---------------- */
 
-  // initial state: first tile visible, others flipped & faint
-  gsap.set(tiles, {rotationY:180, opacity:0, scale:0.9});
-  gsap.set(tiles[0], {rotationY:0, opacity:1, scale:1, zIndex:5});
+  const tiles = gsap.utils.toArray(".story-tile").filter(t => t.dataset.step !== "empty");
+  const centers = gsap.utils.toArray(".center-line");
 
-  const tileTl = gsap.timeline({
+  // initial states
+  gsap.set(tiles, {opacity:0, scale:0.8, y:20});
+  gsap.set(tiles[0], {opacity:1, scale:1, y:0}); // first tile visible on load
+  gsap.set(centers, {opacity:0, y:20});
+
+  const totalSteps = (tiles.length - 1) + centers.length;
+
+  const storyTl = gsap.timeline({
     scrollTrigger:{
-      trigger:"#hero-pin",
+      trigger:".story-section",
       start:"top top",
-      end:"+=" + (tiles.length * 250),
+      end:"+=" + (totalSteps * 200),
       scrub:true,
       pin:true
     }
   });
 
-  // step through tiles 1..n, bringing each forward and fading previous
-  for(let i=1;i<tiles.length;i++){
-    tileTl
+  // Tiles: reveal 2..n one by one, previous tiles stay (become slightly faded)
+  for(let i=1; i<tiles.length; i++){
+    storyTl
       .to(tiles[i], {
-        rotationY:0,
         opacity:1,
         scale:1,
-        zIndex:5,
+        y:0,
+        rotationY:0,
         duration:0.6,
         ease:"power2.out"
-      }, "+=0.6")
+      }, "+=0.5")
       .to(tiles[i-1], {
-        opacity:0.25,
+        opacity:0.35,
         scale:0.9,
         duration:0.5,
         ease:"power2.out",
-        onStart: () => tiles[i-1].classList.add("faded")
+        onStart:() => tiles[i-1].classList.add("faded")
       }, "<");
   }
 
-  /* subtle scroll-in for other cards */
-  gsap.utils.toArray(".card").forEach((card, index)=>{
-    if(card.closest(".hero-section")) return; // skip hero
+  // Center lines after tiles
+  // First one appears
+  storyTl.to(centers[0], {
+    opacity:1,
+    y:0,
+    duration:0.6,
+    ease:"power2.out"
+  }, "+=0.7");
+
+  // then swap 0 -> 1 -> 2
+  for(let i=1; i<centers.length; i++){
+    storyTl
+      .to(centers[i-1], {
+        opacity:0,
+        y:-10,
+        duration:0.5,
+        ease:"power2.in"
+      }, "+=0.8")
+      .to(centers[i], {
+        opacity:1,
+        y:0,
+        duration:0.6,
+        ease:"power2.out"
+      }, "-=0.1");
+  }
+
+  /* simple scroll reveal for other cards */
+  gsap.utils.toArray(".card").forEach(card=>{
+    if (card.closest(".story-section")) return; // skip story-frame
     gsap.from(card,{
       y:80,
       opacity:0,

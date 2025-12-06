@@ -81,52 +81,62 @@ section{
   margin:auto;
 }
 
-/* =============== PINNED TILE STORY (NO BOX) =============== */
+/* ================= PINNED TILE GRID STORY ================= */
+
 .story-section{
-  position:relative;
   background:var(--yellow);
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
 }
-.story-canvas{
-  position:relative;
+.story-inner{
   width:100%;
   max-width:1100px;
-  height:70vh;
-  min-height:420px;
 }
 
-/* floating tiles */
+/* tile grid */
+.story-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  width:100%;
+  max-width:780px;
+  margin:0 auto;
+}
+
+/* individual tiles */
 .story-tile{
-  position:absolute;
-  border-radius:18px;
+  border-radius:16px;
   border:3px solid var(--ink);
-  background:var(--white);
-  padding:12px 14px;
-  text-align:center;
-  box-shadow:6px 6px 0 rgba(0,0,0,0.2);
-  opacity:0;
-  transform-style:preserve-3d;
+  background:#fefce8;
+  box-shadow:4px 4px 0 rgba(0,0,0,0.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  position:relative;
+  aspect-ratio:1/1;       /* makes them square */
+  overflow:hidden;
 }
 .story-tile span{
   font-family:"Playfair Display",serif;
-  font-size:clamp(14px,2.1vw,18px);
+  font-size:clamp(13px,1.6vw,16px);
   font-weight:600;
-  line-height:1.18;
+  line-height:1.2;
+  text-align:center;
+  opacity:0;
+  transform:rotateY(90deg);
+  transform-origin:left center;
 }
 
-/* desktop positions – scattered */
-.story-tile[data-step="0"]{top:10%; left:6%; width:38%;}
-.story-tile[data-step="1"]{top:18%; right:6%; width:36%;}
-.story-tile[data-step="2"]{top:42%; left:10%; width:32%;}
-.story-tile[data-step="3"]{top:58%; right:10%; width:40%;}
-.story-tile[data-step="4"]{top:32%; left:42%; width:26%;}
-.story-tile[data-step="5"]{top:66%; left:22%; width:34%;}
-.story-tile[data-step="6"]{top:4%; left:46%; width:30%;}
+/* first tile visible on load */
+.story-tile.initial span{
+  opacity:1;
+  transform:rotateY(0deg);
+}
 
-/* colours per tile */
+/* fun colours per tile box (not text) */
 .story-tile[data-step="0"]{background:#fee2e2;}
 .story-tile[data-step="1"]{background:#e0f2fe;}
 .story-tile[data-step="2"]{background:#dcfce7;}
@@ -134,27 +144,28 @@ section{
 .story-tile[data-step="4"]{background:#e9d5ff;}
 .story-tile[data-step="5"]{background:#fecaca;}
 .story-tile[data-step="6"]{background:#bae6fd;}
+.story-tile.decor{background:#f9fafb;}
 
-.story-tile.faded{
-  opacity:0.35;
-  box-shadow:none;
+/* faded tiles after their line is done */
+.story-tile.faded span{
+  opacity:0.35 !important;
 }
 
-/* center lines (after tiles) */
+/* center lines after tiles */
 .story-center{
-  position:absolute;
-  inset:0;
+  margin-top:32px;
+  position:relative;
+  min-height:60px;
   display:flex;
   align-items:center;
   justify-content:center;
-  pointer-events:none;
 }
 .center-line{
   position:absolute;
-  max-width:70%;
+  max-width:80%;
   text-align:center;
   font-family:"Playfair Display",serif;
-  font-size:clamp(20px,3.6vw,28px);
+  font-size:clamp(20px,2.4vw,26px);
   font-weight:600;
   opacity:0;
 }
@@ -162,10 +173,15 @@ section{
   font-family:'Poppins',sans-serif;
   text-transform:uppercase;
   letter-spacing:0.12em;
-  font-size:clamp(14px,2.4vw,18px);
+  font-size:clamp(13px,1.8vw,16px);
 }
 
-/* =============== OTHER SECTIONS =============== */
+/* when center text starts, dim all tile text */
+.tiles-dim .story-tile span{
+  opacity:0.15 !important;
+}
+
+/* ================= OTHER SECTIONS ================= */
 
 .s1{background:var(--pink);}
 .s2{background:var(--blue);}
@@ -299,35 +315,33 @@ footer{
   color:var(--muted);
 }
 
-/* =============== MOBILE TWEAKS =============== */
+/* ================= RESPONSIVE ================= */
+
 @media(max-width:900px){
   .problems{grid-template-columns:1fr;}
   .steps{grid-template-columns:1fr;}
   .cols{grid-template-columns:1fr;}
 }
+
+@media(max-width:700px){
+  .story-grid{
+    max-width:460px;
+    grid-template-columns:repeat(2,1fr); /* 2x4 grid on phones */
+  }
+}
+
 @media(max-width:600px){
   section{padding:110px 14px 50px;}
   .card{padding:20px;}
-
-  .story-canvas{
-    height:80vh;
-    min-height:420px;
+  .story-section{
+    padding-top:100px;
   }
-  .story-tile{
-    left:50% !important;
-    top:50% !important;
-    width:82% !important;
-    transform:translate(-50%,0);
-  }
-  .story-tile span{
-    font-size:15px;
+  .story-center{
+    margin-top:24px;
+    min-height:70px;
   }
   .center-line{
-    max-width:82%;
-    font-size:20px;
-  }
-  .center-line.emphasis{
-    font-size:14px;
+    max-width:86%;
   }
 }
 </style>
@@ -350,33 +364,38 @@ footer{
   </nav>
 </header>
 
-<!-- =============== PINNED TILE STORY (FULL-SCREEN YELLOW) =============== -->
+<!-- ================= PINNED TILE GRID STORY ================= -->
 <section class="story-section">
-  <div class="story-canvas">
-    <!-- floating tiles -->
-    <div class="story-tile" data-step="0">
-      <span>Kids don’t need a chapter on gender.</span>
-    </div>
-    <div class="story-tile" data-step="1">
-      <span>They already know the rules.</span>
-    </div>
-    <div class="story-tile" data-step="2">
-      <span>No one ever told them.</span>
-    </div>
-    <div class="story-tile" data-step="3">
-      <span>They hear them at home.</span>
-    </div>
-    <div class="story-tile" data-step="4">
-      <span>In classrooms.</span>
-    </div>
-    <div class="story-tile" data-step="5">
-      <span>On playgrounds.</span>
-    </div>
-    <div class="story-tile" data-step="6">
-      <span>Online.</span>
+  <div class="story-inner" id="story-inner">
+    <div class="story-grid">
+      <!-- 7 story tiles -->
+      <div class="story-tile initial" data-step="0">
+        <span>Kids don’t need a chapter on gender.</span>
+      </div>
+      <div class="story-tile" data-step="1">
+        <span>They already know the rules.</span>
+      </div>
+      <div class="story-tile" data-step="2">
+        <span>No one ever told them.</span>
+      </div>
+      <div class="story-tile" data-step="3">
+        <span>They hear them at home.</span>
+      </div>
+      <div class="story-tile" data-step="4">
+        <span>In classrooms.</span>
+      </div>
+      <div class="story-tile" data-step="5">
+        <span>On playgrounds.</span>
+      </div>
+      <div class="story-tile" data-step="6">
+        <span>Online.</span>
+      </div>
+
+      <!-- extra decorative tiles so the grid looks full -->
+      <div class="story-tile decor"></div>
+      <div class="story-tile decor"></div>
     </div>
 
-    <!-- center lines -->
     <div class="story-center">
       <div class="center-line" data-center="0">That silence teaches.</div>
       <div class="center-line emphasis" data-center="1">We don’t lecture.</div>
@@ -385,7 +404,7 @@ footer{
   </div>
 </section>
 
-<!-- =============== SECTION 1: PROBLEM =============== -->
+<!-- ================= SECTION 1: PROBLEM ================= -->
 <section class="s1" id="problem">
   <div class="wrap">
     <div class="card">
@@ -425,7 +444,7 @@ footer{
   </div>
 </section>
 
-<!-- =============== SECTION 2: WORKSHOPS =============== -->
+<!-- ================= SECTION 2: WORKSHOPS ================= -->
 <section class="s2" id="workshops">
   <div class="wrap">
     <div class="card">
@@ -453,7 +472,7 @@ footer{
   </div>
 </section>
 
-<!-- =============== SECTION 3: IMPACT =============== -->
+<!-- ================= SECTION 3: IMPACT ================= -->
 <section class="s3" id="impact">
   <div class="wrap">
     <div class="card">
@@ -484,7 +503,7 @@ footer{
   </div>
 </section>
 
-<!-- =============== SECTION 4: CTA =============== -->
+<!-- ================= SECTION 4: CTA ================= -->
 <section class="s4" id="contact">
   <div class="wrap">
     <div class="card">
@@ -522,14 +541,20 @@ document.querySelectorAll(".problem-card").forEach(card=>{
 if (typeof gsap !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 
-  /* -------- PINNED TILE STORY (only tiles + text move) -------- */
-  const tiles = gsap.utils.toArray(".story-tile");
+  /* -------- PINNED TILE GRID STORY -------- */
+  const storyInner = document.getElementById("story-inner");
+  const tiles = gsap.utils.toArray(".story-tile").filter(t=>!t.classList.contains("decor"));
   const centers = gsap.utils.toArray(".center-line");
 
-  // initial states
-  gsap.set(tiles, {opacity:0, scale:0.8, y:30});
-  gsap.set(tiles[0], {opacity:1, scale:1, y:0}); // first tile visible on load
-  gsap.set(centers, {opacity:0, y:20});
+  const spans = tiles.map(t => t.querySelector("span"));
+
+  // Initial state: all spans hidden except first
+  gsap.set(spans, {opacity:0, rotationY:90});
+  if (spans[0]) {
+    gsap.set(spans[0], {opacity:1, rotationY:0});
+  }
+
+  gsap.set(centers, {opacity:0, y:12});
 
   const totalSteps = (tiles.length - 1) + centers.length;
 
@@ -537,57 +562,63 @@ if (typeof gsap !== "undefined") {
     scrollTrigger:{
       trigger:".story-section",
       start:"top top",
-      end:"+=" + (totalSteps * 200),
+      end:"+=" + (totalSteps * 220),
       scrub:true,
       pin:true
     }
   });
 
-  // tiles sequence
+  // Step through tiles 1..n
   for(let i=1; i<tiles.length; i++){
     storyTl
-      .to(tiles[i], {
+      .to(spans[i], {
         opacity:1,
-        scale:1,
-        y:0,
         rotationY:0,
-        duration:0.6,
-        ease:"power2.out"
-      }, "+=0.5")
-      .to(tiles[i-1], {
-        opacity:0.35,
-        scale:0.9,
         duration:0.5,
+        ease:"power2.out"
+      }, "+=0.6")
+      .to(spans[i-1], {
+        opacity:0.35,
+        duration:0.4,
         ease:"power2.out",
         onStart:() => tiles[i-1].classList.add("faded")
       }, "<");
   }
 
-  // center messages sequence
-  storyTl.to(centers[0], {
-    opacity:1,
-    y:0,
-    duration:0.6,
-    ease:"power2.out"
+  // Dim all tile text, then show center lines
+  storyTl.to(storyInner, {
+    duration:0.5,
+    onStart:() => storyInner.classList.add("tiles-dim")
   }, "+=0.7");
 
+  // first center line
+  if (centers[0]) {
+    storyTl.to(centers[0], {
+      opacity:1,
+      y:0,
+      duration:0.5,
+      ease:"power2.out"
+    }, "-=0.1");
+  }
+
+  // swap 0 -> 1 -> 2
   for(let i=1; i<centers.length; i++){
     storyTl
       .to(centers[i-1], {
         opacity:0,
         y:-10,
-        duration:0.5,
+        duration:0.4,
         ease:"power2.in"
-      }, "+=0.8")
+      }, "+=0.9")
       .to(centers[i], {
         opacity:1,
         y:0,
-        duration:0.6,
+        duration:0.5,
         ease:"power2.out"
       }, "-=0.1");
   }
 
-  /* simple scroll reveal for other cards */
+  /* scroll-reveal for other cards */
   gsap.utils.toArray(".card").forEach(card=>{
     if (card.closest(".story-section")) return;
     gsap.from(card,{

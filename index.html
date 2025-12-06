@@ -19,6 +19,7 @@
   --green:#6ee7b7;
   --yellow:#ffeb3b; /* brighter yellow */
   --white:#ffffff;
+  --grid-purple:#a855f7;
 }
 
 /* RESET */
@@ -28,6 +29,26 @@ body{
   font-family:'Poppins',sans-serif;
   background:var(--white);
   color:var(--ink);
+  position:relative;
+  min-height:100vh;
+}
+
+/* TILE GRID BACKGROUND */
+.tile-grid{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-template-rows:repeat(7,1fr);
+  background:var(--grid-purple);
+  pointer-events:none;
+}
+.tile-grid div{
+  border:1px solid rgba(255,255,255,0.22);
+  background:rgba(0,0,0,0.02);
+  transform-style:preserve-3d;
+  will-change:transform;
 }
 
 /* HEADER */
@@ -275,7 +296,9 @@ footer{
 }
 
 /* PARALLAX CARDS */
-.parallax{}
+.parallax{
+  /* marker class for JS */
+}
 
 /* RESPONSIVE */
 @media(max-width:900px){
@@ -292,6 +315,9 @@ footer{
 </head>
 
 <body>
+
+<!-- flipping grid background -->
+<div class="tile-grid" aria-hidden="true"></div>
 
 <header>
   <nav class="nav">
@@ -483,6 +509,49 @@ document.querySelectorAll(".problem-card").forEach(card=>{
 if(typeof gsap!=="undefined"){
   gsap.registerPlugin(ScrollTrigger);
 
+  /* ===== TILE GRID CREATION + ANIMATION ===== */
+  const grid = document.querySelector(".tile-grid");
+  if (grid) {
+    const rows = 7;
+    const cols = 12;
+    for (let i = 0; i < rows * cols; i++) {
+      const tile = document.createElement("div");
+      grid.appendChild(tile);
+    }
+    const tiles = grid.querySelectorAll("div");
+
+    // Scroll-driven flip
+    gsap.to(tiles, {
+      scrollTrigger:{
+        trigger: document.body,
+        start:"top top",
+        end:"bottom bottom",
+        scrub:true
+      },
+      rotationY:180,
+      rotationX:15,
+      transformOrigin:"center center",
+      stagger:{
+        each:0.02,
+        from:"random"
+      }
+    });
+
+    // Gentle idle wiggle
+    gsap.to(tiles, {
+      rotationZ:3,
+      yPercent:4,
+      duration:3,
+      yoyo:true,
+      repeat:-1,
+      ease:"sine.inOut",
+      stagger:{
+        each:0.05,
+        from:"random"
+      }
+    });
+  }
+
   /* pinned yellow story */
   const lines = gsap.utils.toArray(".swap-line");
   gsap.set(lines.slice(1), {opacity:0, y:30}); // keep first visible initially
@@ -497,18 +566,15 @@ if(typeof gsap!=="undefined"){
     }
   });
 
-  // first line: visible, then fade out
+  // first line fades out
   tl.to(lines[0], {opacity:1, y:0, duration:0.1})
     .to(lines[0], {opacity:0, y:-30, duration:0.4}, "+=0.6");
 
-  // middle lines: fade in + fade out
-  for(let i=1;i<lines.length-1;i++){
+  // subsequent lines fade in/out
+  for(let i=1;i<lines.length;i++){
     tl.to(lines[i], {opacity:1, y:0, duration:0.4})
       .to(lines[i], {opacity:0, y:-30, duration:0.4}, "+=0.6");
   }
-
-  // last line: fade in and STAY (no fade out)
-  tl.to(lines[lines.length-1], {opacity:1, y:0, duration:0.4});
 
   /* parallax-style scroll for all .parallax cards */
   gsap.utils.toArray(".parallax").forEach(card=>{

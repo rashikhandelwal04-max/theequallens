@@ -1,147 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>The Equal Lens | Seeing Equality Differently</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<title>The Equal Lens</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --ink:#111827;
-  --muted:#4b5563;
-
-  --pink:#ff80bf;
-  --blue:#7dd3fc;
-  --green:#6ee7b7;
-  --yellow:#ffeb3b;
-  --white:#ffffff;
-}
-
-/* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+
 body{
   font-family:'Poppins',sans-serif;
-  background:var(--white);
-  color:var(--ink);
+  background:#0c0c0f;
+  color:#fff;
 }
 
-/* HEADER */
-header{
-  position:fixed;
-  top:0;left:0;right:0;
-  background:rgba(255,255,255,0.95);
-  border-bottom:3px solid var(--ink);
-  z-index:50;
-  backdrop-filter:blur(6px);
-}
-.nav{
-  max-width:1100px;
-  margin:auto;
-  height:64px;
-  padding:0 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:700;
-  letter-spacing:.08em;
-  font-size:13px;
-}
-.logo-box{
-  width:32px;height:32px;
-  background:var(--yellow);
-  border-radius:10px;
-  border:3px solid var(--ink);
-}
-.nav a{
-  font-size:14px;
-  margin-left:16px;
-  color:var(--muted);
-}
-.nav a:hover{color:var(--ink)}
-
-/* GENERIC SECTIONS */
-section{
-  min-height:100vh;
-  padding:120px 20px 64px;
-  display:flex;
-  align-items:center;
-}
-.wrap{
-  max-width:1100px;
-  margin:auto;
-}
-
-/* =============== PINNED TILE STORY (NO BOX) =============== */
-.story-section{
+/* ===== STORY SECTION ===== */
+.story{
+  height:100vh;
   position:relative;
-  background:var(--yellow);
+  overflow:hidden;
+}
+
+/* TILE FIELD */
+.tile-field{
+  position:absolute;
+  inset:0;
+}
+
+/* TILE */
+.tile{
+  position:absolute;
+  width:140px;
+  height:140px;
+  background:#0c0c0f;
+  border:1px solid rgba(255,255,255,0.18);
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-}
-.story-canvas{
-  position:relative;
-  width:100%;
-  max-width:1100px;
-  height:70vh;
-  min-height:420px;
-}
-
-/* floating tiles */
-.story-tile{
-  position:absolute;
-  border-radius:18px;
-  border:3px solid var(--ink);
-  background:var(--white);
-  padding:12px 14px;
   text-align:center;
-  box-shadow:6px 6px 0 rgba(0,0,0,0.2);
-  opacity:0;
-  transform-style:preserve-3d;
-}
-.story-tile span{
+  padding:16px;
   font-family:"Playfair Display",serif;
-  font-size:clamp(14px,2.1vw,18px);
-  font-weight:600;
-  line-height:1.18;
+  font-size:16px;
 }
 
-/* desktop positions – scattered */
-.story-tile[data-step="0"]{top:10%; left:6%; width:38%;}
-.story-tile[data-step="1"]{top:18%; right:6%; width:36%;}
-.story-tile[data-step="2"]{top:42%; left:10%; width:32%;}
-.story-tile[data-step="3"]{top:58%; right:10%; width:40%;}
-.story-tile[data-step="4"]{top:32%; left:42%; width:26%;}
-.story-tile[data-step="5"]{top:66%; left:22%; width:34%;}
-.story-tile[data-step="6"]{top:4%; left:46%; width:30%;}
-
-/* colours per tile */
-.story-tile[data-step="0"]{background:#fee2e2;}
-.story-tile[data-step="1"]{background:#e0f2fe;}
-.story-tile[data-step="2"]{background:#dcfce7;}
-.story-tile[data-step="3"]{background:#fef3c7;}
-.story-tile[data-step="4"]{background:#e9d5ff;}
-.story-tile[data-step="5"]{background:#fecaca;}
-.story-tile[data-step="6"]{background:#bae6fd;}
-
-.story-tile.faded{
-  opacity:0.35;
-  box-shadow:none;
+.tile span{
+  opacity:0;
+  transform:rotateY(90deg);
 }
 
-/* center lines (after tiles) */
-.story-center{
+/* ACTIVE TILE */
+.tile.active{
+  border-color:#fff;
+  box-shadow:0 0 30px rgba(255,255,255,0.15);
+}
+.tile.active span{
+  opacity:1;
+  transform:rotateY(0deg);
+}
+
+/* CENTER TEXT */
+.center{
   position:absolute;
   inset:0;
   display:flex;
@@ -149,185 +70,24 @@ section{
   justify-content:center;
   pointer-events:none;
 }
-.center-line{
-  position:absolute;
-  max-width:70%;
-  text-align:center;
+.center-text{
   font-family:"Playfair Display",serif;
-  font-size:clamp(20px,3.6vw,28px);
-  font-weight:600;
+  font-size:36px;
+  text-align:center;
+  max-width:80%;
   opacity:0;
 }
-.center-line.emphasis{
-  font-family:'Poppins',sans-serif;
-  text-transform:uppercase;
-  letter-spacing:0.12em;
-  font-size:clamp(14px,2.4vw,18px);
-}
 
-/* =============== OTHER SECTIONS =============== */
-
-.s1{background:var(--pink);}
-.s2{background:var(--blue);}
-.s3{background:var(--green);}
-.s4{background:var(--white);}
-
-.card{
-  background:var(--white);
-  border-radius:22px;
-  border:4px solid var(--ink);
-  padding:26px;
-  box-shadow:8px 8px 0 rgba(0,0,0,.15);
-}
-
-.tag{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  border:3px solid var(--ink);
-  font-size:12px;
-  font-weight:600;
-  background:var(--white);
-  margin-bottom:12px;
-}
-
-h2{
-  font-size:clamp(24px,4vw,34px);
-  line-height:1.1;
-  margin-bottom:10px;
-}
-p.lead{
-  font-size:15px;
-  color:var(--muted);
-  max-width:700px;
-}
-
-/* problem cards */
-.problems{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-.problem-card{
-  background:var(--white);
-  border-radius:18px;
-  border:3px solid var(--ink);
-  padding:12px 14px;
-  font-size:13px;
-  cursor:pointer;
-  transition:.2s;
-}
-.problem-card:hover{
-  transform:translateY(-6px) rotate(-1deg);
-  box-shadow:6px 6px 0 rgba(0,0,0,.15);
-}
-.problem-card .title{
-  font-weight:700;
-  margin-bottom:4px;
-}
-.problem-card .more{
-  display:none;
-  margin-top:6px;
-  color:var(--muted);
-  font-size:12px;
-}
-.problem-card.open .more{
-  display:block;
-}
-
-/* steps */
-.steps{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-.step{
-  background:var(--white);
-  border-radius:18px;
-  border:3px solid var(--ink);
-  padding:14px 14px;
-  font-size:13px;
-}
-.step span.num{
-  display:inline-block;
-  font-weight:700;
-  margin-bottom:4px;
-}
-
-/* cols */
-.cols{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-  font-size:13px;
-}
-.cols h3{
-  font-size:14px;
-  margin-bottom:6px;
-}
-.cols ul{
-  padding-left:18px;
-}
-.cols li{
-  margin-bottom:4px;
-}
-
-/* CTA */
-.buttons{
-  margin-top:24px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.btn{
-  padding:10px 22px;
-  border-radius:999px;
-  border:4px solid var(--ink);
-  background:var(--white);
-  font-size:13px;
-  cursor:pointer;
-  font-weight:700;
-}
-.btn.main{background:var(--green);}
-.btn.secondary{background:var(--blue);}
-footer{
-  margin-top:28px;
-  font-size:12px;
-  color:var(--muted);
-}
-
-/* =============== MOBILE TWEAKS =============== */
-@media(max-width:900px){
-  .problems{grid-template-columns:1fr;}
-  .steps{grid-template-columns:1fr;}
-  .cols{grid-template-columns:1fr;}
-}
+/* MOBILE */
 @media(max-width:600px){
-  section{padding:110px 14px 50px;}
-  .card{padding:20px;}
-
-  .story-canvas{
-    height:80vh;
-    min-height:420px;
-  }
-  .story-tile{
-    left:50% !important;
-    top:50% !important;
-    width:82% !important;
-    transform:translate(-50%,0);
-  }
-  .story-tile span{
-    font-size:15px;
-  }
-  .center-line{
-    max-width:82%;
-    font-size:20px;
-  }
-  .center-line.emphasis{
+  .tile{
+    width:110px;
+    height:110px;
     font-size:14px;
+  }
+  .center-text{
+    font-size:22px;
+    max-width:90%;
   }
 }
 </style>
@@ -335,274 +95,116 @@ footer{
 
 <body>
 
-<header>
-  <nav class="nav">
-    <div class="logo">
-      <div class="logo-box"></div>
-      THE EQUAL LENS
-    </div>
-    <div>
-      <a href="#problem">Problem</a>
-      <a href="#workshops">Workshops</a>
-      <a href="#impact">Impact</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-</header>
-
-<!-- =============== PINNED TILE STORY (FULL-SCREEN YELLOW) =============== -->
-<section class="story-section">
-  <div class="story-canvas">
-    <!-- floating tiles -->
-    <div class="story-tile" data-step="0">
-      <span>Kids don’t need a chapter on gender.</span>
-    </div>
-    <div class="story-tile" data-step="1">
-      <span>They already know the rules.</span>
-    </div>
-    <div class="story-tile" data-step="2">
-      <span>No one ever told them.</span>
-    </div>
-    <div class="story-tile" data-step="3">
-      <span>They hear them at home.</span>
-    </div>
-    <div class="story-tile" data-step="4">
-      <span>In classrooms.</span>
-    </div>
-    <div class="story-tile" data-step="5">
-      <span>On playgrounds.</span>
-    </div>
-    <div class="story-tile" data-step="6">
-      <span>Online.</span>
-    </div>
-
-    <!-- center lines -->
-    <div class="story-center">
-      <div class="center-line" data-center="0">That silence teaches.</div>
-      <div class="center-line emphasis" data-center="1">We don’t lecture.</div>
-      <div class="center-line emphasis" data-center="2">We help them notice.</div>
-    </div>
+<section class="story">
+  <div class="tile-field" id="tiles"></div>
+  <div class="center">
+    <div class="center-text" id="centerText"></div>
   </div>
 </section>
 
-<!-- =============== SECTION 1: PROBLEM =============== -->
-<section class="s1" id="problem">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Patterns we keep hearing</div>
-      <h2>Two sets of rules. Almost no space to question.</h2>
-      <p class="lead">
-        In every room we work in, the details change but the patterns don’t. Tap a card:
-      </p>
-
-      <div class="problems">
-        <div class="problem-card">
-          <div class="title">Different rules at home</div>
-          <div>Same house, different freedoms.</div>
-          <div class="more">
-            “Bhai can stay out late.” “She should learn how to manage a home.”
-            No one sits everyone down to ask if this feels fair.
-          </div>
-        </div>
-        <div class="problem-card">
-          <div class="title">Silence in classrooms</div>
-          <div>Some voices shrink, some fill the room.</div>
-          <div class="more">
-            A few students talk over others. Some never raise their hand.
-            Teachers see it, but it feels “normal”, so it continues.
-          </div>
-        </div>
-        <div class="problem-card">
-          <div class="title">Jokes that stick</div>
-          <div>“It’s just a joke” becomes a rule.</div>
-          <div class="more">
-            Nicknames, comments on clothes, “don’t be so emotional” —
-            these jokes quietly teach everyone who is allowed to feel what.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== SECTION 2: WORKSHOPS =============== -->
-<section class="s2" id="workshops">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Inside a session</div>
-      <h2>It feels more like a game than a lecture.</h2>
-      <p class="lead">
-        We move through three simple moves in every workshop:
-      </p>
-
-      <div class="steps">
-        <div class="step">
-          <span class="num">1 · Notice</span>
-          <p>Line games, drawing, simple mapping — students spot who gets which rules.</p>
-        </div>
-        <div class="step">
-          <span class="num">2 · Question</span>
-          <p>We ask: who benefits, who adjusts, who feels small? No one person is “the villain”.</p>
-        </div>
-        <div class="step">
-          <span class="num">3 · Try</span>
-          <p>Each group picks one tiny change to test at home, in class or with friends.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== SECTION 3: IMPACT =============== -->
-<section class="s3" id="impact">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">What shifts afterward</div>
-      <h2>We’re aiming for small, noticeable nudges.</h2>
-
-      <div class="cols">
-        <div>
-          <h3>Young people start to…</h3>
-          <ul>
-            <li>Notice when rules feel unfair, not just “how it is”.</li>
-            <li>Use clearer language to explain what feels off.</li>
-            <li>Back each other up in small, everyday moments.</li>
-            <li>See gender as everyone’s topic, not “just for girls”.</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Adults tell us they see…</h3>
-          <ul>
-            <li>More students speaking up in class.</li>
-            <li>Different kids taking leadership roles.</li>
-            <li>Fewer cruel “jokes” passed off as fun.</li>
-            <li>More questions asked at home about fairness.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== SECTION 4: CTA =============== -->
-<section class="s4" id="contact">
-  <div class="wrap">
-    <div class="card">
-      <div class="tag">Bring The Equal Lens to your space</div>
-      <h2>One room. One hour. A conversation that stays.</h2>
-      <p class="lead">
-        We work with schools, NGOs and youth groups. Start with a single pilot session and
-        see how your students respond.
-      </p>
-
-      <div class="buttons">
-        <button class="btn main">For schools & NGOs</button>
-        <button class="btn secondary">Sample activities</button>
-      </div>
-
-      <footer>
-        © <span id="year"></span> The Equal Lens · hello@theequallens.com
-      </footer>
-    </div>
-  </div>
-</section>
-
-<!-- GSAP -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 <script>
-document.getElementById("year").innerText = new Date().getFullYear();
+gsap.registerPlugin(ScrollTrigger);
 
-/* expand problem cards */
-document.querySelectorAll(".problem-card").forEach(card=>{
-  card.addEventListener("click",()=>card.classList.toggle("open"));
+const messages = [
+  "Kids don’t need a chapter on gender.",
+  "They already know the rules.",
+  "No one ever told them.",
+  "They hear them at home.",
+  "In classrooms.",
+  "On playgrounds.",
+  "Online."
+];
+
+const centerMessages = [
+  "That silence teaches.",
+  "WE DON’T LECTURE.",
+  "WE HELP THEM NOTICE."
+];
+
+const isMobile = window.innerWidth < 600;
+
+/* FIXED RANDOM POSITIONS (DON’T COLLAPSE ON MOBILE) */
+const positionsDesktop = [
+  {x:10,y:20},{x:60,y:15},{x:25,y:55},{x:70,y:60},
+  {x:40,y:30},{x:15,y:70},{x:55,y:75},{x:80,y:40}
+];
+
+const positionsMobile = [
+  {x:10,y:15},{x:60,y:18},{x:20,y:45},{x:55,y:50},
+  {x:30,y:70},{x:65,y:72}
+];
+
+const positions = isMobile ? positionsMobile : positionsDesktop;
+
+/* CREATE TILES */
+const field = document.getElementById("tiles");
+const tiles = positions.map(pos=>{
+  const t = document.createElement("div");
+  t.className = "tile";
+  t.style.left = pos.x + "vw";
+  t.style.top = pos.y + "vh";
+  field.appendChild(t);
+  return t;
 });
 
-if (typeof gsap !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+/* SCROLL LENGTH — MUCH SLOWER ON MOBILE */
+const scrollUnit = isMobile ? 600 : 420;
 
-  /* -------- PINNED TILE STORY (only tiles + text move) -------- */
-  const tiles = gsap.utils.toArray(".story-tile");
-  const centers = gsap.utils.toArray(".center-line");
+const tl = gsap.timeline({
+  scrollTrigger:{
+    trigger:".story",
+    start:"top top",
+    end:"+=" + (messages.length + centerMessages.length + 2) * scrollUnit,
+    scrub:true,
+    pin:true
+  }
+});
 
-  // initial states
-  gsap.set(tiles, {opacity:0, scale:0.8, y:30});
-  gsap.set(tiles[0], {opacity:1, scale:1, y:0}); // first tile visible on load
-  gsap.set(centers, {opacity:0, y:20});
+/* TILE STORY */
+messages.forEach((text,i)=>{
+  const tile = tiles[i % tiles.length];
+  const span = document.createElement("span");
+  span.textContent = text;
+  tile.appendChild(span);
 
-  const totalSteps = (tiles.length - 1) + centers.length;
-
-  const storyTl = gsap.timeline({
-    scrollTrigger:{
-      trigger:".story-section",
-      start:"top top",
-      end:"+=" + (totalSteps * 200),
-      scrub:true,
-      pin:true
+  tl.to({},{
+    onStart:()=>{
+      tiles.forEach(t=>{
+        t.classList.remove("active");
+        const s = t.querySelector("span");
+        if(s) s.style.opacity = 0;
+      });
+      tile.classList.add("active");
+      span.style.opacity = 1;
     }
   });
+});
 
-  // tiles sequence
-  for(let i=1; i<tiles.length; i++){
-    storyTl
-      .to(tiles[i], {
-        opacity:1,
-        scale:1,
-        y:0,
-        rotationY:0,
-        duration:0.6,
-        ease:"power2.out"
-      }, "+=0.5")
-      .to(tiles[i-1], {
-        opacity:0.35,
-        scale:0.9,
-        duration:0.5,
-        ease:"power2.out",
-        onStart:() => tiles[i-1].classList.add("faded")
-      }, "<");
-  }
-
-  // center messages sequence
-  storyTl.to(centers[0], {
-    opacity:1,
-    y:0,
-    duration:0.6,
-    ease:"power2.out"
-  }, "+=0.7");
-
-  for(let i=1; i<centers.length; i++){
-    storyTl
-      .to(centers[i-1], {
-        opacity:0,
-        y:-10,
-        duration:0.5,
-        ease:"power2.in"
-      }, "+=0.8")
-      .to(centers[i], {
-        opacity:1,
-        y:0,
-        duration:0.6,
-        ease:"power2.out"
-      }, "-=0.1");
-  }
-
-  /* simple scroll reveal for other cards */
-  gsap.utils.toArray(".card").forEach(card=>{
-    if (card.closest(".story-section")) return;
-    gsap.from(card,{
-      y:80,
-      opacity:0,
-      ease:"power3.out",
-      scrollTrigger:{
-        trigger:card,
-        start:"top 85%",
-        end:"top 40%",
-        scrub:true
-      }
+/* CLEAR ALL TILE TEXT COMPLETELY */
+tl.to({},{
+  onStart:()=>{
+    tiles.forEach(t=>{
+      const s = t.querySelector("span");
+      if(s) s.remove();
+      t.classList.remove("active");
     });
-  });
-}
+  }
+});
+
+/* CENTER TEXT */
+const center = document.getElementById("centerText");
+centerMessages.forEach(txt=>{
+  tl.to(center,{
+    onStart:()=>{
+      center.textContent = txt;
+      gsap.to(center,{opacity:1,duration:0.4});
+    }
+  })
+  .to(center,{opacity:0,duration:0.4});
+});
 </script>
 
 </body>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — Zoom & Pan</title>
+<title>The Equal Lens — Zoom, Pan & Grid</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -22,6 +22,17 @@ body{
 .story{
   height:100vh;
   position:relative;
+}
+
+/* BACKGROUND GRID (ANCHOR) */
+.grid-bg{
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size:120px 120px;
+  pointer-events:none;
 }
 
 /* CAMERA CANVAS */
@@ -68,6 +79,7 @@ body{
   .secondary{font-size:20px}
   .idea{font-size:15px}
   .center-text{font-size:24px}
+  .grid-bg{background-size:90px 90px}
 }
 </style>
 </head>
@@ -75,47 +87,54 @@ body{
 <body>
 
 <section class="story">
+
+  <!-- GRID ANCHOR -->
+  <div class="grid-bg"></div>
+
+  <!-- CAMERA CANVAS -->
   <div class="canvas" id="canvas">
 
-    <!-- HERO NARRATIVE -->
+    <!-- HERO NARRATIVE (GRID-ALIGNED) -->
     <div class="node hero" style="top:50%;left:50%;">
       Kids don’t learn gender in classrooms.
     </div>
 
-    <div class="node secondary" style="top:30%;left:80%;">
+    <div class="node secondary" style="top:30%;left:70%;">
       They learn it in playgrounds.
     </div>
 
-    <div class="node secondary" style="top:70%;left:20%;">
+    <div class="node secondary" style="top:70%;left:30%;">
       At home.
     </div>
 
-    <div class="node secondary" style="top:15%;left:55%;">
+    <div class="node secondary" style="top:20%;left:50%;">
       In silence.
     </div>
 
-    <div class="node secondary" style="top:80%;left:65%;">
+    <div class="node secondary" style="top:80%;left:60%;">
       Through jokes.
     </div>
 
-    <div class="node secondary" style="top:40%;left:5%;">
+    <div class="node secondary" style="top:40%;left:15%;">
       Through rules no one explains.
     </div>
 
-    <!-- IDEA FIELD -->
-    <div class="node idea" style="top:10%;left:35%;">Emotions are not gendered</div>
+    <!-- IDEA FIELD (ALIGNED, NOT RANDOM) -->
+    <div class="node idea" style="top:10%;left:30%;">Emotions are not gendered</div>
     <div class="node idea" style="top:90%;left:40%;">Care is not weakness</div>
-    <div class="node idea" style="top:85%;left:85%;">Leadership is not gendered</div>
+    <div class="node idea" style="top:85%;left:80%;">Leadership is not gendered</div>
     <div class="node idea" style="top:20%;left:75%;">Confidence is taught, not born</div>
     <div class="node idea" style="top:60%;left:90%;">Strength looks different</div>
-    <div class="node idea" style="top:88%;left:10%;">Equality is learned early</div>
+    <div class="node idea" style="top:85%;left:10%;">Equality is learned early</div>
     <div class="node idea" style="top:50%;left:5%;">Ability isn’t fixed by gender</div>
 
   </div>
 
+  <!-- CENTER MESSAGE -->
   <div class="center">
     <div class="center-text" id="centerText"></div>
   </div>
+
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -128,7 +147,7 @@ const canvas = document.getElementById("canvas");
 const nodes = gsap.utils.toArray(".node");
 const centerText = document.getElementById("centerText");
 
-/* INITIAL CAMERA STATE */
+/* INITIAL CAMERA */
 gsap.set(canvas,{
   scale:3,
   xPercent:-20,
@@ -147,12 +166,12 @@ const tl = gsap.timeline({
   }
 });
 
-/* REVEAL HERO CONTEXT */
+/* REVEAL NARRATIVE */
 nodes.slice(0,6).forEach((node,i)=>{
   tl.to(node,{opacity:1,duration:1}, i*1.2);
 });
 
-/* ZOOM + PAN OUT */
+/* ZOOM + PAN */
 tl.to(canvas,{
   scale:1.6,
   xPercent:-5,
@@ -174,7 +193,7 @@ tl.to(centerText,{
 })
 .to(centerText,{opacity:0,duration:0.6});
 
-/* FINAL ZOOM + PAN */
+/* FINAL ZOOM */
 tl.to(canvas,{
   scale:1,
   xPercent:0,
@@ -182,8 +201,8 @@ tl.to(canvas,{
   duration:4
 });
 
-/* REVEAL IDEAS SLOWLY */
-nodes.slice(6).forEach((node)=>{
+/* REVEAL IDEAS */
+nodes.slice(6).forEach(node=>{
   tl.to(node,{opacity:0.75,duration:0.8},">");
 });
 </script>

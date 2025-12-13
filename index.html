@@ -14,7 +14,7 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:600vh;
+  height:900vh; /* IMPORTANT */
 }
 
 /* SECTION */
@@ -41,21 +41,15 @@ body{
   padding:24px;
   font-size:18px;
   line-height:1.4;
-  opacity:0.25;
-  transition:opacity .3s ease;
+  opacity:0.18;
 }
 
 .cell span{
   opacity:0;
-  transition:opacity .3s ease;
 }
 
 /* ACTIVE */
 .cell.active{
-  opacity:1;
-}
-
-.cell.active span{
   opacity:1;
 }
 
@@ -107,7 +101,7 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* CREATE GRID */
+/* GRID */
 const grid = document.getElementById("grid");
 const cells = [];
 const totalCells = window.innerWidth < 768 ? 24 : 36;
@@ -119,24 +113,15 @@ for(let i=0;i<totalCells;i++){
   cells.push(c);
 }
 
-/* HELPERS */
-function clearCells(){
+/* UTILITIES */
+function clearGrid(){
   cells.forEach(c=>{
     c.classList.remove("active");
-    const s = c.querySelector("span");
-    if(s) s.remove();
+    c.innerHTML = "";
   });
 }
 
-function activateCell(index, text){
-  clearCells();
-  const span = document.createElement("span");
-  span.textContent = text;
-  cells[index].appendChild(span);
-  cells[index].classList.add("active");
-}
-
-/* PHASE 1 — HERO NARRATIVE */
+/* CONTENT */
 const narrative = [
   "Kids don’t learn gender in classrooms.",
   "They learn it in playgrounds.",
@@ -146,10 +131,8 @@ const narrative = [
   "Through rules no one explains."
 ];
 
-/* NICE SCATTERED POSITIONS */
 const narrativeIndexes = [3, 9, 14, 20, 27, 32];
 
-/* PHASE 3 — IDEAS (ALL UNIQUE, SHORT) */
 const ideas = [
   "Emotions are not gendered",
   "Girls can excel in sports when given opportunity",
@@ -168,53 +151,65 @@ const ideas = [
   "Empathy is a skill",
   "Choice matters early",
   "Opportunity shapes outcomes",
-  "Kindness is strength"
+  "Kindness is strength",
+  "Learning starts before lessons",
+  "Beliefs form early"
 ];
 
-/* TIMELINE */
+/* TIMELINE — MUCH LONGER */
 const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 5200,
+    end:"+=" + 8000,  // 🔥 SLOW SCROLL
     scrub:true,
     pin:true
   }
 });
 
-/* PHASE 1 EXECUTION */
+/* PHASE 1 — HERO (SLOW) */
 narrative.forEach((text,i)=>{
   tl.to({},{
-    onStart:()=>activateCell(narrativeIndexes[i], text)
+    duration:1,
+    onStart:()=>{
+      clearGrid();
+      const cell = cells[narrativeIndexes[i]];
+      const span = document.createElement("span");
+      span.textContent = text;
+      cell.appendChild(span);
+      cell.classList.add("active");
+      gsap.to(span,{opacity:1,duration:0.6});
+    }
   });
 });
 
-/* CLEAR BEFORE CENTER */
-tl.to({},{
-  onStart:()=>clearCells()
-});
+/* PAUSE */
+tl.to({}, { duration:1, onStart: clearGrid });
 
-/* CENTER TEXT */
+/* CENTER */
 const center = document.getElementById("centerText");
 
-["WE DON’T LECTURE.","WE HELP THEM NOTICE."].forEach(t=>{
+["WE DON’T LECTURE.","WE HELP THEM NOTICE."].forEach(text=>{
   tl.to(center,{
+    duration:1,
     onStart:()=>{
-      center.textContent = t;
-      gsap.to(center,{opacity:1,duration:.4});
+      center.textContent = text;
+      gsap.to(center,{opacity:1,duration:0.6});
     }
-  }).to(center,{opacity:0,duration:.4});
+  })
+  .to(center,{opacity:0,duration:0.6});
 });
 
-/* PHASE 3 — FILL GRID SLOWLY */
+/* PHASE 3 — FILL GRID GRADUALLY */
 cells.forEach((cell,i)=>{
-  const span = document.createElement("span");
-  span.textContent = ideas[i % ideas.length];
-  cell.appendChild(span);
-
   tl.to({},{
+    duration:0.8,
     onStart:()=>{
+      const span = document.createElement("span");
+      span.textContent = ideas[i % ideas.length];
+      cell.appendChild(span);
       cell.classList.add("active");
+      gsap.to(span,{opacity:1,duration:0.6});
     }
   });
 });

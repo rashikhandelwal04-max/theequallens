@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — Zoom, Pan & Grid</title>
+<title>The Equal Lens — True Zoom Out</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -14,28 +14,28 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:1000vh;
+  height:1400vh; /* LONG SCROLL */
   overflow-x:hidden;
 }
 
-/* PINNED STORY */
+/* PIN */
 .story{
   height:100vh;
   position:relative;
 }
 
-/* BACKGROUND GRID (ANCHOR) */
+/* GRID — SCALE REFERENCE */
 .grid-bg{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-  background-size:120px 120px;
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size:140px 140px;
   pointer-events:none;
 }
 
-/* CAMERA CANVAS */
+/* CAMERA */
 .canvas{
   position:fixed;
   inset:0;
@@ -48,12 +48,12 @@ body{
   max-width:520px;
   text-align:center;
   line-height:1.4;
-  opacity:0;
   transform:translate(-50%,-50%);
+  opacity:0;
 }
 
 /* TYPOGRAPHY */
-.hero{font-size:44px;font-weight:600}
+.hero{font-size:46px;font-weight:600}
 .secondary{font-size:28px}
 .idea{font-size:20px;opacity:0.75}
 
@@ -68,7 +68,7 @@ body{
 }
 
 .center-text{
-  font-size:42px;
+  font-size:44px;
   opacity:0;
   text-align:center;
 }
@@ -79,7 +79,7 @@ body{
   .secondary{font-size:20px}
   .idea{font-size:15px}
   .center-text{font-size:24px}
-  .grid-bg{background-size:90px 90px}
+  .grid-bg{background-size:100px 100px}
 }
 </style>
 </head>
@@ -88,13 +88,13 @@ body{
 
 <section class="story">
 
-  <!-- GRID ANCHOR -->
+  <!-- GRID -->
   <div class="grid-bg"></div>
 
-  <!-- CAMERA CANVAS -->
+  <!-- CANVAS -->
   <div class="canvas" id="canvas">
 
-    <!-- HERO NARRATIVE (GRID-ALIGNED) -->
+    <!-- HERO SEQUENCE -->
     <div class="node hero" style="top:50%;left:50%;">
       Kids don’t learn gender in classrooms.
     </div>
@@ -119,7 +119,7 @@ body{
       Through rules no one explains.
     </div>
 
-    <!-- IDEA FIELD (ALIGNED, NOT RANDOM) -->
+    <!-- IDEAS -->
     <div class="node idea" style="top:10%;left:30%;">Emotions are not gendered</div>
     <div class="node idea" style="top:90%;left:40%;">Care is not weakness</div>
     <div class="node idea" style="top:85%;left:80%;">Leadership is not gendered</div>
@@ -130,7 +130,7 @@ body{
 
   </div>
 
-  <!-- CENTER MESSAGE -->
+  <!-- CENTER -->
   <div class="center">
     <div class="center-text" id="centerText"></div>
   </div>
@@ -147,12 +147,8 @@ const canvas = document.getElementById("canvas");
 const nodes = gsap.utils.toArray(".node");
 const centerText = document.getElementById("centerText");
 
-/* INITIAL CAMERA */
-gsap.set(canvas,{
-  scale:3,
-  xPercent:-20,
-  yPercent:10
-});
+/* START VERY ZOOMED IN */
+gsap.set(canvas,{ scale:3.5, xPercent:-25, yPercent:15 });
 gsap.set(nodes[0],{opacity:1});
 
 /* TIMELINE */
@@ -160,50 +156,52 @@ const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 9000,
+    end:"+=" + 12000,  // VERY LONG
     scrub:true,
     pin:true
   }
 });
 
-/* REVEAL NARRATIVE */
+/* REVEAL HERO CONTEXT (NO ZOOM YET) */
 nodes.slice(0,6).forEach((node,i)=>{
-  tl.to(node,{opacity:1,duration:1}, i*1.2);
+  tl.to(node,{opacity:1,duration:1.2}, i*1.4);
 });
 
-/* ZOOM + PAN */
+/* TRUE ZOOM OUT (LONG + OBVIOUS) */
 tl.to(canvas,{
-  scale:1.6,
+  scale:1.8,
   xPercent:-5,
   yPercent:-5,
-  duration:4
-},1);
+  duration:6
+});
 
-/* CENTER STATEMENT */
+/* CENTER STATEMENT — CANVAS DIMMED */
+tl.to(canvas,{opacity:0.15,duration:0.6});
 tl.to(centerText,{
   onStart:()=>{
     centerText.textContent = "WE DON’T LECTURE.";
     gsap.to(centerText,{opacity:1,duration:0.6});
   }
-})
-.to(centerText,{
+});
+tl.to(centerText,{
   onStart:()=>{
     centerText.textContent = "WE HELP THEM NOTICE.";
   }
-})
-.to(centerText,{opacity:0,duration:0.6});
+});
+tl.to(centerText,{opacity:0,duration:0.6});
+tl.to(canvas,{opacity:1,duration:0.6});
 
-/* FINAL ZOOM */
+/* FINAL ZOOM TO FULL FIELD */
 tl.to(canvas,{
   scale:1,
   xPercent:0,
   yPercent:0,
-  duration:4
+  duration:6
 });
 
-/* REVEAL IDEAS */
+/* IDEAS APPEAR GRADUALLY */
 nodes.slice(6).forEach(node=>{
-  tl.to(node,{opacity:0.75,duration:0.8},">");
+  tl.to(node,{opacity:0.75,duration:1},">");
 });
 </script>
 

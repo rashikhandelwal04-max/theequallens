@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — True Zoom Out</title>
+<title>The Equal Lens — Final Logic</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:1400vh; /* LONG SCROLL */
+  height:1800vh;
   overflow-x:hidden;
 }
 
@@ -24,25 +24,25 @@ body{
   position:relative;
 }
 
-/* GRID — SCALE REFERENCE */
+/* GRID */
 .grid-bg{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
   background-size:140px 140px;
   pointer-events:none;
 }
 
-/* CAMERA */
+/* CANVAS */
 .canvas{
   position:fixed;
   inset:0;
   transform-origin:center center;
 }
 
-/* TEXT NODES */
+/* TEXT */
 .node{
   position:absolute;
   max-width:520px;
@@ -52,12 +52,12 @@ body{
   opacity:0;
 }
 
-/* TYPOGRAPHY */
+/* TYPES */
 .hero{font-size:46px;font-weight:600}
 .secondary{font-size:28px}
-.idea{font-size:20px;opacity:0.75}
+.idea{font-size:20px;opacity:0.85}
 
-/* CENTER STATEMENT */
+/* CENTER */
 .center{
   position:fixed;
   inset:0;
@@ -88,49 +88,28 @@ body{
 
 <section class="story">
 
-  <!-- GRID -->
   <div class="grid-bg"></div>
 
-  <!-- CANVAS -->
   <div class="canvas" id="canvas">
 
-    <!-- HERO SEQUENCE -->
-    <div class="node hero" style="top:50%;left:50%;">
-      Kids don’t learn gender in classrooms.
-    </div>
+    <!-- PHASE 1 TEXT -->
+    <div class="node hero phase1" style="top:50%;left:50%;">Kids don’t learn gender in classrooms.</div>
+    <div class="node secondary phase1" style="top:30%;left:70%;">They learn it in playgrounds.</div>
+    <div class="node secondary phase1" style="top:70%;left:30%;">At home.</div>
+    <div class="node secondary phase1" style="top:20%;left:50%;">In silence.</div>
+    <div class="node secondary phase1" style="top:80%;left:60%;">Through jokes.</div>
+    <div class="node secondary phase1" style="top:40%;left:15%;">Through rules no one explains.</div>
 
-    <div class="node secondary" style="top:30%;left:70%;">
-      They learn it in playgrounds.
-    </div>
-
-    <div class="node secondary" style="top:70%;left:30%;">
-      At home.
-    </div>
-
-    <div class="node secondary" style="top:20%;left:50%;">
-      In silence.
-    </div>
-
-    <div class="node secondary" style="top:80%;left:60%;">
-      Through jokes.
-    </div>
-
-    <div class="node secondary" style="top:40%;left:15%;">
-      Through rules no one explains.
-    </div>
-
-    <!-- IDEAS -->
-    <div class="node idea" style="top:10%;left:30%;">Emotions are not gendered</div>
-    <div class="node idea" style="top:90%;left:40%;">Care is not weakness</div>
-    <div class="node idea" style="top:85%;left:80%;">Leadership is not gendered</div>
-    <div class="node idea" style="top:20%;left:75%;">Confidence is taught, not born</div>
-    <div class="node idea" style="top:60%;left:90%;">Strength looks different</div>
-    <div class="node idea" style="top:85%;left:10%;">Equality is learned early</div>
-    <div class="node idea" style="top:50%;left:5%;">Ability isn’t fixed by gender</div>
+    <!-- PHASE 3 IDEAS -->
+    <div class="node idea phase3" style="top:10%;left:30%;">Emotions are not gendered</div>
+    <div class="node idea phase3" style="top:90%;left:40%;">Care is not weakness</div>
+    <div class="node idea phase3" style="top:85%;left:80%;">Leadership is not gendered</div>
+    <div class="node idea phase3" style="top:20%;left:75%;">Confidence is taught, not born</div>
+    <div class="node idea phase3" style="top:60%;left:90%;">Strength looks different</div>
+    <div class="node idea phase3" style="top:85%;left:10%;">Equality is learned early</div>
 
   </div>
 
-  <!-- CENTER -->
   <div class="center">
     <div class="center-text" id="centerText"></div>
   </div>
@@ -144,42 +123,37 @@ body{
 gsap.registerPlugin(ScrollTrigger);
 
 const canvas = document.getElementById("canvas");
-const nodes = gsap.utils.toArray(".node");
+const phase1 = gsap.utils.toArray(".phase1");
+const phase3 = gsap.utils.toArray(".phase3");
 const centerText = document.getElementById("centerText");
 
-/* START VERY ZOOMED IN */
-gsap.set(canvas,{ scale:3.5, xPercent:-25, yPercent:15 });
-gsap.set(nodes[0],{opacity:1});
+/* START — EXTREME ZOOM IN */
+gsap.set(canvas,{scale:4,xPercent:-30,yPercent:20});
+gsap.set(phase1[0],{opacity:1});
 
 /* TIMELINE */
 const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 12000,  // VERY LONG
+    end:"+=" + 15000,
     scrub:true,
     pin:true
   }
 });
 
-/* REVEAL HERO CONTEXT (NO ZOOM YET) */
-nodes.slice(0,6).forEach((node,i)=>{
+/* PHASE 1 — SEQUENTIAL */
+phase1.forEach((node,i)=>{
   tl.to(node,{opacity:1,duration:1.2}, i*1.4);
 });
 
-/* TRUE ZOOM OUT (LONG + OBVIOUS) */
-tl.to(canvas,{
-  scale:1.8,
-  xPercent:-5,
-  yPercent:-5,
-  duration:6
-});
+/* HARD CUT — HIDE PHASE 1 */
+tl.to(phase1,{opacity:0,duration:0.6});
 
-/* CENTER STATEMENT — CANVAS DIMMED */
-tl.to(canvas,{opacity:0.15,duration:0.6});
+/* CENTER STATEMENT ONLY */
 tl.to(centerText,{
   onStart:()=>{
-    centerText.textContent = "WE DON’T LECTURE.";
+    centerText.textContent = "WE DON’T TEACH.";
     gsap.to(centerText,{opacity:1,duration:0.6});
   }
 });
@@ -189,19 +163,18 @@ tl.to(centerText,{
   }
 });
 tl.to(centerText,{opacity:0,duration:0.6});
-tl.to(canvas,{opacity:1,duration:0.6});
 
-/* FINAL ZOOM TO FULL FIELD */
+/* MASSIVE ZOOM OUT */
 tl.to(canvas,{
   scale:1,
   xPercent:0,
   yPercent:0,
-  duration:6
+  duration:8
 });
 
-/* IDEAS APPEAR GRADUALLY */
-nodes.slice(6).forEach(node=>{
-  tl.to(node,{opacity:0.75,duration:1},">");
+/* PHASE 3 — IDEAS GRADUAL */
+phase3.forEach((node)=>{
+  tl.to(node,{opacity:0.85,duration:1},">");
 });
 </script>
 

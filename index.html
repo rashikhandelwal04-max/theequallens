@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>The Equal Lens</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  font-family:'Poppins',sans-serif;
-  background:#0b0b0e;
-  color:#fff;
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-/* ===== STORY ===== */
+body{
+  background:#0b0b0e;
+  color:#fff;
+  font-family:'Playfair Display',serif;
+  height:400vh;
+}
+
+/* STORY SECTION */
 .story{
   height:100vh;
   position:relative;
-  overflow:hidden;
 }
 
-/* GRID FEEL */
-.tile-field{
-  position:absolute;
+/* FULL-SCREEN GRID */
+.grid{
+  position:fixed;
   inset:0;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  grid-template-rows:repeat(6,1fr);
+  background:#0b0b0e;
 }
 
-/* BIG SQUARE TILES */
-.tile{
-  position:absolute;
-  width:220px;
-  height:220px;
-  background:#0b0b0e;
+/* BIG SQUARE BOXES */
+.cell{
   border:1.2px solid rgba(255,255,255,0.18);
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:22px;
-  font-family:"Playfair Display",serif;
-  font-size:18px;
+  padding:26px;
+  font-size:20px;
   line-height:1.4;
+  transition:border-color .3s ease, box-shadow .3s ease;
 }
 
-/* text hidden initially */
-.tile span{
+/* HIDDEN TEXT */
+.cell span{
   opacity:0;
-  transition:opacity 0.4s ease;
+  transition:opacity .4s ease;
 }
 
-/* ACTIVE TILE */
-.tile.active{
+/* ACTIVE BOX */
+.cell.active{
   border-color:rgba(255,255,255,0.9);
-  box-shadow:
-    0 0 0 rgba(255,255,255,0),
-    0 0 24px rgba(255,255,255,0.18);
-  animation:spark 0.9s ease-out;
+  box-shadow:0 0 36px rgba(255,255,255,0.25);
+  animation:spark .9s ease-out;
 }
 
-.tile.active span{
+.cell.active span{
   opacity:1;
 }
 
 /* SUBTLE SPARK */
 @keyframes spark{
   0%{box-shadow:0 0 0 rgba(255,255,255,0)}
-  40%{box-shadow:0 0 28px rgba(255,255,255,0.25)}
-  100%{box-shadow:0 0 18px rgba(255,255,255,0.15)}
+  40%{box-shadow:0 0 38px rgba(255,255,255,0.35)}
+  100%{box-shadow:0 0 28px rgba(255,255,255,0.22)}
 }
 
 /* CENTER TEXT */
 .center{
-  position:absolute;
+  position:fixed;
   inset:0;
   display:flex;
   align-items:center;
@@ -84,24 +86,23 @@ body{
 }
 
 .center-text{
-  font-family:"Playfair Display",serif;
-  font-size:40px;
-  text-align:center;
-  max-width:75%;
+  font-size:42px;
   opacity:0;
+  text-align:center;
 }
 
 /* MOBILE */
-@media(max-width:600px){
-  .tile{
-    width:160px;
-    height:160px;
+@media(max-width:768px){
+  .grid{
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows:repeat(6,1fr);
+  }
+  .cell{
     font-size:15px;
     padding:16px;
   }
   .center-text{
     font-size:24px;
-    max-width:90%;
   }
 }
 </style>
@@ -110,7 +111,7 @@ body{
 <body>
 
 <section class="story">
-  <div class="tile-field" id="tiles"></div>
+  <div class="grid" id="grid"></div>
   <div class="center">
     <div class="center-text" id="centerText"></div>
   </div>
@@ -122,7 +123,7 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* === EXACT NARRATIVE YOU ASKED FOR === */
+/* EXACT STORY (NO FREESTYLE) */
 const messages = [
   "Kids don’t learn gender in classrooms.",
   "They learn it in playgrounds.",
@@ -137,86 +138,81 @@ const centerMessages = [
   "WE HELP THEM NOTICE."
 ];
 
-const isMobile = window.innerWidth < 600;
+const grid = document.getElementById("grid");
 
-/* SPACED POSITIONS — BIG TILES NEED AIR */
-const positionsDesktop = [
-  {x:8,y:18},{x:62,y:16},
-  {x:22,y:58},{x:68,y:60},
-  {x:40,y:32},{x:12,y:72}
-];
+/* CREATE BIG GRID CELLS */
+const cells = [];
+const totalCells = window.innerWidth < 768 ? 24 : 36;
 
-const positionsMobile = [
-  {x:8,y:18},{x:55,y:20},
-  {x:18,y:52},{x:55,y:58}
-];
+for(let i=0;i<totalCells;i++){
+  const cell = document.createElement("div");
+  cell.className = "cell";
+  grid.appendChild(cell);
+  cells.push(cell);
+}
 
-const positions = isMobile ? positionsMobile : positionsDesktop;
+/* PRE-CHOSEN POSITIONS (LOOK BALANCED) */
+const activeIndexesDesktop = [2, 8, 14, 21, 27, 32];
+const activeIndexesMobile  = [1, 6, 11, 16, 20, 22];
 
-/* CREATE TILES */
-const field = document.getElementById("tiles");
-const tiles = positions.map(pos=>{
-  const t = document.createElement("div");
-  t.className = "tile";
-  t.style.left = pos.x + "vw";
-  t.style.top = pos.y + "vh";
-  field.appendChild(t);
-  return t;
-});
+const activeIndexes = window.innerWidth < 768
+  ? activeIndexesMobile
+  : activeIndexesDesktop;
 
-/* SCROLL — SLOW + READABLE */
-const scrollUnit = isMobile ? 700 : 520;
+/* TIMELINE */
+const scrollUnit = window.innerWidth < 768 ? 700 : 550;
 
 const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + (messages.length + centerMessages.length + 2) * scrollUnit,
+    end:"+=" + (messages.length + centerMessages.length + 1) * scrollUnit,
     scrub:true,
     pin:true
   }
 });
 
-/* TILE SEQUENCE */
+/* TEXT IN BOXES */
 messages.forEach((text,i)=>{
-  const tile = tiles[i % tiles.length];
+  const cell = cells[activeIndexes[i]];
   const span = document.createElement("span");
   span.textContent = text;
-  tile.appendChild(span);
+  cell.appendChild(span);
 
   tl.to({},{
     onStart:()=>{
-      tiles.forEach(t=>{
-        t.classList.remove("active");
-        const s = t.querySelector("span");
-        if(s) s.style.opacity = 0;
+      cells.forEach(c=>{
+        c.classList.remove("active");
+        const s=c.querySelector("span");
+        if(s) s.style.opacity=0;
       });
-      tile.classList.add("active");
-      span.style.opacity = 1;
+      cell.classList.add("active");
+      span.style.opacity=1;
     }
   });
 });
 
-/* CLEAR TILES */
+/* CLEAR GRID */
 tl.to({},{
   onStart:()=>{
-    tiles.forEach(t=>{
-      const s = t.querySelector("span");
+    cells.forEach(c=>{
+      const s=c.querySelector("span");
       if(s) s.remove();
-      t.classList.remove("active");
+      c.classList.remove("active");
     });
   }
 });
 
-/* CENTER TEXT */
+/* CENTER STATEMENT */
 const center = document.getElementById("centerText");
+
 centerMessages.forEach(txt=>{
   tl.to(center,{
     onStart:()=>{
       center.textContent = txt;
-      gsap.to(center,{opacity:1,duration:0.4});
+      gsap.to(center,{opacity:1,duration:.4});
     }
-  }).to(center,{opacity:0,duration:0.4});
+  }).to(center,{opacity:0,duration:.4});
 });
 </script>
 

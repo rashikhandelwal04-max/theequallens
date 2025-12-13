@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — Correct Zoom Logic</title>
+<title>The Equal Lens — Correct Zoom Perception</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:2200vh;
+  height:2400vh;
   overflow-x:hidden;
 }
 
@@ -29,8 +29,8 @@ body{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
 }
@@ -47,15 +47,23 @@ body{
   position:absolute;
   max-width:520px;
   text-align:center;
-  line-height:1.4;
+  line-height:1.35;
   transform:translate(-50%,-50%);
   opacity:0;
 }
 
-/* TYPES */
-.hero{font-size:48px;font-weight:600}
-.secondary{font-size:30px}
-.idea{font-size:20px;opacity:0.9}
+/* TYPOGRAPHY — THIS IS CRITICAL */
+.hero{
+  font-size:clamp(26px, 4vw, 46px);
+  font-weight:600;
+}
+.secondary{
+  font-size:clamp(18px, 2.5vw, 28px);
+}
+.idea{
+  font-size:clamp(14px, 1.8vw, 20px);
+  opacity:0.9;
+}
 
 /* CENTER */
 .center{
@@ -68,18 +76,9 @@ body{
 }
 
 .center-text{
-  font-size:46px;
+  font-size:clamp(24px, 4vw, 46px);
   opacity:0;
   text-align:center;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .hero{font-size:26px}
-  .secondary{font-size:20px}
-  .idea{font-size:15px}
-  .center-text{font-size:24px}
-  .grid-bg{background-size:100px 100px}
 }
 </style>
 </head>
@@ -92,7 +91,7 @@ body{
 
   <div class="canvas" id="canvas">
 
-    <!-- PHASE 1 + 2 -->
+    <!-- FIRST 6 LINES -->
     <div class="node hero phase1" style="top:50%;left:50%;">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary phase1" style="top:35%;left:70%;">They learn it in playgrounds.</div>
     <div class="node secondary phase1" style="top:65%;left:30%;">At home.</div>
@@ -100,15 +99,13 @@ body{
     <div class="node secondary phase1" style="top:75%;left:60%;">Through jokes.</div>
     <div class="node secondary phase1" style="top:45%;left:15%;">Through rules no one explains.</div>
 
-    <!-- PHASE 3 IDEAS -->
+    <!-- BIG PICTURE IDEAS -->
     <div class="node idea phase3" style="top:10%;left:20%;">Emotions are not gendered</div>
     <div class="node idea phase3" style="top:90%;left:30%;">Care is not weakness</div>
     <div class="node idea phase3" style="top:85%;left:75%;">Leadership is not gendered</div>
     <div class="node idea phase3" style="top:15%;left:70%;">Confidence is taught, not born</div>
     <div class="node idea phase3" style="top:60%;left:90%;">Strength looks different</div>
     <div class="node idea phase3" style="top:88%;left:10%;">Equality is learned early</div>
-    <div class="node idea phase3" style="top:45%;left:5%;">Respect is learned young</div>
-    <div class="node idea phase3" style="top:30%;left:85%;">Bias is absorbed early</div>
 
   </div>
 
@@ -138,29 +135,29 @@ const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 18000,
+    end:"+=" + 20000,
     scrub:true,
     pin:true
   }
 });
 
-/* STEP 1 — REVEAL ALL 6 (NO ZOOM CHANGE YET) */
+/* STEP 1 — REVEAL FIRST 6 */
 phase1.forEach((node,i)=>{
   tl.to(node,{opacity:1,duration:1.4}, i*1.6);
 });
 
-/* STEP 2 — ZOOM OUT TO SEE ALL 6 TOGETHER */
+/* 🔥 STEP 2 — COLLECTIVE ZOOM OUT (THIS FIXES IT) */
 tl.to(canvas,{
-  scale:1.8,
+  scale:1.6,
   xPercent:-10,
   yPercent:-5,
-  duration:6
+  duration:8
 });
 
-/* STEP 3 — HARD HIDE PHASE 1 */
+/* STEP 3 — HIDE FIRST 6 */
 tl.to(phase1,{opacity:0,duration:0.8});
 
-/* STEP 4 — CENTER ONLY */
+/* STEP 4 — CENTER STATEMENT */
 tl.to(centerText,{
   onStart:()=>{
     centerText.textContent="WE DON’T TEACH.";
@@ -174,15 +171,15 @@ tl.to(centerText,{
 });
 tl.to(centerText,{opacity:0,duration:0.6});
 
-/* STEP 5 — EXTREME ZOOM OUT (BIGGER PICTURE) */
+/* STEP 5 — EXTREME ZOOM OUT (BIG PICTURE) */
 tl.to(canvas,{
-  scale:0.6,
+  scale:0.55,
   xPercent:0,
   yPercent:0,
-  duration:8
+  duration:10
 });
 
-/* STEP 6 — IDEAS APPEAR GRADUALLY */
+/* STEP 6 — IDEAS APPEAR */
 phase3.forEach(node=>{
   tl.to(node,{opacity:0.9,duration:1.2},">");
 });

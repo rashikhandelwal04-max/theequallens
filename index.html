@@ -14,7 +14,7 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:500vh;
+  height:600vh;
 }
 
 /* SECTION */
@@ -38,30 +38,28 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:22px;
+  padding:24px;
   font-size:18px;
   line-height:1.4;
   opacity:0.25;
-  transition:opacity .4s ease, box-shadow .4s ease;
+  transition:opacity .3s ease;
 }
 
-/* CONTENT */
 .cell span{
   opacity:0;
-  transition:opacity .4s ease;
+  transition:opacity .3s ease;
 }
 
-/* ACTIVE SPARK */
+/* ACTIVE */
 .cell.active{
   opacity:1;
-  box-shadow:0 0 28px rgba(255,255,255,0.25);
 }
 
 .cell.active span{
   opacity:1;
 }
 
-/* CENTER */
+/* CENTER TEXT */
 .center{
   position:fixed;
   inset:0;
@@ -73,8 +71,8 @@ body{
 
 .center-text{
   font-size:42px;
-  opacity:0;
   text-align:center;
+  opacity:0;
 }
 
 /* MOBILE */
@@ -83,8 +81,13 @@ body{
     grid-template-columns:repeat(4,1fr);
     grid-template-rows:repeat(6,1fr);
   }
-  .cell{font-size:15px;padding:14px}
-  .center-text{font-size:24px}
+  .cell{
+    font-size:15px;
+    padding:14px;
+  }
+  .center-text{
+    font-size:24px;
+  }
 }
 </style>
 </head>
@@ -104,19 +107,36 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* GRID SETUP */
+/* CREATE GRID */
 const grid = document.getElementById("grid");
 const cells = [];
 const totalCells = window.innerWidth < 768 ? 24 : 36;
 
 for(let i=0;i<totalCells;i++){
-  const c=document.createElement("div");
-  c.className="cell";
+  const c = document.createElement("div");
+  c.className = "cell";
   grid.appendChild(c);
   cells.push(c);
 }
 
-/* PHASE 1: NARRATIVE */
+/* HELPERS */
+function clearCells(){
+  cells.forEach(c=>{
+    c.classList.remove("active");
+    const s = c.querySelector("span");
+    if(s) s.remove();
+  });
+}
+
+function activateCell(index, text){
+  clearCells();
+  const span = document.createElement("span");
+  span.textContent = text;
+  cells[index].appendChild(span);
+  cells[index].classList.add("active");
+}
+
+/* PHASE 1 — HERO NARRATIVE */
 const narrative = [
   "Kids don’t learn gender in classrooms.",
   "They learn it in playgrounds.",
@@ -126,70 +146,70 @@ const narrative = [
   "Through rules no one explains."
 ];
 
-/* PHASE 4: IDEAS */
+/* NICE SCATTERED POSITIONS */
+const narrativeIndexes = [3, 9, 14, 20, 27, 32];
+
+/* PHASE 3 — IDEAS (ALL UNIQUE, SHORT) */
 const ideas = [
-  "“Boys don’t cry” → Boys can cry 💧",
-  "“Girls don’t play cricket” → They excel when given opportunity 🏏",
-  "Care is not weakness 🌱",
-  "Leadership isn’t gendered",
+  "Emotions are not gendered",
+  "Girls can excel in sports when given opportunity",
+  "Care is not weakness",
+  "Leadership is not gendered",
   "Confidence is taught, not born",
   "Equality is learned early",
   "Strength looks different",
-  "Respect is everyone’s job",
-  "Ability isn’t gendered",
-  "Silence teaches too",
-  "Let kids choose freely",
-  "Empathy is power"
+  "Respect is learned young",
+  "Ability isn’t fixed by gender",
+  "Silence teaches norms",
+  "Children notice before we speak",
+  "Bias is absorbed early",
+  "Fairness can be taught",
+  "Roles are learned, not natural",
+  "Empathy is a skill",
+  "Choice matters early",
+  "Opportunity shapes outcomes",
+  "Kindness is strength"
 ];
-
-/* RANDOM HELPERS */
-function shuffle(arr){
-  return arr.sort(()=>Math.random()-0.5);
-}
-
-const shuffledCells = shuffle([...cells]);
 
 /* TIMELINE */
 const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 4200,
+    end:"+=" + 5200,
     scrub:true,
     pin:true
   }
 });
 
-/* NARRATIVE APPEARS SCATTERED */
+/* PHASE 1 EXECUTION */
 narrative.forEach((text,i)=>{
-  const cell = shuffledCells[i];
-  const span = document.createElement("span");
-  span.textContent=text;
-  cell.appendChild(span);
-
   tl.to({},{
-    onStart:()=>{
-      cells.forEach(c=>c.classList.remove("active"));
-      cell.classList.add("active");
-    }
+    onStart:()=>activateCell(narrativeIndexes[i], text)
   });
 });
 
-/* CENTER MESSAGE */
-const center=document.getElementById("centerText");
+/* CLEAR BEFORE CENTER */
+tl.to({},{
+  onStart:()=>clearCells()
+});
+
+/* CENTER TEXT */
+const center = document.getElementById("centerText");
+
 ["WE DON’T LECTURE.","WE HELP THEM NOTICE."].forEach(t=>{
   tl.to(center,{
     onStart:()=>{
-      center.textContent=t;
+      center.textContent = t;
       gsap.to(center,{opacity:1,duration:.4});
     }
   }).to(center,{opacity:0,duration:.4});
 });
 
-/* FILL THE GRID SLOWLY */
-shuffle(cells).forEach((cell,i)=>{
-  const span=document.createElement("span");
-  span.textContent=ideas[i % ideas.length];
+/* PHASE 3 — FILL GRID SLOWLY */
+cells.forEach((cell,i)=>{
+  const span = document.createElement("span");
+  span.textContent = ideas[i % ideas.length];
   cell.appendChild(span);
 
   tl.to({},{

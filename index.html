@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens</title>
+<title>The Equal Lens — Prezi Style</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -14,46 +14,51 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:900vh; /* IMPORTANT */
+  height:900vh;
+  overflow-x:hidden;
 }
 
-/* SECTION */
+/* PINNED SECTION */
 .story{
   height:100vh;
+  position:relative;
 }
 
-/* GRID */
-.grid{
+/* CAMERA CANVAS */
+.canvas{
   position:fixed;
   inset:0;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  grid-template-rows:repeat(6,1fr);
+  transform-origin:center center;
 }
 
-/* CELL */
-.cell{
-  border:1px solid rgba(255,255,255,0.14);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+/* TEXT NODES */
+.node{
+  position:absolute;
+  max-width:520px;
   text-align:center;
-  padding:24px;
-  font-size:18px;
   line-height:1.4;
-  opacity:0.18;
-}
-
-.cell span{
   opacity:0;
+  transform:translate(-50%,-50%);
 }
 
-/* ACTIVE */
-.cell.active{
-  opacity:1;
+/* HERO TEXT */
+.hero{
+  font-size:42px;
+  font-weight:600;
 }
 
-/* CENTER TEXT */
+/* SECONDARY */
+.secondary{
+  font-size:28px;
+}
+
+/* IDEA TEXT */
+.idea{
+  font-size:20px;
+  opacity:0.75;
+}
+
+/* CENTER STATEMENT */
 .center{
   position:fixed;
   inset:0;
@@ -71,17 +76,10 @@ body{
 
 /* MOBILE */
 @media(max-width:768px){
-  .grid{
-    grid-template-columns:repeat(4,1fr);
-    grid-template-rows:repeat(6,1fr);
-  }
-  .cell{
-    font-size:15px;
-    padding:14px;
-  }
-  .center-text{
-    font-size:24px;
-  }
+  .hero{font-size:26px}
+  .secondary{font-size:20px}
+  .idea{font-size:15px}
+  .center-text{font-size:24px}
 }
 </style>
 </head>
@@ -89,7 +87,44 @@ body{
 <body>
 
 <section class="story">
-  <div class="grid" id="grid"></div>
+  <div class="canvas" id="canvas">
+
+    <!-- HERO NARRATIVE -->
+    <div class="node hero" style="top:50%;left:50%;">
+      Kids don’t learn gender in classrooms.
+    </div>
+
+    <div class="node secondary" style="top:40%;left:80%;">
+      They learn it in playgrounds.
+    </div>
+
+    <div class="node secondary" style="top:65%;left:20%;">
+      At home.
+    </div>
+
+    <div class="node secondary" style="top:20%;left:55%;">
+      In silence.
+    </div>
+
+    <div class="node secondary" style="top:75%;left:60%;">
+      Through jokes.
+    </div>
+
+    <div class="node secondary" style="top:30%;left:10%;">
+      Through rules no one explains.
+    </div>
+
+    <!-- IDEA FIELD -->
+    <div class="node idea" style="top:10%;left:30%;">Emotions are not gendered</div>
+    <div class="node idea" style="top:90%;left:40%;">Care is not weakness</div>
+    <div class="node idea" style="top:80%;left:85%;">Leadership is not gendered</div>
+    <div class="node idea" style="top:15%;left:70%;">Confidence is taught, not born</div>
+    <div class="node idea" style="top:55%;left:90%;">Strength looks different</div>
+    <div class="node idea" style="top:85%;left:10%;">Equality is learned early</div>
+    <div class="node idea" style="top:45%;left:5%;">Ability isn’t fixed by gender</div>
+
+  </div>
+
   <div class="center">
     <div class="center-text" id="centerText"></div>
   </div>
@@ -101,117 +136,53 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* GRID */
-const grid = document.getElementById("grid");
-const cells = [];
-const totalCells = window.innerWidth < 768 ? 24 : 36;
+const canvas = document.getElementById("canvas");
+const nodes = gsap.utils.toArray(".node");
+const centerText = document.getElementById("centerText");
 
-for(let i=0;i<totalCells;i++){
-  const c = document.createElement("div");
-  c.className = "cell";
-  grid.appendChild(c);
-  cells.push(c);
-}
+/* INITIAL STATE */
+gsap.set(canvas,{scale:3});
+gsap.set(nodes[0],{opacity:1});
 
-/* UTILITIES */
-function clearGrid(){
-  cells.forEach(c=>{
-    c.classList.remove("active");
-    c.innerHTML = "";
-  });
-}
-
-/* CONTENT */
-const narrative = [
-  "Kids don’t learn gender in classrooms.",
-  "They learn it in playgrounds.",
-  "At home.",
-  "In silence.",
-  "Through jokes.",
-  "Through rules no one explains."
-];
-
-const narrativeIndexes = [3, 9, 14, 20, 27, 32];
-
-const ideas = [
-  "Emotions are not gendered",
-  "Girls can excel in sports when given opportunity",
-  "Care is not weakness",
-  "Leadership is not gendered",
-  "Confidence is taught, not born",
-  "Equality is learned early",
-  "Strength looks different",
-  "Respect is learned young",
-  "Ability isn’t fixed by gender",
-  "Silence teaches norms",
-  "Children notice before we speak",
-  "Bias is absorbed early",
-  "Fairness can be taught",
-  "Roles are learned, not natural",
-  "Empathy is a skill",
-  "Choice matters early",
-  "Opportunity shapes outcomes",
-  "Kindness is strength",
-  "Learning starts before lessons",
-  "Beliefs form early"
-];
-
-/* TIMELINE — MUCH LONGER */
+/* TIMELINE */
 const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 8000,  // 🔥 SLOW SCROLL
+    end:"+=" + 8000,
     scrub:true,
     pin:true
   }
 });
 
-/* PHASE 1 — HERO (SLOW) */
-narrative.forEach((text,i)=>{
-  tl.to({},{
-    duration:1,
-    onStart:()=>{
-      clearGrid();
-      const cell = cells[narrativeIndexes[i]];
-      const span = document.createElement("span");
-      span.textContent = text;
-      cell.appendChild(span);
-      cell.classList.add("active");
-      gsap.to(span,{opacity:1,duration:0.6});
-    }
-  });
+/* ZOOM OUT + REVEAL NARRATIVE */
+nodes.slice(0,6).forEach((node,i)=>{
+  tl.to(node,{opacity:1,duration:1}, i*1.2);
 });
 
-/* PAUSE */
-tl.to({}, { duration:1, onStart: clearGrid });
+/* ZOOM OUT CAMERA */
+tl.to(canvas,{scale:1.4,duration:4},1);
 
-/* CENTER */
-const center = document.getElementById("centerText");
+/* CENTER STATEMENT */
+tl.to(centerText,{
+  onStart:()=>{
+    centerText.textContent = "WE DON’T LECTURE.";
+    gsap.to(centerText,{opacity:1,duration:0.6});
+  }
+})
+.to(centerText,{
+  onStart:()=>{
+    centerText.textContent = "WE HELP THEM NOTICE.";
+  }
+})
+.to(centerText,{opacity:0,duration:0.6});
 
-["WE DON’T LECTURE.","WE HELP THEM NOTICE."].forEach(text=>{
-  tl.to(center,{
-    duration:1,
-    onStart:()=>{
-      center.textContent = text;
-      gsap.to(center,{opacity:1,duration:0.6});
-    }
-  })
-  .to(center,{opacity:0,duration:0.6});
-});
+/* FULL ZOOM OUT */
+tl.to(canvas,{scale:1,duration:4});
 
-/* PHASE 3 — FILL GRID GRADUALLY */
-cells.forEach((cell,i)=>{
-  tl.to({},{
-    duration:0.8,
-    onStart:()=>{
-      const span = document.createElement("span");
-      span.textContent = ideas[i % ideas.length];
-      cell.appendChild(span);
-      cell.classList.add("active");
-      gsap.to(span,{opacity:1,duration:0.6});
-    }
-  });
+/* REVEAL IDEAS GRADUALLY */
+nodes.slice(6).forEach((node,i)=>{
+  tl.to(node,{opacity:0.75,duration:0.6},">");
 });
 </script>
 

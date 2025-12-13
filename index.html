@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — Prezi Style</title>
+<title>The Equal Lens — Zoom & Pan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -14,11 +14,11 @@ body{
   background:#0b0b0e;
   color:#fff;
   font-family:'Playfair Display',serif;
-  height:900vh;
+  height:1000vh;
   overflow-x:hidden;
 }
 
-/* PINNED SECTION */
+/* PINNED STORY */
 .story{
   height:100vh;
   position:relative;
@@ -41,22 +41,10 @@ body{
   transform:translate(-50%,-50%);
 }
 
-/* HERO TEXT */
-.hero{
-  font-size:42px;
-  font-weight:600;
-}
-
-/* SECONDARY */
-.secondary{
-  font-size:28px;
-}
-
-/* IDEA TEXT */
-.idea{
-  font-size:20px;
-  opacity:0.75;
-}
+/* TYPOGRAPHY */
+.hero{font-size:44px;font-weight:600}
+.secondary{font-size:28px}
+.idea{font-size:20px;opacity:0.75}
 
 /* CENTER STATEMENT */
 .center{
@@ -70,8 +58,8 @@ body{
 
 .center-text{
   font-size:42px;
-  text-align:center;
   opacity:0;
+  text-align:center;
 }
 
 /* MOBILE */
@@ -94,34 +82,34 @@ body{
       Kids don’t learn gender in classrooms.
     </div>
 
-    <div class="node secondary" style="top:40%;left:80%;">
+    <div class="node secondary" style="top:30%;left:80%;">
       They learn it in playgrounds.
     </div>
 
-    <div class="node secondary" style="top:65%;left:20%;">
+    <div class="node secondary" style="top:70%;left:20%;">
       At home.
     </div>
 
-    <div class="node secondary" style="top:20%;left:55%;">
+    <div class="node secondary" style="top:15%;left:55%;">
       In silence.
     </div>
 
-    <div class="node secondary" style="top:75%;left:60%;">
+    <div class="node secondary" style="top:80%;left:65%;">
       Through jokes.
     </div>
 
-    <div class="node secondary" style="top:30%;left:10%;">
+    <div class="node secondary" style="top:40%;left:5%;">
       Through rules no one explains.
     </div>
 
     <!-- IDEA FIELD -->
-    <div class="node idea" style="top:10%;left:30%;">Emotions are not gendered</div>
+    <div class="node idea" style="top:10%;left:35%;">Emotions are not gendered</div>
     <div class="node idea" style="top:90%;left:40%;">Care is not weakness</div>
-    <div class="node idea" style="top:80%;left:85%;">Leadership is not gendered</div>
-    <div class="node idea" style="top:15%;left:70%;">Confidence is taught, not born</div>
-    <div class="node idea" style="top:55%;left:90%;">Strength looks different</div>
-    <div class="node idea" style="top:85%;left:10%;">Equality is learned early</div>
-    <div class="node idea" style="top:45%;left:5%;">Ability isn’t fixed by gender</div>
+    <div class="node idea" style="top:85%;left:85%;">Leadership is not gendered</div>
+    <div class="node idea" style="top:20%;left:75%;">Confidence is taught, not born</div>
+    <div class="node idea" style="top:60%;left:90%;">Strength looks different</div>
+    <div class="node idea" style="top:88%;left:10%;">Equality is learned early</div>
+    <div class="node idea" style="top:50%;left:5%;">Ability isn’t fixed by gender</div>
 
   </div>
 
@@ -140,8 +128,12 @@ const canvas = document.getElementById("canvas");
 const nodes = gsap.utils.toArray(".node");
 const centerText = document.getElementById("centerText");
 
-/* INITIAL STATE */
-gsap.set(canvas,{scale:3});
+/* INITIAL CAMERA STATE */
+gsap.set(canvas,{
+  scale:3,
+  xPercent:-20,
+  yPercent:10
+});
 gsap.set(nodes[0],{opacity:1});
 
 /* TIMELINE */
@@ -149,19 +141,24 @@ const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 8000,
+    end:"+=" + 9000,
     scrub:true,
     pin:true
   }
 });
 
-/* ZOOM OUT + REVEAL NARRATIVE */
+/* REVEAL HERO CONTEXT */
 nodes.slice(0,6).forEach((node,i)=>{
   tl.to(node,{opacity:1,duration:1}, i*1.2);
 });
 
-/* ZOOM OUT CAMERA */
-tl.to(canvas,{scale:1.4,duration:4},1);
+/* ZOOM + PAN OUT */
+tl.to(canvas,{
+  scale:1.6,
+  xPercent:-5,
+  yPercent:-5,
+  duration:4
+},1);
 
 /* CENTER STATEMENT */
 tl.to(centerText,{
@@ -177,12 +174,17 @@ tl.to(centerText,{
 })
 .to(centerText,{opacity:0,duration:0.6});
 
-/* FULL ZOOM OUT */
-tl.to(canvas,{scale:1,duration:4});
+/* FINAL ZOOM + PAN */
+tl.to(canvas,{
+  scale:1,
+  xPercent:0,
+  yPercent:0,
+  duration:4
+});
 
-/* REVEAL IDEAS GRADUALLY */
-nodes.slice(6).forEach((node,i)=>{
-  tl.to(node,{opacity:0.75,duration:0.6},">");
+/* REVEAL IDEAS SLOWLY */
+nodes.slice(6).forEach((node)=>{
+  tl.to(node,{opacity:0.75,duration:0.8},">");
 });
 </script>
 

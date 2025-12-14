@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — Final</title>
+<title>The Equal Lens — Correct Prezi Logic</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -29,13 +29,13 @@ body{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
 }
 
-/* CAMERA */
+/* CAMERA CANVAS */
 .canvas{
   position:fixed;
   inset:0;
@@ -49,23 +49,22 @@ body{
   text-align:center;
   line-height:1.35;
   transform:translate(-50%,-50%);
-  opacity:0;
 }
 
 /* TYPOGRAPHY */
 .hero{
-  font-size:clamp(28px, 4vw, 46px);
+  font-size:clamp(28px, 3.5vw, 42px);
   font-weight:600;
 }
 .secondary{
-  font-size:clamp(18px, 2.5vw, 28px);
+  font-size:clamp(18px, 2.2vw, 26px);
 }
 .idea{
-  font-size:clamp(14px, 1.8vw, 20px);
-  opacity:0.9;
+  font-size:clamp(14px, 1.6vw, 18px);
+  opacity:0;
 }
 
-/* CENTER STATEMENT */
+/* CENTER */
 .center{
   position:fixed;
   inset:0;
@@ -76,14 +75,9 @@ body{
 }
 
 .center-text{
-  font-size:clamp(26px, 4vw, 46px);
+  font-size:clamp(26px, 4vw, 44px);
   opacity:0;
   text-align:center;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .grid-bg{background-size:110px 110px}
 }
 </style>
 </head>
@@ -96,23 +90,38 @@ body{
 
   <div class="canvas" id="canvas">
 
-    <!-- FIRST 6 LINES -->
-    <div class="node hero phase1" style="top:50%;left:50%;">Kids don’t learn gender in classrooms.</div>
-    <div class="node secondary phase1" style="top:35%;left:70%;">They learn it in playgrounds.</div>
-    <div class="node secondary phase1" style="top:65%;left:30%;">At home.</div>
-    <div class="node secondary phase1" style="top:25%;left:50%;">In silence.</div>
-    <div class="node secondary phase1" style="top:75%;left:60%;">Through jokes.</div>
-    <div class="node secondary phase1" style="top:45%;left:15%;">Through rules no one explains.</div>
+    <!-- FIRST 6 — SPATIALLY PLACED -->
+    <div class="node hero" style="top:50%;left:50%;">
+      Kids don’t learn gender in classrooms.
+    </div>
 
-    <!-- BIG PICTURE IDEAS -->
-    <div class="node idea phase3" style="top:10%;left:20%;">Emotions are not gendered</div>
-    <div class="node idea phase3" style="top:90%;left:30%;">Care is not weakness</div>
-    <div class="node idea phase3" style="top:85%;left:75%;">Leadership is not gendered</div>
-    <div class="node idea phase3" style="top:15%;left:70%;">Confidence is taught, not born</div>
-    <div class="node idea phase3" style="top:60%;left:90%;">Strength looks different</div>
-    <div class="node idea phase3" style="top:88%;left:10%;">Equality is learned early</div>
-    <div class="node idea phase3" style="top:45%;left:5%;">Bias is absorbed early</div>
-    <div class="node idea phase3" style="top:30%;left:85%;">Respect is learned young</div>
+    <div class="node secondary" style="top:30%;left:80%;">
+      They learn it in playgrounds.
+    </div>
+
+    <div class="node secondary" style="top:70%;left:20%;">
+      At home.
+    </div>
+
+    <div class="node secondary" style="top:15%;left:50%;">
+      In silence.
+    </div>
+
+    <div class="node secondary" style="top:85%;left:60%;">
+      Through jokes.
+    </div>
+
+    <div class="node secondary" style="top:45%;left:5%;">
+      Through rules no one explains.
+    </div>
+
+    <!-- IDEA FIELD -->
+    <div class="node idea" style="top:10%;left:25%;">Emotions are not gendered</div>
+    <div class="node idea" style="top:90%;left:35%;">Care is not weakness</div>
+    <div class="node idea" style="top:85%;left:75%;">Leadership is not gendered</div>
+    <div class="node idea" style="top:20%;left:75%;">Confidence is taught, not born</div>
+    <div class="node idea" style="top:60%;left:90%;">Strength looks different</div>
+    <div class="node idea" style="top:88%;left:10%;">Equality is learned early</div>
 
   </div>
 
@@ -129,84 +138,49 @@ body{
 gsap.registerPlugin(ScrollTrigger);
 
 const canvas = document.getElementById("canvas");
-const phase1 = gsap.utils.toArray(".phase1");
-const phase3 = gsap.utils.toArray(".phase3");
+const ideas = gsap.utils.toArray(".idea");
 const centerText = document.getElementById("centerText");
 
-/* START — EXTREME ZOOM, CENTERED */
-gsap.set(canvas,{
-  scale:4.5,
-  xPercent:0,
-  yPercent:0
-});
-gsap.set(phase1[0],{opacity:1});
+/* START — FIRST SENTENCE FULLY VISIBLE */
+gsap.set(canvas,{ scale:1.6 });
 
 /* TIMELINE */
 const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 22000,
+    end:"+=" + 18000,
     scrub:true,
     pin:true
   }
 });
 
-/* PHASE 1 — REVEAL ALL 6 */
-phase1.forEach((node,i)=>{
-  tl.to(node,{
-    opacity:1,
-    duration:1.4
-  }, i * 1.8);
-});
+/* CONTINUOUS ZOOM OUT — REVEALS FIRST 6 NATURALLY */
+tl.to(canvas,{ scale:1.2, duration:4 });
+tl.to(canvas,{ scale:1.0, duration:4 });
+tl.to(canvas,{ scale:0.8, duration:4 });
+tl.to(canvas,{ scale:0.65, duration:4 });
 
-/* PHASE 2 — COLLECTIVE ZOOM OUT + RECENTER */
-tl.to(canvas,{
-  scale:1.6,
-  xPercent:0,
-  yPercent:0,
-  duration:10,
-  ease:"none"
-});
-
-/* PHASE 3 — HARD HIDE FIRST 6 */
-tl.to(phase1,{
-  opacity:0,
-  duration:0.8
-});
-
-/* PHASE 4 — CENTER MESSAGE ONLY */
+/* CENTER STATEMENT */
 tl.to(centerText,{
   onStart:()=>{
-    centerText.textContent = "WE DON’T TEACH.";
+    centerText.textContent="WE DON’T TEACH.";
     gsap.to(centerText,{opacity:1,duration:0.6});
   }
 });
 tl.to(centerText,{
   onStart:()=>{
-    centerText.textContent = "WE HELP THEM NOTICE.";
+    centerText.textContent="WE HELP THEM NOTICE.";
   }
 });
-tl.to(centerText,{
-  opacity:0,
-  duration:0.6
-});
+tl.to(centerText,{opacity:0,duration:0.6});
 
-/* PHASE 5 — EXTREME ZOOM OUT (BIG PICTURE) */
-tl.to(canvas,{
-  scale:0.55,
-  xPercent:0,
-  yPercent:0,
-  duration:12,
-  ease:"none"
-});
+/* BIGGER PICTURE ZOOM */
+tl.to(canvas,{ scale:0.45, duration:6 });
 
-/* PHASE 6 — IDEAS APPEAR GRADUALLY */
-phase3.forEach(node=>{
-  tl.to(node,{
-    opacity:0.9,
-    duration:1.4
-  }, ">");
+/* IDEAS APPEAR */
+ideas.forEach(node=>{
+  tl.to(node,{opacity:0.9,duration:1.2},">");
 });
 </script>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equal Lens — Final Narrative</title>
+<title>The Equal Lens</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -11,27 +11,27 @@
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  background:#0b0b0e;
-  color:#fff;
+  background:#0f1115;
+  color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:1600vh; /* 🔥 REDUCED SCROLL */
+  height:1800vh;
   overflow-x:hidden;
 }
 
-/* PIN */
+/* PINNED STORY */
 .story{
   height:100vh;
   position:relative;
 }
 
-/* GRID */
+/* SUBTLE GRID */
 .grid-bg{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-  background-size:160px 160px;
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:140px 140px;
   pointer-events:none;
 }
 
@@ -61,7 +61,7 @@ body{
   font-size:clamp(18px, 2.2vw, 26px);
 }
 .idea{
-  font-size:clamp(14px, 1.6vw, 18px);
+  font-size:clamp(14px, 1.4vw, 18px);
   opacity:0;
 }
 
@@ -79,6 +79,7 @@ body{
   font-size:clamp(26px, 4vw, 44px);
   opacity:0;
   text-align:center;
+  letter-spacing:0.5px;
 }
 </style>
 </head>
@@ -91,21 +92,14 @@ body{
 
   <div class="canvas" id="canvas">
 
-    <!-- FIRST 6 LINES -->
+    <!-- NARRATIVE (7 LINES) -->
     <div class="node hero" id="l1" style="top:50%;left:50%;">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary" id="l2" style="top:30%;left:80%;">They learn it in playgrounds.</div>
     <div class="node secondary" id="l3" style="top:70%;left:20%;">At home.</div>
     <div class="node secondary" id="l4" style="top:15%;left:50%;">In silence.</div>
     <div class="node secondary" id="l5" style="top:85%;left:60%;">Through jokes.</div>
-    <div class="node secondary" id="l6" style="top:45%;left:5%;">Through rules no one explains.</div>
-
-    <!-- IDEA FIELD -->
-    <div class="node idea" style="top:10%;left:20%;">Emotions are not gendered</div>
-    <div class="node idea" style="top:90%;left:30%;">Care is not weakness</div>
-    <div class="node idea" style="top:85%;left:75%;">Leadership is not gendered</div>
-    <div class="node idea" style="top:20%;left:75%;">Confidence is taught, not born</div>
-    <div class="node idea" style="top:60%;left:90%;">Strength looks different</div>
-    <div class="node idea" style="top:88%;left:10%;">Equality is learned early</div>
+    <div class="node secondary" id="l6" style="top:40%;left:10%;">Online.</div>
+    <div class="node secondary" id="l7" style="top:45%;left:90%;">Through rules no one explains.</div>
 
   </div>
 
@@ -122,7 +116,6 @@ body{
 gsap.registerPlugin(ScrollTrigger);
 
 const canvas = document.getElementById("canvas");
-const ideas = gsap.utils.toArray(".idea");
 const centerText = document.getElementById("centerText");
 
 /* START */
@@ -133,45 +126,73 @@ const tl = gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+=" + 9000,   // 🔥 MUCH SHORTER
+    end:"+=" + 10000,
     scrub:true,
     pin:true
   }
 });
 
-/* QUICK, ANIMATED REVEALS */
-function reveal(id){
-  tl.to(canvas,{ scale:"-=0.15", duration:0.8 })
+/* QUICK NARRATIVE REVEAL */
+const lines = ["#l2","#l3","#l4","#l5","#l6","#l7"];
+lines.forEach(id=>{
+  tl.to(canvas,{ scale:"-=0.12", duration:0.6 })
     .to(id,{ opacity:1, y:0, duration:0.4 });
-}
+});
 
-reveal("#l2");
-reveal("#l3");
-reveal("#l4");
-reveal("#l5");
-reveal("#l6");
+/* CLEAR NARRATIVE */
+tl.to("#l1,#l2,#l3,#l4,#l5,#l6,#l7",{ opacity:0, duration:0.4 });
 
 /* CENTER STATEMENT */
-tl.to("#l1,#l2,#l3,#l4,#l5,#l6",{ opacity:0, duration:0.4 });
-
 tl.to(centerText,{
   onStart:()=>{
-    centerText.textContent = "WE DON’T LECTURE.";
+    centerText.textContent="WE DON’T LECTURE.";
     gsap.to(centerText,{opacity:1,duration:0.4});
   }
 });
 tl.to(centerText,{
   onStart:()=>{
-    centerText.textContent = "WE HELP THEM NOTICE.";
+    centerText.textContent="WE HELP THEM NOTICE.";
   }
 });
 tl.to(centerText,{ opacity:0, duration:0.4 });
 
 /* BIG PICTURE ZOOM */
-tl.to(canvas,{ scale:0.6, duration:1.6 });
+tl.to(canvas,{ scale:0.45, duration:2 });
 
-ideas.forEach(node=>{
-  tl.to(node,{ opacity:0.9, duration:0.6 }, ">");
+/* IDEA FIELD */
+const ideas = [
+  "Emotions are not gendered","Care is not weakness","Leadership is not gendered",
+  "Confidence is taught, not born","Strength looks different","Equality is learned early",
+  "Bias is absorbed young","Roles are learned","Fairness can be taught",
+  "Opportunity shapes outcomes","Kindness is strength","Empathy is a skill",
+  "Silence teaches norms","Children notice patterns","Respect is learned",
+  "Ability isn’t fixed","Choices matter","Learning starts early",
+  "Social rules are taught","Norms are repeated","Beliefs form quietly",
+  "Language shapes thinking","Play teaches power","Visibility matters",
+  "Representation matters","Care builds strength","Freedom needs safety",
+  "Questioning is healthy","Gender is observed","Rules are absorbed",
+  "Power is learned","Fairness is modeled","Confidence grows with support",
+  "Skills need opportunity","Expectations shape outcomes",
+  "Equality needs practice","Children mirror adults",
+  "Change starts early","Awareness can be taught",
+  "Observation precedes belief","Bias isn’t natural",
+  "Systems teach","Environment matters",
+  "Exposure changes minds","Learning is social",
+  "Culture teaches","Patterns repeat"
+];
+
+ideas.forEach((text,i)=>{
+  const d = document.createElement("div");
+  d.className="node idea";
+  d.textContent=text;
+  d.style.top = (10 + Math.random()*80) + "%";
+  d.style.left = (10 + Math.random()*80) + "%";
+  canvas.appendChild(d);
+
+  tl.to(d,{
+    opacity:0.85,
+    duration:0.3
+  },"<");
 });
 </script>
 

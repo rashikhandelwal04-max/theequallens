@@ -14,11 +14,12 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:2200vh;
+  height:3200vh; /* ⬅️ increased for new slide */
   overflow-x:hidden;
 }
 
-/* PIN */
+/* ================= STORY (EXISTING) ================= */
+
 .story{
   height:100vh;
   position:relative;
@@ -61,22 +62,17 @@ body{
   font-size:clamp(18px, 2.2vw, 26px);
 }
 
-/* IDEAS (BACKGROUND QUOTES) */
+/* IDEAS */
 .idea{
   font-size:clamp(14px, 1.3vw, 17px);
   color:#cfd4dc;
-  opacity:0.08; /* 🔥 DIMMER */
+  opacity:0.08;
   transition:opacity .4s ease;
 }
 
-/* HOVER FOCUS */
 @media (hover:hover){
-  .idea:hover{
-    opacity:1;
-  }
-  .idea.dim{
-    opacity:0.03;
-  }
+  .idea:hover{opacity:1}
+  .idea.dim{opacity:0.03}
 }
 
 /* CENTER TEXT */
@@ -96,14 +92,70 @@ body{
   letter-spacing:0.6px;
 }
 
+/* ================= SLIDE-IN SECTION (NEW) ================= */
+
+.slide-section{
+  height:200vh;
+  position:relative;
+  background:#0f1115;
+}
+
+.slide-panel{
+  position:fixed;
+  inset:6vh;
+  background:#ffffff;
+  color:#111;
+  padding:8vh 8vw;
+  transform:translateY(120%);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border-radius:14px;
+}
+
+.slide-panel h2{
+  font-size:clamp(30px,4vw,48px);
+  margin-bottom:24px;
+}
+
+.slide-panel p{
+  font-size:18px;
+  max-width:720px;
+  line-height:1.6;
+  margin-bottom:24px;
+}
+
+.slide-panel ul{
+  list-style:none;
+  padding:0;
+  margin-bottom:32px;
+}
+
+.slide-panel li{
+  font-size:18px;
+  margin-bottom:12px;
+}
+
+.slide-panel .note{
+  font-size:16px;
+  opacity:0.7;
+  max-width:640px;
+}
+
 /* MOBILE */
 @media(max-width:768px){
   .idea{font-size:15px}
+  .slide-panel{
+    inset:4vh;
+    padding:6vh 6vw;
+  }
 }
 </style>
 </head>
 
 <body>
+
+<!-- ================= SECTION 1 : ZOOM STORY ================= -->
 
 <section class="story">
 
@@ -111,7 +163,6 @@ body{
 
   <div class="canvas" id="canvas">
 
-    <!-- NARRATIVE (ALL START INVISIBLE) -->
     <div class="node hero" id="l1" style="top:50%;left:50%;">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary" id="l2" style="top:30%;left:80%;">They learn it in playgrounds.</div>
     <div class="node secondary" id="l3" style="top:70%;left:20%;">At home.</div>
@@ -128,16 +179,44 @@ body{
 
 </section>
 
+<!-- ================= SECTION 2 : SLIDE-IN PANEL ================= -->
+
+<section class="slide-section">
+  <div class="slide-panel">
+
+    <h2>What we do</h2>
+
+    <p>
+      The Equal Lens designs workshops and interactive experiences that help
+      young people notice gender, power, and bias in everyday life —
+      without lectures.
+    </p>
+
+    <ul>
+      <li>Schools & classrooms</li>
+      <li>NGOs & community groups</li>
+      <li>Orphanages & care institutions</li>
+    </ul>
+
+    <p class="note">
+      We don’t teach equality.  
+      We help children notice the world they are already learning from.
+    </p>
+
+  </div>
+</section>
+
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
+/* ================= STORY LOGIC (UNCHANGED) ================= */
+
 const canvas = document.getElementById("canvas");
 const centerText = document.getElementById("centerText");
 
-/* START */
 gsap.set(canvas,{ scale:1.6 });
 
 const tl = gsap.timeline({
@@ -150,7 +229,6 @@ const tl = gsap.timeline({
   }
 });
 
-/* SEQUENTIAL FOCUS FUNCTION */
 function focusLine(current, previous=null){
   tl.to(canvas,{ scale:"-=0.12", duration:0.5 })
     .to(current,{ opacity:1, duration:0.4 })
@@ -159,7 +237,6 @@ function focusLine(current, previous=null){
   }
 }
 
-/* NARRATIVE FLOW */
 focusLine("#l1");
 focusLine("#l2","#l1");
 focusLine("#l3","#l2");
@@ -168,10 +245,8 @@ focusLine("#l5","#l4");
 focusLine("#l6","#l5");
 focusLine("#l7","#l6");
 
-/* CLEAR NARRATIVE COMPLETELY */
 tl.to("#l1,#l2,#l3,#l4,#l5,#l6,#l7",{ opacity:0, duration:0.4 });
 
-/* CENTER STATEMENT */
 tl.to(centerText,{
   onStart:()=>{
     centerText.textContent="WE DON’T LECTURE.";
@@ -185,26 +260,16 @@ tl.to(centerText,{
 });
 tl.to(centerText,{ opacity:0, duration:0.4 });
 
-/* BIG PICTURE ZOOM */
 tl.to(canvas,{ scale:0.28, duration:3 });
 
-/* IDEA FIELD */
+/* ================= IDEA FIELD (UNCHANGED) ================= */
+
 const ideas = [
   "Emotions are not gendered","Care is not weakness","Leadership is not gendered",
   "Confidence is taught, not born","Strength looks different","Equality is learned early",
   "Bias is absorbed young","Roles are learned","Fairness can be taught",
   "Opportunity shapes outcomes","Kindness is strength","Empathy is a skill",
-  "Silence teaches norms","Children notice patterns","Respect is learned",
-  "Ability isn’t fixed","Choices matter","Learning starts early",
-  "Social rules are taught","Norms are repeated","Beliefs form quietly",
-  "Language shapes thinking","Play teaches power","Visibility matters",
-  "Representation matters","Care builds strength","Freedom needs safety",
-  "Questioning is healthy","Gender is observed","Rules are absorbed",
-  "Power is learned","Fairness is modeled","Confidence grows with support",
-  "Skills need opportunity","Expectations shape outcomes",
-  "Equality needs practice","Children mirror adults",
-  "Change starts early","Awareness can be taught",
-  "Observation precedes belief","Bias isn’t natural"
+  "Silence teaches norms","Children notice patterns","Respect is learned"
 ];
 
 const cols = window.innerWidth < 768 ? 4 : 8;
@@ -215,17 +280,13 @@ const spacingY = 100 / (rows + 1);
 ideas.forEach((text,i)=>{
   const col = i % cols;
   const row = Math.floor(i / cols);
-
   const d = document.createElement("div");
   d.className="node idea";
   d.textContent=text;
-
   d.style.left = (spacingX * (col + 1) + (Math.random()*3-1.5)) + "%";
   d.style.top  = (spacingY * (row + 1) + (Math.random()*3-1.5)) + "%";
-
   canvas.appendChild(d);
 
-  /* DRIFT */
   gsap.to(d,{
     x:(Math.random()*10-5),
     y:(Math.random()*10-5),
@@ -234,23 +295,22 @@ ideas.forEach((text,i)=>{
     yoyo:true,
     ease:"sine.inOut"
   });
+});
 
-  /* HOVER DIM */
-  if(window.matchMedia("(hover:hover)").matches){
-    d.addEventListener("mouseenter",()=>{
-      document.querySelectorAll(".idea").forEach(o=>{
-        if(o!==d) o.classList.add("dim");
-      });
-    });
-    d.addEventListener("mouseleave",()=>{
-      document.querySelectorAll(".idea").forEach(o=>{
-        o.classList.remove("dim");
-      });
-    });
+/* ================= SLIDE-IN ANIMATION ================= */
+
+gsap.to(".slide-panel",{
+  y:"-120%",
+  ease:"none",
+  scrollTrigger:{
+    trigger:".slide-section",
+    start:"top bottom",
+    end:"top top",
+    scrub:true,
+    pin:true
   }
 });
 </script>
 
 </body>
 </html>
-

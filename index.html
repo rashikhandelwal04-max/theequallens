@@ -14,31 +14,26 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:2200vh;
+  height:2400vh;
   overflow-x:hidden;
 }
 
 /* PIN */
-.story{
-  height:100vh;
-  position:relative;
-}
+.story{height:100vh;position:relative}
 
 /* GRID */
 .grid-bg{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
 }
 
 /* CAMERA */
 .canvas{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   transform-origin:center center;
 }
 
@@ -53,52 +48,60 @@ body{
 }
 
 /* TYPOGRAPHY */
-.hero{
-  font-size:clamp(30px, 3.5vw, 44px);
-  font-weight:600;
-}
-.secondary{
-  font-size:clamp(18px, 2.2vw, 26px);
-}
+.hero{font-size:clamp(30px,3.5vw,44px);font-weight:600}
+.secondary{font-size:clamp(18px,2.2vw,26px)}
 
-/* IDEAS (BACKGROUND QUOTES) */
+/* IDEAS */
 .idea{
-  font-size:clamp(14px, 1.3vw, 17px);
+  font-size:clamp(14px,1.3vw,17px);
   color:#cfd4dc;
-  opacity:0.08; /* 🔥 DIMMER */
+  opacity:0.06;
   transition:opacity .4s ease;
 }
 
 /* HOVER FOCUS */
 @media (hover:hover){
-  .idea:hover{
-    opacity:1;
-  }
-  .idea.dim{
-    opacity:0.03;
-  }
+  .idea:hover{opacity:1}
+  .idea.dim{opacity:0.025}
 }
 
-/* CENTER TEXT */
+/* CENTER */
 .center{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
   pointer-events:none;
 }
-
 .center-text{
-  font-size:clamp(26px, 4vw, 44px);
-  opacity:0;
-  text-align:center;
+  font-size:clamp(26px,4vw,44px);
+  opacity:0;text-align:center;
   letter-spacing:0.6px;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  .idea{font-size:15px}
+/* AFFORDANCE */
+.affordance{
+  position:fixed;
+  bottom:6%;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:14px;
+  color:#9ca3af;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* MEMORY ECHO */
+.echo{
+  position:fixed;
+  bottom:10%;
+  right:8%;
+  font-size:16px;
+  color:#9ca3af;
+  opacity:0;
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
 }
 </style>
 </head>
@@ -106,26 +109,21 @@ body{
 <body>
 
 <section class="story">
-
   <div class="grid-bg"></div>
 
   <div class="canvas" id="canvas">
-
-    <!-- NARRATIVE (ALL START INVISIBLE) -->
-    <div class="node hero" id="l1" style="top:50%;left:50%;">Kids don’t learn gender in classrooms.</div>
-    <div class="node secondary" id="l2" style="top:30%;left:80%;">They learn it in playgrounds.</div>
-    <div class="node secondary" id="l3" style="top:70%;left:20%;">At home.</div>
-    <div class="node secondary" id="l4" style="top:15%;left:50%;">In silence.</div>
-    <div class="node secondary" id="l5" style="top:85%;left:60%;">Through jokes.</div>
-    <div class="node secondary" id="l6" style="top:40%;left:10%;">Online.</div>
-    <div class="node secondary" id="l7" style="top:45%;left:90%;">Through rules no one explains.</div>
-
+    <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
+    <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
+    <div class="node secondary" id="l3" style="top:70%;left:20%">At home.</div>
+    <div class="node secondary" id="l4" style="top:15%;left:50%">In silence.</div>
+    <div class="node secondary" id="l5" style="top:85%;left:60%">Through jokes.</div>
+    <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
+    <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
   </div>
 
-  <div class="center">
-    <div class="center-text" id="centerText"></div>
-  </div>
-
+  <div class="center"><div class="center-text" id="centerText"></div></div>
+  <div class="affordance" id="affordance">Hover to focus. Scroll to notice.</div>
+  <div class="echo" id="echo">Kids don’t learn gender in classrooms.</div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -134,121 +132,95 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-const canvas = document.getElementById("canvas");
-const centerText = document.getElementById("centerText");
+const canvas=document.getElementById("canvas");
+const centerText=document.getElementById("centerText");
+const affordance=document.getElementById("affordance");
+const echo=document.getElementById("echo");
 
-/* START */
-gsap.set(canvas,{ scale:1.6 });
+gsap.set(canvas,{scale:1.6});
 
-const tl = gsap.timeline({
-  scrollTrigger:{
-    trigger:".story",
-    start:"top top",
-    end:"+=" + 12000,
-    scrub:true,
-    pin:true
-  }
+const tl=gsap.timeline({
+  scrollTrigger:{trigger:".story",start:"top top",end:"+="+14000,scrub:true,pin:true}
 });
 
-/* SEQUENTIAL FOCUS FUNCTION */
-function focusLine(current, previous=null){
-  tl.to(canvas,{ scale:"-=0.12", duration:0.5 })
-    .to(current,{ opacity:1, duration:0.4 })
+/* NARRATIVE WITH FOCUS */
+function focus(current, previous=null){
+  tl.to(canvas,{scale:"-=0.12",duration:0.5})
+    .to(current,{opacity:1,y:-8,duration:0.4});
   if(previous){
-    tl.to(previous,{ opacity:0.25, duration:0.4 },"<");
+    tl.to(previous,{opacity:0.25,y:0,duration:0.4},"<");
   }
 }
 
-/* NARRATIVE FLOW */
-focusLine("#l1");
-focusLine("#l2","#l1");
-focusLine("#l3","#l2");
-focusLine("#l4","#l3");
-focusLine("#l5","#l4");
-focusLine("#l6","#l5");
-focusLine("#l7","#l6");
+focus("#l1");
+focus("#l2","#l1");
+focus("#l3","#l2");
+focus("#l4","#l3");
+focus("#l5","#l4");
+focus("#l6","#l5");
+focus("#l7","#l6");
 
-/* CLEAR NARRATIVE COMPLETELY */
-tl.to("#l1,#l2,#l3,#l4,#l5,#l6,#l7",{ opacity:0, duration:0.4 });
+/* BREATHING PAUSE */
+tl.to({},{duration:0.6});
+
+/* CLEAR */
+tl.to(".node",{opacity:0,duration:0.4});
 
 /* CENTER STATEMENT */
-tl.to(centerText,{
-  onStart:()=>{
-    centerText.textContent="WE DON’T LECTURE.";
-    gsap.to(centerText,{opacity:1,duration:0.4});
-  }
-});
-tl.to(centerText,{
-  onStart:()=>{
-    centerText.textContent="WE HELP THEM NOTICE.";
-  }
-});
-tl.to(centerText,{ opacity:0, duration:0.4 });
+tl.to(centerText,{onStart:()=>{centerText.textContent="WE DON’T LECTURE.";gsap.to(centerText,{opacity:1})}});
+tl.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE."}}); 
+tl.to(centerText,{opacity:0});
 
-/* BIG PICTURE ZOOM */
-tl.to(canvas,{ scale:0.28, duration:3 });
+/* ZOOM OUT */
+tl.to(canvas,{scale:0.28,duration:3});
 
-/* IDEA FIELD */
-const ideas = [
-  "Emotions are not gendered","Care is not weakness","Leadership is not gendered",
-  "Confidence is taught, not born","Strength looks different","Equality is learned early",
-  "Bias is absorbed young","Roles are learned","Fairness can be taught",
-  "Opportunity shapes outcomes","Kindness is strength","Empathy is a skill",
-  "Silence teaches norms","Children notice patterns","Respect is learned",
-  "Ability isn’t fixed","Choices matter","Learning starts early",
-  "Social rules are taught","Norms are repeated","Beliefs form quietly",
-  "Language shapes thinking","Play teaches power","Visibility matters",
-  "Representation matters","Care builds strength","Freedom needs safety",
-  "Questioning is healthy","Gender is observed","Rules are absorbed",
-  "Power is learned","Fairness is modeled","Confidence grows with support",
-  "Skills need opportunity","Expectations shape outcomes",
-  "Equality needs practice","Children mirror adults",
-  "Change starts early","Awareness can be taught",
-  "Observation precedes belief","Bias isn’t natural"
+/* AFFORDANCE (ONCE) */
+tl.to(affordance,{opacity:0.8,duration:0.6});
+tl.to(affordance,{opacity:0,duration:0.6},">+1");
+
+/* IDEAS — DENSITY ZONES */
+const ideas=[
+"Emotions are not gendered","Care is not weakness","Empathy is strength",
+"Leadership is not gendered","Power is learned","Rules are absorbed",
+"Confidence is taught","Strength looks different","Fairness can be taught",
+"Bias is absorbed young","Respect is learned","Language shapes belief",
+"Children notice patterns","Norms repeat quietly","Learning starts early",
+"Play teaches power","Systems teach","Culture teaches","Change starts early"
 ];
 
-const cols = window.innerWidth < 768 ? 4 : 8;
-const rows = Math.ceil(ideas.length / cols);
-const spacingX = 100 / (cols + 1);
-const spacingY = 100 / (rows + 1);
-
 ideas.forEach((text,i)=>{
-  const col = i % cols;
-  const row = Math.floor(i / cols);
-
-  const d = document.createElement("div");
+  const d=document.createElement("div");
   d.className="node idea";
   d.textContent=text;
 
-  d.style.left = (spacingX * (col + 1) + (Math.random()*3-1.5)) + "%";
-  d.style.top  = (spacingY * (row + 1) + (Math.random()*3-1.5)) + "%";
+  let zone=i%3;
+  if(zone===0){d.style.left=(10+Math.random()*25)+"%";d.style.top=(15+Math.random()*60)+"%";}
+  if(zone===1){d.style.left=(40+Math.random()*20)+"%";d.style.top=(10+Math.random()*70)+"%";}
+  if(zone===2){d.style.left=(70+Math.random()*20)+"%";d.style.top=(20+Math.random()*60)+"%";}
 
   canvas.appendChild(d);
 
-  /* DRIFT */
-  gsap.to(d,{
-    x:(Math.random()*10-5),
-    y:(Math.random()*10-5),
-    duration:25 + Math.random()*20,
-    repeat:-1,
-    yoyo:true,
-    ease:"sine.inOut"
-  });
+  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    gsap.to(d,{
+      x:(Math.random()*10-5),
+      y:(Math.random()*10-5),
+      duration:30+Math.random()*20,
+      repeat:-1,yoyo:true,ease:"sine.inOut"
+    });
+  }
 
-  /* HOVER DIM */
   if(window.matchMedia("(hover:hover)").matches){
     d.addEventListener("mouseenter",()=>{
-      document.querySelectorAll(".idea").forEach(o=>{
-        if(o!==d) o.classList.add("dim");
-      });
+      document.querySelectorAll(".idea").forEach(o=>{if(o!==d)o.classList.add("dim")});
     });
     d.addEventListener("mouseleave",()=>{
-      document.querySelectorAll(".idea").forEach(o=>{
-        o.classList.remove("dim");
-      });
+      document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
     });
   }
 });
+
+/* MEMORY ECHO */
+tl.to(echo,{opacity:0.6,duration:1});
 </script>
 
 </body>

@@ -14,7 +14,7 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:4200vh;
+  height:4800vh;
   overflow-x:hidden;
 }
 
@@ -24,7 +24,6 @@ body{
   position:relative;
 }
 
-/* GRID */
 .grid-bg{
   position:fixed;
   inset:0;
@@ -35,62 +34,48 @@ body{
   pointer-events:none;
 }
 
-/* CAMERA */
 .canvas{
   position:fixed;
   inset:0;
   transform-origin:center center;
 }
 
-/* TEXT */
 .node{
   position:absolute;
   max-width:520px;
   text-align:center;
-  line-height:1.35;
   transform:translate(-50%,-50%);
   opacity:0;
 }
 
-/* TYPOGRAPHY */
-.hero{font-size:clamp(30px,3.5vw,44px);font-weight:600}
+.hero{font-size:clamp(30px,3.5vw,44px)}
 .secondary{font-size:clamp(18px,2.2vw,26px)}
 
-/* IDEAS */
-.idea{
-  font-size:clamp(13px,1.2vw,16px);
-  color:#cfd4dc;
-  opacity:0.055;
+.center{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
   pointer-events:none;
 }
 
-/* CENTER */
-.center{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-}
 .center-text{
   font-size:clamp(26px,4vw,44px);
   opacity:0;
-  text-align:center;
 }
 
-/* ================= SLIDE TAKEOVER ================= */
+/* ================= TAKEOVER ================= */
 .takeover{
+  height:300vh;
   position:relative;
-  height:200vh;
 }
 
+/* COLUMNS */
 .columns{
   position:fixed;
   inset:0;
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:10;
+  grid-template-columns:repeat(6,1fr);
+  z-index:20;
+  pointer-events:none;
 }
 
 .col{
@@ -98,6 +83,7 @@ body{
   transform:translateY(100%);
 }
 
+/* CONTENT */
 .slide-content{
   position:fixed;
   inset:0;
@@ -109,27 +95,16 @@ body{
   text-align:center;
   padding:10vh 12vw;
   opacity:0;
-}
-
-.slide-content h2{
-  font-size:clamp(32px,4vw,52px);
-  margin-bottom:24px;
-}
-
-.slide-content p{
-  font-size:18px;
-  max-width:720px;
-  line-height:1.6;
+  z-index:21;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= STORY ================= -->
+<!-- ================= ZOOM STORY ================= -->
 <section class="story">
   <div class="grid-bg"></div>
-
   <div class="canvas" id="canvas">
     <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
@@ -139,15 +114,13 @@ body{
     <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
     <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
   </div>
-
-  <div class="center">
-    <div class="center-text" id="centerText"></div>
-  </div>
+  <div class="center"><div class="center-text" id="centerText"></div></div>
 </section>
 
-<!-- ================= TAKEOVER ================= -->
+<!-- ================= COLUMN TAKEOVER ================= -->
 <section class="takeover">
   <div class="columns">
+    <div class="col"></div>
     <div class="col"></div>
     <div class="col"></div>
     <div class="col"></div>
@@ -160,7 +133,7 @@ body{
       <h2>What we do</h2>
       <p>
         We design workshops and experiences that help children notice
-        gender, power, and bias in everyday life — without lectures.
+        gender, power, and bias — without lectures.
       </p>
     </div>
   </div>
@@ -172,67 +145,64 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* STORY TIMELINE */
-const canvas=document.getElementById("canvas");
-const centerText=document.getElementById("centerText");
+/* ================= STORY ================= */
+const canvas = document.getElementById("canvas");
+const centerText = document.getElementById("centerText");
 
 gsap.set(canvas,{scale:1.6});
 
-const tl=gsap.timeline({
-  scrollTrigger:{trigger:".story",start:"top top",end:"+="+14000,scrub:true,pin:true}
-});
-
-function focusLine(cur,prev=null){
-  tl.to(canvas,{scale:"-=0.12",duration:0.5})
-    .to(cur,{opacity:1,duration:0.4});
-  if(prev) tl.to(prev,{opacity:0.25,duration:0.4},"<");
-}
-
-focusLine("#l1");
-focusLine("#l2","#l1");
-focusLine("#l3","#l2");
-focusLine("#l4","#l3");
-focusLine("#l5","#l4");
-focusLine("#l6","#l5");
-focusLine("#l7","#l6");
-
-tl.to(".node",{opacity:0,duration:0.4});
-tl.to(centerText,{onStart:()=>{centerText.textContent="WE DON’T LECTURE.";gsap.to(centerText,{opacity:1})}});
-tl.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE."}});
-tl.to(centerText,{opacity:0});
-tl.to(canvas,{scale:0.28,duration:3});
-
-/* IDEA FIELD — DENSE SCATTER */
-const ideasText=[...Array(70)].map((_,i)=>[
-"Care is not weakness","Bias is learned","Children notice patterns",
-"Rules are absorbed","Power is learned","Language shapes belief",
-"Silence teaches norms","Play teaches power","Learning starts early"
-][i%9]);
-
-ideasText.forEach(text=>{
-  const d=document.createElement("div");
-  d.className="node idea";
-  d.textContent=text;
-  d.style.left=(Math.random()*100)+"%";
-  d.style.top=(Math.random()*100)+"%";
-  canvas.appendChild(d);
-});
-
-/* TAKEOVER — COLUMN ASSEMBLY */
-gsap.timeline({
+const storyTL = gsap.timeline({
   scrollTrigger:{
-    trigger:".takeover",
-    start:"top bottom",
-    end:"top top",
+    trigger:".story",
+    start:"top top",
+    end:"+="+14000,
     scrub:true,
     pin:true
   }
-})
-.fromTo(".col",
-  {y:"100%"},
-  {y:"0%",stagger:0.1,ease:"power2.out"}
-)
-.to(".slide-content",{opacity:1,duration:0.4},"<+0.2");
+});
+
+function focus(cur,prev=null){
+  storyTL.to(canvas,{scale:"-=0.12",duration:0.5})
+         .to(cur,{opacity:1,duration:0.4});
+  if(prev) storyTL.to(prev,{opacity:0.25,duration:0.4},"<");
+}
+
+focus("#l1");
+focus("#l2","#l1");
+focus("#l3","#l2");
+focus("#l4","#l3");
+focus("#l5","#l4");
+focus("#l6","#l5");
+focus("#l7","#l6");
+
+storyTL.to(".node",{opacity:0,duration:0.4});
+storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE DON’T LECTURE.";gsap.to(centerText,{opacity:1})}});
+storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE."}}); 
+storyTL.to(centerText,{opacity:0});
+storyTL.to(canvas,{scale:0.28,duration:3});
+
+/* ================= PIANO COLUMN TAKEOVER ================= */
+const cols = gsap.utils.toArray(".col");
+
+const takeoverTL = gsap.timeline({
+  scrollTrigger:{
+    trigger:".takeover",
+    start:"top top",
+    end:"+="+ (cols.length * 400),
+    pin:true,
+    scrub:false
+  }
+});
+
+cols.forEach(col=>{
+  takeoverTL.to(col,{
+    y:"0%",
+    duration:0.25,
+    ease:"power2.out"
+  });
+});
+
+takeoverTL.to(".slide-content",{opacity:1,duration:0.4});
 </script>
 
 </body>

@@ -14,7 +14,7 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:5600vh;
+  height:6000vh;
   overflow-x:hidden;
 }
 
@@ -72,16 +72,17 @@ body{
 
 /* ================= IMAGE TAKEOVER ================= */
 .takeover{
-  height:220vh;
+  height:240vh;
   position:relative;
 }
 
 .columns{
-  position:fixed;inset:0;
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
   overflow:hidden;
-  z-index:20;
+  z-index:30;
   pointer-events:none;
 }
 
@@ -90,13 +91,11 @@ body{
   background-repeat:no-repeat;
   background-position-y:50%;
   transform:translateY(100%);
-  will-change:transform,background-position;
+  will-change:transform;
 }
 
-/* FIRST IMAGE */
+/* Images */
 .col.img1{background-image:url("workshop.jpg")}
-
-/* SECOND IMAGE */
 .col.img2{background-image:url("workshop-2.jpg")}
 
 .col:nth-child(1){background-position-x:0%}
@@ -106,7 +105,7 @@ body{
 .col:nth-child(5){background-position-x:80%}
 .col:nth-child(6){background-position-x:100%}
 
-/* TEXT OVER IMAGE */
+/* Text */
 .slide-content{
   position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
@@ -115,18 +114,7 @@ body{
   background:rgba(0,0,0,0.35);
   color:#fff;
   opacity:0;
-  z-index:30;
-}
-
-.slide-content h2{
-  font-size:clamp(32px,4vw,52px);
-  margin-bottom:20px;
-}
-
-.slide-content p{
-  font-size:18px;
-  max-width:720px;
-  line-height:1.6;
+  z-index:40;
 }
 
 /* MOBILE */
@@ -142,7 +130,6 @@ body{
 <!-- ================= STORY ================= -->
 <section class="story">
   <div class="grid-bg"></div>
-
   <div class="canvas" id="canvas">
     <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
@@ -152,7 +139,6 @@ body{
     <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
     <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
   </div>
-
   <div class="center"><div class="center-text" id="centerText"></div></div>
 </section>
 
@@ -165,7 +151,7 @@ body{
   <div class="slide-content">
     <div>
       <h2>What we do</h2>
-      <p>We design workshops that help children notice gender, power, and bias in everyday life — without lectures.</p>
+      <p>We design workshops that help children notice gender, power, and bias — without lectures.</p>
     </div>
   </div>
 </section>
@@ -179,7 +165,7 @@ body{
   <div class="slide-content">
     <div>
       <h2>How we work</h2>
-      <p>Through play, discussion, and reflection — children learn by noticing the world around them.</p>
+      <p>Through play, discussion, and reflection — learning happens by noticing.</p>
     </div>
   </div>
 </section>
@@ -218,9 +204,9 @@ storyTL.to(canvas,{scale:0.28,duration:3});
 
 /* ================= IDEAS ================= */
 const ideas=[
-"Care is not weakness","Bias is learned","Children notice patterns","Rules are absorbed",
-"Power is learned","Language shapes belief","Silence teaches norms","Play teaches power",
-"Learning starts early","Confidence is taught","Equality is practiced"
+"Care is not weakness","Bias is learned","Children notice patterns",
+"Rules are absorbed","Power is learned","Language shapes belief",
+"Silence teaches norms","Play teaches power","Learning starts early"
 ];
 
 for(let i=0;i<70;i++){
@@ -232,7 +218,7 @@ for(let i=0;i<70;i++){
   canvas.appendChild(d);
 }
 
-/* ================= TAKEOVER ANIMATIONS ================= */
+/* ================= TAKEOVER FIXED ================= */
 document.querySelectorAll(".takeover").forEach(section=>{
   const cols=section.querySelectorAll(".col");
   const content=section.querySelector(".slide-content");
@@ -241,25 +227,38 @@ document.querySelectorAll(".takeover").forEach(section=>{
     scrollTrigger:{
       trigger:section,
       start:"top top",
-      end:"+="+(cols.length*300),
+      end:"+="+(cols.length*350),
       pin:true,
       scrub:false
     }
   });
 
+  // RISE ONE-BY-ONE
   cols.forEach(col=>{
-    tl.to(col,{y:"0%",duration:0.25,ease:"power2.out"});
+    tl.to(col,{
+      y:"0%",
+      duration:0.28,
+      ease:"power3.out"
+    });
   });
 
+  // HARD ALIGN SNAP (prevents slant illusion)
+  tl.to(cols,{
+    y:"0%",
+    duration:0.05
+  });
+
+  // SHOW TEXT
   tl.to(content,{opacity:1,duration:0.4});
 
+  // PARALLAX ONLY AFTER LOCK
   if(window.innerWidth>768){
-    cols.forEach((col,i)=>{
+    gsap.utils.toArray(cols).forEach((col,i)=>{
       gsap.to(col,{
-        backgroundPositionY:`${50+i*1.2}%`,
+        backgroundPositionY:`${50+i*1.1}%`,
         scrollTrigger:{
           trigger:section,
-          start:"top top",
+          start:"center center",
           end:"bottom top",
           scrub:0.6
         }

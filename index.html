@@ -14,9 +14,11 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:7000vh;
   overflow-x:hidden;
 }
+
+/* ================= GLOBAL ================= */
+section{width:100%}
 
 /* ================= STORY ================= */
 .story{height:100vh;position:relative}
@@ -24,8 +26,8 @@ body{
 .grid-bg{
   position:fixed;inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
 }
@@ -33,6 +35,7 @@ body{
 .canvas{
   position:fixed;inset:0;
   transform-origin:center center;
+  z-index:5;
 }
 
 .node{
@@ -50,6 +53,7 @@ body{
   position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
   pointer-events:none;
+  z-index:6;
 }
 
 .center-text{
@@ -59,23 +63,32 @@ body{
 
 /* ================= IDEAS ================= */
 .idea{
+  position:absolute;
   font-size:clamp(13px,1.2vw,16px);
   color:#cfd4dc;
   opacity:0.06;
+  z-index:7;
+  transition:opacity .3s ease;
 }
 
-/* ================= TAKEOVER ================= */
+@media (hover:hover){
+  .idea:hover{opacity:0.9}
+  .idea.dim{opacity:0.02}
+}
+
+/* ================= TAKEOVER (DESKTOP) ================= */
+@media(min-width:769px){
+
 .takeover{
   height:220vh;
   position:relative;
 }
 
 .columns{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  z-index:30;
+  z-index:20;
   pointer-events:none;
 }
 
@@ -84,12 +97,12 @@ body{
   transform:translateY(100%);
 }
 
-/* IMAGE COLUMNS */
 .col.img{
   background-size:600% auto;
   background-repeat:no-repeat;
   background-position-y:50%;
 }
+
 .col.img:nth-child(1){background-position-x:0%}
 .col.img:nth-child(2){background-position-x:20%}
 .col.img:nth-child(3){background-position-x:40%}
@@ -97,7 +110,7 @@ body{
 .col.img:nth-child(5){background-position-x:80%}
 .col.img:nth-child(6){background-position-x:100%}
 
-/* VIDEO COLUMNS */
+/* Video slicing */
 .video-col video{
   position:absolute;
   top:0;
@@ -114,10 +127,8 @@ body{
 .video-col:nth-child(5) video{left:-400%}
 .video-col:nth-child(6) video{left:-500%}
 
-/* TEXT OVERLAY */
 .slide-content{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -126,20 +137,63 @@ body{
   background:rgba(0,0,0,0.35);
   color:#fff;
   opacity:0;
-  z-index:40;
+  z-index:25;
 }
 
-.slide-content h2{
-  font-size:clamp(36px,5vw,56px);
-  letter-spacing:1px;
-  margin-bottom:16px;
 }
 
-/* MOBILE */
+/* ================= MOBILE MODE ================= */
 @media(max-width:768px){
-  .columns{grid-template-columns:repeat(3,1fr)}
-  .video-col video{width:300%}
+
+.story{height:auto;padding:100px 20px}
+
+.canvas,.grid-bg,.center{position:relative}
+
+.node{
+  position:relative;
+  transform:none;
+  margin:60px auto;
+  opacity:1;
 }
+
+.center-text{opacity:1;margin:60px 0;text-align:center}
+
+.idea{
+  position:relative;
+  opacity:0.12;
+  margin:14px auto;
+  text-align:center;
+}
+
+.takeover{
+  height:auto;
+  position:relative;
+}
+
+.columns{display:none}
+
+.mobile-media{
+  width:100%;
+  margin:80px 0;
+}
+
+.mobile-media img,
+.mobile-media video{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.slide-content{
+  position:relative;
+  background:none;
+  opacity:1;
+  padding:40px 20px;
+  color:#f5f5f5;
+}
+
+}
+
 </style>
 </head>
 
@@ -149,19 +203,26 @@ body{
 <section class="story">
   <div class="grid-bg"></div>
   <div class="canvas" id="canvas">
-    <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
-    <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
-    <div class="node secondary" id="l3" style="top:70%;left:20%">At home.</div>
-    <div class="node secondary" id="l4" style="top:15%;left:50%">In silence.</div>
-    <div class="node secondary" id="l5" style="top:85%;left:60%">Through jokes.</div>
-    <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
-    <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
+
+    <div class="node hero">Kids don’t learn gender in classrooms.</div>
+    <div class="node secondary">They learn it in playgrounds.</div>
+    <div class="node secondary">At home.</div>
+    <div class="node secondary">In silence.</div>
+    <div class="node secondary">Through jokes.</div>
+    <div class="node secondary">Online.</div>
+    <div class="node secondary">Through rules no one explains.</div>
+
   </div>
-  <div class="center"><div class="center-text" id="centerText"></div></div>
+
+  <div class="center">
+    <div class="center-text">WE DON’T LECTURE.<br>WE HELP THEM NOTICE.</div>
+  </div>
 </section>
 
-<!-- ================= TAKEOVER 1 (IMAGE) ================= -->
+<!-- ================= TAKEOVER 1 ================= -->
 <section class="takeover">
+
+  <!-- Desktop -->
   <div class="columns">
     <div class="col img" style="background-image:url('workshop.jpg')"></div>
     <div class="col img" style="background-image:url('workshop.jpg')"></div>
@@ -170,30 +231,42 @@ body{
     <div class="col img" style="background-image:url('workshop.jpg')"></div>
     <div class="col img" style="background-image:url('workshop.jpg')"></div>
   </div>
-  <div class="slide-content">
-    <div>
-      <h2>What we do</h2>
-      <p>We design workshops that help children notice gender, power, and bias — without lectures.</p>
-    </div>
+
+  <!-- Mobile -->
+  <div class="mobile-media">
+    <img src="workshop.jpg" alt="">
   </div>
+
+  <div class="slide-content">
+    <h2>What we do</h2>
+    <p>We design workshops that help children notice gender, power, and bias — without lectures.</p>
+  </div>
+
 </section>
 
-<!-- ================= TAKEOVER 2 (VIDEO) ================= -->
+<!-- ================= TAKEOVER 2 ================= -->
 <section class="takeover">
+
+  <!-- Desktop -->
   <div class="columns">
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
   </div>
+
+  <!-- Mobile -->
+  <div class="mobile-media">
+    <video src="intro-video.mp4" muted autoplay loop playsinline></video>
+  </div>
+
   <div class="slide-content">
-    <div>
-      <h2>THE EQUAL LENS</h2>
-      <p>We help children notice what the world quietly teaches.</p>
-    </div>
+    <h2>THE EQUAL LENS</h2>
+    <p>We help children notice what the world quietly teaches.</p>
   </div>
+
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -202,69 +275,40 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ================= STORY ================= */
-const canvas=document.getElementById("canvas");
-const centerText=document.getElementById("centerText");
+/* Disable heavy animations on mobile */
+if(window.innerWidth > 768){
 
-gsap.set(canvas,{scale:1.6});
+  document.querySelectorAll(".takeover").forEach(section=>{
+    const cols=[...section.querySelectorAll(".col")];
+    const content=section.querySelector(".slide-content");
 
-const storyTL=gsap.timeline({
-  scrollTrigger:{trigger:".story",start:"top top",end:"+="+14000,scrub:true,pin:true}
-});
+    cols.forEach(col=>gsap.set(col,{y:"100%",shown:false}));
 
-function focus(cur,prev=null){
-  storyTL.to(canvas,{scale:"-=0.12",duration:0.5})
-         .to(cur,{opacity:1,duration:0.4});
-  if(prev) storyTL.to(prev,{opacity:0.25,duration:0.4},"<");
+    ScrollTrigger.create({
+      trigger:section,
+      start:"top top",
+      end:"+="+(cols.length*140),
+      pin:true,
+      onUpdate:self=>{
+        const step=Math.floor(self.progress*cols.length);
+        cols.forEach((col,i)=>{
+          if(i<=step && !col.shown){
+            col.shown=true;
+            gsap.to(col,{y:"0%",duration:0.3,ease:"power3.out"});
+          }
+        });
+      }
+    });
+
+    ScrollTrigger.create({
+      trigger:section,
+      start:"center center",
+      onEnter:()=>gsap.to(content,{opacity:1,duration:0.4}),
+      onLeaveBack:()=>gsap.to(content,{opacity:0,duration:0.3})
+    });
+  });
+
 }
-
-["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach((id,i,arr)=>{
-  focus(id,arr[i-1]);
-});
-
-storyTL.to(".node",{opacity:0,duration:0.4});
-storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE DON’T LECTURE.";gsap.to(centerText,{opacity:1})}});
-storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE."}}); 
-storyTL.to(centerText,{opacity:0});
-storyTL.to(canvas,{scale:0.28,duration:3});
-
-/* ================= SNAP TAKEOVER ================= */
-document.querySelectorAll(".takeover").forEach(section=>{
-  const cols=[...section.querySelectorAll(".col")];
-  const content=section.querySelector(".slide-content");
-
-  cols.forEach(col=>{
-    gsap.set(col,{y:"100%"});
-    col.dataset.shown="";
-  });
-
-  ScrollTrigger.create({
-    trigger:section,
-    start:"top top",
-    end:"+="+(cols.length*140),
-    pin:true,
-    onUpdate:self=>{
-      const step=Math.floor(self.progress*cols.length);
-      cols.forEach((col,i)=>{
-        if(i<=step && !col.dataset.shown){
-          col.dataset.shown=true;
-          gsap.to(col,{
-            y:"0%",
-            duration:0.3,
-            ease:"power3.out"
-          });
-        }
-      });
-    }
-  });
-
-  ScrollTrigger.create({
-    trigger:section,
-    start:"center center",
-    onEnter:()=>gsap.to(content,{opacity:1,duration:0.5}),
-    onLeaveBack:()=>gsap.to(content,{opacity:0,duration:0.3})
-  });
-});
 </script>
 
 </body>

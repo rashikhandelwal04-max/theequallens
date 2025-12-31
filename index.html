@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>The Equal Lens</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
@@ -11,120 +11,94 @@
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
+  font-family:'Playfair Display',serif;
   background:#0f1115;
   color:#f5f5f5;
-  font-family:'Playfair Display',serif;
-  height:6000vh;
   overflow-x:hidden;
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .grid-bg{
-  position:fixed; inset:0;
+  position:fixed;
+  inset:0;
   background-image:
     linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
-  z-index:1;
+  z-index:0;
 }
 
-/* CANVAS */
-.canvas{
-  position:fixed;
-  inset:0;
-  z-index:2;
+/* ===== STORY ===== */
+.story{
+  min-height:600vh;
 }
 
-/* NARRATIVE */
-.node{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  max-width:600px;
-  text-align:center;
-  opacity:0;
-}
-
-.hero{font-size:clamp(30px,4vw,44px)}
-.secondary{font-size:clamp(18px,2.5vw,26px)}
-
-.center{
-  position:fixed; inset:0;
+.slide{
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  pointer-events:none;
+  text-align:center;
+  padding:40px;
 }
 
-.center-text{
-  font-size:clamp(26px,4vw,44px);
+.slide p{
+  max-width:600px;
+  font-size:clamp(22px,4vw,38px);
+  line-height:1.4;
   opacity:0;
 }
 
-/* IDEAS */
+/* ===== CENTER STATEMENT ===== */
+.statement{
+  font-size:clamp(26px,4.5vw,44px);
+  letter-spacing:0.5px;
+}
+
+/* ===== IDEAS ===== */
+.ideas{
+  position:relative;
+  min-height:150vh;
+}
+
 .idea{
   position:absolute;
-  font-size:clamp(13px,1.2vw,16px);
+  font-size:clamp(14px,1.4vw,18px);
   color:#cfd4dc;
-  opacity:0;
+  opacity:0.15;
   transition:opacity .3s ease;
 }
 
-@media(hover:hover){
-  .idea:hover{opacity:0.9}
-  .idea.dim{opacity:0.02}
+@media (hover:hover){
+  .idea:hover{opacity:1}
+  .idea.dim{opacity:0.04}
 }
 
-/* TAKEOVERS */
-.takeover{
-  height:200vh;
+/* ===== IMAGE SECTIONS ===== */
+.media{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
 }
 
-.columns{
-  position:fixed; inset:0;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  pointer-events:none;
-}
-
-.col{
-  transform:translateY(100%);
-}
-
-.col.img{
-  background:url("workshop.jpg") center/600% no-repeat;
-}
-.col.img:nth-child(1){background-position-x:0%}
-.col.img:nth-child(2){background-position-x:20%}
-.col.img:nth-child(3){background-position-x:40%}
-.col.img:nth-child(4){background-position-x:60%}
-.col.img:nth-child(5){background-position-x:80%}
-.col.img:nth-child(6){background-position-x:100%}
-
-.video-col video{
-  position:absolute;
-  width:600%;
-  height:100%;
+.media img{
+  width:100%;
+  height:100vh;
   object-fit:cover;
 }
-.video-col:nth-child(1) video{left:0%}
-.video-col:nth-child(2) video{left:-100%}
-.video-col:nth-child(3) video{left:-200%}
-.video-col:nth-child(4) video{left:-300%}
-.video-col:nth-child(5) video{left:-400%}
-.video-col:nth-child(6) video{left:-500%}
 
-.slide-content{
-  position:fixed; inset:0;
+.media .overlay{
+  position:absolute;
+  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:12vw;
   background:rgba(0,0,0,0.35);
-  opacity:0;
+  font-size:clamp(26px,4vw,44px);
 }
 </style>
 </head>
@@ -134,49 +108,29 @@ body{
 <div class="grid-bg"></div>
 
 <section class="story">
-  <div class="canvas" id="canvas">
-    <div class="node hero" id="l1">Kids don’t learn gender in classrooms.</div>
-    <div class="node secondary" id="l2">They learn it in playgrounds.</div>
-    <div class="node secondary" id="l3">At home.</div>
-    <div class="node secondary" id="l4">In silence.</div>
-    <div class="node secondary" id="l5">Through jokes.</div>
-    <div class="node secondary" id="l6">Online.</div>
-    <div class="node secondary" id="l7">Through rules no one explains.</div>
-  </div>
 
-  <div class="center">
-    <div class="center-text" id="centerText"></div>
-  </div>
+  <!-- NARRATIVE -->
+  <div class="slide"><p id="l1">Kids don’t learn gender in classrooms.</p></div>
+  <div class="slide"><p id="l2">They learn it in playgrounds.</p></div>
+  <div class="slide"><p id="l3">At home.</p></div>
+  <div class="slide"><p id="l4">In silence.</p></div>
+  <div class="slide"><p id="l5">Through jokes.</p></div>
+  <div class="slide"><p id="l6">Online.</p></div>
+  <div class="slide"><p id="l7">Through rules no one explains.</p></div>
+
+  <!-- STATEMENT -->
+  <div class="slide"><p class="statement">WE DON’T LECTURE.</p></div>
+  <div class="slide"><p class="statement">WE HELP THEM NOTICE.</p></div>
+
+  <!-- IDEAS -->
+  <div class="ideas" id="ideas"></div>
+
 </section>
 
-<section class="takeover">
-  <div class="columns">
-    <div class="col img"></div><div class="col img"></div><div class="col img"></div>
-    <div class="col img"></div><div class="col img"></div><div class="col img"></div>
-  </div>
-  <div class="slide-content">
-    <div>
-      <h2>What we do</h2>
-      <p>Workshops for schools, NGOs and youth spaces that help children notice gender and power — without lectures.</p>
-    </div>
-  </div>
-</section>
-
-<section class="takeover">
-  <div class="columns">
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-  </div>
-  <div class="slide-content">
-    <div>
-      <h2>The Equal Lens</h2>
-      <p>For children learning who they are — long before anyone explains it.</p>
-    </div>
-  </div>
+<!-- IMAGE -->
+<section class="media">
+  <img src="workshop.jpg" alt="">
+  <div class="overlay">What we do</div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -185,52 +139,46 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* STORY */
-const storyTL = gsap.timeline({
-  scrollTrigger:{trigger:".story",start:"top top",end:"+=9000",scrub:true,pin:true}
+/* Fade narrative */
+document.querySelectorAll(".slide p").forEach(p=>{
+  gsap.to(p,{
+    opacity:1,
+    scrollTrigger:{
+      trigger:p,
+      start:"top 60%",
+      end:"top 30%",
+      scrub:true
+    }
+  });
 });
 
-["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(id=>{
-  storyTL.to(id,{opacity:1,duration:0.5})
-         .to(id,{opacity:0,duration:0.5},">+0.6");
-});
+/* Ideas */
+const ideasText=[
+  "Care is not weakness","Bias is learned","Confidence is taught",
+  "Equality is practiced","Language shapes belief","Silence teaches norms",
+  "Play teaches power","Roles are absorbed","Fairness is modeled"
+];
 
-storyTL.to("#centerText",{opacity:1,onStart:()=>centerText.textContent="WE DON’T LECTURE."});
-storyTL.to("#centerText",{onStart:()=>centerText.textContent="WE HELP THEM NOTICE."});
-storyTL.to("#centerText",{opacity:0});
+const ideas=document.getElementById("ideas");
 
-/* ZOOM + IDEAS */
-storyTL.to(".canvas",{scale:0.5});
-
-const phrases=["Care is not weakness","Bias is learned","Confidence is taught","Equality is practiced"];
 for(let i=0;i<50;i++){
   const d=document.createElement("div");
   d.className="idea";
-  d.textContent=phrases[i%phrases.length];
+  d.textContent=ideasText[i%ideasText.length];
   d.style.left=Math.random()*90+"%";
   d.style.top=Math.random()*90+"%";
-  document.getElementById("canvas").appendChild(d);
+  ideas.appendChild(d);
 }
-storyTL.to(".idea",{opacity:0.06});
 
-/* TAKEOVERS */
-document.querySelectorAll(".takeover").forEach(section=>{
-  const cols=section.querySelectorAll(".col");
-  const content=section.querySelector(".slide-content");
-  ScrollTrigger.create({
-    trigger:section,start:"top top",end:"+=800",pin:true,
-    onUpdate:self=>{
-      cols.forEach((c,i)=>{
-        if(self.progress>i/cols.length){
-          gsap.to(c,{y:0,duration:0.3});
-        }
-      });
-    }
+/* Hover focus */
+document.querySelectorAll(".idea").forEach(el=>{
+  el.addEventListener("mouseenter",()=>{
+    document.querySelectorAll(".idea").forEach(o=>{
+      if(o!==el) o.classList.add("dim");
+    });
   });
-  ScrollTrigger.create({
-    trigger:section,start:"center center",
-    onEnter:()=>gsap.to(content,{opacity:1}),
-    onLeaveBack:()=>gsap.to(content,{opacity:0})
+  el.addEventListener("mouseleave",()=>{
+    document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
   });
 });
 </script>

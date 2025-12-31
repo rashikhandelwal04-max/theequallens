@@ -65,20 +65,15 @@ body{
   transition:opacity .3s ease;
 }
 
-@media(hover:hover){
-  .idea:hover{opacity:0.9}
-  .idea.dim{opacity:0.02}
-}
-
 /* ================= IMAGE TAKEOVER ================= */
 .takeover{
-  height:240vh;
+  height:200vh;
   position:relative;
 }
 
 .columns{
   position:fixed;
-  top:0; left:0; right:0; bottom:0;
+  inset:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
   overflow:hidden;
@@ -105,7 +100,7 @@ body{
 .col:nth-child(5){background-position-x:80%}
 .col:nth-child(6){background-position-x:100%}
 
-/* Text */
+/* Text overlay */
 .slide-content{
   position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
@@ -218,53 +213,34 @@ for(let i=0;i<70;i++){
   canvas.appendChild(d);
 }
 
-/* ================= TAKEOVER FIXED ================= */
+/* ================= COLUMN SNAP TAKEOVER ================= */
 document.querySelectorAll(".takeover").forEach(section=>{
-  const cols=section.querySelectorAll(".col");
+  const cols=[...section.querySelectorAll(".col")];
   const content=section.querySelector(".slide-content");
 
-  const tl=gsap.timeline({
-    scrollTrigger:{
-      trigger:section,
-      start:"top top",
-      end:"+="+(cols.length*350),
-      pin:true,
-      scrub:false
+  ScrollTrigger.create({
+    trigger:section,
+    start:"top top",
+    end:"+="+(cols.length*150),
+    pin:true,
+    onUpdate:self=>{
+      const index=Math.floor(self.progress*cols.length);
+      cols.forEach((col,i)=>{
+        if(i<=index){
+          gsap.to(col,{y:"0%",duration:0.15,ease:"power2.out"});
+        }
+      });
     }
   });
 
-  // RISE ONE-BY-ONE
-  cols.forEach(col=>{
-    tl.to(col,{
-      y:"0%",
-      duration:0.28,
-      ease:"power3.out"
-    });
+  gsap.to(content,{
+    opacity:1,
+    scrollTrigger:{
+      trigger:section,
+      start:"center center",
+      toggleActions:"play none none reverse"
+    }
   });
-
-  // HARD ALIGN SNAP (prevents slant illusion)
-  tl.to(cols,{
-    y:"0%",
-    duration:0.05
-  });
-
-  // SHOW TEXT
-  tl.to(content,{opacity:1,duration:0.4});
-
-  // PARALLAX ONLY AFTER LOCK
-  if(window.innerWidth>768){
-    gsap.utils.toArray(cols).forEach((col,i)=>{
-      gsap.to(col,{
-        backgroundPositionY:`${50+i*1.1}%`,
-        scrollTrigger:{
-          trigger:section,
-          start:"center center",
-          end:"bottom top",
-          scrub:0.6
-        }
-      });
-    });
-  }
 });
 </script>
 

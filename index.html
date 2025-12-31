@@ -14,14 +14,13 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:6200vh;
+  height:6000vh;
   overflow-x:hidden;
 }
 
-/* ================= GRID ================= */
+/* GRID */
 .grid-bg{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background-image:
     linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
@@ -30,52 +29,46 @@ body{
   z-index:1;
 }
 
-/* ================= CANVAS ================= */
+/* CANVAS */
 .canvas{
   position:fixed;
   inset:0;
-  transform-origin:center center;
   z-index:2;
 }
 
-/* ================= NARRATIVE ================= */
+/* NARRATIVE */
 .node{
   position:absolute;
   top:50%;
   left:50%;
-  max-width:560px;
-  text-align:center;
   transform:translate(-50%,-50%);
+  max-width:600px;
+  text-align:center;
   opacity:0;
-  z-index:3;
 }
 
-.hero{font-size:clamp(30px,3.5vw,44px)}
-.secondary{font-size:clamp(18px,2.2vw,26px)}
+.hero{font-size:clamp(30px,4vw,44px)}
+.secondary{font-size:clamp(18px,2.5vw,26px)}
 
 .center{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   pointer-events:none;
-  z-index:4;
 }
 
 .center-text{
   font-size:clamp(26px,4vw,44px);
   opacity:0;
-  text-align:center;
 }
 
-/* ================= IDEAS ================= */
+/* IDEAS */
 .idea{
   position:absolute;
   font-size:clamp(13px,1.2vw,16px);
   color:#cfd4dc;
   opacity:0;
-  z-index:5;
   transition:opacity .3s ease;
 }
 
@@ -84,31 +77,24 @@ body{
   .idea.dim{opacity:0.02}
 }
 
-/* ================= TAKEOVERS ================= */
+/* TAKEOVERS */
 .takeover{
-  height:220vh;
-  position:relative;
+  height:200vh;
 }
 
 .columns{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
   pointer-events:none;
-  z-index:10;
 }
 
 .col{
   transform:translateY(100%);
-  overflow:hidden;
 }
 
-/* IMAGE SLICE */
 .col.img{
-  background-size:600% auto;
-  background-repeat:no-repeat;
-  background-position-y:50%;
+  background:url("workshop.jpg") center/600% no-repeat;
 }
 .col.img:nth-child(1){background-position-x:0%}
 .col.img:nth-child(2){background-position-x:20%}
@@ -117,11 +103,8 @@ body{
 .col.img:nth-child(5){background-position-x:80%}
 .col.img:nth-child(6){background-position-x:100%}
 
-/* VIDEO SLICE */
 .video-col video{
   position:absolute;
-  top:0;
-  left:0;
   width:600%;
   height:100%;
   object-fit:cover;
@@ -133,19 +116,15 @@ body{
 .video-col:nth-child(5) video{left:-400%}
 .video-col:nth-child(6) video{left:-500%}
 
-/* TAKEOVER TEXT */
 .slide-content{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  background:rgba(0,0,0,0.35);
-  color:#fff;
-  opacity:0;
-  z-index:12;
   padding:12vw;
+  background:rgba(0,0,0,0.35);
+  opacity:0;
 }
 </style>
 </head>
@@ -154,10 +133,8 @@ body{
 
 <div class="grid-bg"></div>
 
-<!-- ================= STORY ================= -->
 <section class="story">
   <div class="canvas" id="canvas">
-
     <div class="node hero" id="l1">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary" id="l2">They learn it in playgrounds.</div>
     <div class="node secondary" id="l3">At home.</div>
@@ -165,7 +142,6 @@ body{
     <div class="node secondary" id="l5">Through jokes.</div>
     <div class="node secondary" id="l6">Online.</div>
     <div class="node secondary" id="l7">Through rules no one explains.</div>
-
   </div>
 
   <div class="center">
@@ -173,45 +149,32 @@ body{
   </div>
 </section>
 
-<!-- ================= IMAGE TAKEOVER ================= -->
-<section class="takeover takeover-image">
+<section class="takeover">
   <div class="columns">
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img"></div><div class="col img"></div><div class="col img"></div>
+    <div class="col img"></div><div class="col img"></div><div class="col img"></div>
   </div>
   <div class="slide-content">
     <div>
       <h2>What we do</h2>
-      <p>
-        We design immersive workshops for schools and youth spaces that help
-        children notice gender, power, and bias through play, stories, and reflection —
-        without lectures.
-      </p>
+      <p>Workshops for schools, NGOs and youth spaces that help children notice gender and power — without lectures.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= VIDEO TAKEOVER ================= -->
-<section class="takeover takeover-video">
+<section class="takeover">
   <div class="columns">
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
   </div>
   <div class="slide-content">
     <div>
-      <h2>Who this is for</h2>
-      <p>
-        Schools. NGOs. Orphanages. Youth programs. Any space where children
-        are learning who they are — long before anyone explains it.
-      </p>
+      <h2>The Equal Lens</h2>
+      <p>For children learning who they are — long before anyone explains it.</p>
     </div>
   </div>
 </section>
@@ -222,96 +185,50 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ================= STORY ================= */
-const canvas=document.getElementById("canvas");
-const centerText=document.getElementById("centerText");
-
-gsap.set(canvas,{scale:1.2});
-
-const storyTL=gsap.timeline({
-  scrollTrigger:{
-    trigger:".story",
-    start:"top top",
-    end:"+="+11000,
-    scrub:true,
-    pin:true
-  }
+/* STORY */
+const storyTL = gsap.timeline({
+  scrollTrigger:{trigger:".story",start:"top top",end:"+=9000",scrub:true,pin:true}
 });
 
-function focus(id){
+["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(id=>{
   storyTL.to(id,{opacity:1,duration:0.5})
-         .to(id,{opacity:0,duration:0.5},">+0.8");
-}
-
-["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(id=>focus(id));
-
-storyTL.to(centerText,{
-  onStart:()=>{
-    centerText.textContent="WE DON’T LECTURE.";
-    gsap.to(centerText,{opacity:1});
-  }
+         .to(id,{opacity:0,duration:0.5},">+0.6");
 });
-storyTL.to(centerText,{
-  onStart:()=>centerText.textContent="WE HELP THEM NOTICE."
-});
-storyTL.to(centerText,{opacity:0});
 
-storyTL.to(canvas,{scale:0.3});
+storyTL.to("#centerText",{opacity:1,onStart:()=>centerText.textContent="WE DON’T LECTURE."});
+storyTL.to("#centerText",{onStart:()=>centerText.textContent="WE HELP THEM NOTICE."});
+storyTL.to("#centerText",{opacity:0});
 
-/* ================= IDEAS ================= */
-const ideasText=[
-"Care is not weakness","Bias is learned","Language shapes belief",
-"Silence teaches norms","Play teaches power","Confidence is taught",
-"Equality is practiced","Roles are absorbed","Fairness is modeled"
-];
+/* ZOOM + IDEAS */
+storyTL.to(".canvas",{scale:0.5});
 
-for(let i=0;i<60;i++){
+const phrases=["Care is not weakness","Bias is learned","Confidence is taught","Equality is practiced"];
+for(let i=0;i<50;i++){
   const d=document.createElement("div");
   d.className="idea";
-  d.textContent=ideasText[i%ideasText.length];
-  d.style.left=Math.random()*100+"%";
-  d.style.top=Math.random()*100+"%";
-  canvas.appendChild(d);
+  d.textContent=phrases[i%phrases.length];
+  d.style.left=Math.random()*90+"%";
+  d.style.top=Math.random()*90+"%";
+  document.getElementById("canvas").appendChild(d);
 }
+storyTL.to(".idea",{opacity:0.06});
 
-storyTL.to(".idea",{opacity:0.06,duration:1},"-=1");
-
-/* HOVER */
-document.querySelectorAll(".idea").forEach(el=>{
-  el.addEventListener("mouseenter",()=>{
-    document.querySelectorAll(".idea").forEach(o=>{if(o!==el)o.classList.add("dim")});
-  });
-  el.addEventListener("mouseleave",()=>{
-    document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
-  });
-});
-
-/* ================= TAKEOVERS ================= */
+/* TAKEOVERS */
 document.querySelectorAll(".takeover").forEach(section=>{
-  const cols=[...section.querySelectorAll(".col")];
+  const cols=section.querySelectorAll(".col");
   const content=section.querySelector(".slide-content");
-
-  cols.forEach(col=>gsap.set(col,{y:"100%",shown:false}));
-
   ScrollTrigger.create({
-    trigger:section,
-    start:"top top",
-    end:"+="+(cols.length*160),
-    pin:true,
+    trigger:section,start:"top top",end:"+=800",pin:true,
     onUpdate:self=>{
-      const step=Math.floor(self.progress*cols.length);
-      cols.forEach((col,i)=>{
-        if(i<=step && !col.shown){
-          col.shown=true;
-          gsap.to(col,{y:"0%",duration:0.35,ease:"power3.out"});
+      cols.forEach((c,i)=>{
+        if(self.progress>i/cols.length){
+          gsap.to(c,{y:0,duration:0.3});
         }
       });
     }
   });
-
   ScrollTrigger.create({
-    trigger:section,
-    start:"center center",
+    trigger:section,start:"center center",
     onEnter:()=>gsap.to(content,{opacity:1}),
     onLeaveBack:()=>gsap.to(content,{opacity:0})
   });

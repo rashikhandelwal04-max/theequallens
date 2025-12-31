@@ -14,7 +14,7 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:4800vh;
+  height:5200vh;
   overflow-x:hidden;
 }
 
@@ -24,22 +24,25 @@ body{
   position:relative;
 }
 
+/* GRID BACKGROUND */
 .grid-bg{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
 }
 
+/* CAMERA */
 .canvas{
   position:fixed;
   inset:0;
   transform-origin:center center;
 }
 
+/* TEXT NODES */
 .node{
   position:absolute;
   max-width:520px;
@@ -51,24 +54,40 @@ body{
 .hero{font-size:clamp(30px,3.5vw,44px)}
 .secondary{font-size:clamp(18px,2.2vw,26px)}
 
-.center{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none;
+/* IDEA TILES */
+.idea{
+  font-size:clamp(13px,1.2vw,16px);
+  color:#cfd4dc;
+  opacity:0.06;
+  transition:opacity .3s ease;
 }
 
+@media(hover:hover){
+  .idea:hover{opacity:0.8}
+  .idea.dim{opacity:0.02}
+}
+
+/* CENTER */
+.center{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
 .center-text{
   font-size:clamp(26px,4vw,44px);
   opacity:0;
 }
 
-/* ================= TAKEOVER ================= */
+/* ================= IMAGE TAKEOVER ================= */
 .takeover{
-  height:300vh;
+  height:200vh;
   position:relative;
 }
 
-/* COLUMNS */
+/* COLUMN CONTAINER */
 .columns{
   position:fixed;
   inset:0;
@@ -78,33 +97,56 @@ body{
   pointer-events:none;
 }
 
+/* EACH COLUMN IS A SLICE OF THE SAME IMAGE */
 .col{
-  background:#ffffff;
+  background-image: url("workshop.jpg"); /* 🔥 PUT YOUR IMAGE HERE */
+  background-size:600% 100%;
+  background-repeat:no-repeat;
   transform:translateY(100%);
 }
 
-/* CONTENT */
+/* position image slices */
+.col:nth-child(1){background-position:0% 0%}
+.col:nth-child(2){background-position:20% 0%}
+.col:nth-child(3){background-position:40% 0%}
+.col:nth-child(4){background-position:60% 0%}
+.col:nth-child(5){background-position:80% 0%}
+.col:nth-child(6){background-position:100% 0%}
+
+/* TEXT OVER IMAGE */
 .slide-content{
   position:fixed;
   inset:0;
-  background:#ffffff;
-  color:#111;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
   padding:10vh 12vw;
   opacity:0;
-  z-index:21;
+  z-index:30;
+  color:#fff;
+  background:rgba(0,0,0,0.35);
+}
+
+.slide-content h2{
+  font-size:clamp(32px,4vw,52px);
+  margin-bottom:20px;
+}
+
+.slide-content p{
+  font-size:18px;
+  max-width:720px;
+  line-height:1.6;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= ZOOM STORY ================= -->
+<!-- ================= STORY ================= -->
 <section class="story">
   <div class="grid-bg"></div>
+
   <div class="canvas" id="canvas">
     <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
     <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
@@ -114,10 +156,13 @@ body{
     <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
     <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
   </div>
-  <div class="center"><div class="center-text" id="centerText"></div></div>
+
+  <div class="center">
+    <div class="center-text" id="centerText"></div>
+  </div>
 </section>
 
-<!-- ================= COLUMN TAKEOVER ================= -->
+<!-- ================= IMAGE TAKEOVER ================= -->
 <section class="takeover">
   <div class="columns">
     <div class="col"></div>
@@ -132,7 +177,7 @@ body{
     <div>
       <h2>What we do</h2>
       <p>
-        We design workshops and experiences that help children notice
+        We design workshops and immersive experiences that help children notice
         gender, power, and bias — without lectures.
       </p>
     </div>
@@ -181,14 +226,31 @@ storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE.
 storyTL.to(centerText,{opacity:0});
 storyTL.to(canvas,{scale:0.28,duration:3});
 
-/* ================= PIANO COLUMN TAKEOVER ================= */
+/* ================= BACKGROUND IDEAS ================= */
+const ideas = [
+  "Care is not weakness","Bias is learned","Children notice patterns",
+  "Rules are absorbed","Power is learned","Language shapes belief",
+  "Silence teaches norms","Play teaches power","Learning starts early",
+  "Respect is learned","Confidence is taught","Equality is practiced"
+];
+
+for(let i=0;i<60;i++){
+  const d=document.createElement("div");
+  d.className="node idea";
+  d.textContent=ideas[i % ideas.length];
+  d.style.left=(Math.random()*100)+"%";
+  d.style.top=(Math.random()*100)+"%";
+  canvas.appendChild(d);
+}
+
+/* ================= IMAGE COLUMN TAKEOVER ================= */
 const cols = gsap.utils.toArray(".col");
 
 const takeoverTL = gsap.timeline({
   scrollTrigger:{
     trigger:".takeover",
     start:"top top",
-    end:"+="+ (cols.length * 400),
+    end:"+="+(cols.length*300),
     pin:true,
     scrub:false
   }

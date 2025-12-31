@@ -11,14 +11,14 @@
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
+  font-family:'Playfair Display',serif;
   background:#0f1115;
   color:#f5f5f5;
-  font-family:'Playfair Display',serif;
-  height:400vh;
+  height:700vh;
   overflow-x:hidden;
 }
 
-/* ===== GRID ===== */
+/* ================= GRID ================= */
 .grid-bg{
   position:fixed;
   inset:0;
@@ -30,7 +30,7 @@ body{
   z-index:1;
 }
 
-/* ===== WORLD (ZOOMABLE) ===== */
+/* ================= WORLD (ZOOMABLE) ================= */
 .world{
   position:fixed;
   inset:0;
@@ -38,21 +38,21 @@ body{
   z-index:2;
 }
 
-/* ===== IDEAS ===== */
+/* ================= IDEAS ================= */
 .idea{
   position:absolute;
-  font-size:clamp(14px,1.4vw,18px);
+  font-size:clamp(14px,1.3vw,18px);
   color:#cfd4dc;
   opacity:0.08;
   transition:opacity .3s ease;
 }
 
 @media(hover:hover){
-  .idea:hover{opacity:0.9}
+  .idea:hover{opacity:1}
   .idea.dim{opacity:0.02}
 }
 
-/* ===== NARRATIVE (NEVER TRANSFORMED) ===== */
+/* ================= NARRATIVE ================= */
 .narrative{
   position:fixed;
   inset:0;
@@ -65,15 +65,79 @@ body{
 
 .line{
   position:absolute;
-  max-width:620px;
+  max-width:640px;
   text-align:center;
-  font-size:clamp(26px,4vw,42px);
+  font-size:clamp(26px,4vw,44px);
   line-height:1.4;
   opacity:0;
 }
 
 .statement{
   letter-spacing:0.6px;
+}
+
+/* ================= TAKEOVERS ================= */
+.takeover{
+  height:200vh;
+  position:relative;
+}
+
+.columns{
+  position:fixed;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  pointer-events:none;
+  z-index:5;
+}
+
+.col{
+  transform:translateY(100%);
+  overflow:hidden;
+}
+
+/* IMAGE SLICE */
+.col.img{
+  background-image:url("workshop.jpg");
+  background-size:600% auto;
+  background-repeat:no-repeat;
+  background-position-y:50%;
+}
+.col.img:nth-child(1){background-position-x:0%}
+.col.img:nth-child(2){background-position-x:20%}
+.col.img:nth-child(3){background-position-x:40%}
+.col.img:nth-child(4){background-position-x:60%}
+.col.img:nth-child(5){background-position-x:80%}
+.col.img:nth-child(6){background-position-x:100%}
+
+/* VIDEO SLICE */
+.video-col video{
+  position:absolute;
+  top:0;
+  left:0;
+  width:600%;
+  height:100%;
+  object-fit:cover;
+}
+.video-col:nth-child(1) video{left:0%}
+.video-col:nth-child(2) video{left:-100%}
+.video-col:nth-child(3) video{left:-200%}
+.video-col:nth-child(4) video{left:-300%}
+.video-col:nth-child(5) video{left:-400%}
+.video-col:nth-child(6) video{left:-500%}
+
+/* TAKEOVER TEXT */
+.slide-content{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:12vw;
+  background:rgba(0,0,0,0.35);
+  opacity:0;
+  z-index:6;
 }
 </style>
 </head>
@@ -82,10 +146,10 @@ body{
 
 <div class="grid-bg"></div>
 
-<!-- WORLD (ZOOM TARGET) -->
+<!-- ================= WORLD ================= -->
 <div class="world" id="world"></div>
 
-<!-- NARRATIVE (PINNED) -->
+<!-- ================= NARRATIVE ================= -->
 <div class="narrative" id="narrative">
   <div class="line" id="l1">Kids don’t learn gender in classrooms.</div>
   <div class="line" id="l2">They learn it in playgrounds.</div>
@@ -99,31 +163,69 @@ body{
   <div class="line statement" id="s2">WE HELP THEM NOTICE.</div>
 </div>
 
+<!-- ================= WORKSHOP IMAGE ================= -->
+<section class="takeover" id="workshop">
+  <div class="columns">
+    <div class="col img"></div><div class="col img"></div><div class="col img"></div>
+    <div class="col img"></div><div class="col img"></div><div class="col img"></div>
+  </div>
+  <div class="slide-content">
+    <div>
+      <h2>What we do</h2>
+      <p>
+        We design workshops for schools, NGOs and youth spaces
+        that help children notice gender, power and bias —
+        without lectures.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTRO VIDEO ================= -->
+<section class="takeover" id="intro">
+  <div class="columns">
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+  </div>
+  <div class="slide-content">
+    <div>
+      <h2>The Equal Lens</h2>
+      <p>
+        For children learning who they are —
+        long before anyone explains it.
+      </p>
+    </div>
+  </div>
+</section>
+
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ===== IDEAS FIELD ===== */
+/* ================= IDEAS ================= */
+const world=document.getElementById("world");
 const phrases=[
   "Care is not weakness","Bias is learned","Confidence is taught",
   "Equality is practiced","Language shapes belief","Silence teaches norms",
   "Play teaches power","Roles are absorbed","Fairness is modeled"
 ];
 
-const world=document.getElementById("world");
-
 for(let i=0;i<60;i++){
   const d=document.createElement("div");
   d.className="idea";
   d.textContent=phrases[i%phrases.length];
-  d.style.left=Math.random()*120-10+"%";
-  d.style.top=Math.random()*120-10+"%";
+  d.style.left=(Math.random()*120-10)+"%";
+  d.style.top=(Math.random()*120-10)+"%";
   world.appendChild(d);
 }
 
-/* Hover focus */
+/* Hover highlight */
 document.querySelectorAll(".idea").forEach(el=>{
   el.addEventListener("mouseenter",()=>{
     document.querySelectorAll(".idea").forEach(o=>{
@@ -135,29 +237,56 @@ document.querySelectorAll(".idea").forEach(el=>{
   });
 });
 
-/* ===== STORY TIMELINE ===== */
+/* ================= STORY TIMELINE ================= */
 const tl=gsap.timeline({
   scrollTrigger:{
     trigger:document.body,
     start:"top top",
-    end:"+=3000",
+    end:"+=2500",
     scrub:true,
     pin:true
   }
 });
 
-function show(line){
-  tl.to(line,{opacity:1,duration:0.4})
-    .to(line,{opacity:0,duration:0.4},">+0.6");
+function show(id){
+  tl.to(id,{opacity:1,duration:0.4})
+    .to(id,{opacity:0,duration:0.4},">+0.7");
 }
 
-["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(id=>show(id));
+["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(show);
 show("#s1");
 show("#s2");
 
-/* ===== ZOOM OUT (WORLD ONLY) ===== */
-tl.to(world,{scale:0.4,duration:2});
-tl.to(".idea",{opacity:0.12,duration:1},"<");
+/* Zoom world only */
+tl.to(world,{scale:0.45,duration:1.5});
+tl.to(".idea",{opacity:0.14},"<");
+
+/* ================= TAKEOVERS ================= */
+document.querySelectorAll(".takeover").forEach(section=>{
+  const cols=section.querySelectorAll(".col");
+  const content=section.querySelector(".slide-content");
+
+  ScrollTrigger.create({
+    trigger:section,
+    start:"top top",
+    end:"+=900",
+    pin:true,
+    onUpdate:self=>{
+      cols.forEach((c,i)=>{
+        if(self.progress>i/cols.length){
+          gsap.to(c,{y:0,duration:0.3,ease:"power3.out"});
+        }
+      });
+    }
+  });
+
+  ScrollTrigger.create({
+    trigger:section,
+    start:"center center",
+    onEnter:()=>gsap.to(content,{opacity:1}),
+    onLeaveBack:()=>gsap.to(content,{opacity:0})
+  });
+});
 </script>
 
 </body>

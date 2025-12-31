@@ -14,7 +14,7 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:6000vh;
+  height:6500vh;
   overflow-x:hidden;
 }
 
@@ -65,9 +65,9 @@ body{
   transition:opacity .3s ease;
 }
 
-/* ================= IMAGE TAKEOVER ================= */
+/* ================= TAKEOVER ================= */
 .takeover{
-  height:200vh;
+  height:220vh;
   position:relative;
 }
 
@@ -76,7 +76,6 @@ body{
   inset:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  overflow:hidden;
   z-index:30;
   pointer-events:none;
 }
@@ -86,7 +85,6 @@ body{
   background-repeat:no-repeat;
   background-position-y:50%;
   transform:translateY(100%);
-  will-change:transform;
 }
 
 /* Images */
@@ -102,8 +100,11 @@ body{
 
 /* Text overlay */
 .slide-content{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
   padding:10vh 12vw;
   background:rgba(0,0,0,0.35);
@@ -138,7 +139,7 @@ body{
 </section>
 
 <!-- ================= TAKEOVER 1 ================= -->
-<section class="takeover takeover-1">
+<section class="takeover">
   <div class="columns">
     <div class="col img1"></div><div class="col img1"></div><div class="col img1"></div>
     <div class="col img1"></div><div class="col img1"></div><div class="col img1"></div>
@@ -152,7 +153,7 @@ body{
 </section>
 
 <!-- ================= TAKEOVER 2 ================= -->
-<section class="takeover takeover-2">
+<section class="takeover">
   <div class="columns">
     <div class="col img2"></div><div class="col img2"></div><div class="col img2"></div>
     <div class="col img2"></div><div class="col img2"></div><div class="col img2"></div>
@@ -213,33 +214,41 @@ for(let i=0;i<70;i++){
   canvas.appendChild(d);
 }
 
-/* ================= COLUMN SNAP TAKEOVER ================= */
+/* ================= SNAP COLUMN TAKEOVER ================= */
 document.querySelectorAll(".takeover").forEach(section=>{
   const cols=[...section.querySelectorAll(".col")];
   const content=section.querySelector(".slide-content");
 
+  cols.forEach(col=>{
+    gsap.set(col,{y:"100%"});
+    col.dataset.shown="";
+  });
+
   ScrollTrigger.create({
     trigger:section,
     start:"top top",
-    end:"+="+(cols.length*150),
+    end:"+="+(cols.length*140),
     pin:true,
     onUpdate:self=>{
-      const index=Math.floor(self.progress*cols.length);
+      const step=Math.floor(self.progress*cols.length);
       cols.forEach((col,i)=>{
-        if(i<=index){
-          gsap.to(col,{y:"0%",duration:0.15,ease:"power2.out"});
+        if(i<=step && !col.dataset.shown){
+          col.dataset.shown=true;
+          gsap.to(col,{
+            y:"0%",
+            duration:0.28,
+            ease:"power3.out"
+          });
         }
       });
     }
   });
 
-  gsap.to(content,{
-    opacity:1,
-    scrollTrigger:{
-      trigger:section,
-      start:"center center",
-      toggleActions:"play none none reverse"
-    }
+  ScrollTrigger.create({
+    trigger:section,
+    start:"center center",
+    onEnter:()=>gsap.to(content,{opacity:1,duration:0.4}),
+    onLeaveBack:()=>gsap.to(content,{opacity:0,duration:0.3})
   });
 });
 </script>

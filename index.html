@@ -14,7 +14,7 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:6500vh;
+  height:6200vh;
   overflow-x:hidden;
 }
 
@@ -41,7 +41,9 @@ body{
 /* ================= NARRATIVE ================= */
 .node{
   position:absolute;
-  max-width:520px;
+  top:50%;
+  left:50%;
+  max-width:560px;
   text-align:center;
   transform:translate(-50%,-50%);
   opacity:0;
@@ -143,6 +145,7 @@ body{
   color:#fff;
   opacity:0;
   z-index:12;
+  padding:12vw;
 }
 </style>
 </head>
@@ -154,13 +157,15 @@ body{
 <!-- ================= STORY ================= -->
 <section class="story">
   <div class="canvas" id="canvas">
-    <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
-    <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
-    <div class="node secondary" id="l3" style="top:70%;left:20%">At home.</div>
-    <div class="node secondary" id="l4" style="top:15%;left:50%">In silence.</div>
-    <div class="node secondary" id="l5" style="top:85%;left:60%">Through jokes.</div>
-    <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
-    <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
+
+    <div class="node hero" id="l1">Kids don’t learn gender in classrooms.</div>
+    <div class="node secondary" id="l2">They learn it in playgrounds.</div>
+    <div class="node secondary" id="l3">At home.</div>
+    <div class="node secondary" id="l4">In silence.</div>
+    <div class="node secondary" id="l5">Through jokes.</div>
+    <div class="node secondary" id="l6">Online.</div>
+    <div class="node secondary" id="l7">Through rules no one explains.</div>
+
   </div>
 
   <div class="center">
@@ -178,7 +183,16 @@ body{
     <div class="col img" style="background-image:url('workshop.jpg')"></div>
     <div class="col img" style="background-image:url('workshop.jpg')"></div>
   </div>
-  <div class="slide-content"><h2>What we do</h2></div>
+  <div class="slide-content">
+    <div>
+      <h2>What we do</h2>
+      <p>
+        We design immersive workshops for schools and youth spaces that help
+        children notice gender, power, and bias through play, stories, and reflection —
+        without lectures.
+      </p>
+    </div>
+  </div>
 </section>
 
 <!-- ================= VIDEO TAKEOVER ================= -->
@@ -191,7 +205,15 @@ body{
     <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
     <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
   </div>
-  <div class="slide-content"><h2>THE EQUAL LENS</h2></div>
+  <div class="slide-content">
+    <div>
+      <h2>Who this is for</h2>
+      <p>
+        Schools. NGOs. Orphanages. Youth programs. Any space where children
+        are learning who they are — long before anyone explains it.
+      </p>
+    </div>
+  </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -204,43 +226,49 @@ gsap.registerPlugin(ScrollTrigger);
 const canvas=document.getElementById("canvas");
 const centerText=document.getElementById("centerText");
 
-gsap.set(canvas,{scale:1.6});
+gsap.set(canvas,{scale:1.2});
 
 const storyTL=gsap.timeline({
   scrollTrigger:{
     trigger:".story",
     start:"top top",
-    end:"+="+12000,
+    end:"+="+11000,
     scrub:true,
     pin:true
   }
 });
 
-function focus(cur,prev=null){
-  storyTL.to(canvas,{scale:"-=0.12"})
-         .to(cur,{opacity:1});
-  if(prev) storyTL.to(prev,{opacity:0.25},"<");
+function focus(id){
+  storyTL.to(id,{opacity:1,duration:0.5})
+         .to(id,{opacity:0,duration:0.5},">+0.8");
 }
 
-["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach((id,i,arr)=>focus(id,arr[i-1]));
+["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(id=>focus(id));
 
-storyTL.to(".node",{opacity:0});
-storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE DON’T LECTURE.";gsap.to(centerText,{opacity:1})}});
-storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE."}}); 
+storyTL.to(centerText,{
+  onStart:()=>{
+    centerText.textContent="WE DON’T LECTURE.";
+    gsap.to(centerText,{opacity:1});
+  }
+});
+storyTL.to(centerText,{
+  onStart:()=>centerText.textContent="WE HELP THEM NOTICE."
+});
 storyTL.to(centerText,{opacity:0});
+
 storyTL.to(canvas,{scale:0.3});
 
 /* ================= IDEAS ================= */
-const phrases=[
-"Care is not weakness","Bias is learned","Language shapes belief","Silence teaches norms",
-"Play teaches power","Confidence is taught","Equality is practiced",
-"Roles are absorbed","Norms repeat","Fairness is modeled"
+const ideasText=[
+"Care is not weakness","Bias is learned","Language shapes belief",
+"Silence teaches norms","Play teaches power","Confidence is taught",
+"Equality is practiced","Roles are absorbed","Fairness is modeled"
 ];
 
 for(let i=0;i<60;i++){
   const d=document.createElement("div");
   d.className="idea";
-  d.textContent=phrases[i%phrases.length];
+  d.textContent=ideasText[i%ideasText.length];
   d.style.left=Math.random()*100+"%";
   d.style.top=Math.random()*100+"%";
   canvas.appendChild(d);

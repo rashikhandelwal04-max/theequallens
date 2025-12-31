@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>The Equal Lens</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
@@ -11,9 +11,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  font-family:'Playfair Display',serif;
   background:#0f1115;
   color:#f5f5f5;
+  font-family:'Playfair Display',serif;
+  height:400vh;
   overflow-x:hidden;
 }
 
@@ -22,83 +23,57 @@ body{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
-  z-index:0;
+  z-index:1;
 }
 
-/* ===== STORY ===== */
-.story{
-  min-height:600vh;
-}
-
-.slide{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:40px;
-}
-
-.slide p{
-  max-width:600px;
-  font-size:clamp(22px,4vw,38px);
-  line-height:1.4;
-  opacity:0;
-}
-
-/* ===== CENTER STATEMENT ===== */
-.statement{
-  font-size:clamp(26px,4.5vw,44px);
-  letter-spacing:0.5px;
+/* ===== WORLD (ZOOMABLE) ===== */
+.world{
+  position:fixed;
+  inset:0;
+  transform-origin:center center;
+  z-index:2;
 }
 
 /* ===== IDEAS ===== */
-.ideas{
-  position:relative;
-  min-height:150vh;
-}
-
 .idea{
   position:absolute;
   font-size:clamp(14px,1.4vw,18px);
   color:#cfd4dc;
-  opacity:0.15;
+  opacity:0.08;
   transition:opacity .3s ease;
 }
 
-@media (hover:hover){
-  .idea:hover{opacity:1}
-  .idea.dim{opacity:0.04}
+@media(hover:hover){
+  .idea:hover{opacity:0.9}
+  .idea.dim{opacity:0.02}
 }
 
-/* ===== IMAGE SECTIONS ===== */
-.media{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
-
-.media img{
-  width:100%;
-  height:100vh;
-  object-fit:cover;
-}
-
-.media .overlay{
-  position:absolute;
+/* ===== NARRATIVE (NEVER TRANSFORMED) ===== */
+.narrative{
+  position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
+  pointer-events:none;
+  z-index:3;
+}
+
+.line{
+  position:absolute;
+  max-width:620px;
   text-align:center;
-  background:rgba(0,0,0,0.35);
-  font-size:clamp(26px,4vw,44px);
+  font-size:clamp(26px,4vw,42px);
+  line-height:1.4;
+  opacity:0;
+}
+
+.statement{
+  letter-spacing:0.6px;
 }
 </style>
 </head>
@@ -107,31 +82,22 @@ body{
 
 <div class="grid-bg"></div>
 
-<section class="story">
+<!-- WORLD (ZOOM TARGET) -->
+<div class="world" id="world"></div>
 
-  <!-- NARRATIVE -->
-  <div class="slide"><p id="l1">Kids don’t learn gender in classrooms.</p></div>
-  <div class="slide"><p id="l2">They learn it in playgrounds.</p></div>
-  <div class="slide"><p id="l3">At home.</p></div>
-  <div class="slide"><p id="l4">In silence.</p></div>
-  <div class="slide"><p id="l5">Through jokes.</p></div>
-  <div class="slide"><p id="l6">Online.</p></div>
-  <div class="slide"><p id="l7">Through rules no one explains.</p></div>
+<!-- NARRATIVE (PINNED) -->
+<div class="narrative" id="narrative">
+  <div class="line" id="l1">Kids don’t learn gender in classrooms.</div>
+  <div class="line" id="l2">They learn it in playgrounds.</div>
+  <div class="line" id="l3">At home.</div>
+  <div class="line" id="l4">In silence.</div>
+  <div class="line" id="l5">Through jokes.</div>
+  <div class="line" id="l6">Online.</div>
+  <div class="line" id="l7">Through rules no one explains.</div>
 
-  <!-- STATEMENT -->
-  <div class="slide"><p class="statement">WE DON’T LECTURE.</p></div>
-  <div class="slide"><p class="statement">WE HELP THEM NOTICE.</p></div>
-
-  <!-- IDEAS -->
-  <div class="ideas" id="ideas"></div>
-
-</section>
-
-<!-- IMAGE -->
-<section class="media">
-  <img src="workshop.jpg" alt="">
-  <div class="overlay">What we do</div>
-</section>
+  <div class="line statement" id="s1">WE DON’T LECTURE.</div>
+  <div class="line statement" id="s2">WE HELP THEM NOTICE.</div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
@@ -139,35 +105,22 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* Fade narrative */
-document.querySelectorAll(".slide p").forEach(p=>{
-  gsap.to(p,{
-    opacity:1,
-    scrollTrigger:{
-      trigger:p,
-      start:"top 60%",
-      end:"top 30%",
-      scrub:true
-    }
-  });
-});
-
-/* Ideas */
-const ideasText=[
+/* ===== IDEAS FIELD ===== */
+const phrases=[
   "Care is not weakness","Bias is learned","Confidence is taught",
   "Equality is practiced","Language shapes belief","Silence teaches norms",
   "Play teaches power","Roles are absorbed","Fairness is modeled"
 ];
 
-const ideas=document.getElementById("ideas");
+const world=document.getElementById("world");
 
-for(let i=0;i<50;i++){
+for(let i=0;i<60;i++){
   const d=document.createElement("div");
   d.className="idea";
-  d.textContent=ideasText[i%ideasText.length];
-  d.style.left=Math.random()*90+"%";
-  d.style.top=Math.random()*90+"%";
-  ideas.appendChild(d);
+  d.textContent=phrases[i%phrases.length];
+  d.style.left=Math.random()*120-10+"%";
+  d.style.top=Math.random()*120-10+"%";
+  world.appendChild(d);
 }
 
 /* Hover focus */
@@ -181,6 +134,30 @@ document.querySelectorAll(".idea").forEach(el=>{
     document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
   });
 });
+
+/* ===== STORY TIMELINE ===== */
+const tl=gsap.timeline({
+  scrollTrigger:{
+    trigger:document.body,
+    start:"top top",
+    end:"+=3000",
+    scrub:true,
+    pin:true
+  }
+});
+
+function show(line){
+  tl.to(line,{opacity:1,duration:0.4})
+    .to(line,{opacity:0,duration:0.4},">+0.6");
+}
+
+["#l1","#l2","#l3","#l4","#l5","#l6","#l7"].forEach(id=>show(id));
+show("#s1");
+show("#s2");
+
+/* ===== ZOOM OUT (WORLD ONLY) ===== */
+tl.to(world,{scale:0.4,duration:2});
+tl.to(".idea",{opacity:0.12,duration:1},"<");
 </script>
 
 </body>

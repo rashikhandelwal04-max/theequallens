@@ -14,7 +14,7 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:6500vh;
+  height:7000vh;
   overflow-x:hidden;
 }
 
@@ -62,7 +62,6 @@ body{
   font-size:clamp(13px,1.2vw,16px);
   color:#cfd4dc;
   opacity:0.06;
-  transition:opacity .3s ease;
 }
 
 /* ================= TAKEOVER ================= */
@@ -81,24 +80,41 @@ body{
 }
 
 .col{
-  background-size:600% auto;
-  background-repeat:no-repeat;
-  background-position-y:50%;
+  overflow:hidden;
   transform:translateY(100%);
 }
 
-/* Images */
-.col.img1{background-image:url("workshop.jpg")}
-.col.img2{background-image:url("workshop-2.jpg")}
+/* IMAGE COLUMNS */
+.col.img{
+  background-size:600% auto;
+  background-repeat:no-repeat;
+  background-position-y:50%;
+}
+.col.img:nth-child(1){background-position-x:0%}
+.col.img:nth-child(2){background-position-x:20%}
+.col.img:nth-child(3){background-position-x:40%}
+.col.img:nth-child(4){background-position-x:60%}
+.col.img:nth-child(5){background-position-x:80%}
+.col.img:nth-child(6){background-position-x:100%}
 
-.col:nth-child(1){background-position-x:0%}
-.col:nth-child(2){background-position-x:20%}
-.col:nth-child(3){background-position-x:40%}
-.col:nth-child(4){background-position-x:60%}
-.col:nth-child(5){background-position-x:80%}
-.col:nth-child(6){background-position-x:100%}
+/* VIDEO COLUMNS */
+.video-col video{
+  position:absolute;
+  top:0;
+  left:0;
+  width:600%;
+  height:100%;
+  object-fit:cover;
+}
 
-/* Text overlay */
+.video-col:nth-child(1) video{left:0%}
+.video-col:nth-child(2) video{left:-100%}
+.video-col:nth-child(3) video{left:-200%}
+.video-col:nth-child(4) video{left:-300%}
+.video-col:nth-child(5) video{left:-400%}
+.video-col:nth-child(6) video{left:-500%}
+
+/* TEXT OVERLAY */
 .slide-content{
   position:fixed;
   inset:0;
@@ -113,10 +129,16 @@ body{
   z-index:40;
 }
 
+.slide-content h2{
+  font-size:clamp(36px,5vw,56px);
+  letter-spacing:1px;
+  margin-bottom:16px;
+}
+
 /* MOBILE */
 @media(max-width:768px){
   .columns{grid-template-columns:repeat(3,1fr)}
-  .col{background-size:300% auto}
+  .video-col video{width:300%}
 }
 </style>
 </head>
@@ -138,11 +160,15 @@ body{
   <div class="center"><div class="center-text" id="centerText"></div></div>
 </section>
 
-<!-- ================= TAKEOVER 1 ================= -->
+<!-- ================= TAKEOVER 1 (IMAGE) ================= -->
 <section class="takeover">
   <div class="columns">
-    <div class="col img1"></div><div class="col img1"></div><div class="col img1"></div>
-    <div class="col img1"></div><div class="col img1"></div><div class="col img1"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
   </div>
   <div class="slide-content">
     <div>
@@ -152,16 +178,20 @@ body{
   </div>
 </section>
 
-<!-- ================= TAKEOVER 2 ================= -->
+<!-- ================= TAKEOVER 2 (VIDEO) ================= -->
 <section class="takeover">
   <div class="columns">
-    <div class="col img2"></div><div class="col img2"></div><div class="col img2"></div>
-    <div class="col img2"></div><div class="col img2"></div><div class="col img2"></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
   </div>
   <div class="slide-content">
     <div>
-      <h2>How we work</h2>
-      <p>Through play, discussion, and reflection — learning happens by noticing.</p>
+      <h2>THE EQUAL LENS</h2>
+      <p>We help children notice what the world quietly teaches.</p>
     </div>
   </div>
 </section>
@@ -198,23 +228,7 @@ storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE.
 storyTL.to(centerText,{opacity:0});
 storyTL.to(canvas,{scale:0.28,duration:3});
 
-/* ================= IDEAS ================= */
-const ideas=[
-"Care is not weakness","Bias is learned","Children notice patterns",
-"Rules are absorbed","Power is learned","Language shapes belief",
-"Silence teaches norms","Play teaches power","Learning starts early"
-];
-
-for(let i=0;i<70;i++){
-  const d=document.createElement("div");
-  d.className="node idea";
-  d.textContent=ideas[i%ideas.length];
-  d.style.left=Math.random()*100+"%";
-  d.style.top=Math.random()*100+"%";
-  canvas.appendChild(d);
-}
-
-/* ================= SNAP COLUMN TAKEOVER ================= */
+/* ================= SNAP TAKEOVER ================= */
 document.querySelectorAll(".takeover").forEach(section=>{
   const cols=[...section.querySelectorAll(".col")];
   const content=section.querySelector(".slide-content");
@@ -236,7 +250,7 @@ document.querySelectorAll(".takeover").forEach(section=>{
           col.dataset.shown=true;
           gsap.to(col,{
             y:"0%",
-            duration:0.28,
+            duration:0.3,
             ease:"power3.out"
           });
         }
@@ -247,7 +261,7 @@ document.querySelectorAll(".takeover").forEach(section=>{
   ScrollTrigger.create({
     trigger:section,
     start:"center center",
-    onEnter:()=>gsap.to(content,{opacity:1,duration:0.4}),
+    onEnter:()=>gsap.to(content,{opacity:1,duration:0.5}),
     onLeaveBack:()=>gsap.to(content,{opacity:0,duration:0.3})
   });
 });

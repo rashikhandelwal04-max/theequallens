@@ -14,13 +14,14 @@ body{
   background:#0f1115;
   color:#f5f5f5;
   font-family:'Playfair Display',serif;
-  height:6200vh;
+  height:6500vh;
   overflow-x:hidden;
 }
 
-/* ================= BACKGROUND GRID ================= */
+/* ================= GRID ================= */
 .grid-bg{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background-image:
     linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
@@ -71,7 +72,7 @@ body{
   position:absolute;
   font-size:clamp(13px,1.2vw,16px);
   color:#cfd4dc;
-  opacity:0.06;
+  opacity:0;
   z-index:5;
   transition:opacity .3s ease;
 }
@@ -92,13 +93,13 @@ body{
   inset:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  z-index:10;
   pointer-events:none;
+  z-index:10;
 }
 
 .col{
-  overflow:hidden;
   transform:translateY(100%);
+  overflow:hidden;
 }
 
 /* IMAGE SLICE */
@@ -138,17 +139,10 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:10vh 12vw;
   background:rgba(0,0,0,0.35);
   color:#fff;
   opacity:0;
   z-index:12;
-}
-
-/* ================= MOBILE ADJUST ================= */
-@media(max-width:768px){
-  .columns{grid-template-columns:repeat(3,1fr)}
-  .video-col video{width:300%}
 }
 </style>
 </head>
@@ -157,48 +151,47 @@ body{
 
 <div class="grid-bg"></div>
 
-<div class="canvas" id="canvas">
-  <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
-  <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
-  <div class="node secondary" id="l3" style="top:70%;left:20%">At home.</div>
-  <div class="node secondary" id="l4" style="top:15%;left:50%">In silence.</div>
-  <div class="node secondary" id="l5" style="top:85%;left:60%">Through jokes.</div>
-  <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
-  <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
-</div>
-
-<div class="center">
-  <div class="center-text" id="centerText"></div>
-</div>
-
-<!-- TAKEOVER 1 -->
-<section class="takeover">
-  <div class="columns">
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
-    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+<!-- ================= STORY ================= -->
+<section class="story">
+  <div class="canvas" id="canvas">
+    <div class="node hero" id="l1" style="top:50%;left:50%">Kids don’t learn gender in classrooms.</div>
+    <div class="node secondary" id="l2" style="top:30%;left:80%">They learn it in playgrounds.</div>
+    <div class="node secondary" id="l3" style="top:70%;left:20%">At home.</div>
+    <div class="node secondary" id="l4" style="top:15%;left:50%">In silence.</div>
+    <div class="node secondary" id="l5" style="top:85%;left:60%">Through jokes.</div>
+    <div class="node secondary" id="l6" style="top:40%;left:10%">Online.</div>
+    <div class="node secondary" id="l7" style="top:45%;left:90%">Through rules no one explains.</div>
   </div>
-  <div class="slide-content">
-    <h2>What we do</h2>
+
+  <div class="center">
+    <div class="center-text" id="centerText"></div>
   </div>
 </section>
 
-<!-- TAKEOVER 2 -->
-<section class="takeover">
+<!-- ================= IMAGE TAKEOVER ================= -->
+<section class="takeover takeover-image">
   <div class="columns">
-    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
-    <div class="col video-col"><video src="intro-video.mp4" muted autoplay loop playsinline></video></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
+    <div class="col img" style="background-image:url('workshop.jpg')"></div>
   </div>
-  <div class="slide-content">
-    <h2>THE EQUAL LENS</h2>
+  <div class="slide-content"><h2>What we do</h2></div>
+</section>
+
+<!-- ================= VIDEO TAKEOVER ================= -->
+<section class="takeover takeover-video">
+  <div class="columns">
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="col video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
   </div>
+  <div class="slide-content"><h2>THE EQUAL LENS</h2></div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -207,14 +200,20 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* STORY */
+/* ================= STORY ================= */
 const canvas=document.getElementById("canvas");
 const centerText=document.getElementById("centerText");
 
 gsap.set(canvas,{scale:1.6});
 
 const storyTL=gsap.timeline({
-  scrollTrigger:{trigger:document.body,start:"top top",end:"+="+12000,scrub:true,pin:true}
+  scrollTrigger:{
+    trigger:".story",
+    start:"top top",
+    end:"+="+12000,
+    scrub:true,
+    pin:true
+  }
 });
 
 function focus(cur,prev=null){
@@ -229,36 +228,37 @@ storyTL.to(".node",{opacity:0});
 storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE DON’T LECTURE.";gsap.to(centerText,{opacity:1})}});
 storyTL.to(centerText,{onStart:()=>{centerText.textContent="WE HELP THEM NOTICE."}}); 
 storyTL.to(centerText,{opacity:0});
-storyTL.to(canvas,{scale:0.28});
+storyTL.to(canvas,{scale:0.3});
 
-/* IDEAS */
-const ideas=[
+/* ================= IDEAS ================= */
+const phrases=[
 "Care is not weakness","Bias is learned","Language shapes belief","Silence teaches norms",
-"Play teaches power","Confidence is taught","Equality is practiced"
+"Play teaches power","Confidence is taught","Equality is practiced",
+"Roles are absorbed","Norms repeat","Fairness is modeled"
 ];
 
 for(let i=0;i<60;i++){
   const d=document.createElement("div");
   d.className="idea";
-  d.textContent=ideas[i%ideas.length];
+  d.textContent=phrases[i%phrases.length];
   d.style.left=Math.random()*100+"%";
   d.style.top=Math.random()*100+"%";
   canvas.appendChild(d);
 }
 
-/* HOVER */
-if(window.matchMedia("(hover:hover)").matches){
-  document.querySelectorAll(".idea").forEach(el=>{
-    el.addEventListener("mouseenter",()=>{
-      document.querySelectorAll(".idea").forEach(o=>{if(o!==el)o.classList.add("dim")});
-    });
-    el.addEventListener("mouseleave",()=>{
-      document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
-    });
-  });
-}
+storyTL.to(".idea",{opacity:0.06,duration:1},"-=1");
 
-/* TAKEOVERS */
+/* HOVER */
+document.querySelectorAll(".idea").forEach(el=>{
+  el.addEventListener("mouseenter",()=>{
+    document.querySelectorAll(".idea").forEach(o=>{if(o!==el)o.classList.add("dim")});
+  });
+  el.addEventListener("mouseleave",()=>{
+    document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
+  });
+});
+
+/* ================= TAKEOVERS ================= */
 document.querySelectorAll(".takeover").forEach(section=>{
   const cols=[...section.querySelectorAll(".col")];
   const content=section.querySelector(".slide-content");
@@ -268,14 +268,14 @@ document.querySelectorAll(".takeover").forEach(section=>{
   ScrollTrigger.create({
     trigger:section,
     start:"top top",
-    end:"+="+(cols.length*150),
+    end:"+="+(cols.length*160),
     pin:true,
     onUpdate:self=>{
       const step=Math.floor(self.progress*cols.length);
       cols.forEach((col,i)=>{
         if(i<=step && !col.shown){
           col.shown=true;
-          gsap.to(col,{y:"0%",duration:0.3,ease:"power3.out"});
+          gsap.to(col,{y:"0%",duration:0.35,ease:"power3.out"});
         }
       });
     }

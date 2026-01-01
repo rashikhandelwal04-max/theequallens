@@ -22,18 +22,18 @@ body{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
   z-index:1;
 }
 
-/* IDEAS */
+/* IDEA FIELD */
 .world{
   position:fixed;
   inset:0;
-  z-index:3;
+  z-index:2;
 }
 
 .idea{
@@ -42,41 +42,38 @@ body{
   color:#cfd4dc;
   opacity:0.18;
   transition:opacity .3s ease, transform .3s ease;
+  pointer-events:auto;
 }
 
-.idea.focus{opacity:1;transform:scale(1.15)}
+.idea.focus{
+  opacity:1;
+  color:#fff;
+  transform:scale(1.15);
+}
+
 .idea.dim{opacity:0.05}
 
 /* NARRATIVE */
 .narrative{
   position:fixed;
   inset:0;
-  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:3;
   pointer-events:none;
 }
 
 .line{
   position:absolute;
-  max-width:520px;
-  font-size:clamp(24px,3.5vw,42px);
+  max-width:700px;
+  text-align:center;
+  font-size:clamp(26px,4vw,44px);
   line-height:1.4;
   opacity:0;
-  transition:opacity .4s ease;
 }
 
-.line.active{opacity:1}
-.line.dim{opacity:0.25}
-.line.hidden{opacity:0}
-
-/* POSITIONS */
-.center{top:50%;left:50%;transform:translate(-50%,-50%)}
-.left{top:45%;left:10%}
-.right{top:40%;right:10%}
-.top-left{top:15%;left:12%}
-.bottom-left{bottom:15%;left:12%}
-.bottom-right{bottom:18%;right:12%}
-
-.spacer{height:240vh}
+.spacer{height:220vh}
 
 /* VIDEO */
 .video-takeover{height:200vh}
@@ -92,6 +89,7 @@ body{
 
 .video-col{
   transform:translateY(100%);
+  overflow:hidden;
 }
 
 .video-col video{
@@ -103,6 +101,14 @@ body{
   pointer-events:none;
 }
 
+.video-col:nth-child(1) video{left:0%}
+.video-col:nth-child(2) video{left:-100%}
+.video-col:nth-child(3) video{left:-200%}
+.video-col:nth-child(4) video{left:-300%}
+.video-col:nth-child(5) video{left:-400%}
+.video-col:nth-child(6) video{left:-500%}
+
+/* VIDEO OVERLAY */
 .video-overlay{
   position:fixed;
   inset:0;
@@ -111,7 +117,7 @@ body{
   justify-content:center;
   text-align:center;
   padding:10vw;
-  background:rgba(0,0,0,0.45);
+  background:rgba(0,0,0,0.4);
   opacity:0;
   z-index:6;
   pointer-events:auto;
@@ -134,15 +140,15 @@ body{
 
 <!-- NARRATIVE -->
 <div class="narrative">
-  <div class="line center">Kids don’t learn gender in classrooms.</div>
-  <div class="line right">They learn it in playgrounds.</div>
-  <div class="line left">At home.</div>
-  <div class="line bottom-right">In silence.</div>
-  <div class="line top-left">Through jokes.</div>
-  <div class="line bottom-left">Online.</div>
+  <div class="line">Kids don’t learn gender in classrooms.</div>
+  <div class="line">They learn it in playgrounds.</div>
+  <div class="line">At home.</div>
+  <div class="line">In silence.</div>
+  <div class="line">Through jokes.</div>
+  <div class="line">Online.</div>
 
-  <div class="line center">WE DON’T LECTURE.</div>
-  <div class="line center">WE HELP THEM NOTICE.</div>
+  <div class="line">WE DON’T LECTURE.</div>
+  <div class="line">WE HELP THEM NOTICE.</div>
 </div>
 
 <div class="spacer"></div>
@@ -172,10 +178,52 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
+/* ===== IDEAS (50–60, ALWAYS PRESENT) ===== */
+const phrases=[
+  "Care is not weakness","Bias is learned","Confidence is taught","Equality is practiced",
+  "Language shapes belief","Silence teaches norms","Play teaches power","Roles are absorbed",
+  "Fairness is modeled","Boys cry","Girls lead","Work has no gender","Listening is strength",
+  "Kindness is radical","Norms repeat quietly","Jokes teach values",
+  "Children notice everything","Power hides in habits","Respect is learned",
+  "Rules are inherited","Care is labor","Softness is human","Normal is trained",
+  "Words leave residue","Observation precedes change","Seeing comes first",
+  "Notice before judging","Pause before teaching","Change is subtle",
+  "Play mirrors society","Authority is modeled","Belonging is taught",
+  "Limits are social","Confidence is rewarded","Silence is permission",
+  "Equality is slow","Strength is not loud","Roles feel natural",
+  "Children copy adults","Power feels normal","Care is gendered",
+  "Leadership is learned","Boundaries are shown","Freedom is practiced",
+  "Attention creates value","Behavior teaches more","Rules feel invisible",
+  "Micro habits matter","Learning is social","Seeing comes before change"
+];
+
+const world=document.getElementById("world");
+const ideas=[];
+
+phrases.forEach((t,i)=>{
+  const el=document.createElement("div");
+  el.className="idea";
+  el.textContent=t;
+  el.style.left=(Math.random()*100)+"%";
+  el.style.top=(Math.random()*100)+"%";
+  el.dataset.depth=Math.random()*0.6+0.2;
+  world.appendChild(el);
+  ideas.push(el);
+
+  el.addEventListener("mouseenter",()=>{
+    ideas.forEach(o=>o!==el&&o.classList.add("dim"));
+    el.classList.add("focus");
+  });
+  el.addEventListener("mouseleave",()=>{
+    ideas.forEach(o=>o.classList.remove("dim"));
+    el.classList.remove("focus");
+  });
+});
+
+/* ===== NARRATIVE SEQUENCE (NO OVERLAP) ===== */
 const lines = gsap.utils.toArray(".line");
 
-/* NARRATIVE TIMELINE */
-const tl = gsap.timeline({
+const textTL = gsap.timeline({
   scrollTrigger:{
     trigger:".spacer",
     start:"top top",
@@ -186,22 +234,45 @@ const tl = gsap.timeline({
 });
 
 lines.forEach((line,i)=>{
-  tl.add(()=>{
-    lines.forEach((l,idx)=>{
-      l.classList.remove("active","dim","hidden");
-      if(idx < i) l.classList.add("dim");
-      if(idx === i) l.classList.add("active");
-      if(idx > i) l.classList.add("hidden");
-    });
-  }, i*1);
+  textTL.to(line,{opacity:1,duration:0.3})
+        .to(line,{opacity:i<6?0.25:0,duration:0.3},">+0.6");
 });
 
-/* FINAL TWO LINES RULE */
-tl.add(()=>{
-  lines.forEach((l,idx)=>{
-    if(idx < 6) l.classList.add("hidden");
-  });
-}, 6);
+/* hide first six completely when slogans appear */
+textTL.to(lines.slice(0,6),{opacity:0,duration:0.3});
+
+/* ===== ZOOM OUT (IDEAS ONLY) ===== */
+gsap.to(world,{
+  scale:0.82,
+  scrollTrigger:{
+    trigger:".spacer",
+    start:"+=1200",
+    end:"+=1200",
+    scrub:true
+  }
+});
+
+/* ===== VIDEO ===== */
+ScrollTrigger.create({
+  trigger:".video-takeover",
+  start:"top+=200 top",
+  end:"+=900",
+  pin:true,
+  onUpdate:self=>{
+    document.querySelectorAll(".video-col").forEach((c,i)=>{
+      if(self.progress>i/6){
+        gsap.to(c,{y:0,duration:0.4});
+      }
+    });
+  }
+});
+
+ScrollTrigger.create({
+  trigger:".video-takeover",
+  start:"center center",
+  onEnter:()=>gsap.to(".video-overlay",{opacity:1}),
+  onLeaveBack:()=>gsap.to(".video-overlay",{opacity:0})
+});
 
 /* ABOUT TRANSITION */
 document.querySelector(".about-link").onclick=e=>{

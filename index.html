@@ -33,7 +33,7 @@ body{
 .world{
   position:fixed;
   inset:0;
-  z-index:3; /* ABOVE narrative */
+  z-index:3;
 }
 
 .idea{
@@ -42,40 +42,41 @@ body{
   color:#cfd4dc;
   opacity:0.18;
   transition:opacity .3s ease, transform .3s ease;
-  pointer-events:auto;
 }
 
-.idea.focus{
-  opacity:1;
-  transform:scale(1.15);
-}
-
-.idea.dim{opacity:0.04}
+.idea.focus{opacity:1;transform:scale(1.15)}
+.idea.dim{opacity:0.05}
 
 /* NARRATIVE */
 .narrative{
   position:fixed;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   z-index:2;
   pointer-events:none;
 }
 
 .line{
   position:absolute;
-  max-width:640px;
-  text-align:center;
-  font-size:clamp(26px,4vw,44px);
+  max-width:520px;
+  font-size:clamp(24px,3.5vw,42px);
   line-height:1.4;
   opacity:0;
+  transition:opacity .4s ease;
 }
 
-/* show first line initially */
-.line.initial{opacity:1}
+.line.active{opacity:1}
+.line.dim{opacity:0.25}
+.line.hidden{opacity:0}
 
-.spacer{height:220vh}
+/* POSITIONS */
+.center{top:50%;left:50%;transform:translate(-50%,-50%)}
+.left{top:45%;left:10%}
+.right{top:40%;right:10%}
+.top-left{top:15%;left:12%}
+.bottom-left{bottom:15%;left:12%}
+.bottom-right{bottom:18%;right:12%}
+
+.spacer{height:240vh}
 
 /* VIDEO */
 .video-takeover{height:200vh}
@@ -91,7 +92,6 @@ body{
 
 .video-col{
   transform:translateY(100%);
-  overflow:hidden;
 }
 
 .video-col video{
@@ -100,17 +100,9 @@ body{
   width:600%;
   height:100%;
   object-fit:cover;
-  pointer-events:none; /* IMPORTANT */
+  pointer-events:none;
 }
 
-.video-col:nth-child(1) video{left:0%}
-.video-col:nth-child(2) video{left:-100%}
-.video-col:nth-child(3) video{left:-200%}
-.video-col:nth-child(4) video{left:-300%}
-.video-col:nth-child(5) video{left:-400%}
-.video-col:nth-child(6) video{left:-500%}
-
-/* OVERLAY */
 .video-overlay{
   position:fixed;
   inset:0;
@@ -142,14 +134,15 @@ body{
 
 <!-- NARRATIVE -->
 <div class="narrative">
-  <div class="line initial">Kids don’t learn gender in classrooms.</div>
-  <div class="line">They learn it in playgrounds.</div>
-  <div class="line">At home.</div>
-  <div class="line">In silence.</div>
-  <div class="line">Through jokes.</div>
-  <div class="line">Online.</div>
-  <div class="line">WE DON’T LECTURE.</div>
-  <div class="line">WE HELP THEM NOTICE.</div>
+  <div class="line center">Kids don’t learn gender in classrooms.</div>
+  <div class="line right">They learn it in playgrounds.</div>
+  <div class="line left">At home.</div>
+  <div class="line bottom-right">In silence.</div>
+  <div class="line top-left">Through jokes.</div>
+  <div class="line bottom-left">Online.</div>
+
+  <div class="line center">WE DON’T LECTURE.</div>
+  <div class="line center">WE HELP THEM NOTICE.</div>
 </div>
 
 <div class="spacer"></div>
@@ -179,90 +172,38 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* IDEAS */
-const phrases=[
-  "Care is not weakness","Bias is learned","Confidence is taught","Equality is practiced",
-  "Play teaches power","Silence teaches norms","Roles are absorbed","Fairness is modeled",
-  "Boys cry","Girls lead","Work has no gender","Listening is strength",
-  "Children notice everything","Power hides in habits","Words leave residue",
-  "Observation precedes change","Seeing comes first","Notice before judging"
-];
+const lines = gsap.utils.toArray(".line");
 
-const world=document.getElementById("world");
-const ideas=[];
-
-phrases.forEach((t,i)=>{
-  const el=document.createElement("div");
-  el.className="idea";
-  el.textContent=t;
-  el.style.left=Math.random()*90+"%";
-  el.style.top=Math.random()*90+"%";
-  el.dataset.depth=Math.random()*0.6+0.2;
-  world.appendChild(el);
-  ideas.push(el);
-
-  el.addEventListener("mouseenter",()=>{
-    ideas.forEach(o=>o!==el&&o.classList.add("dim"));
-    el.classList.add("focus");
-  });
-  el.addEventListener("mouseleave",()=>{
-    ideas.forEach(o=>o.classList.remove("dim"));
-    el.classList.remove("focus");
-  });
-});
-
-/* NARRATIVE SCROLL */
-gsap.utils.toArray(".line").forEach((line,i)=>{
-  gsap.to(line,{
-    opacity:1,
-    scrollTrigger:{
-      trigger:".spacer",
-      start:`top+=${i*200} top`,
-      end:`top+=${i*200+120} top`,
-      scrub:true
-    }
-  });
-});
-
-/* PARALLAX */
-ScrollTrigger.create({
-  trigger:".spacer",
-  start:"top top",
-  end:"bottom bottom",
-  scrub:true,
-  onUpdate:self=>{
-    ideas.forEach(el=>{
-      gsap.to(el,{
-        y:-120*self.progress*el.dataset.depth,
-        overwrite:true
-      });
-    });
+/* NARRATIVE TIMELINE */
+const tl = gsap.timeline({
+  scrollTrigger:{
+    trigger:".spacer",
+    start:"top top",
+    end:"+=1800",
+    scrub:true,
+    pin:true
   }
 });
 
-/* VIDEO */
-ScrollTrigger.create({
-  trigger:".video-takeover",
-  start:"top+=200 top",
-  end:"+=900",
-  pin:true,
-  onUpdate:self=>{
-    document.querySelectorAll(".video-col").forEach((c,i)=>{
-      if(self.progress>i/6){
-        gsap.to(c,{y:0,duration:0.4});
-      }
+lines.forEach((line,i)=>{
+  tl.add(()=>{
+    lines.forEach((l,idx)=>{
+      l.classList.remove("active","dim","hidden");
+      if(idx < i) l.classList.add("dim");
+      if(idx === i) l.classList.add("active");
+      if(idx > i) l.classList.add("hidden");
     });
-  }
+  }, i*1);
 });
 
-ScrollTrigger.create({
-  trigger:".video-takeover",
-  start:"center center",
-  onEnter:()=>gsap.to(".video-overlay",{opacity:1}),
-  onLeaveBack:()=>gsap.to(".video-overlay",{opacity:0})
-});
+/* FINAL TWO LINES RULE */
+tl.add(()=>{
+  lines.forEach((l,idx)=>{
+    if(idx < 6) l.classList.add("hidden");
+  });
+}, 6);
 
-/* TRANSITION */
+/* ABOUT TRANSITION */
 document.querySelector(".about-link").onclick=e=>{
   e.preventDefault();
   gsap.to("body",{opacity:0,scale:0.96,duration:0.35,onComplete:()=>location.href=e.target.href});

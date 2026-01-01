@@ -13,11 +13,13 @@ body{
   font-family:'Playfair Display',serif;
   background:#fff;
   color:#111;
+  opacity:0;
+  transform:scale(0.96);
 }
 
 .hero{
   height:100vh;
-  background:url("workshop.jpg") center/cover no-repeat;
+  background:#f4f4f4;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -46,22 +48,18 @@ body{
 </section>
 
 <section class="content">
-  <p>
-    The Equal Lens designs workshops for schools, NGOs, and youth spaces
-    that help children observe everyday ideas around gender, fairness,
-    power, and care.
-  </p>
-
-  <p>
-    Our sessions are interactive, age-appropriate, and grounded in
-    play, storytelling, and reflection — not instruction.
-  </p>
-
-  <p>
-    We believe meaningful change begins early, quietly, and through
-    noticing what already exists.
-  </p>
+  <p>The Equal Lens designs workshops that help children observe gender, fairness and power.</p>
+  <p>We don’t lecture. We create space for noticing.</p>
 </section>
+
+<script>
+window.onload=()=>{
+  document.body.animate(
+    [{opacity:0,transform:"scale(0.96)"},{opacity:1,transform:"scale(1)"}],
+    {duration:500,fill:"forwards"}
+  );
+};
+</script>
 
 </body>
 </html>

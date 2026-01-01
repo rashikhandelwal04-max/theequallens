@@ -17,37 +17,46 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= GRID ================= */
+/* GRID */
 .grid{
   position:fixed;
   inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size:160px 160px;
   pointer-events:none;
   z-index:1;
 }
 
-/* ================= IDEA FIELD ================= */
+/* IDEA WORLD */
 .world{
   position:fixed;
   inset:0;
   z-index:2;
-  pointer-events:auto;
 }
 
 .idea{
   position:absolute;
-  font-size:clamp(14px,1.3vw,18px);
+  font-size:clamp(14px,1.2vw,18px);
   color:#cfd4dc;
-  opacity:0.08;
-  transition:opacity .3s ease;
+  opacity:0.15;
+  transition:
+    opacity .4s ease,
+    transform .4s ease;
+  pointer-events:auto;
 }
-.idea:hover{opacity:1}
-.idea.dim{opacity:0.03}
 
-/* ================= NARRATIVE ================= */
+.idea.focus{
+  opacity:1;
+  transform:scale(1.15);
+}
+
+.idea.dim{
+  opacity:0.04;
+}
+
+/* TEXT */
 .narrative{
   position:fixed;
   inset:0;
@@ -67,10 +76,9 @@ body{
   opacity:0;
 }
 
-/* ================= SPACER ================= */
 .spacer{height:200vh}
 
-/* ================= VIDEO TAKEOVER ================= */
+/* VIDEO */
 .video-takeover{
   height:200vh;
   position:relative;
@@ -105,7 +113,7 @@ body{
 .video-col:nth-child(5) video{left:-400%}
 .video-col:nth-child(6) video{left:-500%}
 
-/* ================= VIDEO TEXT ================= */
+/* OVERLAY */
 .video-overlay{
   position:fixed;
   inset:0;
@@ -116,7 +124,7 @@ body{
   padding:10vw;
   background:rgba(0,0,0,0.4);
   opacity:0;
-  z-index:5;
+  z-index:6;
   pointer-events:auto;
 }
 
@@ -133,7 +141,6 @@ body{
 }
 
 .video-overlay a{
-  display:inline-block;
   padding:14px 34px;
   background:#fff;
   color:#000;
@@ -142,7 +149,11 @@ body{
   letter-spacing:1px;
   text-transform:uppercase;
 }
-.video-overlay a:hover{opacity:0.85}
+
+/* MOBILE */
+@media(max-width:768px){
+  .idea{font-size:14px}
+}
 </style>
 </head>
 
@@ -151,40 +162,34 @@ body{
 <div class="grid"></div>
 <div class="world" id="world"></div>
 
-<!-- ================= INTRO TEXT ================= -->
 <div class="narrative">
-  <div class="line" id="l1">Kids don’t learn gender in classrooms.</div>
-  <div class="line" id="l2">They learn it in playgrounds.</div>
-  <div class="line" id="l3">At home.</div>
-  <div class="line" id="l4">In silence.</div>
-  <div class="line" id="l5">Through jokes.</div>
-  <div class="line" id="l6">Online.</div>
-
-  <div class="line" id="s1">WE DON’T LECTURE.</div>
-  <div class="line" id="s2">WE HELP THEM NOTICE.</div>
+  <div class="line">Kids don’t learn gender in classrooms.</div>
+  <div class="line">They learn it in playgrounds.</div>
+  <div class="line">At home.</div>
+  <div class="line">In silence.</div>
+  <div class="line">Through jokes.</div>
+  <div class="line">Online.</div>
+  <div class="line">WE DON’T LECTURE.</div>
+  <div class="line">WE HELP THEM NOTICE.</div>
 </div>
 
 <div class="spacer"></div>
 
-<!-- ================= VIDEO ================= -->
 <section class="video-takeover">
   <div class="video-columns">
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay playsinline></video></div>
+    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
+    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
   </div>
 
   <div class="video-overlay">
     <div>
       <h2>The Equal Lens</h2>
-      <p>
-        We create spaces where children notice gender, power, and bias —
-        through observation, play, and reflection, not lectures.
-      </p>
-      <a href="about.html">About Us</a>
+      <p>We help children notice gender, power and bias — through play, not lectures.</p>
+      <a href="about.html" class="about-link">About Us</a>
     </div>
   </div>
 </section>
@@ -195,68 +200,82 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ===== IDEAS ===== */
-const phrases=[
-  "Care is not weakness","Bias is learned","Confidence is taught",
-  "Equality is practiced","Language shapes belief","Silence teaches norms",
-  "Play teaches power","Roles are absorbed","Fairness is modeled"
+const isMobile = window.innerWidth < 768;
+const world = document.getElementById("world");
+
+const phrases = [
+  "Care is not weakness","Bias is learned","Confidence is taught","Equality is practiced",
+  "Silence teaches norms","Play teaches power","Roles are absorbed","Fairness is modeled",
+  "Boys cry","Girls lead","Work has no gender","Listening is strength",
+  "Norms repeat quietly","Children notice everything","Power hides in habits",
+  "Respect is learned","Care is labor","Softness is human","Normal is trained",
+  "Words leave residue","Observation precedes change","Seeing comes first",
+  "Notice before judging","Pause before teaching","Equality is slow",
+  "Change is subtle","Play mirrors society","Authority is modeled"
 ];
-const world=document.getElementById("world");
 
-for(let i=0;i<60;i++){
-  const d=document.createElement("div");
-  d.className="idea";
-  d.textContent=phrases[i%phrases.length];
-  d.style.left=(Math.random()*120-10)+"%";
-  d.style.top=(Math.random()*120-10)+"%";
-  world.appendChild(d);
-}
+const count = isMobile ? 28 : phrases.length;
 
-/* Hover highlight */
-document.querySelectorAll(".idea").forEach(el=>{
+const ideas = [];
+
+for(let i=0;i<count;i++){
+  const el = document.createElement("div");
+  el.className = "idea";
+  el.textContent = phrases[i];
+  el.style.left = Math.random()*90+"%";
+  el.style.top  = Math.random()*90+"%";
+  el.dataset.depth = Math.random()*0.6+0.2;
+  world.appendChild(el);
+  ideas.push(el);
+
   el.addEventListener("mouseenter",()=>{
-    document.querySelectorAll(".idea").forEach(o=>o!==el&&o.classList.add("dim"));
+    ideas.forEach(o=>o!==el&&o.classList.add("dim"));
+    el.classList.add("focus");
   });
   el.addEventListener("mouseleave",()=>{
-    document.querySelectorAll(".idea").forEach(o=>o.classList.remove("dim"));
+    ideas.forEach(o=>o.classList.remove("dim"));
+    el.classList.remove("focus");
   });
-});
+}
 
-/* ===== TEXT SEQUENCE ===== */
-const textTL=gsap.timeline({
-  scrollTrigger:{
-    trigger:".spacer",
-    start:"top top",
-    end:"+=2200",
-    scrub:true,
-    pin:true
+/* PARALLAX */
+ScrollTrigger.create({
+  trigger:".spacer",
+  start:"top top",
+  end:"bottom bottom",
+  scrub:true,
+  onUpdate:self=>{
+    ideas.forEach(el=>{
+      gsap.to(el,{
+        y:self.progress * -120 * el.dataset.depth,
+        ease:"none",
+        overwrite:true
+      });
+    });
   }
 });
 
-["#l1","#l2","#l3","#l4","#l5","#l6"].forEach(id=>{
-  textTL.to(id,{opacity:1,duration:0.4})
-        .to(id,{opacity:0,duration:0.4},">+0.6");
+/* ZOOM OUT + REVEAL */
+gsap.to(world,{
+  scale:isMobile?0.92:0.82,
+  scrollTrigger:{
+    trigger:".spacer",
+    start:"+=1200",
+    end:"+=1200",
+    scrub:true
+  }
 });
 
-textTL.to("#s1",{opacity:1,duration:0.4})
-      .to("#s1",{opacity:0,duration:0.4},">+0.8");
-
-textTL.to("#s2",{opacity:1,duration:0.4})
-      .to("#s2",{opacity:0,duration:0.4},">+0.8");
-
-/* ===== VIDEO SLICES ===== */
-const cols=document.querySelectorAll(".video-col");
-const overlay=document.querySelector(".video-overlay");
-
+/* VIDEO */
 ScrollTrigger.create({
   trigger:".video-takeover",
-  start:"top top",
+  start:"top+=200 top",
   end:"+=900",
   pin:true,
   onUpdate:self=>{
-    cols.forEach((c,i)=>{
-      if(self.progress>i/cols.length){
-        gsap.to(c,{y:0,duration:0.35,ease:"power3.out"});
+    document.querySelectorAll(".video-col").forEach((c,i)=>{
+      if(self.progress>i/6){
+        gsap.to(c,{y:0,duration:0.4});
       }
     });
   }
@@ -265,8 +284,14 @@ ScrollTrigger.create({
 ScrollTrigger.create({
   trigger:".video-takeover",
   start:"center center",
-  onEnter:()=>gsap.to(overlay,{opacity:1}),
-  onLeaveBack:()=>gsap.to(overlay,{opacity:0})
+  onEnter:()=>gsap.to(".video-overlay",{opacity:1}),
+  onLeaveBack:()=>gsap.to(".video-overlay",{opacity:0})
+});
+
+/* PAGE TRANSITION */
+document.querySelector(".about-link").addEventListener("click",e=>{
+  e.preventDefault();
+  gsap.to("body",{opacity:0,scale:0.96,duration:0.4,onComplete:()=>location.href=e.target.href});
 });
 </script>
 

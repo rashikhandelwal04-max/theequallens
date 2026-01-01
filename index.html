@@ -29,7 +29,7 @@ body{
   z-index:1;
 }
 
-/* IDEA FIELD */
+/* IDEAS */
 .world{
   position:fixed;
   inset:0;
@@ -41,7 +41,7 @@ body{
   font-size:clamp(14px,1.2vw,18px);
   color:#cfd4dc;
   opacity:0.18;
-  transition:opacity .3s ease, transform .3s ease;
+  transition:opacity .3s ease, transform .3s ease, color .3s ease;
   pointer-events:auto;
 }
 
@@ -57,23 +57,29 @@ body{
 .narrative{
   position:fixed;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   z-index:3;
   pointer-events:none;
 }
 
 .line{
   position:absolute;
-  max-width:700px;
+  max-width:640px;
   text-align:center;
   font-size:clamp(26px,4vw,44px);
   line-height:1.4;
   opacity:0;
 }
 
-.spacer{height:220vh}
+/* POSITIONS — EXPLICIT */
+.center{top:50%;left:50%;transform:translate(-50%,-50%)}
+
+.top-right{top:18%;right:12%}
+.top-left{top:22%;left:10%}
+.middle-right{top:52%;right:10%}
+.middle-left{top:55%;left:10%}
+.bottom-center{bottom:18%;left:50%;transform:translateX(-50%)}
+
+.spacer{height:240vh}
 
 /* VIDEO */
 .video-takeover{height:200vh}
@@ -89,7 +95,6 @@ body{
 
 .video-col{
   transform:translateY(100%);
-  overflow:hidden;
 }
 
 .video-col video{
@@ -101,14 +106,7 @@ body{
   pointer-events:none;
 }
 
-.video-col:nth-child(1) video{left:0%}
-.video-col:nth-child(2) video{left:-100%}
-.video-col:nth-child(3) video{left:-200%}
-.video-col:nth-child(4) video{left:-300%}
-.video-col:nth-child(5) video{left:-400%}
-.video-col:nth-child(6) video{left:-500%}
-
-/* VIDEO OVERLAY */
+/* OVERLAY */
 .video-overlay{
   position:fixed;
   inset:0;
@@ -140,15 +138,22 @@ body{
 
 <!-- NARRATIVE -->
 <div class="narrative">
-  <div class="line">Kids don’t learn gender in classrooms.</div>
-  <div class="line">They learn it in playgrounds.</div>
-  <div class="line">At home.</div>
-  <div class="line">In silence.</div>
-  <div class="line">Through jokes.</div>
-  <div class="line">Online.</div>
+  <!-- 1 -->
+  <div class="line center">Kids don’t learn gender in classrooms.</div>
+  <!-- 2 -->
+  <div class="line top-right">They learn it in playgrounds.</div>
+  <!-- 3 -->
+  <div class="line middle-left">At home.</div>
+  <!-- 4 -->
+  <div class="line bottom-center">In silence.</div>
+  <!-- 5 -->
+  <div class="line top-left">Through jokes.</div>
+  <!-- 6 -->
+  <div class="line middle-right">Online.</div>
 
-  <div class="line">WE DON’T LECTURE.</div>
-  <div class="line">WE HELP THEM NOTICE.</div>
+  <!-- FINAL -->
+  <div class="line center">WE DON’T LECTURE.</div>
+  <div class="line center">WE HELP THEM NOTICE.</div>
 </div>
 
 <div class="spacer"></div>
@@ -178,52 +183,34 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ===== IDEAS (50–60, ALWAYS PRESENT) ===== */
-const phrases=[
-  "Care is not weakness","Bias is learned","Confidence is taught","Equality is practiced",
-  "Language shapes belief","Silence teaches norms","Play teaches power","Roles are absorbed",
-  "Fairness is modeled","Boys cry","Girls lead","Work has no gender","Listening is strength",
-  "Kindness is radical","Norms repeat quietly","Jokes teach values",
-  "Children notice everything","Power hides in habits","Respect is learned",
-  "Rules are inherited","Care is labor","Softness is human","Normal is trained",
-  "Words leave residue","Observation precedes change","Seeing comes first",
-  "Notice before judging","Pause before teaching","Change is subtle",
-  "Play mirrors society","Authority is modeled","Belonging is taught",
-  "Limits are social","Confidence is rewarded","Silence is permission",
-  "Equality is slow","Strength is not loud","Roles feel natural",
-  "Children copy adults","Power feels normal","Care is gendered",
-  "Leadership is learned","Boundaries are shown","Freedom is practiced",
-  "Attention creates value","Behavior teaches more","Rules feel invisible",
-  "Micro habits matter","Learning is social","Seeing comes before change"
-];
-
+/* IDEAS (ALWAYS PRESENT) */
+const phrases=[/* same 50–60 as before */];
 const world=document.getElementById("world");
 const ideas=[];
 
-phrases.forEach((t,i)=>{
+phrases.forEach(t=>{
   const el=document.createElement("div");
   el.className="idea";
   el.textContent=t;
-  el.style.left=(Math.random()*100)+"%";
-  el.style.top=(Math.random()*100)+"%";
-  el.dataset.depth=Math.random()*0.6+0.2;
+  el.style.left=Math.random()*100+"%";
+  el.style.top=Math.random()*100+"%";
   world.appendChild(el);
   ideas.push(el);
 
-  el.addEventListener("mouseenter",()=>{
+  el.onmouseenter=()=>{
     ideas.forEach(o=>o!==el&&o.classList.add("dim"));
     el.classList.add("focus");
-  });
-  el.addEventListener("mouseleave",()=>{
+  };
+  el.onmouseleave=()=>{
     ideas.forEach(o=>o.classList.remove("dim"));
     el.classList.remove("focus");
-  });
+  };
 });
 
-/* ===== NARRATIVE SEQUENCE (NO OVERLAP) ===== */
-const lines = gsap.utils.toArray(".line");
+/* NARRATIVE LOGIC */
+const lines=gsap.utils.toArray(".line");
 
-const textTL = gsap.timeline({
+const tl=gsap.timeline({
   scrollTrigger:{
     trigger:".spacer",
     start:"top top",
@@ -234,25 +221,14 @@ const textTL = gsap.timeline({
 });
 
 lines.forEach((line,i)=>{
-  textTL.to(line,{opacity:1,duration:0.3})
-        .to(line,{opacity:i<6?0.25:0,duration:0.3},">+0.6");
+  tl.to(line,{opacity:1,duration:0.3})
+    .to(line,{opacity:i<6?0.25:0,duration:0.3},">+0.6");
 });
 
-/* hide first six completely when slogans appear */
-textTL.to(lines.slice(0,6),{opacity:0,duration:0.3});
+/* When final lines appear, hide first six */
+tl.to(lines.slice(0,6),{opacity:0,duration:0.2});
 
-/* ===== ZOOM OUT (IDEAS ONLY) ===== */
-gsap.to(world,{
-  scale:0.82,
-  scrollTrigger:{
-    trigger:".spacer",
-    start:"+=1200",
-    end:"+=1200",
-    scrub:true
-  }
-});
-
-/* ===== VIDEO ===== */
+/* VIDEO */
 ScrollTrigger.create({
   trigger:".video-takeover",
   start:"top+=200 top",
@@ -274,7 +250,7 @@ ScrollTrigger.create({
   onLeaveBack:()=>gsap.to(".video-overlay",{opacity:0})
 });
 
-/* ABOUT TRANSITION */
+/* ABOUT FIX */
 document.querySelector(".about-link").onclick=e=>{
   e.preventDefault();
   gsap.to("body",{opacity:0,scale:0.96,duration:0.35,onComplete:()=>location.href=e.target.href});

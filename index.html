@@ -18,6 +18,7 @@ body{
 }
 
 /* GRID */
+
 .grid{
   position:fixed;
   inset:0;
@@ -29,21 +30,21 @@ body{
   pointer-events:none;
 }
 
-/* SPLIT VIDEO OVERLAY (TRANSLUCENT) */
+/* SPLIT VIDEO — ENTERS FROM TOP */
 
 .split-video{
   position:fixed;
   inset:0;
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  z-index:2;
+  z-index:3;
   pointer-events:none;
 }
 
 .split-col{
   overflow:hidden;
-  transform:translateY(100%);
-  opacity:.28;
+  transform:translateY(-100%); /* from top */
+  opacity:.26;
 }
 
 .split-col video{
@@ -58,7 +59,7 @@ body{
 .world{
   position:fixed;
   inset:0;
-  z-index:3;
+  z-index:2;
   pointer-events:none;
 }
 
@@ -66,7 +67,7 @@ body{
   position:absolute;
   font-size:clamp(13px,1.1vw,17px);
   color:#cfd6e2;
-  opacity:0.16;
+  opacity:0.18;
   transition:all .25s ease;
   pointer-events:auto;
   padding:2px 6px;
@@ -75,8 +76,8 @@ body{
 
 .idea:hover{
   opacity:1;
-  color:#ffe082;                 /* highlight color */
-  background:rgba(255,224,130,.12);
+  color:#ffe082;
+  background:rgba(255,224,130,.14);
   text-shadow:0 0 14px rgba(255,200,80,.6);
   transform:scale(1.15);
 }
@@ -97,7 +98,7 @@ body{
   font-size:clamp(26px,4vw,44px);
   line-height:1.4;
   opacity:0;
-  text-shadow:0 6px 30px rgba(0,0,0,.7);
+  text-shadow:0 6px 30px rgba(0,0,0,.75);
 }
 
 .line.final{
@@ -124,7 +125,7 @@ body{
 
 <div class="grid"></div>
 
-<!-- SPLIT VIDEO OVERLAY -->
+<!-- SPLIT VIDEO -->
 <div class="split-video">
   <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
   <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
@@ -155,17 +156,14 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ===== PHRASES ===== */
+/* PHRASES */
 
 const phrases=[
-"emotions are not gender specific","freedom is a choice","boys can cry","girls can lead",
-"strength has no gender","care is power","labels limit","let kids be kids","pink is not a rule",
-"play has no gender","respect over roles","listen first","identity is personal",
-"feelings are human","voice matters","break the script","question the norm",
-"equal ≠ same","choice matters","expand empathy","care counts",
+"emotions are not gender specific","freedom is a choice","boys can cry",
+"girls can lead","strength has no gender","care is power","labels limit",
+"break the script","question the norm","equal ≠ same","expand empathy",
 "everyone belongs","notice the joke","notice the silence",
-"change the habit","learn differently","include more",
-"bias is learned","unlearn early","equal voices"
+"change the habit","include more","bias is learned","equal voices"
 ];
 
 const world=document.getElementById("world");
@@ -179,7 +177,7 @@ phrases.forEach(t=>{
   world.appendChild(el);
 });
 
-/* ===== TEXT TIMELINE ===== */
+/* TEXT SCROLL */
 
 const lines=gsap.utils.toArray(".line");
 
@@ -193,45 +191,40 @@ const tl=gsap.timeline({
   }
 });
 
-lines.forEach((line,i)=>{
+lines.forEach(line=>{
   tl.fromTo(line,
     {opacity:0,y:40,filter:"blur(6px)"},
     {opacity:1,y:0,filter:"blur(0px)",duration:0.6}
   );
 
   if(!line.classList.contains("final")){
-    tl.to(line,{opacity:0.14,filter:"blur(1px)"},">+0.9");
+    tl.to(line,{opacity:0.15,filter:"blur(1px)"},">+0.9");
   } else {
     tl.to(line,{opacity:0},">+1.2");
   }
 });
 
-/* ===== SPLIT VIDEO REVEAL DURING TEXT ===== */
+/* VIDEO ENTERS FROM TOP — STARTS EARLY */
 
 ScrollTrigger.create({
   trigger:".spacer",
-  start:"top+=200 top",
+  start:"top+=40 top",   // start almost immediately
   end:"bottom top",
   scrub:true,
   onUpdate:self=>{
     document.querySelectorAll(".split-col").forEach((c,i)=>{
       if(self.progress > i/6){
-        gsap.to(c,{y:0,duration:0.6});
+        gsap.to(c,{y:0,duration:0.7,ease:"power2.out"});
       }
     });
   }
 });
 
-/* ===== FINAL TEXT PULSE ===== */
+/* FINAL TEXT GLOW */
 
 gsap.fromTo(".final",
   {textShadow:"0 0 0 rgba(255,255,255,0)"},
-  {
-    textShadow:"0 0 22px rgba(255,255,255,.6)",
-    repeat:-1,
-    yoyo:true,
-    duration:1.6
-  }
+  {textShadow:"0 0 22px rgba(255,255,255,.6)",repeat:-1,yoyo:true,duration:1.6}
 );
 </script>
 

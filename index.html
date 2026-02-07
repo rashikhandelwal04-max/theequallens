@@ -17,7 +17,29 @@ body{
   overflow-x:hidden;
 }
 
+/* ===== VIDEO BACKGROUND LAYER ===== */
+
+.bg-video{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+
+.bg-video video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0.22; /* translucency */
+  filter:
+    saturate(1.2)
+    contrast(1.05)
+    hue-rotate(0deg);
+  mix-blend-mode:screen;
+}
+
 /* GRID */
+
 .grid{
   position:fixed;
   inset:0;
@@ -25,11 +47,12 @@ body{
     linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
   background-size:160px 160px;
-  pointer-events:none;
   z-index:1;
+  pointer-events:none;
 }
 
 /* BACKGROUND QUOTES */
+
 .world{
   position:fixed;
   inset:0;
@@ -39,24 +62,26 @@ body{
 .idea{
   position:absolute;
   font-size:clamp(13px,1.1vw,17px);
-  color:#dbe1ea;
-  opacity:0.08;
+  color:#e7ecf3;
+  opacity:0.10;
   letter-spacing:.4px;
   transition:all .35s ease;
+  pointer-events:auto;
 }
 
 .idea:hover{
-  opacity:0.75;
+  opacity:0.9;
   color:#ffffff;
-  text-shadow:0 0 14px rgba(255,255,255,.35);
-  transform:scale(1.08);
+  text-shadow:0 0 18px rgba(255,255,255,.45);
+  transform:scale(1.12);
 }
 
-/* NARRATIVE */
+/* NARRATIVE TEXT */
+
 .narrative{
   position:fixed;
   inset:0;
-  z-index:3;
+  z-index:4;
   pointer-events:none;
 }
 
@@ -67,11 +92,8 @@ body{
   font-size:clamp(26px,4vw,44px);
   line-height:1.4;
   opacity:0;
-  z-index:3;
-}
-
-.line:last-child{
   z-index:5;
+  text-shadow:0 6px 28px rgba(0,0,0,.6);
 }
 
 .center{top:50%;left:50%;transform:translate(-50%,-50%)}
@@ -83,29 +105,9 @@ body{
 
 .spacer{height:260vh}
 
-/* VIDEO */
+/* VIDEO TAKEOVER SECTION */
+
 .video-takeover{height:200vh}
-
-.video-columns{
-  position:fixed;
-  inset:0;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  z-index:4;
-  pointer-events:none;
-}
-
-.video-col{
-  transform:translateY(100%);
-}
-
-.video-col video{
-  position:absolute;
-  inset:0;
-  width:600%;
-  height:100%;
-  object-fit:cover;
-}
 
 .video-overlay{
   position:fixed;
@@ -115,7 +117,7 @@ body{
   justify-content:center;
   text-align:center;
   padding:10vw;
-  background:rgba(0,0,0,0.45);
+  background:rgba(0,0,0,0.55);
   opacity:0;
   z-index:6;
 }
@@ -131,6 +133,11 @@ body{
 </head>
 
 <body>
+
+<!-- GLOBAL TRANSLUCENT VIDEO -->
+<div class="bg-video">
+  <video src="intro-video.mp4" autoplay muted loop></video>
+</div>
 
 <div class="grid"></div>
 <div class="world" id="world"></div>
@@ -149,15 +156,6 @@ body{
 <div class="spacer"></div>
 
 <section class="video-takeover">
-  <div class="video-columns">
-    <div class="video-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-    <div class="video-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-    <div class="video-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-    <div class="video-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-    <div class="video-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-    <div class="video-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-  </div>
-
   <div class="video-overlay">
     <div>
       <h2>The Equal Lens</h2>
@@ -174,8 +172,21 @@ body{
 gsap.registerPlugin(ScrollTrigger);
 gsap.defaults({ease:"power2.out"});
 
-/* 60 BACKGROUND PHRASES */
-const phrases = [
+/* ===== COLOR TONE SHIFT ON SCROLL ===== */
+
+gsap.to(".bg-video video",{
+  filter:"saturate(1.4) contrast(1.1) hue-rotate(40deg)",
+  scrollTrigger:{
+    trigger:".spacer",
+    start:"top top",
+    end:"bottom top",
+    scrub:true
+  }
+});
+
+/* ===== PHRASES ===== */
+
+const phrases=[
 "emotions are not gender specific","freedom is a choice","boys can cry","girls can lead",
 "strength has no gender","care is power","labels limit","let kids be kids","pink is not a rule",
 "blue is not a rule","play has no gender","respect over roles","listen first","kindness is strength",
@@ -197,16 +208,17 @@ phrases.forEach((t,i)=>{
   el.className="idea";
   el.textContent=t;
 
-  const col = i % 10;
-  const row = Math.floor(i/10);
+  const col=i%10;
+  const row=Math.floor(i/10);
 
-  el.style.left = (col*10 + Math.random()*6) + "%";
-  el.style.top  = (row*14 + Math.random()*8) + "%";
+  el.style.left=(col*10+Math.random()*6)+"%";
+  el.style.top=(row*14+Math.random()*8)+"%";
 
   world.appendChild(el);
 });
 
-/* SMOOTH NARRATIVE SCROLL */
+/* ===== NARRATIVE SCROLL ===== */
+
 const lines=gsap.utils.toArray(".line");
 
 const tl=gsap.timeline({
@@ -232,29 +244,12 @@ lines.forEach((line,i)=>{
       duration:0.6
     },">+0.9");
   } else {
-    tl.to(line,{
-      opacity:0,
-      duration:0.5
-    },">+0.9");
+    tl.to(line,{opacity:0,duration:0.5},">+0.9");
   }
 });
 
-/* VIDEO COLUMN REVEAL */
-ScrollTrigger.create({
-  trigger:".video-takeover",
-  start:"top+=200 top",
-  end:"+=900",
-  pin:true,
-  onUpdate:self=>{
-    document.querySelectorAll(".video-col").forEach((c,i)=>{
-      if(self.progress>i/6){
-        gsap.to(c,{y:0,duration:0.5});
-      }
-    });
-  }
-});
+/* ===== VIDEO OVERLAY ===== */
 
-/* VIDEO OVERLAY */
 ScrollTrigger.create({
   trigger:".video-takeover",
   start:"center center",
@@ -262,7 +257,8 @@ ScrollTrigger.create({
   onLeaveBack:()=>gsap.to(".video-overlay",{opacity:0})
 });
 
-/* ABOUT TRANSITION */
+/* ===== PAGE TRANSITION ===== */
+
 document.querySelector(".about-link").onclick=e=>{
   e.preventDefault();
   gsap.to("body",{opacity:0,scale:0.96,duration:0.35,onComplete:()=>location.href=e.target.href});

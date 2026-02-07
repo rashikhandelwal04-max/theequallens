@@ -5,64 +5,62 @@
 <title>The Equal Lens</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;500;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f1115;color:#f5f5f5;font-family:Inter,sans-serif;overflow-x:hidden}
+body{font-family:Inter;background:#0f1115;color:#111;overflow-x:hidden}
 
-/* GRID */
-.grid{
- position:fixed; inset:0; z-index:1; pointer-events:none;
- background-image:
- linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
- linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
- background-size:140px 140px;
-}
+/* SPLIT VIDEO */
 
-/* SPLIT VIDEO — TRUE TOP DROP */
 .split-video{
  position:fixed; inset:0; z-index:3;
  display:grid; grid-template-columns:repeat(6,1fr);
  pointer-events:none;
 }
-.split-col{
- transform:translateY(-100vh);
- opacity:.32;
- overflow:hidden;
-}
-.split-col video{
- width:600%; height:100%; object-fit:cover;
-}
+.split-col{transform:translateY(-100vh);opacity:.35;overflow:hidden}
+.split-col video{width:600%;height:100%;object-fit:cover}
 
 /* PHRASES */
+
 .world{position:fixed;inset:0;z-index:2;pointer-events:none}
 .idea{
  position:absolute;font-size:14px;
- opacity:.18;color:#cfd6e2;
- padding:4px 8px;border-radius:8px;
+ opacity:.22;color:#ffffff;
+ background:rgba(0,0,0,.35);
+ padding:4px 8px;border-radius:10px;
  pointer-events:auto;transition:.25s;
 }
 .idea:hover{
- opacity:1;color:#ffd54f;
- background:rgba(255,213,79,.15);
- transform:scale(1.18);
- text-shadow:0 0 14px rgba(255,213,79,.7);
+ background:#ffe082;color:#000;
+ transform:scale(1.2);
+ box-shadow:0 0 18px rgba(255,224,130,.9);
 }
 
-/* NARRATIVE */
-.narrative{position:fixed;inset:0;z-index:4;pointer-events:none;font-family:"Playfair Display",serif}
-.line{
- position:absolute;max-width:720px;text-align:center;
- font-size:clamp(28px,4vw,46px);opacity:0;
+/* INTRO TEXT */
+
+.narrative{
+ position:fixed;inset:0;z-index:4;
+ font-family:"Playfair Display";
+ pointer-events:none;
 }
+
+.line{
+ position:absolute;
+ max-width:680px;
+ text-align:center;
+ font-size:clamp(26px,3.6vw,40px);
+ opacity:0;
+}
+
 .final{
- font-weight:700;text-transform:uppercase;
- font-size:clamp(38px,5vw,64px);
+ font-size:clamp(30px,4vw,46px);
+ font-weight:600;
+ letter-spacing:.5px;
 }
 
 .center{top:50%;left:50%;transform:translate(-50%,-50%)}
-.tr{top:20%;right:10%}
+.tr{top:18%;right:10%}
 .tl{top:20%;left:10%}
 .ml{top:55%;left:12%}
 .mr{top:55%;right:12%}
@@ -71,35 +69,85 @@ body{background:#0f1115;color:#f5f5f5;font-family:Inter,sans-serif;overflow-x:hi
 .spacer{height:260vh}
 
 /* SECTIONS */
-section{padding:110px 10vw;position:relative;z-index:5}
-h2{font-family:"Playfair Display";font-size:42px;margin-bottom:20px}
-p{max-width:820px;line-height:1.7;opacity:.9}
 
-/* TILES 2×2 */
-.tiles{
+section{
+ padding:120px 10vw;
+ min-height:100vh;
+}
+
+h2{
+ font-family:"Playfair Display";
+ font-size:44px;
+ margin-bottom:24px;
+}
+
+p{
+ max-width:860px;
+ line-height:1.8;
+ font-size:18px;
+}
+
+/* COLOR BLOCKS */
+
+.pink{background:#ff4fa3;color:#111}
+.blue{background:#39a7ff;color:#111}
+.yellow{background:#ffe45c;color:#111}
+.purple{background:#b388ff;color:#111}
+.green{background:#5be7a9;color:#111}
+
+/* WHO TILES */
+
+.audience{
+ display:flex;
+ flex-wrap:wrap;
+ gap:18px;
+ margin-top:40px;
+}
+
+.tag{
+ background:#111;
+ color:#fff;
+ padding:14px 22px;
+ border-radius:30px;
+ font-weight:600;
+ opacity:0;
+ transform:scale(.6);
+}
+
+/* WORKSHOP CARDS */
+
+.cards{
  display:grid;
  grid-template-columns:repeat(2,1fr);
  gap:28px;
  margin-top:40px;
 }
-.tile{
- background:#161c24;
- padding:28px;
+
+.card{
+ background:#fff;
  border-radius:18px;
- transform:translateY(40px);
+ overflow:hidden;
  opacity:0;
- transition:.35s;
+ transform:translateY(40px);
 }
-.tile:hover{
- transform:translateY(-6px) scale(1.03);
- box-shadow:0 20px 60px rgba(0,0,0,.4);
+
+.card img{
+ width:100%;
+ height:220px;
+ object-fit:cover;
+}
+
+.card div{padding:20px}
+
+.card:hover{
+ transform:translateY(-6px) scale(1.02);
+ box-shadow:0 20px 60px rgba(0,0,0,.25);
+ transition:.3s;
 }
 </style>
 </head>
 
 <body>
-
-<div class="grid"></div>
 
 <!-- VIDEO -->
 <div class="split-video">
@@ -113,7 +161,7 @@ p{max-width:820px;line-height:1.7;opacity:.9}
 
 <div class="world" id="world"></div>
 
-<!-- TEXT -->
+<!-- INTRO -->
 <div class="narrative">
 <div class="line center">Kids don’t learn gender in classrooms.</div>
 <div class="line tr">They learn it in playgrounds.</div>
@@ -121,41 +169,84 @@ p{max-width:820px;line-height:1.7;opacity:.9}
 <div class="line bc">In silence.</div>
 <div class="line tl">Through jokes.</div>
 <div class="line mr">Online.</div>
-<div class="line center final" id="l7">WE DON’T LECTURE.</div>
-<div class="line center final" id="l8">WE HELP THEM NOTICE.</div>
+<div class="line center final" id="l7">We don’t lecture.</div>
+<div class="line center final" id="l8">We help them notice.</div>
 </div>
 
 <div class="spacer"></div>
 
 <!-- ABOUT -->
-<section>
+<section class="pink">
 <h2>The Equal Lens</h2>
-<p>Learning equality and breaking gender bias through play-based workshops and interactive activities for ages 10–12.</p>
+<p>
+The Equal Lens is an interactive learning initiative designed to help young learners recognize,
+question, and rethink gender stereotypes through games, group activities, and guided reflection.
+Instead of telling children what to think, we design experiences that help them <b>notice patterns</b>,
+<b>ask questions</b>, and <b>build fairness thinking</b>.
+</p>
 </section>
 
-<section>
+<!-- WHO -->
+<section class="blue">
 <h2>Who Is This For</h2>
-<p>Schools • Learning centers • Orphanages • Youth programs • Children aged 10–12 • Educators seeking bias-aware learning tools.</p>
-</section>
+<p>
+Our programs are designed for early adolescents and youth environments where beliefs are still forming
+and social norms are actively absorbed.
+</p>
 
-<section>
-<h2>Workshops</h2>
-<p>Hands-on sessions combining storytelling, roleplay, reflection games, and stereotype challenges.</p>
-</section>
-
-<section>
-<h2>How We Do It</h2>
-<div class="tiles">
-<div class="tile">Stereotype Challenge Lab</div>
-<div class="tile">Promise Ball Activity</div>
-<div class="tile">Story Swap Circles</div>
-<div class="tile">Bias Breaker Games</div>
+<div class="audience">
+<div class="tag">Schools</div>
+<div class="tag">Learning Centers</div>
+<div class="tag">Youth Programs</div>
+<div class="tag">NGOs</div>
+<div class="tag">Orphanages</div>
+<div class="tag">Community Groups</div>
+<div class="tag">Age 10–12</div>
+<div class="tag">Educators</div>
 </div>
 </section>
 
-<section>
+<!-- WORKSHOPS -->
+<section class="yellow">
+<h2>Workshops</h2>
+<p>
+Each workshop blends storytelling, roleplay, bias-spotting games, and reflection exercises so that
+students actively discover how stereotypes form and how fairness can be practiced.
+</p>
+
+<div class="cards">
+
+<div class="card">
+<img src="images/workshop1.jpg">
+<div><h3>Stereotype Challenge Lab</h3></div>
+</div>
+
+<div class="card">
+<img src="images/activity-ball.jpg">
+<div><h3>Promise Ball Activity</h3></div>
+</div>
+
+<div class="card">
+<img src="images/group-discussion.jpg">
+<div><h3>Story Swap Circles</h3></div>
+</div>
+
+<div class="card">
+<img src="images/game-cards.jpg">
+<div><h3>Bias Breaker Games</h3></div>
+</div>
+
+</div>
+</section>
+
+<!-- HOW IT HELPS -->
+<section class="green">
 <h2>How It Helps</h2>
-<p>Builds empathy, reduces stereotype bias, encourages inclusive thinking, and develops respectful peer behavior.</p>
+<p>
+Students develop empathy, inclusive thinking, respectful language habits,
+and confidence to question unfair norms. These skills translate into
+healthier peer behavior and long-term mindset shifts.
+</p>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -164,12 +255,28 @@ p{max-width:820px;line-height:1.7;opacity:.9}
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* 60 PHRASES */
-const phrases = Array.from({length:60},(_,i)=>[
-"emotions are human","labels limit","question norms","kindness is strength",
-"fair play matters","voice matters","care is power","bias is learned",
-"unlearn early","equal voices","choice matters"
-][i%11]);
+/* 60 UNIQUE PHRASES */
+const phrases = [
+"emotions belong to everyone","fairness is learned","question the joke",
+"care is strength","respect all voices","pink is not a rule","blue is not a rule",
+"toys have no gender","jobs have no gender","feelings are human",
+"kindness is brave","share the space","listen deeper",
+"notice patterns","rewrite norms","curiosity beats bias",
+"include others","equal play","equal say","equal chance",
+"challenge labels","grow empathy","see clearly",
+"words shape worlds","notice silence","ask why",
+"be fair","be kind","be aware",
+"identity is personal","choice matters","support peers",
+"bias can change","learn fairness","practice respect",
+"question roles","expand thinking","break boxes",
+"think wider","learn together","listen first",
+"respect feelings","fair play matters","no fixed roles",
+"power can be gentle","gentle is powerful","everyone belongs",
+"invite voices","spot bias","change habits",
+"grow awareness","see people first","share power",
+"build empathy","notice imbalance","equal future",
+"fair start","fair stories","fair teams"
+];
 
 const world=document.getElementById("world");
 phrases.forEach(t=>{
@@ -181,9 +288,7 @@ phrases.forEach(t=>{
  world.appendChild(d);
 });
 
-/* TEXT + VIDEO SAME TIMELINE */
-const lines=gsap.utils.toArray(".line");
-const cols=gsap.utils.toArray(".split-col");
+/* VIDEO + TEXT TIMELINE */
 
 const tl=gsap.timeline({
  scrollTrigger:{
@@ -195,26 +300,33 @@ const tl=gsap.timeline({
  }
 });
 
-/* VIDEO STARTS IMMEDIATELY FROM TOP */
-cols.forEach((c,i)=>{
- tl.to(c,{y:0,duration:.6}, i*0.15);
+gsap.utils.toArray(".split-col").forEach((c,i)=>{
+ tl.to(c,{y:0,duration:.6},i*0.15);
 });
 
-/* TEXT */
-lines.forEach((line,i)=>{
- tl.to(line,{opacity:1,y:0,duration:.5});
- if(line.id==="l7"){
-   tl.to(line,{opacity:0},"+=1"); // hide before next
- } else if(!line.id){
-   tl.to(line,{opacity:.15},"+=1");
- }
+gsap.utils.toArray(".line").forEach(line=>{
+ tl.to(line,{opacity:1,duration:.5});
+ if(line.id==="l7") tl.to(line,{opacity:0},">+1");
+ else if(!line.id) tl.to(line,{opacity:.15},">+1");
 });
 
-/* TILES ENTRANCE */
-gsap.utils.toArray(".tile").forEach(t=>{
- gsap.to(t,{
+/* AUDIENCE TAG POP */
+
+gsap.utils.toArray(".tag").forEach((el,i)=>{
+ gsap.to(el,{
+  opacity:1,scale:1,
+  delay:i*.08,
+  scrollTrigger:{trigger:el,start:"top 85%"}
+ });
+});
+
+/* CARDS POP */
+
+gsap.utils.toArray(".card").forEach((el,i)=>{
+ gsap.to(el,{
   opacity:1,y:0,
-  scrollTrigger:{trigger:t,start:"top 85%"}
+  delay:i*.1,
+  scrollTrigger:{trigger:el,start:"top 85%"}
  });
 });
 </script>

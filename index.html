@@ -2,107 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Equivalent</title>
+<title>The Equal Lens</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1115;color:#f5f5f5;font-family:Inter,sans-serif;overflow-x:hidden}
 
-body{
-  background:#0f1115;
-  color:#f5f5f5;
-  font-family:Inter, sans-serif;
-  overflow-x:hidden;
-}
-
-/* ---------- GRID ---------- */
-
+/* GRID */
 .grid{
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size:140px 140px;
-  pointer-events:none;
-  z-index:1;
+ position:fixed; inset:0; z-index:1; pointer-events:none;
+ background-image:
+ linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+ linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+ background-size:140px 140px;
 }
 
-/* ---------- SPLIT VIDEO FROM TOP ---------- */
-
+/* SPLIT VIDEO — TRUE TOP DROP */
 .split-video{
-  position:fixed;
-  inset:0;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  z-index:3;
-  pointer-events:none;
+ position:fixed; inset:0; z-index:3;
+ display:grid; grid-template-columns:repeat(6,1fr);
+ pointer-events:none;
 }
-
 .split-col{
-  transform:translateY(-100vh); /* TRUE top drop */
-  opacity:.35;
-  overflow:hidden;
+ transform:translateY(-100vh);
+ opacity:.32;
+ overflow:hidden;
 }
-
 .split-col video{
-  width:600%;
-  height:100%;
-  object-fit:cover;
+ width:600%; height:100%; object-fit:cover;
 }
 
-/* ---------- FLOATING PHRASES ---------- */
-
-.world{
-  position:fixed;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-}
-
+/* PHRASES */
+.world{position:fixed;inset:0;z-index:2;pointer-events:none}
 .idea{
-  position:absolute;
-  font-size:14px;
-  opacity:.18;
-  color:#cfd6e2;
-  pointer-events:auto;
-  padding:4px 8px;
-  border-radius:8px;
-  transition:.25s;
+ position:absolute;font-size:14px;
+ opacity:.18;color:#cfd6e2;
+ padding:4px 8px;border-radius:8px;
+ pointer-events:auto;transition:.25s;
 }
-
 .idea:hover{
-  opacity:1;
-  color:#ffd54f;
-  background:rgba(255,213,79,.15);
-  transform:scale(1.15);
-  text-shadow:0 0 14px rgba(255,213,79,.7);
+ opacity:1;color:#ffd54f;
+ background:rgba(255,213,79,.15);
+ transform:scale(1.18);
+ text-shadow:0 0 14px rgba(255,213,79,.7);
 }
 
-/* ---------- NARRATIVE ---------- */
-
-.narrative{
-  position:fixed;
-  inset:0;
-  z-index:4;
-  pointer-events:none;
-  font-family:"Playfair Display",serif;
-}
-
+/* NARRATIVE */
+.narrative{position:fixed;inset:0;z-index:4;pointer-events:none;font-family:"Playfair Display",serif}
 .line{
-  position:absolute;
-  max-width:700px;
-  text-align:center;
-  font-size:clamp(28px,4vw,46px);
-  opacity:0;
+ position:absolute;max-width:720px;text-align:center;
+ font-size:clamp(28px,4vw,46px);opacity:0;
 }
-
 .final{
-  font-weight:700;
-  text-transform:uppercase;
-  font-size:clamp(36px,5vw,64px);
+ font-weight:700;text-transform:uppercase;
+ font-size:clamp(38px,5vw,64px);
 }
 
 .center{top:50%;left:50%;transform:translate(-50%,-50%)}
@@ -114,80 +70,29 @@ body{
 
 .spacer{height:260vh}
 
-/* ---------- SECTIONS ---------- */
+/* SECTIONS */
+section{padding:110px 10vw;position:relative;z-index:5}
+h2{font-family:"Playfair Display";font-size:42px;margin-bottom:20px}
+p{max-width:820px;line-height:1.7;opacity:.9}
 
-section{
-  position:relative;
-  z-index:5;
-  padding:120px 10vw;
-  background:#0f1115;
+/* TILES 2×2 */
+.tiles{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:28px;
+ margin-top:40px;
 }
-
-h2{
-  font-family:"Playfair Display",serif;
-  font-size:42px;
-  margin-bottom:20px;
+.tile{
+ background:#161c24;
+ padding:28px;
+ border-radius:18px;
+ transform:translateY(40px);
+ opacity:0;
+ transition:.35s;
 }
-
-/* ABOUT */
-
-.about{
-  background:#11161d;
-}
-
-.about p{
-  max-width:800px;
-  line-height:1.7;
-  opacity:.9;
-}
-
-/* WORKSHOP CARDS */
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:28px;
-  margin-top:50px;
-}
-
-.card{
-  background:#161c24;
-  border-radius:18px;
-  overflow:hidden;
-  transform:translateY(40px);
-  opacity:0;
-  transition:.4s;
-}
-
-.card img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-}
-
-.card div{
-  padding:20px;
-}
-
-.card:hover{
-  transform:translateY(-6px) scale(1.02);
-}
-
-/* BUTTON */
-
-.btn{
-  display:inline-block;
-  padding:14px 28px;
-  background:#ffd54f;
-  color:#000;
-  text-decoration:none;
-  border-radius:30px;
-  margin-top:30px;
-  transition:.25s;
-}
-
-.btn:hover{
-  transform:scale(1.08);
+.tile:hover{
+ transform:translateY(-6px) scale(1.03);
+ box-shadow:0 20px 60px rgba(0,0,0,.4);
 }
 </style>
 </head>
@@ -196,20 +101,19 @@ h2{
 
 <div class="grid"></div>
 
-<!-- SPLIT VIDEO -->
+<!-- VIDEO -->
 <div class="split-video">
-  <div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-  <div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-  <div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-  <div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-  <div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
-  <div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
 </div>
 
-<!-- PHRASES -->
 <div class="world" id="world"></div>
 
-<!-- NARRATIVE -->
+<!-- TEXT -->
 <div class="narrative">
 <div class="line center">Kids don’t learn gender in classrooms.</div>
 <div class="line tr">They learn it in playgrounds.</div>
@@ -217,66 +121,41 @@ h2{
 <div class="line bc">In silence.</div>
 <div class="line tl">Through jokes.</div>
 <div class="line mr">Online.</div>
-<div class="line center final">WE DON’T LECTURE.</div>
-<div class="line center final">WE HELP THEM NOTICE.</div>
+<div class="line center final" id="l7">WE DON’T LECTURE.</div>
+<div class="line center final" id="l8">WE HELP THEM NOTICE.</div>
 </div>
 
 <div class="spacer"></div>
 
 <!-- ABOUT -->
-
-<section class="about">
-<h2>The Equivalent</h2>
-<p>
-Learning equality and breaking gender bias through activities,
-games, and guided workshops for ages 10–12.  
-We don’t teach with lectures — we build awareness through participation,
-reflection, and play-based learning.
-</p>
-
-<a href="#work" class="btn">Explore Workshops ↓</a>
+<section>
+<h2>The Equal Lens</h2>
+<p>Learning equality and breaking gender bias through play-based workshops and interactive activities for ages 10–12.</p>
 </section>
 
-<!-- WHAT WE DO -->
+<section>
+<h2>Who Is This For</h2>
+<p>Schools • Learning centers • Orphanages • Youth programs • Children aged 10–12 • Educators seeking bias-aware learning tools.</p>
+</section>
 
-<section id="work">
+<section>
+<h2>Workshops</h2>
+<p>Hands-on sessions combining storytelling, roleplay, reflection games, and stereotype challenges.</p>
+</section>
+
+<section>
 <h2>How We Do It</h2>
+<div class="tiles">
+<div class="tile">Stereotype Challenge Lab</div>
+<div class="tile">Promise Ball Activity</div>
+<div class="tile">Story Swap Circles</div>
+<div class="tile">Bias Breaker Games</div>
+</div>
+</section>
 
-<div class="cards">
-
-<div class="card">
-<img src="images/workshop1.jpg">
-<div>
-<h3>Stereotype Challenge Lab</h3>
-<p>Students confront common phrases like “boys don’t cry” and rewrite them through group roleplay.</p>
-</div>
-</div>
-
-<div class="card">
-<img src="images/activity-ball.jpg">
-<div>
-<h3>Promise Ball Activity</h3>
-<p>Each student writes one fairness promise and passes it forward — building shared accountability.</p>
-</div>
-</div>
-
-<div class="card">
-<img src="images/group-discussion.jpg">
-<div>
-<h3>Story Swap Circles</h3>
-<p>Kids exchange real-life stories and identify hidden gender assumptions together.</p>
-</div>
-</div>
-
-<div class="card">
-<img src="images/game-cards.jpg">
-<div>
-<h3>Bias Breaker Games</h3>
-<p>Interactive card & scenario games that expose subtle bias patterns.</p>
-</div>
-</div>
-
-</div>
+<section>
+<h2>How It Helps</h2>
+<p>Builds empathy, reduces stereotype bias, encourages inclusive thinking, and develops respectful peer behavior.</p>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
@@ -285,74 +164,58 @@ reflection, and play-based learning.
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* FLOATING PHRASES */
-
-const phrases=[
-"emotions are human","labels limit","question norms",
-"kindness is strength","fair play matters",
-"voice matters","care is power","bias is learned",
+/* 60 PHRASES */
+const phrases = Array.from({length:60},(_,i)=>[
+"emotions are human","labels limit","question norms","kindness is strength",
+"fair play matters","voice matters","care is power","bias is learned",
 "unlearn early","equal voices","choice matters"
-];
+][i%11]);
 
 const world=document.getElementById("world");
-
 phrases.forEach(t=>{
-  const d=document.createElement("div");
-  d.className="idea";
-  d.textContent=t;
-  d.style.left=Math.random()*90+"%";
-  d.style.top=Math.random()*90+"%";
-  world.appendChild(d);
+ const d=document.createElement("div");
+ d.className="idea";
+ d.textContent=t;
+ d.style.left=Math.random()*92+"%";
+ d.style.top=Math.random()*92+"%";
+ world.appendChild(d);
 });
 
-/* TEXT SCROLL */
-
+/* TEXT + VIDEO SAME TIMELINE */
 const lines=gsap.utils.toArray(".line");
+const cols=gsap.utils.toArray(".split-col");
 
 const tl=gsap.timeline({
-  scrollTrigger:{
-    trigger:".spacer",
-    start:"top top",
-    end:"+=2200",
-    scrub:1.2,
-    pin:true
-  }
-});
-
-lines.forEach(line=>{
-  tl.fromTo(line,{opacity:0,y:50},{opacity:1,y:0,duration:.6});
-  if(!line.classList.contains("final")){
-    tl.to(line,{opacity:.15},">+1");
-  }
-});
-
-/* VIDEO FROM VERY TOP */
-
-ScrollTrigger.create({
+ scrollTrigger:{
   trigger:".spacer",
   start:"top top",
-  end:"bottom top",
-  scrub:true,
-  onUpdate:self=>{
-    document.querySelectorAll(".split-col").forEach((c,i)=>{
-      if(self.progress > i/6){
-        gsap.to(c,{y:0,duration:.8});
-      }
-    });
-  }
+  end:"+=2200",
+  scrub:1.2,
+  pin:true
+ }
 });
 
-/* CARD ENTRANCE */
+/* VIDEO STARTS IMMEDIATELY FROM TOP */
+cols.forEach((c,i)=>{
+ tl.to(c,{y:0,duration:.6}, i*0.15);
+});
 
-gsap.utils.toArray(".card").forEach(card=>{
-  gsap.to(card,{
-    opacity:1,
-    y:0,
-    scrollTrigger:{
-      trigger:card,
-      start:"top 85%"
-    }
-  });
+/* TEXT */
+lines.forEach((line,i)=>{
+ tl.to(line,{opacity:1,y:0,duration:.5});
+ if(line.id==="l7"){
+   tl.to(line,{opacity:0},"+=1"); // hide before next
+ } else if(!line.id){
+   tl.to(line,{opacity:.15},"+=1");
+ }
+});
+
+/* TILES ENTRANCE */
+gsap.utils.toArray(".tile").forEach(t=>{
+ gsap.to(t,{
+  opacity:1,y:0,
+  scrollTrigger:{trigger:t,start:"top 85%"}
+ });
 });
 </script>
 

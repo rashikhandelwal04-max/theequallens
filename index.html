@@ -5,7 +5,7 @@
 <title>The Equal Lens</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -25,41 +25,68 @@ body{
     linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
   background-size:160px 160px;
-  pointer-events:none;
   z-index:1;
+  pointer-events:none;
 }
 
-/* PHRASE FIELD */
+/* SPLIT VIDEO OVERLAY (TRANSLUCENT) */
+
+.split-video{
+  position:fixed;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  z-index:2;
+  pointer-events:none;
+}
+
+.split-col{
+  overflow:hidden;
+  transform:translateY(100%);
+  opacity:.28;
+}
+
+.split-col video{
+  width:600%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(1.2) contrast(1.05);
+}
+
+/* PHRASES */
+
 .world{
   position:fixed;
   inset:0;
-  z-index:2;
-  pointer-events:none; /* allow text scroll area */
+  z-index:3;
+  pointer-events:none;
 }
 
 .idea{
   position:absolute;
   font-size:clamp(13px,1.1vw,17px);
-  color:#e7ecf3;
-  opacity:0.14;
+  color:#cfd6e2;
+  opacity:0.16;
   transition:all .25s ease;
-  letter-spacing:.4px;
-  pointer-events:auto;   /* enable hover */
-  cursor:default;
+  pointer-events:auto;
+  padding:2px 6px;
+  border-radius:6px;
 }
 
 .idea:hover{
   opacity:1;
-  color:#ffffff;
-  text-shadow:0 0 16px rgba(255,255,255,.55);
+  color:#ffe082;                 /* highlight color */
+  background:rgba(255,224,130,.12);
+  text-shadow:0 0 14px rgba(255,200,80,.6);
   transform:scale(1.15);
 }
 
-/* NARRATIVE */
+/* TEXT */
+
 .narrative{
   position:fixed;
   inset:0;
-  z-index:3;
+  z-index:4;
   pointer-events:none;
 }
 
@@ -73,6 +100,15 @@ body{
   text-shadow:0 6px 30px rgba(0,0,0,.7);
 }
 
+.line.final{
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:clamp(34px,5vw,58px);
+  letter-spacing:1px;
+}
+
+/* POSITIONS */
+
 .center{top:50%;left:50%;transform:translate(-50%,-50%)}
 .top-right{top:18%;right:12%}
 .top-left{top:22%;left:10%}
@@ -81,58 +117,23 @@ body{
 .bottom-center{bottom:18%;left:50%;transform:translateX(-50%)}
 
 .spacer{height:260vh}
-
-/* VIDEO SECTION */
-
-.video-section{
-  height:200vh;
-  position:relative;
-  z-index:4;
-}
-
-.video-columns{
-  position:fixed;
-  inset:0;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  pointer-events:none;
-}
-
-.video-col{
-  overflow:hidden;
-  transform:translateY(100%);
-}
-
-.video-col video{
-  width:600%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* TITLE OVER VIDEO */
-
-.video-title{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:5;
-  opacity:0;
-  pointer-events:none;
-}
-
-.video-title h1{
-  font-size:clamp(42px,7vw,92px);
-  font-weight:600;
-  letter-spacing:1px;
-}
 </style>
 </head>
 
 <body>
 
 <div class="grid"></div>
+
+<!-- SPLIT VIDEO OVERLAY -->
+<div class="split-video">
+  <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
+  <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
+  <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
+  <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
+  <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
+  <div class="split-col"><video src="intro-video.mp4" muted autoplay loop></video></div>
+</div>
+
 <div class="world" id="world"></div>
 
 <div class="narrative">
@@ -142,28 +143,11 @@ body{
   <div class="line bottom-center">In silence.</div>
   <div class="line top-left">Through jokes.</div>
   <div class="line middle-right">Online.</div>
-  <div class="line center">We don’t lecture.</div>
-  <div class="line center">We help them notice.</div>
+  <div class="line center final">WE DON’T LECTURE.</div>
+  <div class="line center final">WE HELP THEM NOTICE.</div>
 </div>
 
 <div class="spacer"></div>
-
-<section class="video-section">
-
-  <div class="video-columns">
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-    <div class="video-col"><video src="intro-video.mp4" muted loop autoplay></video></div>
-  </div>
-
-  <div class="video-title">
-    <h1>Equal Lens</h1>
-  </div>
-
-</section>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
@@ -173,18 +157,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ===== PHRASES ===== */
 
-const phrases=[ "emotions are not gender specific","freedom is a choice","boys can cry","girls can lead",
+const phrases=[
+"emotions are not gender specific","freedom is a choice","boys can cry","girls can lead",
 "strength has no gender","care is power","labels limit","let kids be kids","pink is not a rule",
-"blue is not a rule","play has no gender","respect over roles","listen first","kindness is strength",
-"identity is personal","no toy is wrong","feelings are human","voice matters","no role is fixed",
-"fairness begins early","break the script","question the norm","curiosity over bias","share the space",
-"equal ≠ same","choice matters","power can be gentle","gentle can be powerful","notice patterns",
-"change starts small","words shape worlds","notice who speaks","notice who is silent","rewrite rules",
-"grow beyond boxes","expand empathy","care counts","soft is strong","brave is kind","everyone belongs" ];
+"play has no gender","respect over roles","listen first","identity is personal",
+"feelings are human","voice matters","break the script","question the norm",
+"equal ≠ same","choice matters","expand empathy","care counts",
+"everyone belongs","notice the joke","notice the silence",
+"change the habit","learn differently","include more",
+"bias is learned","unlearn early","equal voices"
+];
 
 const world=document.getElementById("world");
 
-phrases.forEach((t,i)=>{
+phrases.forEach(t=>{
   const el=document.createElement("div");
   el.className="idea";
   el.textContent=t;
@@ -193,7 +179,7 @@ phrases.forEach((t,i)=>{
   world.appendChild(el);
 });
 
-/* ===== TEXT SCROLL ===== */
+/* ===== TEXT TIMELINE ===== */
 
 const lines=gsap.utils.toArray(".line");
 
@@ -213,40 +199,40 @@ lines.forEach((line,i)=>{
     {opacity:1,y:0,filter:"blur(0px)",duration:0.6}
   );
 
-  if(i<6){
-    tl.to(line,{opacity:0.15,filter:"blur(1px)"},">+0.9");
+  if(!line.classList.contains("final")){
+    tl.to(line,{opacity:0.14,filter:"blur(1px)"},">+0.9");
   } else {
-    tl.to(line,{opacity:0},">+0.9");
+    tl.to(line,{opacity:0},">+1.2");
   }
 });
 
-/* ===== VIDEO COLUMN REVEAL ===== */
+/* ===== SPLIT VIDEO REVEAL DURING TEXT ===== */
 
 ScrollTrigger.create({
-  trigger:".video-section",
-  start:"top top",
-  end:"+=900",
-  pin:true,
+  trigger:".spacer",
+  start:"top+=200 top",
+  end:"bottom top",
+  scrub:true,
   onUpdate:self=>{
-    document.querySelectorAll(".video-col").forEach((c,i)=>{
+    document.querySelectorAll(".split-col").forEach((c,i)=>{
       if(self.progress > i/6){
-        gsap.to(c,{y:0,duration:0.6,ease:"power2.out"});
+        gsap.to(c,{y:0,duration:0.6});
       }
     });
   }
 });
 
-/* ===== TITLE ANIMATION ===== */
+/* ===== FINAL TEXT PULSE ===== */
 
-gsap.to(".video-title",{
-  opacity:1,
-  scale:1,
-  duration:1.2,
-  scrollTrigger:{
-    trigger:".video-section",
-    start:"top+=300 top"
+gsap.fromTo(".final",
+  {textShadow:"0 0 0 rgba(255,255,255,0)"},
+  {
+    textShadow:"0 0 22px rgba(255,255,255,.6)",
+    repeat:-1,
+    yoyo:true,
+    duration:1.6
   }
-});
+);
 </script>
 
 </body>

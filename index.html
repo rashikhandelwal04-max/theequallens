@@ -29,7 +29,7 @@ body{
   z-index:1;
 }
 
-/* IDEAS */
+/* BACKGROUND QUOTES */
 .world{
   position:fixed;
   inset:0;
@@ -38,20 +38,19 @@ body{
 
 .idea{
   position:absolute;
-  font-size:clamp(14px,1.2vw,18px);
-  color:#cfd4dc;
-  opacity:0.18;
-  transition:opacity .3s ease, transform .3s ease, color .3s ease;
-  pointer-events:auto;
+  font-size:clamp(13px,1.1vw,17px);
+  color:#dbe1ea;
+  opacity:0.08;
+  letter-spacing:.4px;
+  transition:all .35s ease;
 }
 
-.idea.focus{
-  opacity:1;
-  color:#fff;
-  transform:scale(1.15);
+.idea:hover{
+  opacity:0.75;
+  color:#ffffff;
+  text-shadow:0 0 14px rgba(255,255,255,.35);
+  transform:scale(1.08);
 }
-
-.idea.dim{opacity:0.05}
 
 /* NARRATIVE */
 .narrative{
@@ -68,18 +67,21 @@ body{
   font-size:clamp(26px,4vw,44px);
   line-height:1.4;
   opacity:0;
+  z-index:3;
 }
 
-/* POSITIONS — EXPLICIT */
-.center{top:50%;left:50%;transform:translate(-50%,-50%)}
+.line:last-child{
+  z-index:5;
+}
 
+.center{top:50%;left:50%;transform:translate(-50%,-50%)}
 .top-right{top:18%;right:12%}
 .top-left{top:22%;left:10%}
 .middle-right{top:52%;right:10%}
 .middle-left{top:55%;left:10%}
 .bottom-center{bottom:18%;left:50%;transform:translateX(-50%)}
 
-.spacer{height:240vh}
+.spacer{height:260vh}
 
 /* VIDEO */
 .video-takeover{height:200vh}
@@ -103,10 +105,8 @@ body{
   width:600%;
   height:100%;
   object-fit:cover;
-  pointer-events:none;
 }
 
-/* OVERLAY */
 .video-overlay{
   position:fixed;
   inset:0;
@@ -115,10 +115,9 @@ body{
   justify-content:center;
   text-align:center;
   padding:10vw;
-  background:rgba(0,0,0,0.4);
+  background:rgba(0,0,0,0.45);
   opacity:0;
   z-index:6;
-  pointer-events:auto;
 }
 
 .video-overlay a{
@@ -136,22 +135,13 @@ body{
 <div class="grid"></div>
 <div class="world" id="world"></div>
 
-<!-- NARRATIVE -->
 <div class="narrative">
-  <!-- 1 -->
   <div class="line center">Kids don’t learn gender in classrooms.</div>
-  <!-- 2 -->
   <div class="line top-right">They learn it in playgrounds.</div>
-  <!-- 3 -->
   <div class="line middle-left">At home.</div>
-  <!-- 4 -->
   <div class="line bottom-center">In silence.</div>
-  <!-- 5 -->
   <div class="line top-left">Through jokes.</div>
-  <!-- 6 -->
   <div class="line middle-right">Online.</div>
-
-  <!-- FINAL -->
   <div class="line center">WE DON’T LECTURE.</div>
   <div class="line center">WE HELP THEM NOTICE.</div>
 </div>
@@ -182,53 +172,74 @@ body{
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
+gsap.defaults({ease:"power2.out"});
 
-/* IDEAS (ALWAYS PRESENT) */
-const phrases=[/* same 50–60 as before */];
+/* 60 BACKGROUND PHRASES */
+const phrases = [
+"emotions are not gender specific","freedom is a choice","boys can cry","girls can lead",
+"strength has no gender","care is power","labels limit","let kids be kids","pink is not a rule",
+"blue is not a rule","play has no gender","respect over roles","listen first","kindness is strength",
+"identity is personal","no toy is wrong","feelings are human","voice matters","no role is fixed",
+"fairness begins early","break the script","question the norm","curiosity over bias","share the space",
+"equal ≠ same","choice matters","power can be gentle","gentle can be powerful","notice patterns",
+"change starts small","words shape worlds","notice who speaks","notice who is silent","who decides?",
+"who benefits?","rewrite rules","grow beyond boxes","labels are lazy","expand empathy","care counts",
+"soft is strong","brave is kind","everyone belongs","fair play matters","stories shape beliefs",
+"notice the joke","notice the silence","notice the pattern","notice the gap","change the habit",
+"learn differently","see clearly","question loudly","include more","bias is learned",
+"unlearn early","equal voices","shared power","human first"
+];
+
 const world=document.getElementById("world");
-const ideas=[];
 
-phrases.forEach(t=>{
+phrases.forEach((t,i)=>{
   const el=document.createElement("div");
   el.className="idea";
   el.textContent=t;
-  el.style.left=Math.random()*100+"%";
-  el.style.top=Math.random()*100+"%";
-  world.appendChild(el);
-  ideas.push(el);
 
-  el.onmouseenter=()=>{
-    ideas.forEach(o=>o!==el&&o.classList.add("dim"));
-    el.classList.add("focus");
-  };
-  el.onmouseleave=()=>{
-    ideas.forEach(o=>o.classList.remove("dim"));
-    el.classList.remove("focus");
-  };
+  const col = i % 10;
+  const row = Math.floor(i/10);
+
+  el.style.left = (col*10 + Math.random()*6) + "%";
+  el.style.top  = (row*14 + Math.random()*8) + "%";
+
+  world.appendChild(el);
 });
 
-/* NARRATIVE LOGIC */
+/* SMOOTH NARRATIVE SCROLL */
 const lines=gsap.utils.toArray(".line");
 
 const tl=gsap.timeline({
   scrollTrigger:{
     trigger:".spacer",
     start:"top top",
-    end:"+=1800",
-    scrub:true,
+    end:"+=2200",
+    scrub:1.2,
     pin:true
   }
 });
 
 lines.forEach((line,i)=>{
-  tl.to(line,{opacity:1,duration:0.3})
-    .to(line,{opacity:i<6?0.25:0,duration:0.3},">+0.6");
+  tl.fromTo(line,
+    {opacity:0,y:40,filter:"blur(6px)"},
+    {opacity:1,y:0,filter:"blur(0px)",duration:0.6}
+  );
+
+  if(i<6){
+    tl.to(line,{
+      opacity:0.12,
+      filter:"blur(1px)",
+      duration:0.6
+    },">+0.9");
+  } else {
+    tl.to(line,{
+      opacity:0,
+      duration:0.5
+    },">+0.9");
+  }
 });
 
-/* When final lines appear, hide first six */
-tl.to(lines.slice(0,6),{opacity:0,duration:0.2});
-
-/* VIDEO */
+/* VIDEO COLUMN REVEAL */
 ScrollTrigger.create({
   trigger:".video-takeover",
   start:"top+=200 top",
@@ -237,12 +248,13 @@ ScrollTrigger.create({
   onUpdate:self=>{
     document.querySelectorAll(".video-col").forEach((c,i)=>{
       if(self.progress>i/6){
-        gsap.to(c,{y:0,duration:0.4});
+        gsap.to(c,{y:0,duration:0.5});
       }
     });
   }
 });
 
+/* VIDEO OVERLAY */
 ScrollTrigger.create({
   trigger:".video-takeover",
   start:"center center",
@@ -250,7 +262,7 @@ ScrollTrigger.create({
   onLeaveBack:()=>gsap.to(".video-overlay",{opacity:0})
 });
 
-/* ABOUT FIX */
+/* ABOUT TRANSITION */
 document.querySelector(".about-link").onclick=e=>{
   e.preventDefault();
   gsap.to("body",{opacity:0,scale:0.96,duration:0.35,onComplete:()=>location.href=e.target.href});

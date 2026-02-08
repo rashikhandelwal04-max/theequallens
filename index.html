@@ -1,320 +1,302 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>The Equal Lens</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter;background:#0f1115;overflow-x:hidden}
 
-*{box-sizing:border-box;margin:0;padding:0}
+/* VIDEO SPLIT */
+.split-video{position:fixed;inset:0;display:grid;grid-template-columns:repeat(6,1fr);z-index:3;pointer-events:none}
+.split-col{transform:translateY(-100vh);opacity:.35;overflow:hidden}
+.split-col video{width:600%;height:100%;object-fit:cover}
 
-body{
-background:#0f1115;
-color:white;
-font-family:Inter, sans-serif;
-overflow-x:hidden;
+/* PHRASES */
+.world{position:fixed;inset:0;z-index:2;pointer-events:none}
+.idea{
+ position:absolute;font-size:13px;
+ background:#000a;color:white;
+ padding:4px 8px;border-radius:10px;
+ opacity:.28;pointer-events:auto;
+ transition:.25s;
+}
+.idea:hover{
+ background:#ffe082;color:#000;
+ transform:scale(1.2);
 }
 
-/* floating phrases */
+/* INTRO */
+.narrative{position:fixed;inset:0;z-index:4;color:white;font-family:"Playfair Display";pointer-events:none}
+.line{position:absolute;max-width:720px;text-align:center;font-size:34px;opacity:0}
+.final{font-size:40px;font-weight:600}
 
-#phrase-layer{
-position:fixed;
-inset:0;
-z-index:1;
-pointer-events:none;
-}
+.center{top:50%;left:50%;transform:translate(-50%,-50%)}
+.tr{top:18%;right:10%}
+.tl{top:20%;left:10%}
+.ml{top:55%;left:12%}
+.mr{top:55%;right:12%}
+.bc{bottom:18%;left:50%;transform:translateX(-50%)}
 
-.phrase{
-position:absolute;
-font-size:12px;
-opacity:.18;
-background:#0008;
-padding:4px 8px;
-border-radius:12px;
-transition:.3s;
-pointer-events:auto;
-}
+.spacer{height:260vh}
 
-.phrase:hover{
-opacity:.9;
-transform:scale(1.2);
-background:#fff;
-color:#000;
-}
+/* SECTIONS — FULL OPAQUE */
+section{min-height:100vh;padding:120px 10vw;position:relative;z-index:5;color:#111}
+h2{font-family:"Playfair Display";font-size:44px;margin-bottom:24px}
+p{font-size:18px;line-height:1.8;max-width:900px;margin-bottom:20px}
 
-/* intro narrative */
-
-.narrative{
-position:fixed;
-inset:0;
-z-index:3;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-pointer-events:none;
-}
-
-.line{
-font-family:Playfair Display;
-font-size:clamp(28px,4vw,48px);
-opacity:0;
-max-width:800px;
-}
-
-/* video split overlay */
-
-.video-split{
-position:fixed;
-inset:0;
-display:grid;
-grid-template-columns:repeat(6,1fr);
-z-index:2;
-pointer-events:none;
-}
-
-.video-split div{
-overflow:hidden;
-transform:translateY(-100%);
-}
-
-.video-split video{
-width:600%;
-height:100%;
-object-fit:cover;
-opacity:.35;
-}
-
-/* sections */
-
-.section{
-min-height:100vh;
-padding:120px 10vw;
-position:relative;
-z-index:4;
-}
-
+/* COLOR BLOCKS */
 .pink{background:#ff4fa3}
 .blue{background:#39a7ff}
-.yellow{background:#ffe45c;color:#111}
-.green{background:#5be7a9;color:#111}
+.yellow{background:#ffe45c}
+.green{background:#5be7a9}
 .purple{background:#b388ff}
-.dark{background:#222}
 
-.tiles{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:24px;
-margin-top:40px;
+/* GRID CONTENT */
+.two-col{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:40px;
+ margin-top:30px;
 }
 
-.tile{
-background:white;
-color:black;
-padding:20px;
-border-radius:16px;
-transform:scale(.9);
-opacity:0;
-}
+ul{font-size:18px;line-height:1.9}
 
-/* game cards */
+/* WORKSHOP CARDS */
+.cards{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:28px;
+ margin-top:40px;
+}
 
 .card{
-background:#111;
-padding:16px;
-margin:12px 0;
-border-radius:12px;
+ background:white;
+ border-radius:18px;
+ overflow:hidden;
+ transform:translateY(40px);
+ opacity:0;
 }
 
-button{
-padding:8px 14px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin:6px;
+.card img{
+ width:100%;
+ height:220px;
+ object-fit:cover;
 }
 
-img{
-width:100%;
-border-radius:14px;
+/* TAG TILES */
+.tags{display:flex;flex-wrap:wrap;gap:16px;margin-top:30px}
+.tag{
+ background:#111;color:white;
+ padding:14px 22px;
+ border-radius:30px;
+ transform:scale(.6);
+ opacity:0;
 }
 
+/* GAME */
+.gamebox{
+ background:white;
+ padding:30px;
+ border-radius:18px;
+ max-width:900px;
+}
+
+.drag{
+ background:#222;color:white;
+ padding:10px;border-radius:8px;
+ margin:8px 0;
+ cursor:grab;
+}
+
+.drop{
+ border:2px dashed #888;
+ padding:16px;
+ border-radius:12px;
+ min-height:120px;
+ margin-top:14px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- floating phrases -->
-<div id="phrase-layer"></div>
-
-<!-- split video -->
-<div class="video-split" id="videoSplit">
-<div><video src="intro-video.mp4" autoplay muted loop></video></div>
-<div><video src="intro-video.mp4" autoplay muted loop></video></div>
-<div><video src="intro-video.mp4" autoplay muted loop></video></div>
-<div><video src="intro-video.mp4" autoplay muted loop></video></div>
-<div><video src="intro-video.mp4" autoplay muted loop></video></div>
-<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+<!-- VIDEO -->
+<div class="split-video">
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div class="split-col"><video src="intro-video.mp4" autoplay muted loop></video></div>
 </div>
 
-<!-- intro narrative -->
+<div class="world" id="world"></div>
+
+<!-- INTRO -->
 <div class="narrative">
-<div>
-<div class="line">Kids don’t learn gender in classrooms</div>
-<div class="line">They learn it in playgrounds</div>
-<div class="line">Through jokes</div>
-<div class="line">At home</div>
-<div class="line">WE DON’T LECTURE</div>
-<div class="line">WE HELP THEM NOTICE</div>
-</div>
+<div class="line center">Kids don’t learn gender in classrooms.</div>
+<div class="line tr">They learn it in playgrounds.</div>
+<div class="line ml">At home.</div>
+<div class="line bc">In silence.</div>
+<div class="line tl">Through jokes.</div>
+<div class="line mr">Online.</div>
+<div class="line center final" id="l7">We don’t lecture.</div>
+<div class="line center final" id="l8">We help them notice.</div>
 </div>
 
-<div style="height:220vh"></div>
+<div class="spacer"></div>
 
 <!-- ABOUT -->
-<section class="section pink">
-<h2>The Equal Lens — About</h2>
+<section class="pink">
+<h2>The Equal Lens — About Us</h2>
+
 <p>
-We help children recognize gender bias through games, workshops,
-and reflection — not lectures.
+The Equal Lens is a learning initiative designed to help young people
+recognize, question, and rethink gender stereotypes through games,
+reflection, and group activities.
 </p>
+
+<div class="two-col">
+<ul>
+<li>Bias awareness training</li>
+<li>Empathy development</li>
+<li>Fairness thinking</li>
+<li>Inclusive behavior</li>
+</ul>
+
+<ul>
+<li>Game-based learning</li>
+<li>Group reflection</li>
+<li>Activity workshops</li>
+<li>Discussion circles</li>
+</ul>
+</div>
 </section>
 
-<!-- AUDIENCE -->
-<section class="section blue">
+<!-- WHO FOR -->
+<section class="blue">
 <h2>Who Is This For</h2>
-<div class="tiles">
-<div class="tile">Schools</div>
-<div class="tile">Learning Centers</div>
-<div class="tile">NGOs</div>
-<div class="tile">Youth Programs</div>
+
+<p>
+Designed for learning environments where social beliefs are forming.
+</p>
+
+<div class="tags">
+<div class="tag">Schools</div>
+<div class="tag">Learning Centers</div>
+<div class="tag">Youth Programs</div>
+<div class="tag">NGOs</div>
+<div class="tag">Age 10–12</div>
+<div class="tag">Educators</div>
 </div>
 </section>
 
 <!-- WORKSHOPS -->
-<section class="section yellow">
-<h2>Workshops</h2>
-<div class="tiles">
-<img src="images/workshop1.jpg">
-<img src="images/activity-ball.jpg">
-<img src="images/group-discussion.jpg">
-<img src="images/game-cards.jpg">
+<section class="yellow">
+<h2>Workshop Activities</h2>
+
+<div class="cards">
+
+<div class="card"><img src="images/workshop1.jpg"></div>
+<div class="card"><img src="images/activity-ball.jpg"></div>
+<div class="card"><img src="images/group-discussion.jpg"></div>
+<div class="card"><img src="images/game-cards.jpg"></div>
+
 </div>
 </section>
 
 <!-- MATCH GAME -->
-<section class="section green">
-<h2>Bias Match Game</h2>
+<section class="green">
+<h2>Match Fair vs Stereotype</h2>
 
-<div class="card">Boys don’t cry
-<button onclick="score(1)">Stereotype</button>
-<button onclick="score(0)">Fair</button>
+<div class="gamebox">
+
+<div class="drag" draggable="true">Boys don’t cry</div>
+<div class="drag" draggable="true">Anyone can lead</div>
+<div class="drag" draggable="true">Pink only for girls</div>
+<div class="drag" draggable="true">All jobs are for everyone</div>
+
+<div class="drop" id="fair">Fair</div>
+<div class="drop" id="bias">Stereotype</div>
+
+<div id="score">Score: 0</div>
+
 </div>
-
-<div class="card">Anyone can lead
-<button onclick="score(0)">Stereotype</button>
-<button onclick="score(1)">Fair</button>
-</div>
-
-<h3 id="scoreBox">Score: 0</h3>
-</section>
-
-<!-- SCENARIO -->
-<section class="section purple">
-<h2>Scenario Challenge</h2>
-<p>“Girls are bad at sports.”</p>
-<button onclick="scenario('Correct — challenge bias')">Challenge</button>
-<button onclick="scenario('Silence supports bias')">Ignore</button>
-<h3 id="scenarioOut"></h3>
-</section>
-
-<!-- DASHBOARD -->
-<section class="section dark">
-<h2>Teacher Dashboard Demo</h2>
-<ul>
-<li>Bias Score: 78%</li>
-<li>Games Completed: 42</li>
-<li>Needs Attention: Scenario Module</li>
-</ul>
 </section>
 
 <script>
-
 gsap.registerPlugin(ScrollTrigger);
 
-/* floating phrases */
+/* VIDEO + TEXT */
+const tl=gsap.timeline({
+ scrollTrigger:{trigger:".spacer",start:"top top",end:"+=2200",scrub:1.2,pin:true}
+});
+gsap.utils.toArray(".split-col").forEach((c,i)=>tl.to(c,{y:0},i*.15));
+gsap.utils.toArray(".line").forEach(l=>{
+ tl.to(l,{opacity:1});
+ if(l.id==="l7") tl.to(l,{opacity:0},">+1");
+ else if(!l.id) tl.to(l,{opacity:.15},">+1");
+});
 
-const phrases=[ "emotions are not gendered","pink is not for girls","jobs have no gender",
-"toys are for everyone","question stereotypes","respect feelings","kindness is strength",
-"fairness matters","voices deserve space","identity is personal","break norms","be fair",
-"challenge bias","include everyone","equal chance","equal say","see clearly","grow empathy",
-"no fixed roles","rewrite rules","people first","respect differences","human first"
+/* PHRASES — UNIQUE */
+const phrases = [
+"emotions are not gendered","pink is not for girls","blue is not for boys",
+"care is strength","jobs have no gender","toys are for everyone",
+"leadership is human","voices deserve space","question stereotypes",
+"challenge bias","respect feelings","kindness is brave",
+"everyone belongs","labels limit","be fair","be aware",
+"include others","share power","listen first","ask why",
+"grow empathy","fair play","equal chance","equal say",
+"break norms","rewrite rules","notice patterns","support peers",
+"identity is personal","choice matters","bias can change",
+"learn fairness","respect voices","expand thinking","break boxes",
+"see clearly","learn together","no fixed roles",
+"power can be gentle","gentle is strong","spot bias",
+"change habits","grow awareness","people first",
+"equal future","fair teams","fair stories",
+"question jokes","notice silence","include all",
+"respect differences","human first","fair always"
 ];
 
-const layer=document.getElementById("phrase-layer");
-
+const world=document.getElementById("world");
 phrases.forEach(t=>{
-const d=document.createElement("div");
-d.className="phrase";
-d.innerText=t;
-d.style.left=Math.random()*95+"%";
-d.style.top=Math.random()*95+"%";
-layer.appendChild(d);
+ const d=document.createElement("div");
+ d.className="idea";
+ d.textContent=t;
+ d.style.left=Math.random()*90+"%";
+ d.style.top=Math.random()*90+"%";
+ world.appendChild(d);
 });
 
-/* intro text scroll */
+/* TAG + CARD ANIMATION */
+gsap.to(".tag",{opacity:1,scale:1,stagger:.1,scrollTrigger:{trigger:".tags",start:"top 80%"}});
+gsap.to(".card",{opacity:1,y:0,stagger:.15,scrollTrigger:{trigger:".cards",start:"top 80%"}});
 
-const lines=document.querySelectorAll(".line");
-
-lines.forEach((el,i)=>{
-gsap.to(el,{
-opacity:1,
-scrollTrigger:{
-trigger:el,
-start:"top center",
-end:"+=200",
-scrub:true
-}
+/* MATCH GAME */
+let score=0,dragged=null;
+document.querySelectorAll(".drag").forEach(el=>{
+ el.ondragstart=()=>dragged=el;
 });
+document.querySelectorAll(".drop").forEach(d=>{
+ d.ondragover=e=>e.preventDefault();
+ d.ondrop=()=>{
+  d.appendChild(dragged);
+  if(
+   (d.id==="bias" && dragged.textContent.includes("don’t")) ||
+   (d.id==="fair" && dragged.textContent.includes("everyone"))
+  ) score++;
+  document.getElementById("score").innerText="Score: "+score;
+ };
 });
-
-/* split video reveal from top */
-
-gsap.to("#videoSplit div",{
-y:0,
-stagger:.15,
-scrollTrigger:{
-trigger:document.body,
-start:"top top",
-end:"+=600",
-scrub:true
-}
-});
-
-/* tiles animation */
-
-gsap.utils.toArray(".tile").forEach(t=>{
-gsap.to(t,{
-scale:1,
-opacity:1,
-scrollTrigger:{trigger:t,start:"top 80%"}
-});
-});
-
-/* games */
-
-let s=0;
-function score(v){ s+=v; scoreBox.innerText="Score: "+s }
-
-function scenario(t){ scenarioOut.innerText=t }
-
 </script>
 
 </body>
 </html>
+

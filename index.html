@@ -5,35 +5,35 @@
 <title>The Equal Lens</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter;background:#0f1115;overflow-x:hidden}
 
-/* ---------- VIDEO SPLIT ---------- */
+/* VIDEO SPLIT */
 .split-video{position:fixed;inset:0;display:grid;grid-template-columns:repeat(6,1fr);z-index:3;pointer-events:none}
 .split-col{transform:translateY(-100vh);opacity:.35;overflow:hidden}
 .split-col video{width:600%;height:100%;object-fit:cover}
 
-/* ---------- PHRASES ---------- */
+/* PHRASES */
 .world{position:fixed;inset:0;z-index:2;pointer-events:none}
 .idea{
  position:absolute;font-size:13px;
- background:rgba(0,0,0,.45);
- color:#fff;padding:4px 8px;border-radius:10px;
- opacity:.22;pointer-events:auto;transition:.25s
+ background:rgba(0,0,0,.5);
+ color:white;padding:4px 8px;border-radius:10px;
+ opacity:.25;pointer-events:auto;transition:.25s
 }
 .idea:hover{
  background:#ffe082;color:#000;
  transform:scale(1.18);
- box-shadow:0 0 18px rgba(255,224,130,.9)
 }
 
-/* ---------- INTRO ---------- */
-.narrative{position:fixed;inset:0;z-index:4;font-family:"Playfair Display";color:white;pointer-events:none}
-.line{position:absolute;max-width:680px;text-align:center;font-size:34px;opacity:0}
+/* INTRO */
+.narrative{position:fixed;inset:0;z-index:4;color:white;font-family:"Playfair Display";pointer-events:none}
+.line{position:absolute;max-width:700px;text-align:center;font-size:34px;opacity:0}
 .final{font-size:40px;font-weight:600}
 
 .center{top:50%;left:50%;transform:translate(-50%,-50%)}
@@ -45,32 +45,37 @@ body{font-family:Inter;background:#0f1115;overflow-x:hidden}
 
 .spacer{height:260vh}
 
-/* ---------- SECTIONS ---------- */
+/* SECTIONS — OPAQUE */
 section{min-height:100vh;padding:110px 10vw;position:relative;z-index:5}
 h2{font-family:"Playfair Display";font-size:42px;margin-bottom:20px}
-p{max-width:820px;font-size:18px;line-height:1.8}
+p{font-size:18px;line-height:1.8;max-width:900px}
 
-/* OPAQUE COLOR BLOCKS */
 .pink{background:#ff4fa3}
 .blue{background:#39a7ff}
 .yellow{background:#ffe45c}
 .green{background:#5be7a9}
 .purple{background:#b388ff}
 
-/* ---------- CARDS ---------- */
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:40px}
+/* LAYOUT */
+.two-col{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:40px;
+ margin-top:30px;
+}
+
+ul{line-height:1.9;font-size:18px}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:40px}
 .card{background:white;border-radius:18px;overflow:hidden}
 .card img{width:100%;height:220px;object-fit:cover;background:#ddd}
+.card div{padding:16px}
 
-/* ---------- GAME ---------- */
-.gamebox{background:white;padding:30px;border-radius:18px;max-width:900px}
+/* GAME */
+.gamebox{background:white;padding:30px;border-radius:18px;margin-top:30px;max-width:900px}
 .drag{background:#222;color:white;padding:10px;border-radius:8px;margin:8px 0;cursor:grab}
 .drop{border:2px dashed #999;padding:14px;border-radius:12px;min-height:120px;margin-top:10px}
-.score{font-weight:700;margin-top:10px}
-
-/* ---------- DASHBOARD DEMO ---------- */
-.dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.panel{background:white;padding:20px;border-radius:16px}
 
 button{padding:10px 16px;border:none;border-radius:10px;cursor:pointer;margin:6px 0}
 </style>
@@ -106,56 +111,80 @@ button{padding:10px 16px;border:none;border-radius:10px;cursor:pointer;margin:6p
 
 <!-- ABOUT -->
 <section class="pink">
-<h2>The Equal Lens</h2>
-<p>Interactive gender equality learning through games, reflection, and workshops.</p>
+<h2>The Equal Lens — About Us</h2>
+
+<p>
+The Equal Lens helps young learners understand and question gender stereotypes
+through interactive workshops, games, and reflection activities.
+</p>
+
+<div class="two-col">
+<div>
+<h3>What We Focus On</h3>
+<ul>
+<li>Bias awareness</li>
+<li>Fairness thinking</li>
+<li>Empathy building</li>
+<li>Inclusive behavior</li>
+</ul>
+</div>
+
+<div>
+<h3>How We Teach</h3>
+<ul>
+<li>Activity driven</li>
+<li>Discussion based</li>
+<li>Game centered</li>
+<li>Reflection exercises</li>
+</ul>
+</div>
+</div>
 </section>
 
 <!-- WORKSHOPS -->
 <section class="yellow">
 <h2>Workshop Activities</h2>
+
 <div class="cards">
-<div class="card"><img src="images/workshop1.jpg" onerror="this.src=''"><div>Workshop Lab</div></div>
-<div class="card"><img src="images/activity-ball.jpg" onerror="this.src=''"><div>Promise Ball</div></div>
-<div class="card"><img src="images/group-discussion.jpg" onerror="this.src=''"><div>Discussion Circles</div></div>
-<div class="card"><img src="images/game-cards.jpg" onerror="this.src=''"><div>Bias Games</div></div>
+
+<div class="card">
+<img src="images/workshop1.jpg">
+<div>Stereotype Challenge Lab</div>
+</div>
+
+<div class="card">
+<img src="images/activity-ball.jpg">
+<div>Promise Ball Exercise</div>
+</div>
+
+<div class="card">
+<img src="images/group-discussion.jpg">
+<div>Discussion Circles</div>
+</div>
+
+<div class="card">
+<img src="images/game-cards.jpg">
+<div>Bias Breaker Games</div>
+</div>
+
 </div>
 </section>
 
-<!-- GAME 1 -->
-<section class="green">
-<h2>Bias Breaker Game</h2>
-<div class="gamebox">
-<div class="drag" draggable="true">Boys don’t cry</div>
-<div class="drag" draggable="true">Anyone can lead</div>
-<div class="drag" draggable="true">Pink is only for girls</div>
-<div class="drag" draggable="true">All jobs are for everyone</div>
-
-<div class="drop" id="fair">Fair</div>
-<div class="drop" id="bias">Stereotype</div>
-
-<div class="score">Score: <span id="score">0</span></div>
-</div>
-</section>
-
-<!-- GAME 2 -->
+<!-- SCENARIO -->
 <section class="purple">
-<h2>Scenario Game</h2>
+<h2>Scenario Challenge</h2>
+
+<p>
+Students respond to real-world stereotype situations and choose the most fair action.
+</p>
+
 <div class="gamebox">
-<p>A class says “girls are bad at sports.” What do you do?</p>
+<p>A student says: “Girls are bad at sports.” What should you do?</p>
 <button onclick="scenario(1)">Challenge it</button>
 <button onclick="scenario(0)">Ignore</button>
 <div id="scenarioResult"></div>
 </div>
-</section>
 
-<!-- TEACHER PANEL DEMO -->
-<section class="blue">
-<h2>Teacher Control Panel (Demo UI)</h2>
-<div class="dashboard">
-<div class="panel">Class Bias Score: 82%</div>
-<div class="panel">Activities Completed: 6</div>
-<div class="panel">Students Engaged: 24</div>
-</div>
 </section>
 
 <script>
@@ -172,25 +201,22 @@ gsap.utils.toArray(".line").forEach(l=>{
  else if(!l.id) tl.to(l,{opacity:.15},">+1");
 });
 
-/* REAL PHRASES — UNIQUE */
+/* PHRASES */
 const phrases=[
 "emotions are not gendered","pink is not for girls","blue is not for boys",
-"care is strength","fairness matters","jobs have no gender",
-"toys are for everyone","leadership is human","voices deserve space",
-"question stereotypes","challenge bias","respect feelings",
-"kindness is brave","everyone belongs","labels limit people",
-"be fair","be aware","include others","share power",
-"listen first","ask why","grow empathy","fair play",
-"equal chance","equal say","break norms","rewrite rules",
-"notice patterns","support peers","identity is personal",
-"choice matters","bias can change","learn fairness",
-"respect voices","expand thinking","break boxes",
-"see clearly","think wider","learn together",
-"respect emotions","no fixed roles","power can be gentle",
-"gentle is strong","invite voices","spot bias",
+"care is strength","jobs have no gender","toys are for everyone",
+"leadership is human","voices deserve space","question stereotypes",
+"challenge bias","respect feelings","kindness is brave",
+"everyone belongs","labels limit","be fair","be aware",
+"include others","share power","listen first","ask why",
+"grow empathy","fair play","equal chance","equal say",
+"break norms","rewrite rules","notice patterns","support peers",
+"identity is personal","choice matters","bias can change",
+"learn fairness","respect voices","expand thinking","break boxes",
+"see clearly","learn together","no fixed roles",
+"power can be gentle","gentle is strong","spot bias",
 "change habits","grow awareness","people first",
-"share opportunity","build empathy","equal future",
-"fair teams","fair stories","fair start",
+"equal future","fair teams","fair stories",
 "question jokes","notice silence","include all",
 "respect differences","human first","fair always"
 ];
@@ -205,29 +231,9 @@ phrases.forEach(t=>{
  world.appendChild(d);
 });
 
-/* GAME LOGIC */
-let score=0, dragged=null;
-document.querySelectorAll(".drag").forEach(el=>{
- el.ondragstart=()=>dragged=el;
-});
-
-document.querySelectorAll(".drop").forEach(drop=>{
- drop.ondragover=e=>e.preventDefault();
- drop.ondrop=()=>{
-  drop.appendChild(dragged);
-  if(
-   (drop.id==="bias" && dragged.textContent.includes("don’t")) ||
-   (drop.id==="fair" && dragged.textContent.includes("everyone"))
-  ){
-    score++;
-  }
-  document.getElementById("score").textContent=score;
- };
-});
-
 function scenario(ok){
- const r=document.getElementById("scenarioResult");
- r.textContent = ok ? "Correct — speak up against bias." : "Try again — silence supports bias.";
+ document.getElementById("scenarioResult").textContent =
+ ok ? "Correct — challenge bias." : "Silence supports bias — try again.";
 }
 </script>
 

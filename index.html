@@ -1,11 +1,320 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>The Equal Lens</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<title>The Equal Lens</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+background:#0f1115;
+color:white;
+font-family:Inter, sans-serif;
+overflow-x:hidden;
+}
+
+/* floating phrases */
+
+#phrase-layer{
+position:fixed;
+inset:0;
+z-index:1;
+pointer-events:none;
+}
+
+.phrase{
+position:absolute;
+font-size:12px;
+opacity:.18;
+background:#0008;
+padding:4px 8px;
+border-radius:12px;
+transition:.3s;
+pointer-events:auto;
+}
+
+.phrase:hover{
+opacity:.9;
+transform:scale(1.2);
+background:#fff;
+color:#000;
+}
+
+/* intro narrative */
+
+.narrative{
+position:fixed;
+inset:0;
+z-index:3;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+pointer-events:none;
+}
+
+.line{
+font-family:Playfair Display;
+font-size:clamp(28px,4vw,48px);
+opacity:0;
+max-width:800px;
+}
+
+/* video split overlay */
+
+.video-split{
+position:fixed;
+inset:0;
+display:grid;
+grid-template-columns:repeat(6,1fr);
+z-index:2;
+pointer-events:none;
+}
+
+.video-split div{
+overflow:hidden;
+transform:translateY(-100%);
+}
+
+.video-split video{
+width:600%;
+height:100%;
+object-fit:cover;
+opacity:.35;
+}
+
+/* sections */
+
+.section{
+min-height:100vh;
+padding:120px 10vw;
+position:relative;
+z-index:4;
+}
+
+.pink{background:#ff4fa3}
+.blue{background:#39a7ff}
+.yellow{background:#ffe45c;color:#111}
+.green{background:#5be7a9;color:#111}
+.purple{background:#b388ff}
+.dark{background:#222}
+
+.tiles{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+margin-top:40px;
+}
+
+.tile{
+background:white;
+color:black;
+padding:20px;
+border-radius:16px;
+transform:scale(.9);
+opacity:0;
+}
+
+/* game cards */
+
+.card{
+background:#111;
+padding:16px;
+margin:12px 0;
+border-radius:12px;
+}
+
+button{
+padding:8px 14px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin:6px;
+}
+
+img{
+width:100%;
+border-radius:14px;
+}
+
+</style>
 </head>
+
 <body>
-  <div id="root"></div>
+
+<!-- floating phrases -->
+<div id="phrase-layer"></div>
+
+<!-- split video -->
+<div class="video-split" id="videoSplit">
+<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+<div><video src="intro-video.mp4" autoplay muted loop></video></div>
+</div>
+
+<!-- intro narrative -->
+<div class="narrative">
+<div>
+<div class="line">Kids don’t learn gender in classrooms</div>
+<div class="line">They learn it in playgrounds</div>
+<div class="line">Through jokes</div>
+<div class="line">At home</div>
+<div class="line">WE DON’T LECTURE</div>
+<div class="line">WE HELP THEM NOTICE</div>
+</div>
+</div>
+
+<div style="height:220vh"></div>
+
+<!-- ABOUT -->
+<section class="section pink">
+<h2>The Equal Lens — About</h2>
+<p>
+We help children recognize gender bias through games, workshops,
+and reflection — not lectures.
+</p>
+</section>
+
+<!-- AUDIENCE -->
+<section class="section blue">
+<h2>Who Is This For</h2>
+<div class="tiles">
+<div class="tile">Schools</div>
+<div class="tile">Learning Centers</div>
+<div class="tile">NGOs</div>
+<div class="tile">Youth Programs</div>
+</div>
+</section>
+
+<!-- WORKSHOPS -->
+<section class="section yellow">
+<h2>Workshops</h2>
+<div class="tiles">
+<img src="images/workshop1.jpg">
+<img src="images/activity-ball.jpg">
+<img src="images/group-discussion.jpg">
+<img src="images/game-cards.jpg">
+</div>
+</section>
+
+<!-- MATCH GAME -->
+<section class="section green">
+<h2>Bias Match Game</h2>
+
+<div class="card">Boys don’t cry
+<button onclick="score(1)">Stereotype</button>
+<button onclick="score(0)">Fair</button>
+</div>
+
+<div class="card">Anyone can lead
+<button onclick="score(0)">Stereotype</button>
+<button onclick="score(1)">Fair</button>
+</div>
+
+<h3 id="scoreBox">Score: 0</h3>
+</section>
+
+<!-- SCENARIO -->
+<section class="section purple">
+<h2>Scenario Challenge</h2>
+<p>“Girls are bad at sports.”</p>
+<button onclick="scenario('Correct — challenge bias')">Challenge</button>
+<button onclick="scenario('Silence supports bias')">Ignore</button>
+<h3 id="scenarioOut"></h3>
+</section>
+
+<!-- DASHBOARD -->
+<section class="section dark">
+<h2>Teacher Dashboard Demo</h2>
+<ul>
+<li>Bias Score: 78%</li>
+<li>Games Completed: 42</li>
+<li>Needs Attention: Scenario Module</li>
+</ul>
+</section>
+
+<script>
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* floating phrases */
+
+const phrases=[ "emotions are not gendered","pink is not for girls","jobs have no gender",
+"toys are for everyone","question stereotypes","respect feelings","kindness is strength",
+"fairness matters","voices deserve space","identity is personal","break norms","be fair",
+"challenge bias","include everyone","equal chance","equal say","see clearly","grow empathy",
+"no fixed roles","rewrite rules","people first","respect differences","human first"
+];
+
+const layer=document.getElementById("phrase-layer");
+
+phrases.forEach(t=>{
+const d=document.createElement("div");
+d.className="phrase";
+d.innerText=t;
+d.style.left=Math.random()*95+"%";
+d.style.top=Math.random()*95+"%";
+layer.appendChild(d);
+});
+
+/* intro text scroll */
+
+const lines=document.querySelectorAll(".line");
+
+lines.forEach((el,i)=>{
+gsap.to(el,{
+opacity:1,
+scrollTrigger:{
+trigger:el,
+start:"top center",
+end:"+=200",
+scrub:true
+}
+});
+});
+
+/* split video reveal from top */
+
+gsap.to("#videoSplit div",{
+y:0,
+stagger:.15,
+scrollTrigger:{
+trigger:document.body,
+start:"top top",
+end:"+=600",
+scrub:true
+}
+});
+
+/* tiles animation */
+
+gsap.utils.toArray(".tile").forEach(t=>{
+gsap.to(t,{
+scale:1,
+opacity:1,
+scrollTrigger:{trigger:t,start:"top 80%"}
+});
+});
+
+/* games */
+
+let s=0;
+function score(v){ s+=v; scoreBox.innerText="Score: "+s }
+
+function scenario(t){ scenarioOut.innerText=t }
+
+</script>
+
 </body>
 </html>

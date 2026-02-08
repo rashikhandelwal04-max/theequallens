@@ -1,0 +1,14 @@
+export default function Dashboard(){
+return (
+<section style={{background:"#222",color:"white",padding:"120px 10vw"}}>
+<h2>Teacher Dashboard (Demo)</h2>
+
+<ul>
+<li>Class Bias Score: 78%</li>
+<li>Games Completed: 42</li>
+<li>Needs Attention: Scenario Level</li>
+</ul>
+
+</section>
+);
+}

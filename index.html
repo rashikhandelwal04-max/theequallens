@@ -12,9 +12,9 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f1115;color:white;font-family:Inter,sans-serif}
+body{font-family:Inter,sans-serif;background:#111}
 
-/* ================= BACKGROUND PHRASES ================= */
+/* ================= PHRASES ================= */
 
 #phrase-layer{
 position:fixed;
@@ -26,16 +26,17 @@ pointer-events:none;
 .phrase{
 position:absolute;
 font-size:13px;
-opacity:.16;
-color:#cfd6e6;
+color:#9aa3ad;
+opacity:.35;
 }
 
-/* ================= CENTER HERO ================= */
+/* ================= WHITE HERO ================= */
 
 .hero{
 position:fixed;
 inset:0;
 z-index:3;
+background:white;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -45,12 +46,11 @@ pointer-events:none;
 
 #headline{
 max-width:900px;
-padding:0 20px;
+padding:0 24px;
 font-family:"DM Serif Display",serif;
-font-size:clamp(44px,5.5vw,68px);
+font-size:clamp(44px,5.5vw,70px);
 line-height:1.2;
-color:white;
-text-shadow:0 0 28px rgba(255,255,255,.45);
+color:black;
 }
 
 /* ================= SECTIONS ================= */
@@ -60,6 +60,7 @@ min-height:100vh;
 padding:120px 10vw;
 position:relative;
 z-index:5;
+color:white;
 }
 
 .pink{background:#ff4fa3}
@@ -96,7 +97,7 @@ line-height:1.6;
 font-weight:600;
 }
 
-/* ================= WORKSHOP ================= */
+/* workshop */
 
 .work-grid{
 display:grid;
@@ -135,7 +136,7 @@ font-size:14px;
 
 .work-card:hover .work-overlay{opacity:1}
 
-/* ================= DRAG GAME ================= */
+/* drag */
 
 .drag-card{
 background:#111;
@@ -171,7 +172,7 @@ width:0%;
 transition:.3s;
 }
 
-/* ================= SCENARIO ================= */
+/* scenario */
 
 .sc-grid{
 display:grid;
@@ -204,7 +205,7 @@ font-weight:600;
 
 <div id="phrase-layer"></div>
 
-<!-- HERO -->
+<!-- WHITE CENTER INTRO -->
 <div class="hero">
 <div id="headline"></div>
 </div>
@@ -215,21 +216,13 @@ font-weight:600;
 
 <section class="section pink">
 <h2>About The Equal Lens</h2>
-
 <p>
-The Equal Lens is an activity-driven learning platform designed to help
-young learners notice gender bias, question stereotypes, and build fairness
-thinking through games, workshops, and guided reflection.
+The Equal Lens builds equality thinking in young learners using games,
+workshops and scenario-based learning instead of lectures.
 </p>
-
 <p>
-Instead of lectures, we use interactive exercises, group activities,
-scenario challenges, and role-reversal labs so equality is experienced —
-not memorized.
-</p>
-
-<p>
-Our goal is early mindset shaping through participation, not preaching.
+We help students notice bias through participation,
+not memorization.
 </p>
 </section>
 
@@ -239,76 +232,38 @@ Our goal is early mindset shaping through participation, not preaching.
 <h2>What We Do</h2>
 
 <div class="tiles">
-<div class="tile">Bias awareness through real-life stereotype detection exercises.</div>
-<div class="tile">Empathy labs using perspective reversal and role play.</div>
-<div class="tile">Fairness decision games and group reasoning tasks.</div>
-<div class="tile">Voice building so students learn to question norms safely.</div>
-<div class="tile">Equality workshops with structured play modules.</div>
-<div class="tile">Scenario challenges using real social examples.</div>
-</div>
-</section>
-
-<!-- ================= WHO FOR ================= -->
-
-<section class="section yellow">
-<h2>Who Is This For</h2>
-
-<div class="tiles">
-<div class="tile">
-Schools — classroom equality modules, reflection circles,
-discussion labs and bias games integrated into learning hours.
-</div>
-
-<div class="tile">
-Youth Programs — leadership building, fairness thinking,
-confidence and inclusion skill training.
-</div>
-
-<div class="tile">
-Learning Centers — mindset workshops, stereotype labs
-and interactive social reasoning activities.
-</div>
-
-<div class="tile">
-NGOs — outreach programs, community inclusion workshops
-and youth awareness labs.
-</div>
+<div class="tile">Bias detection exercises</div>
+<div class="tile">Empathy role-reversal labs</div>
+<div class="tile">Fairness decision games</div>
+<div class="tile">Voice & inclusion training</div>
 </div>
 </section>
 
 <!-- ================= WORKSHOP ================= -->
 
-<section class="section green">
+<section class="section yellow">
 <h2>Workshop Activities</h2>
 
 <div class="work-grid">
 
 <div class="work-card">
 <img src="images/activity-ball.jpg">
-<div class="work-overlay">
-Promise Ball — every student commits one real equality action.
-</div>
+<div class="work-overlay">Promise Ball activity</div>
 </div>
 
 <div class="work-card">
 <img src="images/workshop1.jpg">
-<div class="work-overlay">
-Stereotype Lab — challenge common bias statements.
-</div>
+<div class="work-overlay">Stereotype Lab</div>
 </div>
 
 <div class="work-card">
 <img src="images/group-discussion.jpg">
-<div class="work-overlay">
-Circle Dialogue — guided norm reframing discussion.
-</div>
+<div class="work-overlay">Circle Dialogue</div>
 </div>
 
 <div class="work-card">
 <img src="images/game-cards.jpg">
-<div class="work-overlay">
-Bias Cards — fairness vs stereotype sorting challenge.
-</div>
+<div class="work-overlay">Bias Cards Game</div>
 </div>
 
 </div>
@@ -316,11 +271,10 @@ Bias Cards — fairness vs stereotype sorting challenge.
 
 <!-- ================= DRAG GAME ================= -->
 
-<section class="section purple">
-<h2>Fair vs Stereotype Challenge</h2>
+<section class="section green">
+<h2>Fair vs Stereotype</h2>
 
 <div id="dragCard" class="drag-card" draggable="true"></div>
-
 <div class="drop" id="fair">Fair</div>
 <div class="drop" id="stereo">Stereotype</div>
 
@@ -328,9 +282,9 @@ Bias Cards — fairness vs stereotype sorting challenge.
 <p id="scoreText">0 / 10</p>
 </section>
 
-<!-- ================= SCENARIOS ================= -->
+<!-- ================= SCENARIO ================= -->
 
-<section class="section blue">
+<section class="section purple">
 <h2>Scenario Challenge</h2>
 <div class="sc-grid" id="scGrid"></div>
 </section>
@@ -338,24 +292,25 @@ Bias Cards — fairness vs stereotype sorting challenge.
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* phrases */
+/* phrases — grey visible */
 
-const base=[
+const words=[
 "fairness matters","jobs have no gender","emotions are human",
-"question bias","equal chance","voices matter"
+"equal chance","question bias","voices matter"
 ];
 
 const layer=document.getElementById("phrase-layer");
+
 for(let i=0;i<60;i++){
 let d=document.createElement("div");
 d.className="phrase";
-d.innerText=base[i%base.length];
+d.innerText=words[i%words.length];
 d.style.left=Math.random()*96+"%";
 d.style.top=Math.random()*96+"%";
 layer.appendChild(d);
 }
 
-/* center headline swap */
+/* center intro swap */
 
 const lines=[
 "Kids don’t learn gender in classrooms",
@@ -385,11 +340,11 @@ tl.to(head,{opacity:0,duration:.25})
   .to({}, {duration:(i===lines.length-1)?2:1});
 });
 
-/* tile animation */
+/* tile anim */
 
 gsap.utils.toArray(".tile").forEach((t,i)=>{
 gsap.to(t,{
-y:0,opacity:1,delay:i*.12,
+y:0,opacity:1,delay:i*.15,
 scrollTrigger:{trigger:t,start:"top 85%"}
 });
 });
@@ -433,8 +388,8 @@ stereo.ondrop=()=>check("st");
 /* scenarios */
 
 const scenarios=[
-["Girls are bad at sports","Champions like Smriti Mandhana prove opportunity gap, not ability gap."],
-["Women can’t lead nations","Finland and New Zealand had strong women leaders."],
+["Girls are bad at sports","Champions like Smriti Mandhana prove opportunity gap."],
+["Women can’t lead nations","Finland & New Zealand had strong women leaders."],
 ["Boys shouldn’t show emotion","Emotional expression improves resilience."],
 ["STEM is not for girls","Women lead major tech initiatives."],
 ["Politics is not for women","Many nations had women PMs."],

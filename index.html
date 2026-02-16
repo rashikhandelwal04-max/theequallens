@@ -15,91 +15,79 @@
 body{background:#0f1115;color:white;font-family:Inter,sans-serif;overflow-x:hidden}
 
 /* floating phrases */
-
 #phrase-layer{position:fixed;inset:0;z-index:1;pointer-events:none}
 .phrase{
-position:absolute;font-size:12px;opacity:.15;
+position:absolute;font-size:12px;opacity:.18;
 background:#0008;padding:4px 8px;border-radius:12px;
 transition:.3s;pointer-events:auto;
 }
-.phrase:hover{opacity:.95;transform:scale(1.25);background:white;color:black}
+.phrase:hover{opacity:1;transform:scale(1.2);background:#fff;color:#000}
 
 /* narrative */
-
 .narrative{
 position:fixed;inset:0;z-index:3;
 display:flex;align-items:center;justify-content:center;
 text-align:center;pointer-events:none;
 }
-
 .line{
 font-family:"DM Serif Display",serif;
 font-size:clamp(30px,4vw,48px);
-opacity:0;max-width:820px;
+opacity:.08;
 transition:.4s;
+margin:14px 0;
 }
-.line.dim{opacity:.08}
+.line.active{opacity:1}
 
 /* video split */
-
 .video-split{
-position:fixed;inset:0;display:grid;
-grid-template-columns:repeat(6,1fr);
+position:fixed;inset:0;
+display:grid;grid-template-columns:repeat(6,1fr);
 z-index:2;pointer-events:none;
 }
 .video-split div{overflow:hidden;transform:translateY(-100%)}
-.video-split video{width:600%;height:100%;object-fit:cover;opacity:.35}
+.video-split video{
+width:600%;height:100%;object-fit:cover;opacity:.35;
+}
 
 /* sections */
-
-.section{min-height:100vh;padding:120px 10vw;z-index:4;position:relative}
+.section{min-height:100vh;padding:120px 10vw;position:relative;z-index:4}
 .pink{background:#ff4fa3}
 .blue{background:#39a7ff}
 .yellow{background:#ffe45c;color:#111}
 .green{background:#5be7a9;color:#111}
 .purple{background:#b388ff}
 
-/* animated background dots */
-
-.bg-anim{
-background-image:radial-gradient(circle,#ffffff22 1px,transparent 1px);
-background-size:30px 30px;
-animation:bgmove 20s linear infinite;
-}
-@keyframes bgmove{to{background-position:400px 400px}}
-
 /* tiles */
-
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:40px}
 .tile{
-background:white;color:black;padding:24px;border-radius:18px;
+background:#fff;color:#000;padding:24px;border-radius:18px;
 transform:translateY(40px);opacity:0;font-weight:600;
 }
 
 /* workshop cards */
-
 .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px}
-.work-card{
-background:white;color:black;border-radius:18px;
-overflow:hidden;cursor:pointer;transition:.3s;
-}
-.work-card:hover{transform:scale(1.03)}
+.work-card{background:#fff;color:#000;border-radius:18px;overflow:hidden}
 .work-body{padding:18px;display:none}
 
 /* drag game */
-
+.drag-card{
+background:#111;color:#fff;padding:20px;
+border-radius:14px;display:inline-block;
+cursor:grab;margin-top:20px;
+}
 .drop-zone{
-border:3px dashed #222;padding:30px;border-radius:16px;
-min-height:120px;margin-top:20px;background:#fff3;
+border:3px dashed #222;background:#fff3;
+padding:30px;border-radius:16px;
+min-height:120px;margin-top:20px;
 }
 
 /* buttons */
-
 button{
 padding:8px 14px;border:none;border-radius:8px;
 cursor:pointer;margin:6px;font-weight:600;
 }
-h2{font-family:"DM Serif Display",serif;font-weight:400;font-size:40px}
+
+h2{font-family:"DM Serif Display",serif;font-size:40px;font-weight:400}
 img{width:100%;display:block}
 </style>
 </head>
@@ -108,7 +96,7 @@ img{width:100%;display:block}
 
 <div id="phrase-layer"></div>
 
-<!-- video split -->
+<!-- VIDEO -->
 <div class="video-split" id="videoSplit">
 <div><video src="intro-video.mp4" autoplay muted loop></video></div>
 <div><video src="intro-video.mp4" autoplay muted loop></video></div>
@@ -118,10 +106,10 @@ img{width:100%;display:block}
 <div><video src="intro-video.mp4" autoplay muted loop></video></div>
 </div>
 
-<!-- narrative -->
+<!-- NARRATIVE -->
 <div class="narrative">
-<div id="narrativeBox">
-<div class="line">Kids don’t learn gender in classrooms</div>
+<div id="lines">
+<div class="line active">Kids don’t learn gender in classrooms</div>
 <div class="line">They learn it in playgrounds</div>
 <div class="line">Through jokes</div>
 <div class="line">At home</div>
@@ -133,11 +121,11 @@ img{width:100%;display:block}
 <div style="height:260vh"></div>
 
 <!-- ABOUT -->
-<section class="section pink bg-anim">
+<section class="section pink">
 <h2>What We Focus On</h2>
 <p style="max-width:700px;margin-top:20px">
-We build gender awareness through structured cognitive,
-emotional, and social reflection models.
+We develop equality thinking through structured reflection,
+bias recognition, empathy exercises, and social reasoning labs.
 </p>
 
 <div class="tiles">
@@ -145,22 +133,22 @@ emotional, and social reflection models.
 <div class="tile">Empathy Building</div>
 <div class="tile">Fairness Thinking</div>
 <div class="tile">Voice & Inclusion</div>
-<div class="tile">Power Balance</div>
 <div class="tile">Critical Thinking</div>
+<div class="tile">Power Balance</div>
 <div class="tile">Role Reversal Labs</div>
 <div class="tile">Equality Practice</div>
 </div>
 </section>
 
 <!-- AUDIENCE -->
-<section class="section blue bg-anim">
+<section class="section blue">
 <h2>Who Is This For</h2>
 
 <div class="tiles">
-<div class="tile">Schools — curriculum workshops & class modules</div>
-<div class="tile">NGOs — community equality programs</div>
+<div class="tile">Schools — curriculum workshops</div>
+<div class="tile">NGOs — community programs</div>
 <div class="tile">Learning Centers — mindset labs</div>
-<div class="tile">Youth Programs — leadership + fairness training</div>
+<div class="tile">Youth Programs — leadership training</div>
 </div>
 </section>
 
@@ -172,22 +160,22 @@ emotional, and social reflection models.
 
 <div class="work-card" onclick="toggle(this)">
 <img src="images/activity-ball.jpg">
-<div class="work-body">Promise Ball — every student writes one equality promise and commits publicly.</div>
+<div class="work-body">Promise Ball — students commit equality actions.</div>
 </div>
 
 <div class="work-card" onclick="toggle(this)">
 <img src="images/workshop1.jpg">
-<div class="work-body">Stereotype Lab — challenge common gender myths through group tasks.</div>
+<div class="work-body">Stereotype Lab — bias myth busting.</div>
 </div>
 
 <div class="work-card" onclick="toggle(this)">
 <img src="images/group-discussion.jpg">
-<div class="work-body">Circle Dialogues — guided norm-breaking discussions.</div>
+<div class="work-body">Circle Dialogue — norm reframing.</div>
 </div>
 
 <div class="work-card" onclick="toggle(this)">
 <img src="images/game-cards.jpg">
-<div class="work-body">Bias Cards — fairness vs stereotype sorting game.</div>
+<div class="work-body">Bias Cards — fairness sorting game.</div>
 </div>
 
 </div>
@@ -195,20 +183,20 @@ emotional, and social reflection models.
 
 <!-- DRAG GAME -->
 <section class="section green">
-<h2>Fair or Stereotype — Drag Match</h2>
+<h2>Drag to Match — Fair vs Stereotype</h2>
 
-<div id="dragItem" draggable="true" class="card"></div>
+<div id="dragCard" class="drag-card" draggable="true"></div>
 
-<div class="drop-zone" id="fairBox">Fair</div>
-<div class="drop-zone" id="stBox">Stereotype</div>
+<div class="drop-zone" id="fair">Drop → Fair</div>
+<div class="drop-zone" id="stereo">Drop → Stereotype</div>
 
-<h3 id="scoreBox">Score: 0</h3>
+<h3 id="score">Score: 0</h3>
 </section>
 
 <!-- SCENARIO -->
 <section class="section purple">
 <h2>Scenario Challenge</h2>
-<div id="scenarioText"></div>
+<p id="scenarioText"></p>
 <button onclick="choose(true)">Challenge</button>
 <button onclick="choose(false)">Ignore</button>
 <p id="scenarioOut"></p>
@@ -218,104 +206,94 @@ emotional, and social reflection models.
 gsap.registerPlugin(ScrollTrigger);
 
 /* phrases */
-
-const phrases=["emotions are not gendered","pink is not for girls","jobs have no gender","toys are for everyone","question stereotypes","respect feelings","kindness is strength","fairness matters"];
-
-phrases.forEach(t=>{
-let d=document.createElement("div");
-d.className="phrase"; d.innerText=t;
+const phraseLayer=document.getElementById("phrase-layer");
+["emotions are not gendered","pink is not for girls","jobs have no gender","toys are for everyone","fairness matters"].forEach(t=>{
+const d=document.createElement("div");
+d.className="phrase";
+d.innerText=t;
 d.style.left=Math.random()*95+"%";
 d.style.top=Math.random()*95+"%";
-phrase-layer.appendChild(d);
+phraseLayer.appendChild(d);
 });
 
-/* narrative one-by-one */
-
+/* narrative scroll one-by-one */
 const lines=document.querySelectorAll(".line");
 lines.forEach((el,i)=>{
 ScrollTrigger.create({
-trigger:document.body,
-start:()=>i*300+" top",
-end:()=>i*300+300+" top",
+start:i*300,
+end:i*300+1,
 onEnter:()=>{
-lines.forEach(l=>l.classList.add("dim"));
-el.classList.remove("dim");
-gsap.to(el,{opacity:1});
+lines.forEach(l=>l.classList.remove("active"));
+el.classList.add("active");
 }
 });
 });
 
 /* video reveal */
+gsap.to("#videoSplit div",{y:0,stagger:.15,
+scrollTrigger:{start:0,end:600,scrub:true}});
 
-gsap.to("#videoSplit div",{y:0,stagger:.15,scrollTrigger:{start:"top top",end:"+=600",scrub:true}});
-
-/* tile pop animation */
-
+/* tile pop */
 gsap.utils.toArray(".tile").forEach((t,i)=>{
-gsap.to(t,{y:0,opacity:1,delay:i*.15,scrollTrigger:{trigger:t,start:"top 85%"}});
+gsap.to(t,{y:0,opacity:1,delay:i*.12,
+scrollTrigger:{trigger:t,start:"top 85%"}});
 });
 
-/* workshop click */
-
-function toggle(card){
-const body=card.querySelector(".work-body");
-body.style.display=body.style.display==="block"?"none":"block";
+/* workshop toggle */
+function toggle(c){
+const b=c.querySelector(".work-body");
+b.style.display=b.style.display==="block"?"none":"block";
 }
 
 /* drag game */
-
 const bank=[
 ["Pink is for girls",1],
 ["Anyone can lead",0],
 ["Boys don’t cry",1],
-["Care is strength",0],
-["All jobs are for everyone",0],
-["Math is not for girls",1]
+["Care is strength",0]
 ];
+let score=0,cur;
 
-let score=0, cur;
-
-function nextDrag(){
+function next(){
 cur=bank[Math.floor(Math.random()*bank.length)];
-dragItem.innerText=cur[0];
+dragCard.innerText=cur[0];
 }
-nextDrag();
+next();
 
-dragItem.ondragstart=e=>e.dataTransfer.setData("text","x");
+dragCard.ondragstart=e=>e.dataTransfer.setData("x","x");
 
-fairBox.ondragover=stBox.ondragover=e=>e.preventDefault();
+fair.ondragover=stereo.ondragover=e=>e.preventDefault();
 
-fairBox.ondrop=()=>{
+fair.ondrop=()=>{
 if(cur[1]===0) score++;
-scoreBox.innerText="Score: "+score;
-nextDrag();
+score.innerText="Score: "+score;
+next();
 };
 
-stBox.ondrop=()=>{
+stereo.ondrop=()=>{
 if(cur[1]===1) score++;
-scoreBox.innerText="Score: "+score;
-nextDrag();
+score.innerText="Score: "+score;
+next();
 };
 
-/* scenario engine */
-
+/* scenario */
 const scenarios=[
-["Girls are bad at sports","Incorrect — Smriti Mandhana is a world champion cricketer."],
-["Women can’t lead nations","Incorrect — multiple female prime ministers globally."],
-["Boys shouldn’t show emotion","Incorrect — emotional expression is human."]
+["Girls are bad at sports","Incorrect — Smriti Mandhana is world-class."],
+["Women can’t lead nations","Incorrect — many female heads of state."],
+["Boys shouldn’t cry","Incorrect — emotions are human."]
 ];
-
 let sc;
-function nextScenario(){
+function nextSc(){
 sc=scenarios[Math.floor(Math.random()*scenarios.length)];
 scenarioText.innerText=sc[0];
 scenarioOut.innerText="";
 }
-nextScenario();
+nextSc();
 
 function choose(ch){
-scenarioOut.innerText = ch ? "Correct — "+sc[1] : "Ignoring supports bias — "+sc[1];
-nextScenario();
+scenarioOut.innerText = ch ? "Correct — "+sc[1] :
+"Ignoring supports bias — "+sc[1];
+nextSc();
 }
 </script>
 

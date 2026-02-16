@@ -40,21 +40,22 @@ body{font-family:Inter,sans-serif;background:white}
   pointer-events:none;
 }
 
-/* TRUE CENTER + SOUTH EAST OFFSET */
+/* TRUE CENTER + DOWN RIGHT SHIFT */
 
 #headline{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) translate(160px,140px);
+  position:fixed;
+  top:56%;
+  left:58%;
+  transform:translate(-50%,-50%);
 
+  width:65%;
   max-width:900px;
-  width:80%;
+
   text-align:center;
 
   font-family:"DM Serif Display",serif;
-  font-size:clamp(44px,5.5vw,70px);
-  line-height:1.2;
+  font-size:clamp(48px,6vw,72px);
+  line-height:1.15;
   color:black;
 }
 
@@ -199,6 +200,8 @@ button{
   font-weight:600;
 }
 
+/* scroll spacer for hero */
+
 .spacer{height:420vh}
 </style>
 </head>
@@ -270,7 +273,7 @@ button{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* phrases */
+/* floating phrases */
 
 const words=["fairness","equal chance","voices matter","question bias"];
 for(let i=0;i<60;i++){
@@ -279,10 +282,10 @@ d.className="phrase";
 d.innerText=words[i%words.length];
 d.style.left=Math.random()*96+"%";
 d.style.top=Math.random()*96+"%";
-document.getElementById("phrase-layer").appendChild(d);
+phrase-layer.appendChild(d);
 }
 
-/* HERO LINES */
+/* hero lines */
 
 const lines=[
 "Kids don’t learn gender in classrooms",
@@ -312,14 +315,14 @@ tl.to(headline,{opacity:0})
   .to({}, {duration:1});
 });
 
-/* tile anim */
+/* tiles anim */
 
 gsap.utils.toArray(".tile").forEach((t,i)=>{
 gsap.to(t,{y:0,opacity:1,delay:i*.15,
 scrollTrigger:{trigger:t,start:"top 85%"}});
 });
 
-/* drag */
+/* drag game */
 
 const bank=[
 ["Pink is for girls",1],

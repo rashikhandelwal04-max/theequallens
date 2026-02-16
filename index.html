@@ -37,22 +37,25 @@ body{font-family:Inter,sans-serif;background:white}
   inset:0;
   z-index:3;
   background:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
   pointer-events:none;
 }
 
+/* TRUE CENTER + SOUTH EAST OFFSET */
+
 #headline{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) translate(160px,140px);
+
   max-width:900px;
+  width:80%;
+  text-align:center;
+
   font-family:"DM Serif Display",serif;
   font-size:clamp(44px,5.5vw,70px);
   line-height:1.2;
   color:black;
-
-  /* push slightly south + east */
-  transform: translate(40px, 40px);
 }
 
 /* sections */
@@ -219,6 +222,7 @@ button{
 <p>Learning happens through participation and reflection.</p>
 <p>We build awareness through safe discussion spaces.</p>
 <p>Mindsets shift when children notice patterns themselves.</p>
+<p>Bias awareness becomes intuitive through play.</p>
 </section>
 
 <!-- WHAT WE DO -->
@@ -245,7 +249,7 @@ button{
 </div>
 </section>
 
-<!-- DRAG MATCH -->
+<!-- DRAG -->
 
 <section class="section green">
 <h2>Fair vs Stereotype</h2>
@@ -253,7 +257,7 @@ button{
 <div class="drop" id="fair">Fair</div>
 <div class="drop" id="stereo">Stereotype</div>
 <div class="bar"><div id="barFill" class="bar-fill"></div></div>
-<p id="scoreText">0 / 10</p>
+<p id="scoreText">0 / 6</p>
 </section>
 
 <!-- SCENARIO -->
@@ -269,14 +273,13 @@ gsap.registerPlugin(ScrollTrigger);
 /* phrases */
 
 const words=["fairness","equal chance","voices matter","question bias"];
-const layer=document.getElementById("phrase-layer");
-for(let i=0;i<50;i++){
+for(let i=0;i<60;i++){
 let d=document.createElement("div");
 d.className="phrase";
 d.innerText=words[i%words.length];
 d.style.left=Math.random()*96+"%";
 d.style.top=Math.random()*96+"%";
-layer.appendChild(d);
+document.getElementById("phrase-layer").appendChild(d);
 }
 
 /* HERO LINES */
@@ -309,20 +312,22 @@ tl.to(headline,{opacity:0})
   .to({}, {duration:1});
 });
 
-/* tiles anim */
+/* tile anim */
 
 gsap.utils.toArray(".tile").forEach((t,i)=>{
 gsap.to(t,{y:0,opacity:1,delay:i*.15,
 scrollTrigger:{trigger:t,start:"top 85%"}});
 });
 
-/* drag game */
+/* drag */
 
 const bank=[
 ["Pink is for girls",1],
 ["Anyone can lead",0],
 ["Boys don’t cry",1],
-["Care is strength",0]
+["Care is strength",0],
+["Math is not for girls",1],
+["All jobs are for everyone",0]
 ];
 
 let idx=0,score=0,cur;
@@ -334,8 +339,8 @@ fair.ondragover=stereo.ondragover=e=>e.preventDefault();
 
 function check(type){
 if((type==="fair"&&cur[1]==0)||(type==="st"&&cur[1]==1)) score++;
-scoreText.innerText=score+" / 4";
-barFill.style.width=(score/4*100)+"%";
+scoreText.innerText=score+" / 6";
+barFill.style.width=(score/6*100)+"%";
 next();
 }
 fair.ondrop=()=>check("fair");
@@ -345,10 +350,12 @@ stereo.ondrop=()=>check("st");
 
 const scenarios=[
 ["Girls are bad at sports","Opportunity gap — not ability."],
-["Boys shouldn’t cry","Emotion builds resilience."]
+["Boys shouldn’t cry","Emotion builds resilience."],
+["STEM is not for girls","Representation is rising fast."],
+["Leaders must be male","Leadership is not gendered."]
 ];
 
-scenarios.forEach((s,i)=>{
+scenarios.forEach(s=>{
 let c=document.createElement("div");
 c.className="sc-card";
 c.innerHTML=`${s[0]}<br>

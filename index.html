@@ -21,68 +21,36 @@ position:fixed;
 inset:0;
 z-index:1;
 pointer-events:none;
-filter:blur(1.2px);
 }
 
 .phrase{
 position:absolute;
 font-size:13px;
-opacity:.14;
-background:#0005;
-padding:4px 8px;
-border-radius:12px;
-transition:.3s;
-pointer-events:auto;
+opacity:.16;
+color:#cfd6e6;
 }
 
-.phrase:hover{
-opacity:.6;
-transform:scale(1.15);
-}
+/* ================= CENTER HERO ================= */
 
-/* ================= CENTER NARRATIVE — HARD FIX ================= */
-
-.narrative{
+.hero{
 position:fixed;
 inset:0;
 z-index:3;
 display:flex;
 align-items:center;
 justify-content:center;
+text-align:center;
 pointer-events:none;
 }
 
-#lines{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-width:100%;
+#headline{
 max-width:900px;
-text-align:center;
-}
-
-/* THIS guarantees center */
-.line{
-display:block;
-width:100%;
-text-align:center;
+padding:0 20px;
 font-family:"DM Serif Display",serif;
-font-size:clamp(42px,5vw,64px);
-color:#ffffff;
-opacity:.12;
-margin:22px auto;
-transition:.45s;
-}
-
-.line.active{
-opacity:1;
-text-shadow:0 0 26px rgba(255,255,255,.55);
-}
-
-.line.final{
-text-transform:uppercase;
-letter-spacing:2px;
+font-size:clamp(44px,5.5vw,68px);
+line-height:1.2;
+color:white;
+text-shadow:0 0 28px rgba(255,255,255,.45);
 }
 
 /* ================= SECTIONS ================= */
@@ -103,9 +71,10 @@ z-index:5;
 h2{
 font-family:"DM Serif Display",serif;
 font-size:42px;
-font-weight:400;
 margin-bottom:20px;
 }
+
+p{line-height:1.7;margin-top:12px}
 
 /* tiles */
 
@@ -127,7 +96,7 @@ line-height:1.6;
 font-weight:600;
 }
 
-/* workshop */
+/* ================= WORKSHOP ================= */
 
 .work-grid{
 display:grid;
@@ -152,7 +121,7 @@ object-fit:cover;
 .work-overlay{
 position:absolute;
 inset:0;
-background:rgba(0,0,0,.82);
+background:rgba(0,0,0,.85);
 color:white;
 display:flex;
 align-items:center;
@@ -166,7 +135,7 @@ font-size:14px;
 
 .work-card:hover .work-overlay{opacity:1}
 
-/* drag */
+/* ================= DRAG GAME ================= */
 
 .drag-card{
 background:#111;
@@ -176,6 +145,7 @@ border-radius:14px;
 display:inline-block;
 cursor:grab;
 margin:20px 0;
+font-weight:600;
 }
 
 .drop{
@@ -201,7 +171,7 @@ width:0%;
 transition:.3s;
 }
 
-/* scenario */
+/* ================= SCENARIO ================= */
 
 .sc-grid{
 display:grid;
@@ -226,7 +196,7 @@ margin:6px;
 font-weight:600;
 }
 
-.spacer{height:400vh}
+.spacer{height:420vh}
 </style>
 </head>
 
@@ -234,70 +204,133 @@ font-weight:600;
 
 <div id="phrase-layer"></div>
 
-<!-- CENTER INTRO -->
-<div class="narrative">
-<div id="lines">
-<div class="line active">Kids don’t learn gender in classrooms</div>
-<div class="line">They learn it in playgrounds</div>
-<div class="line">Through jokes</div>
-<div class="line">At home</div>
-<div class="line final">WE DON’T LECTURE</div>
-<div class="line final">WE HELP THEM NOTICE</div>
-</div>
+<!-- HERO -->
+<div class="hero">
+<div id="headline"></div>
 </div>
 
 <div class="spacer"></div>
 
-<!-- CONTENT SECTIONS (kept intact) -->
+<!-- ================= ABOUT ================= -->
 
 <section class="section pink">
-<h2>What We Focus On</h2>
-<div class="tiles">
-<div class="tile">Bias awareness through reflection exercises.</div>
-<div class="tile">Empathy building via role reversal.</div>
-<div class="tile">Fairness thinking labs.</div>
-<div class="tile">Voice & inclusion training.</div>
-</div>
+<h2>About The Equal Lens</h2>
+
+<p>
+The Equal Lens is an activity-driven learning platform designed to help
+young learners notice gender bias, question stereotypes, and build fairness
+thinking through games, workshops, and guided reflection.
+</p>
+
+<p>
+Instead of lectures, we use interactive exercises, group activities,
+scenario challenges, and role-reversal labs so equality is experienced —
+not memorized.
+</p>
+
+<p>
+Our goal is early mindset shaping through participation, not preaching.
+</p>
 </section>
+
+<!-- ================= WHAT WE DO ================= -->
 
 <section class="section blue">
-<h2>Who Is This For</h2>
+<h2>What We Do</h2>
+
 <div class="tiles">
-<div class="tile">Schools — classroom equality modules and discussion labs.</div>
-<div class="tile">Youth Programs — leadership and fairness training.</div>
-<div class="tile">Learning Centers — stereotype and mindset labs.</div>
-<div class="tile">NGOs — inclusion workshops and outreach.</div>
+<div class="tile">Bias awareness through real-life stereotype detection exercises.</div>
+<div class="tile">Empathy labs using perspective reversal and role play.</div>
+<div class="tile">Fairness decision games and group reasoning tasks.</div>
+<div class="tile">Voice building so students learn to question norms safely.</div>
+<div class="tile">Equality workshops with structured play modules.</div>
+<div class="tile">Scenario challenges using real social examples.</div>
 </div>
 </section>
 
+<!-- ================= WHO FOR ================= -->
+
 <section class="section yellow">
+<h2>Who Is This For</h2>
+
+<div class="tiles">
+<div class="tile">
+Schools — classroom equality modules, reflection circles,
+discussion labs and bias games integrated into learning hours.
+</div>
+
+<div class="tile">
+Youth Programs — leadership building, fairness thinking,
+confidence and inclusion skill training.
+</div>
+
+<div class="tile">
+Learning Centers — mindset workshops, stereotype labs
+and interactive social reasoning activities.
+</div>
+
+<div class="tile">
+NGOs — outreach programs, community inclusion workshops
+and youth awareness labs.
+</div>
+</div>
+</section>
+
+<!-- ================= WORKSHOP ================= -->
+
+<section class="section green">
 <h2>Workshop Activities</h2>
+
 <div class="work-grid">
 
 <div class="work-card">
 <img src="images/activity-ball.jpg">
-<div class="work-overlay">Promise Ball — equality commitment activity.</div>
+<div class="work-overlay">
+Promise Ball — every student commits one real equality action.
+</div>
 </div>
 
 <div class="work-card">
 <img src="images/workshop1.jpg">
-<div class="work-overlay">Stereotype Lab — myth challenge tasks.</div>
+<div class="work-overlay">
+Stereotype Lab — challenge common bias statements.
+</div>
 </div>
 
 <div class="work-card">
 <img src="images/group-discussion.jpg">
-<div class="work-overlay">Circle Dialogue — norm reframing.</div>
+<div class="work-overlay">
+Circle Dialogue — guided norm reframing discussion.
+</div>
 </div>
 
 <div class="work-card">
 <img src="images/game-cards.jpg">
-<div class="work-overlay">Bias Cards — fairness sorting.</div>
+<div class="work-overlay">
+Bias Cards — fairness vs stereotype sorting challenge.
+</div>
 </div>
 
 </div>
 </section>
 
+<!-- ================= DRAG GAME ================= -->
+
 <section class="section purple">
+<h2>Fair vs Stereotype Challenge</h2>
+
+<div id="dragCard" class="drag-card" draggable="true"></div>
+
+<div class="drop" id="fair">Fair</div>
+<div class="drop" id="stereo">Stereotype</div>
+
+<div class="bar"><div id="barFill" class="bar-fill"></div></div>
+<p id="scoreText">0 / 10</p>
+</section>
+
+<!-- ================= SCENARIOS ================= -->
+
+<section class="section blue">
 <h2>Scenario Challenge</h2>
 <div class="sc-grid" id="scGrid"></div>
 </section>
@@ -305,11 +338,14 @@ font-weight:600;
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* phrases — blurred + translucent */
+/* phrases */
 
-const base=["fairness matters","jobs have no gender","emotions are human","question bias"];
+const base=[
+"fairness matters","jobs have no gender","emotions are human",
+"question bias","equal chance","voices matter"
+];
+
 const layer=document.getElementById("phrase-layer");
-
 for(let i=0;i<60;i++){
 let d=document.createElement("div");
 d.className="phrase";
@@ -319,9 +355,18 @@ d.style.top=Math.random()*96+"%";
 layer.appendChild(d);
 }
 
-/* narrative scroll */
+/* center headline swap */
 
-const lines=document.querySelectorAll(".line");
+const lines=[
+"Kids don’t learn gender in classrooms",
+"They learn it in playgrounds",
+"Through jokes",
+"At home",
+"WE DON’T LECTURE",
+"WE HELP THEM NOTICE"
+];
+
+const head=document.getElementById("headline");
 
 const tl=gsap.timeline({
 scrollTrigger:{
@@ -329,28 +374,67 @@ trigger:".spacer",
 start:"top top",
 end:"bottom bottom",
 scrub:true,
-pin:".narrative"
+pin:".hero"
 }
 });
 
-lines.forEach((line,i)=>{
-tl.to(line,{opacity:1,duration:.4})
-  .to({}, {duration:(i===lines.length-1)?1.6:.9})
-  .to(line,{opacity:.12,duration:.5});
+lines.forEach((text,i)=>{
+tl.to(head,{opacity:0,duration:.25})
+  .add(()=>head.innerText=text)
+  .to(head,{opacity:1,duration:.35})
+  .to({}, {duration:(i===lines.length-1)?2:1});
 });
 
-/* tile anim */
+/* tile animation */
 
 gsap.utils.toArray(".tile").forEach((t,i)=>{
-gsap.to(t,{y:0,opacity:1,delay:i*.15,
-scrollTrigger:{trigger:t,start:"top 85%"}});
+gsap.to(t,{
+y:0,opacity:1,delay:i*.12,
+scrollTrigger:{trigger:t,start:"top 85%"}
 });
+});
+
+/* drag game */
+
+const bank=[
+["Pink is for girls",1],
+["Anyone can lead",0],
+["Boys don’t cry",1],
+["Care is strength",0],
+["Math is not for girls",1],
+["All jobs are for everyone",0],
+["Leaders must be male",1],
+["Emotions are human",0],
+["Sports are for boys",1],
+["Skills are not gendered",0]
+];
+
+let idx=0,score=0,cur;
+
+function next(){
+cur=bank[idx++];
+dragCard.innerText=cur[0];
+if(idx>=bank.length) idx=0;
+}
+next();
+
+dragCard.ondragstart=e=>e.dataTransfer.setData("x","x");
+fair.ondragover=stereo.ondragover=e=>e.preventDefault();
+
+function check(type){
+if((type==="fair"&&cur[1]===0)||(type==="st"&&cur[1]===1)) score++;
+scoreText.innerText=score+" / 10";
+barFill.style.width=(score/10*100)+"%";
+next();
+}
+fair.ondrop=()=>check("fair");
+stereo.ondrop=()=>check("st");
 
 /* scenarios */
 
 const scenarios=[
 ["Girls are bad at sports","Champions like Smriti Mandhana prove opportunity gap, not ability gap."],
-["Women can’t lead nations","Finland, New Zealand, Germany — strong women leaders."],
+["Women can’t lead nations","Finland and New Zealand had strong women leaders."],
 ["Boys shouldn’t show emotion","Emotional expression improves resilience."],
 ["STEM is not for girls","Women lead major tech initiatives."],
 ["Politics is not for women","Many nations had women PMs."],

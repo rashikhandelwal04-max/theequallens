@@ -31,7 +31,7 @@ text-align:center;pointer-events:none;
 }
 .line{
 font-family:"DM Serif Display",serif;
-font-size:clamp(30px,4vw,48px);
+font-size:clamp(32px,4vw,50px);
 opacity:.08;
 transition:.4s;
 margin:14px 0;
@@ -60,35 +60,49 @@ width:600%;height:100%;object-fit:cover;opacity:.35;
 /* tiles */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:40px}
 .tile{
-background:#fff;color:#000;padding:24px;border-radius:18px;
+background:#fff;color:#000;padding:22px;border-radius:18px;
 transform:translateY(40px);opacity:0;font-weight:600;
 }
 
-/* workshop cards */
-.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px}
-.work-card{background:#fff;color:#000;border-radius:18px;overflow:hidden}
-.work-body{padding:18px;display:none}
+/* workshop grid smaller */
+.work-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-top:40px;
+}
+.work-card{background:#fff;color:#000;border-radius:14px;overflow:hidden;font-size:14px}
+.work-card img{height:140px;object-fit:cover}
+.work-body{padding:12px}
 
 /* drag game */
 .drag-card{
-background:#111;color:#fff;padding:20px;
+background:#111;color:#fff;padding:18px;
 border-radius:14px;display:inline-block;
-cursor:grab;margin-top:20px;
+cursor:grab;margin:20px 0;
 }
 .drop-zone{
 border:3px dashed #222;background:#fff3;
-padding:30px;border-radius:16px;
-min-height:120px;margin-top:20px;
+padding:24px;border-radius:16px;
+min-height:100px;margin-top:14px;
 }
 
-/* buttons */
+/* progress bars */
+.bar{
+height:16px;background:#0003;border-radius:10px;
+overflow:hidden;margin-top:10px;
+}
+.bar-fill{
+height:100%;background:#111;width:0%;
+transition:.3s;
+}
+
 button{
 padding:8px 14px;border:none;border-radius:8px;
 cursor:pointer;margin:6px;font-weight:600;
 }
 
 h2{font-family:"DM Serif Display",serif;font-size:40px;font-weight:400}
-img{width:100%;display:block}
 </style>
 </head>
 
@@ -118,25 +132,20 @@ img{width:100%;display:block}
 </div>
 </div>
 
-<div style="height:260vh"></div>
+<div style="height:320vh"></div>
 
 <!-- ABOUT -->
 <section class="section pink">
 <h2>What We Focus On</h2>
-<p style="max-width:700px;margin-top:20px">
-We develop equality thinking through structured reflection,
-bias recognition, empathy exercises, and social reasoning labs.
-</p>
-
 <div class="tiles">
 <div class="tile">Bias Awareness</div>
 <div class="tile">Empathy Building</div>
 <div class="tile">Fairness Thinking</div>
 <div class="tile">Voice & Inclusion</div>
 <div class="tile">Critical Thinking</div>
-<div class="tile">Power Balance</div>
 <div class="tile">Role Reversal Labs</div>
 <div class="tile">Equality Practice</div>
+<div class="tile">Power Balance</div>
 </div>
 </section>
 
@@ -145,10 +154,25 @@ bias recognition, empathy exercises, and social reasoning labs.
 <h2>Who Is This For</h2>
 
 <div class="tiles">
-<div class="tile">Schools — curriculum workshops</div>
-<div class="tile">NGOs — community programs</div>
-<div class="tile">Learning Centers — mindset labs</div>
-<div class="tile">Youth Programs — leadership training</div>
+<div class="tile">
+Schools — structured classroom modules, guided activities,
+reflection journals, and peer discussion circles.
+</div>
+
+<div class="tile">
+Youth Programs — leadership labs, fairness challenges,
+confidence and voice building workshops.
+</div>
+
+<div class="tile">
+Learning Centers — mindset training, stereotype labs,
+interactive equality games.
+</div>
+
+<div class="tile">
+NGOs — community outreach programs, social awareness workshops,
+group inclusion exercises.
+</div>
 </div>
 </section>
 
@@ -157,49 +181,38 @@ bias recognition, empathy exercises, and social reasoning labs.
 <h2>Workshop Activities</h2>
 
 <div class="work-grid">
-
-<div class="work-card" onclick="toggle(this)">
-<img src="images/activity-ball.jpg">
-<div class="work-body">Promise Ball — students commit equality actions.</div>
-</div>
-
-<div class="work-card" onclick="toggle(this)">
-<img src="images/workshop1.jpg">
-<div class="work-body">Stereotype Lab — bias myth busting.</div>
-</div>
-
-<div class="work-card" onclick="toggle(this)">
-<img src="images/group-discussion.jpg">
-<div class="work-body">Circle Dialogue — norm reframing.</div>
-</div>
-
-<div class="work-card" onclick="toggle(this)">
-<img src="images/game-cards.jpg">
-<div class="work-body">Bias Cards — fairness sorting game.</div>
-</div>
-
+<div class="work-card"><img src="images/activity-ball.jpg"><div class="work-body">Promise Ball</div></div>
+<div class="work-card"><img src="images/workshop1.jpg"><div class="work-body">Stereotype Lab</div></div>
+<div class="work-card"><img src="images/group-discussion.jpg"><div class="work-body">Circle Dialogue</div></div>
+<div class="work-card"><img src="images/game-cards.jpg"><div class="work-body">Bias Cards</div></div>
 </div>
 </section>
 
-<!-- DRAG GAME -->
+<!-- DRAG MATCH -->
 <section class="section green">
-<h2>Drag to Match — Fair vs Stereotype</h2>
+<h2>Drag → Fair or Stereotype</h2>
 
 <div id="dragCard" class="drag-card" draggable="true"></div>
 
-<div class="drop-zone" id="fair">Drop → Fair</div>
-<div class="drop-zone" id="stereo">Drop → Stereotype</div>
+<div class="drop-zone" id="fair">Fair</div>
+<div class="drop-zone" id="stereo">Stereotype</div>
 
-<h3 id="score">Score: 0</h3>
+<div class="bar"><div id="dragBar" class="bar-fill"></div></div>
+<p id="dragScore">0 / 10</p>
 </section>
 
-<!-- SCENARIO -->
+<!-- SCENARIOS -->
 <section class="section purple">
 <h2>Scenario Challenge</h2>
+
 <p id="scenarioText"></p>
 <button onclick="choose(true)">Challenge</button>
 <button onclick="choose(false)">Ignore</button>
+
 <p id="scenarioOut"></p>
+
+<div class="bar"><div id="scBar" class="bar-fill"></div></div>
+<p id="scScore">0 / 6</p>
 </section>
 
 <script>
@@ -207,7 +220,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* phrases */
 const phraseLayer=document.getElementById("phrase-layer");
-["emotions are not gendered","pink is not for girls","jobs have no gender","toys are for everyone","fairness matters"].forEach(t=>{
+["emotions are not gendered","pink is not for girls","jobs have no gender","fairness matters"]
+.forEach(t=>{
 const d=document.createElement("div");
 d.className="phrase";
 d.innerText=t;
@@ -216,12 +230,11 @@ d.style.top=Math.random()*95+"%";
 phraseLayer.appendChild(d);
 });
 
-/* narrative scroll one-by-one */
+/* narrative one-by-one */
 const lines=document.querySelectorAll(".line");
 lines.forEach((el,i)=>{
 ScrollTrigger.create({
-start:i*300,
-end:i*300+1,
+start:i*400,
 onEnter:()=>{
 lines.forEach(l=>l.classList.remove("active"));
 el.classList.add("active");
@@ -233,67 +246,68 @@ el.classList.add("active");
 gsap.to("#videoSplit div",{y:0,stagger:.15,
 scrollTrigger:{start:0,end:600,scrub:true}});
 
-/* tile pop */
+/* tiles animate */
 gsap.utils.toArray(".tile").forEach((t,i)=>{
-gsap.to(t,{y:0,opacity:1,delay:i*.12,
+gsap.to(t,{y:0,opacity:1,delay:i*.15,
 scrollTrigger:{trigger:t,start:"top 85%"}});
 });
 
-/* workshop toggle */
-function toggle(c){
-const b=c.querySelector(".work-body");
-b.style.display=b.style.display==="block"?"none":"block";
-}
-
-/* drag game */
+/* drag match engine */
 const bank=[
-["Pink is for girls",1],
-["Anyone can lead",0],
-["Boys don’t cry",1],
-["Care is strength",0]
+["Pink is for girls",1],["Anyone can lead",0],["Boys don’t cry",1],
+["Care is strength",0],["Math is not for girls",1],
+["All jobs are for everyone",0],
+["Leaders must be male",1],
+["Emotions are human",0],
+["Sports are for boys",1],
+["Skills are not gendered",0]
 ];
-let score=0,cur;
 
-function next(){
-cur=bank[Math.floor(Math.random()*bank.length)];
+let di=0,ds=0,cur;
+function nextDrag(){
+cur=bank[di++];
 dragCard.innerText=cur[0];
+if(di>=bank.length) di=0;
 }
-next();
+nextDrag();
 
 dragCard.ondragstart=e=>e.dataTransfer.setData("x","x");
-
 fair.ondragover=stereo.ondragover=e=>e.preventDefault();
 
-fair.ondrop=()=>{
-if(cur[1]===0) score++;
-score.innerText="Score: "+score;
-next();
-};
+function dropCheck(type){
+if((type==="fair" && cur[1]===0) || (type==="st" && cur[1]===1)) ds++;
+dragScore.innerText=ds+" / 10";
+dragBar.style.width=(ds/10*100)+"%";
+nextDrag();
+}
+fair.ondrop=()=>dropCheck("fair");
+stereo.ondrop=()=>dropCheck("st");
 
-stereo.ondrop=()=>{
-if(cur[1]===1) score++;
-score.innerText="Score: "+score;
-next();
-};
-
-/* scenario */
+/* scenarios */
 const scenarios=[
-["Girls are bad at sports","Incorrect — Smriti Mandhana is world-class."],
-["Women can’t lead nations","Incorrect — many female heads of state."],
-["Boys shouldn’t cry","Incorrect — emotions are human."]
+["Girls are bad at sports","AI Insight: Smriti Mandhana is world class."],
+["Women can’t lead nations","AI Insight: Many female prime ministers globally."],
+["Boys shouldn’t cry","AI Insight: Emotional expression improves mental health."],
+["Politics is not for women","AI Insight: Multiple female heads of state."],
+["STEM is not for girls","AI Insight: Women lead major tech firms."],
+["Care work is not for boys","AI Insight: Care is a human skill."]
 ];
-let sc;
-function nextSc(){
-sc=scenarios[Math.floor(Math.random()*scenarios.length)];
+
+let si=0,ss=0,sc;
+function nextScenario(){
+sc=scenarios[si++];
 scenarioText.innerText=sc[0];
 scenarioOut.innerText="";
+if(si>=scenarios.length) si=0;
 }
-nextSc();
+nextScenario();
 
 function choose(ch){
-scenarioOut.innerText = ch ? "Correct — "+sc[1] :
-"Ignoring supports bias — "+sc[1];
-nextSc();
+scenarioOut.innerText = ch ? sc[1] : "Ignoring supports bias. "+sc[1];
+ss++;
+scScore.innerText=ss+" / 6";
+scBar.style.width=(ss/6*100)+"%";
+nextScenario();
 }
 </script>
 

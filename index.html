@@ -20,28 +20,33 @@ body{font-family:Inter,sans-serif;background:white}
   position:fixed;
   inset:0;
   z-index:1;
-  pointer-events:none;
 }
 
 .phrase{
   position:absolute;
   font-size:13px;
   color:#6b7280;
-  opacity:.22;
+  opacity:.25;
+  transition:.25s;
+  cursor:default;
 }
 
-/* HERO — pin-safe centering */
+.phrase:hover{
+  opacity:.9;
+  color:#111;
+  font-weight:600;
+}
+
+/* HERO */
 
 .hero{
   position:fixed;
   inset:0;
   z-index:3;
   background:white;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   pointer-events:none;
 }
 
@@ -49,15 +54,14 @@ body{font-family:Inter,sans-serif;background:white}
   max-width:900px;
   width:70%;
   text-align:center;
-
   font-family:"DM Serif Display",serif;
   font-size:clamp(48px,6vw,72px);
   line-height:1.15;
   color:black;
 
-  /* safe south + east push */
-  margin-left:120px;
-  margin-top:90px;
+  /* pushed further DOWN */
+  margin-left:80px;
+  margin-top:160px;
 }
 
 /* sections */
@@ -159,20 +163,6 @@ p{line-height:1.7;margin-top:12px}
   background:#fff5;
 }
 
-.bar{
-  height:16px;
-  background:#0003;
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.bar-fill{
-  height:100%;
-  background:#111;
-  width:0%;
-}
-
 /* scenario */
 
 .sc-grid{
@@ -197,7 +187,8 @@ button{
   margin:6px;
 }
 
-.spacer{height:420vh}
+/* reduced so pink shows earlier */
+.spacer{height:260vh}
 </style>
 </head>
 
@@ -211,7 +202,7 @@ button{
 
 <div class="spacer"></div>
 
-<!-- ABOUT -->
+<!-- ABOUT — APPEARS EARLY -->
 
 <section class="section pink">
 <h2>About The Equal Lens</h2>
@@ -220,10 +211,7 @@ button{
 <p>Learning happens through participation and reflection.</p>
 <p>We build awareness through safe discussion spaces.</p>
 <p>Mindsets shift when children notice patterns themselves.</p>
-<p>Bias awareness becomes intuitive through play.</p>
 </section>
-
-<!-- WHAT WE DO -->
 
 <section class="section sky">
 <h2>What We Do</h2>
@@ -235,30 +223,22 @@ button{
 </div>
 </section>
 
-<!-- WORKSHOP -->
-
 <section class="section yellow">
 <h2>Workshop Activities</h2>
 <div class="work-grid">
-<div class="work-card"><img src="https://picsum.photos/300/200?1"><div class="work-overlay">Stereotype Lab</div></div>
-<div class="work-card"><img src="https://picsum.photos/300/200?2"><div class="work-overlay">Circle Dialogue</div></div>
-<div class="work-card"><img src="https://picsum.photos/300/200?3"><div class="work-overlay">Bias Cards Game</div></div>
-<div class="work-card"><img src="https://picsum.photos/300/200?4"><div class="work-overlay">Promise Ball</div></div>
+<div class="work-card"><img src="images/activity-ball.jpg"><div class="work-overlay">Promise Ball</div></div>
+<div class="work-card"><img src="images/workshop1.jpg"><div class="work-overlay">Stereotype Lab</div></div>
+<div class="work-card"><img src="images/group-discussion.jpg"><div class="work-overlay">Circle Dialogue</div></div>
+<div class="work-card"><img src="images/game-cards.jpg"><div class="work-overlay">Bias Cards Game</div></div>
 </div>
 </section>
-
-<!-- DRAG -->
 
 <section class="section green">
 <h2>Fair vs Stereotype</h2>
 <div id="dragCard" class="drag-card" draggable="true"></div>
 <div class="drop" id="fair">Fair</div>
 <div class="drop" id="stereo">Stereotype</div>
-<div class="bar"><div id="barFill" class="bar-fill"></div></div>
-<p id="scoreText">0 / 4</p>
 </section>
-
-<!-- SCENARIO -->
 
 <section class="section purple">
 <h2>Scenario Challenge</h2>
@@ -268,21 +248,39 @@ button{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* phrases */
+/* 60 quotes */
 
-const phraseLayer = document.getElementById("phrase-layer");
-const words=["fairness","equal chance","voices matter","question bias"];
+const quotes = [
+"fairness matters","jobs have no gender","emotions are human","equal chance",
+"question bias","voices matter","respect first","everyone belongs",
+"care is strength","leadership is human","skills > stereotypes",
+"future is equal","bias can change","think again","listen more",
+"include everyone","fair play","shared voice","equal start",
+"equal opportunity","challenge norms","be aware","notice patterns",
+"kindness counts","break bias","think fair","open minds",
+"grow empathy","equal rights","balanced voices","fair systems",
+"shared future","no limits","question labels","see people",
+"learn fairness","understand difference","bridge gaps",
+"bias is learned","so is equality","notice behavior",
+"question jokes","question roles","question rules",
+"think deeper","pause and ask","include more",
+"fair teams win","diverse works","everyone leads",
+"everyone feels","everyone learns","everyone grows",
+"change starts small","see clearly","act fair"
+];
 
-for(let i=0;i<50;i++){
-  let d=document.createElement("div");
-  d.className="phrase";
-  d.innerText=words[i%words.length];
-  d.style.left=Math.random()*96+"%";
-  d.style.top=Math.random()*96+"%";
-  phraseLayer.appendChild(d);
+const layer = document.getElementById("phrase-layer");
+
+for(let i=0;i<60;i++){
+ let d=document.createElement("div");
+ d.className="phrase";
+ d.innerText=quotes[i];
+ d.style.left=Math.random()*96+"%";
+ d.style.top=Math.random()*96+"%";
+ layer.appendChild(d);
 }
 
-/* hero lines */
+/* HERO TIMELINE — last line delayed */
 
 const headline = document.getElementById("headline");
 
@@ -307,73 +305,12 @@ pin:".hero"
 }
 });
 
-lines.slice(1).forEach(t=>{
-tl.to(headline,{opacity:0})
-  .add(()=>headline.innerText=t)
-  .to(headline,{opacity:1})
-  .to({}, {duration:1});
-});
-
-/* tile anim */
-
-gsap.utils.toArray(".tile").forEach((t,i)=>{
-gsap.to(t,{y:0,opacity:1,delay:i*.15,
-scrollTrigger:{trigger:t,start:"top 85%"}});
-});
-
-/* drag game */
-
-const dragCard=document.getElementById("dragCard");
-const fair=document.getElementById("fair");
-const stereo=document.getElementById("stereo");
-const barFill=document.getElementById("barFill");
-const scoreText=document.getElementById("scoreText");
-
-const bank=[
-["Pink is for girls",1],
-["Anyone can lead",0],
-["Boys don’t cry",1],
-["Care is strength",0]
-];
-
-let idx=0,score=0,cur;
-
-function next(){
-cur=bank[idx++];
-dragCard.innerText=cur[0];
-if(idx>=bank.length) idx=0;
-}
-next();
-
-dragCard.ondragstart=e=>e.dataTransfer.setData("x","x");
-fair.ondragover=stereo.ondragover=e=>e.preventDefault();
-
-function check(type){
-if((type==="fair"&&cur[1]==0)||(type==="st"&&cur[1]==1)) score++;
-scoreText.innerText=score+" / 4";
-barFill.style.width=(score/4*100)+"%";
-next();
-}
-
-fair.ondrop=()=>check("fair");
-stereo.ondrop=()=>check("st");
-
-/* scenarios */
-
-const scGrid=document.getElementById("scGrid");
-
-const scenarios=[
-["Girls are bad at sports","Opportunity gap — not ability."],
-["Boys shouldn’t cry","Emotion builds resilience."]
-];
-
-scenarios.forEach(s=>{
-let c=document.createElement("div");
-c.className="sc-card";
-c.innerHTML=`${s[0]}<br>
-<button onclick="this.nextElementSibling.innerText='${s[1]}'">Challenge</button>
-<p></p>`;
-scGrid.appendChild(c);
+lines.forEach((t,i)=>{
+ if(i===0) return;
+ tl.to(headline,{opacity:0})
+   .add(()=>headline.innerText=t)
+   .to(headline,{opacity:1})
+   .to({}, {duration: i===lines.length-1 ? 3 : 1});
 });
 </script>
 

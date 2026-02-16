@@ -30,28 +30,34 @@ body{font-family:Inter,sans-serif;background:white}
   opacity:.22;
 }
 
-/* HERO */
+/* HERO — pin-safe centering */
 
 .hero{
   position:fixed;
   inset:0;
   z-index:3;
   background:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
   pointer-events:none;
 }
 
 #headline{
-  position:fixed;
-  top:56%;
-  left:58%;
-  transform:translate(-50%,-50%);
-  width:65%;
   max-width:900px;
+  width:70%;
   text-align:center;
+
   font-family:"DM Serif Display",serif;
   font-size:clamp(48px,6vw,72px);
   line-height:1.15;
   color:black;
+
+  /* safe south + east push */
+  margin-left:120px;
+  margin-top:90px;
 }
 
 /* sections */
@@ -214,6 +220,7 @@ button{
 <p>Learning happens through participation and reflection.</p>
 <p>We build awareness through safe discussion spaces.</p>
 <p>Mindsets shift when children notice patterns themselves.</p>
+<p>Bias awareness becomes intuitive through play.</p>
 </section>
 
 <!-- WHAT WE DO -->
@@ -314,7 +321,7 @@ gsap.to(t,{y:0,opacity:1,delay:i*.15,
 scrollTrigger:{trigger:t,start:"top 85%"}});
 });
 
-/* drag */
+/* drag game */
 
 const dragCard=document.getElementById("dragCard");
 const fair=document.getElementById("fair");

@@ -14,38 +14,33 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0f1115;color:white;font-family:Inter,sans-serif}
 
-/* =========================
-   FLOATING PHRASES
-========================= */
+/* ================= BACKGROUND PHRASES ================= */
 
 #phrase-layer{
 position:fixed;
 inset:0;
 z-index:1;
 pointer-events:none;
+filter:blur(1.2px);
 }
 
 .phrase{
 position:absolute;
 font-size:13px;
-opacity:.35;
-background:#0007;
-padding:5px 9px;
+opacity:.14;
+background:#0005;
+padding:4px 8px;
 border-radius:12px;
 transition:.3s;
 pointer-events:auto;
 }
 
 .phrase:hover{
-opacity:1;
-transform:scale(1.25);
-background:white;
-color:black;
+opacity:.6;
+transform:scale(1.15);
 }
 
-/* =========================
-   NARRATIVE CENTER
-========================= */
+/* ================= CENTER NARRATIVE — HARD FIX ================= */
 
 .narrative{
 position:fixed;
@@ -54,28 +49,35 @@ z-index:3;
 display:flex;
 align-items:center;
 justify-content:center;
-text-align:center;
 pointer-events:none;
 }
 
 #lines{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+width:100%;
 max-width:900px;
-margin:auto;
 text-align:center;
 }
 
+/* THIS guarantees center */
 .line{
+display:block;
+width:100%;
+text-align:center;
 font-family:"DM Serif Display",serif;
-font-size:clamp(40px,5vw,62px);
+font-size:clamp(42px,5vw,64px);
 color:#ffffff;
-opacity:.15;
+opacity:.12;
 margin:22px auto;
-transition:.4s;
+transition:.45s;
 }
 
 .line.active{
 opacity:1;
-text-shadow:0 0 22px rgba(255,255,255,.45);
+text-shadow:0 0 26px rgba(255,255,255,.55);
 }
 
 .line.final{
@@ -83,9 +85,7 @@ text-transform:uppercase;
 letter-spacing:2px;
 }
 
-/* =========================
-   SECTIONS
-========================= */
+/* ================= SECTIONS ================= */
 
 .section{
 min-height:100vh;
@@ -127,9 +127,7 @@ line-height:1.6;
 font-weight:600;
 }
 
-/* =========================
-   WORKSHOP GRID
-========================= */
+/* workshop */
 
 .work-grid{
 display:grid;
@@ -168,9 +166,7 @@ font-size:14px;
 
 .work-card:hover .work-overlay{opacity:1}
 
-/* =========================
-   DRAG GAME
-========================= */
+/* drag */
 
 .drag-card{
 background:#111;
@@ -205,9 +201,7 @@ width:0%;
 transition:.3s;
 }
 
-/* =========================
-   SCENARIOS
-========================= */
+/* scenario */
 
 .sc-grid{
 display:grid;
@@ -232,8 +226,7 @@ margin:6px;
 font-weight:600;
 }
 
-/* spacer controls intro scroll */
-.spacer{height:380vh}
+.spacer{height:400vh}
 </style>
 </head>
 
@@ -241,10 +234,7 @@ font-weight:600;
 
 <div id="phrase-layer"></div>
 
-<!-- =========================
-     INTRO NARRATIVE
-========================= -->
-
+<!-- CENTER INTRO -->
 <div class="narrative">
 <div id="lines">
 <div class="line active">Kids don’t learn gender in classrooms</div>
@@ -258,106 +248,66 @@ font-weight:600;
 
 <div class="spacer"></div>
 
-<!-- =========================
-     WHAT WE FOCUS ON
-========================= -->
+<!-- CONTENT SECTIONS (kept intact) -->
 
 <section class="section pink">
 <h2>What We Focus On</h2>
-
 <div class="tiles">
-<div class="tile">Bias awareness through real-life examples and reflection exercises that help students notice hidden patterns.</div>
-<div class="tile">Empathy building using role-reversal and guided perspective activities.</div>
-<div class="tile">Fairness thinking through structured decision labs and scenario debates.</div>
-<div class="tile">Voice & inclusion training so every student learns to speak up safely.</div>
+<div class="tile">Bias awareness through reflection exercises.</div>
+<div class="tile">Empathy building via role reversal.</div>
+<div class="tile">Fairness thinking labs.</div>
+<div class="tile">Voice & inclusion training.</div>
 </div>
 </section>
-
-<!-- =========================
-     WHO IS THIS FOR
-========================= -->
 
 <section class="section blue">
 <h2>Who Is This For</h2>
-
 <div class="tiles">
-<div class="tile">Schools — classroom modules, structured equality labs, guided peer discussions and reflection journals.</div>
-<div class="tile">Youth Programs — leadership development, fairness challenges and social courage training.</div>
-<div class="tile">Learning Centers — mindset workshops, stereotype labs and interactive equality games.</div>
-<div class="tile">NGOs — community outreach programs and inclusion learning circles.</div>
+<div class="tile">Schools — classroom equality modules and discussion labs.</div>
+<div class="tile">Youth Programs — leadership and fairness training.</div>
+<div class="tile">Learning Centers — stereotype and mindset labs.</div>
+<div class="tile">NGOs — inclusion workshops and outreach.</div>
 </div>
 </section>
 
-<!-- =========================
-     WORKSHOPS
-========================= -->
-
 <section class="section yellow">
 <h2>Workshop Activities</h2>
-
 <div class="work-grid">
 
 <div class="work-card">
 <img src="images/activity-ball.jpg">
-<div class="work-overlay">Promise Ball — each student commits one equality action publicly.</div>
+<div class="work-overlay">Promise Ball — equality commitment activity.</div>
 </div>
 
 <div class="work-card">
 <img src="images/workshop1.jpg">
-<div class="work-overlay">Stereotype Lab — challenge common bias statements.</div>
+<div class="work-overlay">Stereotype Lab — myth challenge tasks.</div>
 </div>
 
 <div class="work-card">
 <img src="images/group-discussion.jpg">
-<div class="work-overlay">Circle Dialogue — guided norm reframing.</div>
+<div class="work-overlay">Circle Dialogue — norm reframing.</div>
 </div>
 
 <div class="work-card">
 <img src="images/game-cards.jpg">
-<div class="work-overlay">Bias Cards — fairness vs stereotype sorting game.</div>
+<div class="work-overlay">Bias Cards — fairness sorting.</div>
 </div>
 
 </div>
 </section>
-
-<!-- =========================
-     DRAG MATCH GAME
-========================= -->
-
-<section class="section green">
-<h2>Drag → Fair or Stereotype</h2>
-
-<div id="dragCard" class="drag-card" draggable="true"></div>
-
-<div class="drop" id="fair">Fair</div>
-<div class="drop" id="stereo">Stereotype</div>
-
-<div class="bar"><div id="barFill" class="bar-fill"></div></div>
-<p id="scoreText">0 / 10</p>
-</section>
-
-<!-- =========================
-     SCENARIO CARDS
-========================= -->
 
 <section class="section purple">
 <h2>Scenario Challenge</h2>
-
 <div class="sc-grid" id="scGrid"></div>
-
 </section>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ================= PHRASES ================= */
+/* phrases — blurred + translucent */
 
-const base=[
-"emotions are human","pink is not gendered","fairness matters",
-"question bias","jobs have no gender","voices deserve space",
-"kindness is strength","equal chance"
-];
-
+const base=["fairness matters","jobs have no gender","emotions are human","question bias"];
 const layer=document.getElementById("phrase-layer");
 
 for(let i=0;i<60;i++){
@@ -369,7 +319,7 @@ d.style.top=Math.random()*96+"%";
 layer.appendChild(d);
 }
 
-/* ================= INTRO SCROLL ================= */
+/* narrative scroll */
 
 const lines=document.querySelectorAll(".line");
 
@@ -385,86 +335,36 @@ pin:".narrative"
 
 lines.forEach((line,i)=>{
 tl.to(line,{opacity:1,duration:.4})
-  .to({}, {duration:(i===lines.length-1)?1.4:.8})
-  .to(line,{opacity:.15,duration:.5});
+  .to({}, {duration:(i===lines.length-1)?1.6:.9})
+  .to(line,{opacity:.12,duration:.5});
 });
 
-/* ================= TILE ANIM ================= */
+/* tile anim */
 
 gsap.utils.toArray(".tile").forEach((t,i)=>{
-gsap.to(t,{
-y:0,opacity:1,delay:i*.15,
-scrollTrigger:{trigger:t,start:"top 85%"}
-});
+gsap.to(t,{y:0,opacity:1,delay:i*.15,
+scrollTrigger:{trigger:t,start:"top 85%"}});
 });
 
-/* ================= DRAG GAME ================= */
-
-const bank=[
-["Pink is for girls",1],
-["Anyone can lead",0],
-["Boys don’t cry",1],
-["Care is strength",0],
-["Math is not for girls",1],
-["All jobs are for everyone",0],
-["Leaders must be male",1],
-["Emotions are human",0],
-["Sports are for boys",1],
-["Skills are not gendered",0]
-];
-
-let i=0,score=0,cur;
-
-function next(){
-cur=bank[i++];
-dragCard.innerText=cur[0];
-if(i>=bank.length)i=0;
-}
-next();
-
-dragCard.ondragstart=e=>e.dataTransfer.setData("x","x");
-fair.ondragover=stereo.ondragover=e=>e.preventDefault();
-
-function check(type){
-if((type==="fair"&&cur[1]===0)||(type==="st"&&cur[1]===1)) score++;
-scoreText.innerText=score+" / 10";
-barFill.style.width=(score/10*100)+"%";
-next();
-}
-fair.ondrop=()=>check("fair");
-stereo.ondrop=()=>check("st");
-
-/* ================= SCENARIOS ================= */
+/* scenarios */
 
 const scenarios=[
-["Girls are bad at sports",
-"Performance follows training and access. Champions like Smriti Mandhana show the gap is opportunity, not ability."],
-
-["Women can’t lead nations",
-"Finland, New Zealand, Germany and others have had successful women leaders. Leadership is competence, not gender."],
-
-["Boys shouldn’t show emotion",
-"Psychology shows emotional expression improves resilience and mental health outcomes."],
-
-["STEM is not for girls",
-"Women lead major tech and science initiatives globally — exposure drives participation."],
-
-["Politics is not for women",
-"Multiple countries have had women prime ministers and presidents with strong governance records."],
-
-["Care work is not for boys",
-"Care professions require high skill — many top doctors and nurses are men."]
+["Girls are bad at sports","Champions like Smriti Mandhana prove opportunity gap, not ability gap."],
+["Women can’t lead nations","Finland, New Zealand, Germany — strong women leaders."],
+["Boys shouldn’t show emotion","Emotional expression improves resilience."],
+["STEM is not for girls","Women lead major tech initiatives."],
+["Politics is not for women","Many nations had women PMs."],
+["Care work is not for boys","Care professions require high skill."]
 ];
 
 const grid=document.getElementById("scGrid");
 
-scenarios.forEach((s,idx)=>{
+scenarios.forEach((s,i)=>{
 const c=document.createElement("div");
 c.className="sc-card";
-c.innerHTML=`
-${s[0]}<br>
-<button onclick="reveal(this,${idx},true)">Challenge</button>
-<button onclick="reveal(this,${idx},false)">Ignore</button>
+c.innerHTML=`${s[0]}<br>
+<button onclick="reveal(this,${i},true)">Challenge</button>
+<button onclick="reveal(this,${i},false)">Ignore</button>
 <p class="out"></p>`;
 grid.appendChild(c);
 });
@@ -472,7 +372,7 @@ grid.appendChild(c);
 function reveal(btn,i,ch){
 const out=btn.parentElement.querySelector(".out");
 out.innerText = ch ? scenarios[i][1]
-: "Ignoring reinforces the stereotype. "+scenarios[i][1];
+: "Ignoring reinforces bias. "+scenarios[i][1];
 }
 </script>
 

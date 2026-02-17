@@ -184,18 +184,52 @@ h2{
 .work-card:hover img{transform:scale(1.1)}
 .work-card:hover .work-overlay{opacity:1}
 
-/* DRAG */
-.drag-card{
-  background:#222;
-  padding:16px;
-  border-radius:12px;
-  margin:20px 0;
-  display:inline-block;
-  cursor:grab;
+/* ================= DRAG MATCH ================= */
+
+const bank = [
+["Pink is for girls",1],
+["Anyone can lead",0],
+["Boys don’t cry",1],
+["Care is strength",0]
+];
+
+let idx = 0;
+let score = 0;
+let current;
+
+const dragCard = document.getElementById("dragCard");
+const fair = document.getElementById("fair");
+const stereo = document.getElementById("stereo");
+const barFill = document.getElementById("barFill");
+const scoreText = document.getElementById("scoreText");
+
+function nextPhrase(){
+  current = bank[idx];
+  dragCard.innerText = current[0];
+  idx = (idx + 1) % bank.length;
 }
-.drop{border:2px dashed #555;padding:16px;margin-top:10px;border-radius:10px}
-.bar{height:8px;background:#333;margin-top:10px}
-.bar-fill{height:100%;background:#ff4fa3;width:0%}
+
+nextPhrase(); // IMPORTANT: initializes first phrase
+
+dragCard.ondragstart = e => e.dataTransfer.setData("text","x");
+
+fair.ondragover = stereo.ondragover = e => e.preventDefault();
+
+function check(type){
+  if((type === "fair" && current[1] === 0) ||
+     (type === "stereo" && current[1] === 1)){
+       score++;
+  }
+
+  scoreText.innerText = score + " / 4";
+  barFill.style.width = (score/4 * 100) + "%";
+
+  nextPhrase();
+}
+
+fair.ondrop = () => check("fair");
+stereo.ondrop = () => check("stereo");
+
 
 /* SCENARIO */
 .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -343,11 +377,131 @@ The cycle continues
 <div class="drop" id="stereo">Stereotype</div>
 </section>
 
-<!-- SCENARIO -->
-<section class="section scenario-sec">
-<h2>Scenario Challenge</h2>
-<div class="sc-grid" id="scGrid"></div>
-</section>
+/* ================= SCENARIO CHALLENGE ================= */
+
+const scenarios = [
+
+{
+title:"Girls are bad at sports",
+challenge:[
+"Equal coaching access closes most performance gaps.",
+"Confidence rises when ability is reinforced early.",
+"Schools that encourage girls see higher participation rates.",
+"Opportunity — not biology — drives early differences."
+],
+ignore:[
+"Girls withdraw before discovering strengths.",
+"Participation drops over time.",
+"Confidence gaps widen.",
+"The stereotype becomes normalized."
+]
+},
+
+{
+title:"Boys shouldn’t cry",
+challenge:[
+"Emotional literacy improves long-term mental health.",
+"Boys encouraged to express feelings build stronger relationships.",
+"Healthy vulnerability reduces aggression patterns.",
+"Emotional awareness strengthens leadership."
+],
+ignore:[
+"Emotions are suppressed, not resolved.",
+"Anger becomes the dominant expression.",
+"Mental health struggles increase.",
+"Empathy skills weaken over time."
+]
+},
+
+{
+title:"Leadership is for boys",
+challenge:[
+"Leadership skill develops through exposure.",
+"Girls given equal roles perform equally well.",
+"Representation increases ambition.",
+"Diverse leadership improves decision-making."
+],
+ignore:[
+"Girls self-select out early.",
+"Power imbalance becomes normalized.",
+"Public confidence declines.",
+"Future pipelines narrow."
+]
+},
+
+{
+title:"Math is for boys",
+challenge:[
+"Encouragement improves math performance for all genders.",
+"Belonging increases academic outcomes.",
+"Girls excel when stereotypes are removed.",
+"Mentorship boosts long-term STEM participation."
+],
+ignore:[
+"Girls disengage from STEM early.",
+"Confidence drops before skill develops.",
+"Career options narrow.",
+"Workforce gaps widen."
+]
+},
+
+{
+title:"Pink is only for girls",
+challenge:[
+"Colours carry no biological meaning.",
+"Freedom of expression builds confidence.",
+"Inclusive environments reduce bullying.",
+"Identity grows through exploration."
+],
+ignore:[
+"Children police each other’s choices.",
+"Gender norms become rigid.",
+"Self-expression narrows.",
+"Fear replaces authenticity."
+]
+},
+
+{
+title:"Care work is weak",
+challenge:[
+"Care skills correlate with strong collaboration.",
+"Emotional intelligence improves team performance.",
+"Care sustains communities and economies.",
+"Empathy strengthens leadership."
+],
+ignore:[
+"Care roles remain undervalued.",
+"Emotional labor becomes invisible.",
+"Gender pay gaps persist.",
+"Respect becomes uneven."
+]
+}
+
+];
+
+const scGrid = document.getElementById("scGrid");
+
+scenarios.forEach((s,index)=>{
+  const card = document.createElement("div");
+  card.className = "sc-card";
+
+  card.innerHTML = `
+    <strong>${s.title}</strong><br><br>
+    <button onclick="handleScenario(${index}, 'challenge')">Challenge</button>
+    <button onclick="handleScenario(${index}, 'ignore')">Ignore</button>
+    <div class="scenario-output" style="margin-top:12px; line-height:1.6;"></div>
+  `;
+
+  scGrid.appendChild(card);
+});
+
+function handleScenario(index,type){
+  const card = scGrid.children[index];
+  const output = card.querySelector(".scenario-output");
+  const lines = scenarios[index][type];
+  output.innerHTML = lines.map(l => "• " + l).join("<br>");
+}
+
 
 <!-- END -->
 <section class="dark-end">
@@ -499,3 +653,4 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+

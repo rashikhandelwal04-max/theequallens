@@ -37,10 +37,21 @@ body{
   position:absolute;
   white-space:nowrap;
   font-family:'Inter',sans-serif;
+  transition: all 0.3s ease;
+}
+
+.idea:hover{
+  opacity:0.6 !important;
+  transform:scale(1.4);
+  color:#ffffff;
+  filter:blur(0px);
+  z-index:5;
 }
 .layer-far{opacity:.03;font-size:14px;filter:blur(1px)}
 .layer-mid{opacity:.06;font-size:16px}
 .layer-near{opacity:.12;font-size:18px}
+
+
 
 /* ================= INTRO ================= */
 .narrative{
@@ -166,10 +177,16 @@ h2{
   display:flex;
   justify-content:space-between;
   gap:40px;
-  flex-wrap:wrap;
   text-align:center;
+  flex-wrap:nowrap;        /* 🔥 force single row */
+  align-items:center;
 }
-.timeline-item{flex:1;min-width:200px}
+
+.timeline-item{
+  flex:1;
+  min-width:0;             /* 🔥 remove wrapping trigger */
+}
+
 .timeline-number{
   font-size:68px;
   font-family:'Bodoni Moda',serif;
@@ -268,14 +285,18 @@ button{
 
 /* ================= END ================= */
 .end-title{
-  font-family:'Bodoni Moda',serif;
-  font-size:clamp(60px,6vw,90px);
+  font-family:'Bodoni Moda', serif;  /* 🔥 ensure correct font */
+  font-size:clamp(60px,6vw,100px);
+  font-weight:600;
+  letter-spacing:1px;
   opacity:0;
 }
+
 .end-sub{
-  margin-top:25px;
-  font-size:22px;
-  opacity:0;
+  font-family:'Inter', sans-serif;
+  font-weight:300;
+  font-size:18px;
+  opacity:.8;
 }
 
 @media(max-width:768px){
@@ -476,7 +497,9 @@ const world = document.getElementById("world");
 quotes.forEach(text => {
 
   const d = document.createElement("div");
-  d.className = "idea";
+  d.className="idea";
+  d.style.cursor = "default";
+
 
   const layer = Math.random();
   if(layer < 0.33){
@@ -529,7 +552,7 @@ onEnter:()=>gsap.to(el,{innerText:el.dataset.target,duration:2,snap:{innerText:1
 });
 });
 
-/* ================= CYCLE ESCALATION ANIMATION ================= */
+/* ================= FASTER CYCLE ESCALATION ================= */
 
 const cycleCounter = document.getElementById("cycleCounter");
 
@@ -541,18 +564,18 @@ ScrollTrigger.create({
     const cycleTL = gsap.timeline();
 
     cycleTL
-      .to(cycleCounter, {innerText: 1, duration: 0.4, snap:{innerText:1}})
-      .to(cycleCounter, {innerText: 5, duration: 0.4, snap:{innerText:1}})
-      .to(cycleCounter, {innerText: 10, duration: 0.5, snap:{innerText:1}})
-      .to(cycleCounter, {innerText: 20, duration: 0.6, snap:{innerText:1}})
-      .to(cycleCounter, {innerText: 30, duration: 0.6, snap:{innerText:1}})
-      .to(cycleCounter, {innerText: 40, duration: 0.6, snap:{innerText:1}})
-      .to(cycleCounter, {innerText: 60, duration: 0.8, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 1, duration: 0.2, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 5, duration: 0.2, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 10, duration: 0.25, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 20, duration: 0.3, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 30, duration: 0.3, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 40, duration: 0.3, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 60, duration: 0.4, snap:{innerText:1}})
       .to(cycleCounter, {
         innerText: "∞",
-        duration: 1,
+        duration: 0.6,
         onStart: () => {
-          cycleCounter.style.fontSize = "80px";
+          gsap.to(cycleCounter,{scale:1.2,duration:0.3});
         }
       });
 
@@ -666,5 +689,6 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 
 

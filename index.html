@@ -81,12 +81,10 @@ h2{
   pointer-events:none;
 }
 .line{
-  position:absolute;
-  max-width:760px;
-  text-align:center;
-  font-size:clamp(30px,4vw,52px);
-  font-family:'Playfair Display',serif;
-  opacity:0;
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(40px,5vw,72px);
+  font-weight:600;
+  letter-spacing:1px;
 }
 .spacer{height:230vh}
 
@@ -162,17 +160,41 @@ h2{
 
 /* ================= HEADINGS ================= */
 h2{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(40px,4vw,56px);
-  margin-bottom:50px;
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(28px,3vw,40px);
+  font-weight:600;
+  letter-spacing:1px;
+  margin-bottom:40px;
 }
 
 /* ================= ABOUT ================= */
-.about p{
-  font-size:21px;
-  margin-bottom:24px;
-  opacity:0;
-  transform:translateY(20px);
+.about p,
+.timeline-item,
+.what-card,
+.sc-card,
+.work-overlay p{
+  font-size:16px;
+  font-weight:300;
+  letter-spacing:.4px;
+  line-height:1.7;
+}
+
+/* ================= TIMELINE NUMBERS ================= */
+.timeline-number{
+  font-family:'Bodoni Moda', serif;
+  font-size:42px;
+  font-weight:600;
+}
+
+/* ================= ENDING ================= */
+.end-title{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(50px,6vw,90px);
+}
+
+.end-sub{
+  font-size:16px;
+  opacity:.7;
 }
 
 /* ================= TIMELINE ================= */
@@ -183,12 +205,8 @@ h2{
   flex-wrap:wrap;
   text-align:center;
 }
-.timeline-item{flex:1;min-width:200px}
-.timeline-number{
-  font-size:68px;
-  font-family:'Playfair Display',serif;
-  margin-bottom:12px;
-}
+
+
 
 /* ================= WHAT WE DO ================= */
 .what-grid{
@@ -196,13 +214,7 @@ h2{
   grid-template-columns:1fr 1fr;
   gap:30px;
 }
-.what-card{
-  background:#1f2532;
-  padding:35px;
-  border-radius:18px;
-  transform:scale(.85);
-  opacity:0;
-}
+
 
 /* ================= WORKSHOP ================= */
 .work-grid{
@@ -221,17 +233,7 @@ h2{
   object-fit:cover;
   transition:transform .6s ease;
 }
-.work-overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  padding:30px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  opacity:0;
-  transition:.4s;
-}
+
 .work-card:hover img{transform:scale(1.1)}
 .work-card:hover .work-overlay{opacity:1}
 
@@ -267,11 +269,7 @@ h2{
   grid-template-columns:1fr 1fr;
   gap:20px;
 }
-.sc-card{
-  background:#1f1a2a;
-  padding:20px;
-  border-radius:14px;
-}
+
 button{
   margin:6px;
   padding:6px 12px;
@@ -281,16 +279,6 @@ button{
 }
 
 /* ================= END ================= */
-.end-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(60px,6vw,90px);
-  opacity:0;
-}
-.end-sub{
-  margin-top:25px;
-  font-size:22px;
-  opacity:0;
-}
 
 @media(max-width:768px){
   .timeline{flex-direction:column}
@@ -651,5 +639,6 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 
 

@@ -329,10 +329,9 @@ Stereotypes shape play
 <div class="timeline-item">
 <div class="timeline-number" data-target="7">0</div>
 Confidence gaps emerge
-</div>
 <div class="timeline-item">
-<div class="timeline-number">∞</div>
-The cycle continues
+  <div class="timeline-number" id="cycleCounter">0</div>
+  The cycle continues
 </div>
 </div>
 </section>
@@ -530,6 +529,37 @@ onEnter:()=>gsap.to(el,{innerText:el.dataset.target,duration:2,snap:{innerText:1
 });
 });
 
+/* ================= CYCLE ESCALATION ANIMATION ================= */
+
+const cycleCounter = document.getElementById("cycleCounter");
+
+ScrollTrigger.create({
+  trigger: cycleCounter,
+  start: "top 80%",
+  onEnter: () => {
+
+    const cycleTL = gsap.timeline();
+
+    cycleTL
+      .to(cycleCounter, {innerText: 1, duration: 0.4, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 5, duration: 0.4, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 10, duration: 0.5, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 20, duration: 0.6, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 30, duration: 0.6, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 40, duration: 0.6, snap:{innerText:1}})
+      .to(cycleCounter, {innerText: 60, duration: 0.8, snap:{innerText:1}})
+      .to(cycleCounter, {
+        innerText: "∞",
+        duration: 1,
+        onStart: () => {
+          cycleCounter.style.fontSize = "80px";
+        }
+      });
+
+  }
+});
+
+
 /* WHAT POP */
 gsap.utils.toArray(".what-card").forEach((card,i)=>{
 gsap.to(card,{
@@ -636,4 +666,5 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 

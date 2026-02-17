@@ -5,7 +5,7 @@
 <title>The Equal Lens</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
@@ -18,37 +18,41 @@ html,body{
 }
 
 body{
-  font-family:'Manrope', sans-serif;
+  font-family:'Inter', sans-serif;
+  font-weight:300;
   background:#0f1115;
   color:#f5f5f5;
   overflow-x:hidden;
 }
 
+/* HEADINGS – Fashion Style */
 h1, h2, h3, .line, .end-title{
-  font-family:'Cormorant Garamond', serif;
-  letter-spacing:.5px;
+  font-family:'Bodoni Moda', serif;
+  letter-spacing:1px;
+  font-weight:600;
 }
 
-.about p,
-.timeline-item,
-.what-card,
-.sc-card,
-button{
-  font-family:'Manrope', sans-serif;
-  font-weight:400;
-}
 h2{
-  font-weight:600;
+  font-size:clamp(42px,4vw,64px);
 }
 
 .line{
-  font-weight:600;
+  font-size:clamp(34px,4vw,60px);
 }
 
 .end-title{
-  font-weight:700;
+  font-size:clamp(60px,6vw,100px);
 }
 
+/* Body refinement */
+.about p,
+.timeline-item,
+.what-card,
+.sc-card{
+  font-weight:300;
+  letter-spacing:.4px;
+  line-height:1.7;
+}
 /* ================= FLOATING BACKGROUND ================= */
 .world{
   position:fixed;
@@ -94,6 +98,31 @@ h2{
   position:relative;
   z-index:2;
   backdrop-filter:blur(2px);
+}
+/* ================= TRANSLUCENT SECTION COLORS ================= */
+
+.about-sec{
+  background:rgba(21,26,34,.75);
+}
+
+.problem-sec{
+  background:rgba(26,19,36,.75);
+}
+
+.what{
+  background:rgba(20,24,33,.75);
+}
+
+.workshop-sec{
+  background:rgba(23,27,36,.75);
+}
+
+.drag-sec{
+  background:rgba(17,19,26,.8);
+}
+
+.scenario-sec{
+  background:rgba(22,16,29,.8);
 }
 
 /* ================= GLOW ================= */
@@ -393,6 +422,106 @@ The cycle continues
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
+/* ================= 60 UNIQUE FASHION-STYLE BACKGROUND QUOTES ================= */
+
+const quotes = [
+"Bias is absorbed quietly",
+"Expectation shapes identity",
+"Norms are inherited",
+"Confidence is cultivated",
+"Silence reinforces patterns",
+"Representation shapes ambition",
+"Play encodes power",
+"Children mirror structure",
+"Curiosity disrupts systems",
+"Language creates limits",
+"Labels define roles",
+"Awareness creates agency",
+"Leadership is practiced",
+"Strength is redefined",
+"Empathy shifts culture",
+"Opportunity builds belief",
+"Perception shapes outcomes",
+"Bias hides in routine",
+"Reflection rewrites narratives",
+"Belonging transforms confidence",
+"Fairness must be modeled",
+"Identity evolves through exposure",
+"Culture informs expectation",
+"Dialogue reshapes understanding",
+"Agency begins early",
+"Norms are constructed",
+"Inclusion expands possibility",
+"Expression shapes identity",
+"Assumptions guide behavior",
+"Systems influence confidence",
+"Observation precedes change",
+"Exposure drives ambition",
+"Environment molds belief",
+"Expectation influences risk",
+"Bias embeds early",
+"Confidence grows through support",
+"Structure shapes opportunity",
+"Perspective alters narrative",
+"Equality is intentional",
+"Voice determines visibility",
+"Perception informs ambition",
+"Belief influences action",
+"Fairness demands awareness",
+"Influence begins young",
+"Patterns shape potential",
+"Change begins with noticing",
+"Access determines growth",
+"Empathy informs leadership",
+"Confidence reflects support",
+"Norms guide direction",
+"Belonging fuels growth",
+"Challenge builds clarity",
+"Agency shapes future",
+"Culture frames behavior",
+"Exposure expands identity",
+"Possibility grows with inclusion",
+"Awareness reshapes outcomes",
+"Equality requires intention",
+"Perspective builds fairness",
+"Structure influences ambition"
+];
+
+const world = document.getElementById("world");
+
+quotes.forEach(text => {
+
+  const d = document.createElement("div");
+  d.className = "idea";
+
+  const layer = Math.random();
+  if(layer < 0.33){
+    d.classList.add("layer-far");
+  } else if(layer < 0.66){
+    d.classList.add("layer-mid");
+  } else {
+    d.classList.add("layer-near");
+  }
+
+  d.innerText = text;
+
+  d.style.left = Math.random() * 100 + "%";
+  d.style.top  = Math.random() * 100 + "%";
+
+  world.appendChild(d);
+
+  gsap.to(d,{
+    y: "+=" + (20 + Math.random() * 60),
+    x: "+=" + (10 - Math.random() * 20),
+    duration: 30 + Math.random() * 20,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+
+});
+
+
 /* INTRO */
 const introTL=gsap.timeline({
 scrollTrigger:{trigger:".spacer",start:"top top",end:"+=2200",scrub:true,pin:true}
@@ -522,4 +651,5 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 

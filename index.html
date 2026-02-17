@@ -267,12 +267,108 @@ next();
 fair.ondrop=()=>check("fair");
 stereo.ondrop=()=>check("st");
 
-/* SCENARIO */
-const scenarios=[{
+/* SCENARIO — EXPANDED (6 TOTAL) */
+
+const scenarios = [
+
+{
 title:"Girls are bad at sports",
-challenge:["Equal coaching closes performance gaps.","Confidence increases with opportunity.","Participation rises with encouragement."],
-ignore:["Girls withdraw early.","Confidence drops.","The stereotype reinforces itself."]
-}];
+challenge:[
+"Equal access to coaching closes most performance gaps.",
+"Encouragement increases long-term participation rates.",
+"Confidence improves when ability is reinforced.",
+"Opportunity — not biology — explains early differences."
+],
+ignore:[
+"Girls opt out before discovering strengths.",
+"Lower participation reinforces the stereotype.",
+"Confidence gaps widen over time.",
+"Leadership in sports remains uneven."
+]
+},
+
+{
+title:"Boys shouldn’t cry",
+challenge:[
+"Emotional literacy improves long-term mental health.",
+"Boys encouraged to express feelings build stronger relationships.",
+"Healthy vulnerability reduces aggression patterns.",
+"Emotional awareness strengthens leadership capacity."
+],
+ignore:[
+"Suppressed emotions resurface as anger.",
+"Mental health struggles become harder to address.",
+"Emotional expression becomes socially policed.",
+"Connection and empathy skills weaken."
+]
+},
+
+{
+title:"Leadership is for boys",
+challenge:[
+"Leadership skill grows with exposure, not gender.",
+"Girls given equal roles perform equally effectively.",
+"Representation increases ambition.",
+"Diverse leadership improves decision-making."
+],
+ignore:[
+"Girls self-select out of leadership early.",
+"Power imbalance becomes normalized.",
+"Confidence declines in public roles.",
+"Future pipelines narrow."
+]
+},
+
+{
+title:"Care work is weak",
+challenge:[
+"Care skills correlate with stronger team collaboration.",
+"Emotional intelligence is recognized as leadership strength.",
+"Care work sustains families and economies.",
+"Empathy improves group performance."
+],
+ignore:[
+"Care roles remain undervalued.",
+"Emotional labor becomes invisible.",
+"Gender pay gaps persist.",
+"Respect becomes unevenly distributed."
+]
+},
+
+{
+title:"Math is for boys",
+challenge:[
+"Performance gaps shrink when encouragement is equal.",
+"Girls excel in math when given equal confidence support.",
+"Belonging improves academic outcomes.",
+"STEM participation rises with mentorship."
+],
+ignore:[
+"Girls disengage from STEM subjects early.",
+"Workforce diversity declines.",
+"Confidence drops before skill develops.",
+"Stereotypes shape career choices."
+]
+},
+
+{
+title:"Pink is only for girls",
+challenge:[
+"Colours have no biological meaning.",
+"Freedom of expression builds confidence.",
+"Limiting color choices restricts identity.",
+"Inclusive environments reduce bullying."
+],
+ignore:[
+"Children police each other's preferences.",
+"Gender norms become more rigid.",
+"Expression narrows over time.",
+"Fear replaces authenticity."
+]
+}
+
+];
+
 
 const scGrid=document.getElementById("scGrid");
 scenarios.forEach((s,i)=>{
@@ -296,3 +392,4 @@ gsap.to(".dark-end h2",{opacity:1,y:-20,duration:1,scrollTrigger:{trigger:".dark
 
 </body>
 </html>
+

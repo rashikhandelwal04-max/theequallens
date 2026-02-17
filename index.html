@@ -53,20 +53,29 @@ body{
   border-top:1px solid rgba(255,255,255,.05);
 }
 
+/* LIGHT VARIATIONS */
+.about-sec{
+  background:linear-gradient(180deg,#151a22,#10141b);
+}
+
+.problem-sec{
+  background:linear-gradient(180deg,#1a1324,#0f1115);
+}
+
 .what{background:#141821;}
 .drag-sec{background:#11131a;}
 .scenario-sec{background:#16101d;}
 
 h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(36px,4vw,48px);
+  font-size:clamp(38px,4vw,52px);
   margin-bottom:40px;
 }
 
 /* ABOUT */
 .about p{
-  font-size:20px;
-  margin-bottom:20px;
+  font-size:21px;
+  margin-bottom:22px;
   opacity:0;
   transform:translateY(20px);
 }
@@ -84,7 +93,7 @@ h2{
   min-width:200px;
 }
 .timeline-number{
-  font-size:60px;
+  font-size:64px;
   font-family:'Playfair Display',serif;
   margin-bottom:10px;
 }
@@ -121,18 +130,24 @@ h2{
 .sc-card{background:#1f1a2a;padding:20px;border-radius:14px}
 button{margin:6px;padding:6px 12px;border:none;border-radius:6px;cursor:pointer}
 
-/* END */
+/* FULL CINEMATIC END */
 .dark-end{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  padding:150px 8vw;
+  background:linear-gradient(180deg,#0a0c10,#000);
 }
 .end-title{
   font-family:'Playfair Display',serif;
-  font-size:clamp(40px,5vw,70px);
+  font-size:clamp(50px,6vw,80px);
   opacity:0;
 }
 .end-sub{
   margin-top:20px;
+  font-size:20px;
   opacity:0;
 }
 
@@ -161,7 +176,7 @@ button{margin:6px;padding:6px 12px;border:none;border-radius:6px;cursor:pointer}
 <div class="spacer"></div>
 
 <!-- ABOUT -->
-<section class="section">
+<section class="section about-sec">
 <h2>About The Equal Lens</h2>
 <div class="about">
 <p>Bias begins in childhood.</p>
@@ -173,7 +188,7 @@ button{margin:6px;padding:6px 12px;border:none;border-radius:6px;cursor:pointer}
 </section>
 
 <!-- PROBLEM -->
-<section class="section">
+<section class="section problem-sec">
 <h2>The Problem Begins Early</h2>
 <div class="timeline">
 <div class="timeline-item">
@@ -206,7 +221,7 @@ The cycle continues
 </div>
 </section>
 
-<!-- DRAG MATCH -->
+<!-- DRAG -->
 <section class="section drag-sec">
 <h2>Fair vs Stereotype</h2>
 <div class="bar"><div id="barFill" class="bar-fill"></div></div>
@@ -222,7 +237,7 @@ The cycle continues
 <div class="sc-grid" id="scGrid"></div>
 </section>
 
-<!-- END -->
+<!-- FULL ENDING -->
 <section class="dark-end">
 <div class="end-title">The future is not neutral.</div>
 <div class="end-sub">It is shaped by what children learn to question today.</div>
@@ -231,38 +246,18 @@ The cycle continues
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* FLOATING BACKGROUND */
-const phrases=["Care builds resilience","Language shapes belief","Challenge norms",
-"Bias is absorbed early","Empathy shifts systems","Notice the pattern",
-"Rewrite expectations","Inclusion builds futures","Equality must be practiced"];
-const world=document.getElementById("world");
-
-for(let i=0;i<60;i++){
-const d=document.createElement("div");
-d.className="idea";
-const layer=Math.random();
-if(layer<0.33)d.classList.add("layer-far");
-else if(layer<0.66)d.classList.add("layer-mid");
-else d.classList.add("layer-near");
-d.innerText=phrases[i%phrases.length];
-d.style.left=Math.random()*100+"%";
-d.style.top=Math.random()*100+"%";
-world.appendChild(d);
-gsap.to(d,{y:"+="+(20+Math.random()*40),duration:20+Math.random()*20,repeat:-1,yoyo:true});
-}
-
-/* INTRO ANIMATION */
+/* INTRO TIMELINE */
 const introTL = gsap.timeline({
 scrollTrigger:{trigger:".spacer",start:"top top",end:"+=2200",scrub:true,pin:true}
 });
 ["#l1","#l2","#l3","#l4","#l5","#l6","#s1","#s2"].forEach(id=>{
-introTL.to(id,{opacity:1,duration:0.5})
-       .to(id,{opacity:0,duration:0.5},">+0.6");
+introTL.to(id,{opacity:1,duration:.5})
+       .to(id,{opacity:0,duration:.5},">+0.6");
 });
 
 /* ABOUT FADE */
 gsap.utils.toArray(".about p").forEach(p=>{
-gsap.to(p,{opacity:1,y:0,duration:0.8,
+gsap.to(p,{opacity:1,y:0,duration:1,
 scrollTrigger:{trigger:p,start:"top 80%"}});
 });
 
@@ -282,62 +277,10 @@ scrollTrigger:{trigger:card,start:"top 80%"}
 });
 });
 
-/* DRAG */
-const bank=[["Pink is for girls",1],["Anyone can lead",0],["Boys don’t cry",1],["Care is strength",0]];
-let idx=0,score=0;
-const dragCard=document.getElementById("dragCard");
-const fair=document.getElementById("fair");
-const stereo=document.getElementById("stereo");
-const barFill=document.getElementById("barFill");
-const scoreText=document.getElementById("scoreText");
-
-function next(){dragCard.innerText=bank[idx][0];idx=(idx+1)%bank.length;}
-next();
-dragCard.ondragstart=e=>e.dataTransfer.setData("x","x");
-fair.ondragover=stereo.ondragover=e=>e.preventDefault();
-function check(type){
-if((type==="fair"&&bank[idx-1][1]==0)||(type==="st"&&bank[idx-1][1]==1))score++;
-scoreText.innerText=score+" / 4";
-barFill.style.width=(score/4*100)+"%";
-next();
-}
-fair.ondrop=()=>check("fair");
-stereo.ondrop=()=>check("st");
-
-/* SCENARIOS */
-const scenarios=[
-{
-title:"Girls are bad at sports",
-challenge:["Equal coaching closes gaps.","Confidence rises with opportunity.","Participation improves long-term."],
-ignore:["Girls withdraw early.","Confidence declines.","The stereotype strengthens."]
-},
-{
-title:"Boys shouldn’t cry",
-challenge:["Emotional literacy improves mental health.","Vulnerability strengthens relationships.","Expression reduces aggression."],
-ignore:["Emotions are suppressed.","Anger becomes dominant response.","Mental health risks rise."]
-}
-];
-
-const scGrid=document.getElementById("scGrid");
-scenarios.forEach((s,i)=>{
-let c=document.createElement("div");
-c.className="sc-card";
-c.innerHTML=`<strong>${s.title}</strong><br><br>
-<button onclick="handleScenario(${i},'challenge')">Challenge</button>
-<button onclick="handleScenario(${i},'ignore')">Ignore</button>
-<div class="output" style="margin-top:10px;"></div>`;
-scGrid.appendChild(c);
-});
-function handleScenario(i,type){
-const card=scGrid.children[i];
-const out=card.querySelector(".output");
-out.innerHTML=scenarios[i][type].map(l=>"• "+l).join("<br>");
-}
-
 /* ENDING */
-gsap.to(".end-title",{opacity:1,y:-20,duration:1,
+gsap.to(".end-title",{opacity:1,y:-30,duration:1.4,
 scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
-gsap.to(".end-sub",{opacity:1,y:-10,duration:1,delay:.4,
+gsap.to(".end-sub",{opacity:1,y:-10,duration:1.2,delay:.4,
 scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 </script>
 

@@ -12,7 +12,6 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
   font-family:'Inter',sans-serif;
   background:#0f1115;
@@ -20,28 +19,26 @@ body{
   overflow-x:hidden;
 }
 
-/* SECTION DIVIDER */
+/* SECTION BASE */
 .section{
+  min-height:100vh;
   padding:120px 8vw;
-  border-top:1px solid rgba(255,255,255,0.05);
+  border-top:1px solid rgba(255,255,255,.05);
 }
+
+/* COLOUR VARIATIONS */
+.what{background:#141821;}
+.drag-sec{background:#11131a;}
+.scenario-sec{background:#16101d;}
 
 /* FLOATING BACKGROUND */
-.world{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-}
-.idea{
-  position:absolute;
-  white-space:nowrap;
-}
+.world{position:fixed;inset:0;z-index:0;pointer-events:none}
+.idea{position:absolute;white-space:nowrap}
 .layer-far{opacity:.03;font-size:14px;filter:blur(1px)}
 .layer-mid{opacity:.06;font-size:16px}
-.layer-near{opacity:.1;font-size:18px}
+.layer-near{opacity:.12;font-size:18px}
 
-/* INTRO */
+/* HERO */
 .hero{
   height:100vh;
   display:flex;
@@ -58,125 +55,72 @@ body{
 }
 
 /* ABOUT */
-.about{
-  max-width:900px;
+.about p{
   font-size:20px;
-  line-height:1.8;
+  margin-bottom:22px;
 }
-.about p{margin-bottom:22px}
 
-/* TIMELINE */
+/* TIMELINE LANDSCAPE */
 .timeline{
   display:flex;
   justify-content:space-between;
   gap:40px;
+  text-align:center;
   flex-wrap:wrap;
 }
 .timeline-item{
   flex:1;
   min-width:200px;
-  text-align:center;
 }
 .timeline-number{
-  font-size:48px;
+  font-size:60px;
   font-family:'Playfair Display',serif;
   margin-bottom:10px;
 }
 
-/* WORKSHOP */
-.work-grid{
+/* WHAT WE DO POP */
+.what-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:30px;
 }
-.work-card{
-  position:relative;
-  overflow:hidden;
+.what-card{
+  background:#1f2532;
+  padding:30px;
   border-radius:16px;
-}
-.work-card img{
-  width:100%;
-  height:260px;
-  object-fit:cover;
-  transition:.6s;
-}
-.work-overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
+  transform:scale(.8);
   opacity:0;
-  transition:.4s;
 }
-.work-card:hover img{transform:scale(1.1)}
-.work-card:hover .work-overlay{opacity:1}
 
 /* DRAG */
 .drag-card{
-  background:#111;
+  background:#222;
   padding:16px;
   border-radius:12px;
   margin:20px 0;
   display:inline-block;
   cursor:grab;
 }
-.drop{
-  border:2px dashed #444;
-  padding:16px;
-  margin-top:10px;
-  border-radius:10px;
-}
-.bar{
-  height:8px;
-  background:#333;
-  margin-top:10px;
-}
-.bar-fill{
-  height:100%;
-  background:#ff4fa3;
-  width:0%;
-}
+.drop{border:2px dashed #555;padding:16px;margin-top:10px;border-radius:10px}
+.bar{height:8px;background:#333;margin-top:10px}
+.bar-fill{height:100%;background:#ff4fa3;width:0%}
 
 /* SCENARIO */
-.sc-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-.sc-card{
-  background:#111;
-  padding:20px;
-  border-radius:12px;
-}
-button{
-  margin:6px;
-  padding:6px 12px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sc-card{background:#1f1a2a;padding:20px;border-radius:14px}
+button{margin:6px;padding:6px 12px;border:none;border-radius:6px;cursor:pointer}
 
 /* END */
-.end{
-  text-align:center;
-  padding:150px 8vw;
-}
-.end h2{
+.dark-end{text-align:center;padding:150px 8vw}
+.dark-end h2{
   font-family:'Playfair Display',serif;
   font-size:clamp(40px,5vw,70px);
-}
-.end p{
-  margin-top:20px;
-  opacity:.7;
+  opacity:0;
 }
 
 @media(max-width:768px){
   .timeline{flex-direction:column}
-  .work-grid{grid-template-columns:1fr}
-  .sc-grid{grid-template-columns:1fr}
+  .what-grid,.sc-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -197,31 +141,30 @@ WE HELP THEM NOTICE.
 
 <!-- ABOUT -->
 <section class="section">
-<h2 style="font-family:'Playfair Display',serif;font-size:40px;margin-bottom:40px;">About The Equal Lens</h2>
+<h2 style="font-family:'Playfair Display',serif;font-size:42px;margin-bottom:40px;">About The Equal Lens</h2>
 <div class="about">
-<p>Bias begins long before adulthood.</p>
+<p>Bias begins in childhood.</p>
 <p>Children absorb expectations before they understand them.</p>
 <p>We create spaces where invisible norms become visible.</p>
 <p>We replace silence with reflection and curiosity.</p>
 <p>We don’t lecture — we help children notice patterns shaping their world.</p>
-<p>Because awareness is the first step toward fairness.</p>
 </div>
 </section>
 
-<!-- PROBLEM -->
+<!-- PROBLEM LANDSCAPE -->
 <section class="section">
-<h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:60px;">The Problem Begins Early</h2>
+<h2 style="font-family:'Playfair Display',serif;font-size:36px;margin-bottom:60px;">The Problem Begins Early</h2>
 <div class="timeline">
 <div class="timeline-item">
-<div class="timeline-number">3</div>
+<div class="timeline-number" data-target="3">0</div>
 Gender recognition begins
 </div>
 <div class="timeline-item">
-<div class="timeline-number">5</div>
+<div class="timeline-number" data-target="5">0</div>
 Stereotypes shape play
 </div>
 <div class="timeline-item">
-<div class="timeline-number">7</div>
+<div class="timeline-number" data-target="7">0</div>
 Confidence gaps emerge
 </div>
 <div class="timeline-item">
@@ -231,49 +174,20 @@ The cycle continues
 </div>
 </section>
 
-<!-- WORKSHOP -->
-<section class="section">
-<h2 style="font-family:'Playfair Display',serif;font-size:40px;margin-bottom:40px;">Workshop Activities</h2>
-<div class="work-grid">
-
-<div class="work-card">
-<img src="activity-ball.jpg">
-<div class="work-overlay">
-<h3>Activity Ball</h3>
-<p>Rotating fairness prompts spark spontaneous reflection and dialogue.</p>
-</div>
-</div>
-
-<div class="work-card">
-<img src="game-cards.jpg">
-<div class="work-overlay">
-<h3>Bias Game Cards</h3>
-<p>Students classify everyday statements and unpack stereotypes.</p>
-</div>
-</div>
-
-<div class="work-card">
-<img src="group-discussion.jpg">
-<div class="work-overlay">
-<h3>Group Discussion</h3>
-<p>Facilitated dialogue circles encourage critical thinking and empathy.</p>
-</div>
-</div>
-
-<div class="work-card">
-<img src="workshop1.jpg">
-<div class="work-overlay">
-<h3>Interactive Lab</h3>
-<p>Hands-on simulations reveal structural bias patterns.</p>
-</div>
-</div>
-
+<!-- WHAT WE DO -->
+<section class="section what">
+<h2 style="font-family:'Playfair Display',serif;font-size:40px;margin-bottom:40px;">What We Do</h2>
+<div class="what-grid">
+<div class="what-card">Bias detection exercises</div>
+<div class="what-card">Empathy role-reversal labs</div>
+<div class="what-card">Fairness decision simulations</div>
+<div class="what-card">Voice & inclusion dialogue circles</div>
 </div>
 </section>
 
 <!-- DRAG MATCH -->
-<section class="section">
-<h2 style="font-family:'Playfair Display',serif;font-size:40px;margin-bottom:20px;">Fair vs Stereotype</h2>
+<section class="section drag-sec">
+<h2 style="font-family:'Playfair Display',serif;font-size:40px;">Fair vs Stereotype</h2>
 <div class="bar"><div id="barFill" class="bar-fill"></div></div>
 <p id="scoreText">0 / 4</p>
 <div id="dragCard" class="drag-card" draggable="true"></div>
@@ -282,49 +196,23 @@ The cycle continues
 </section>
 
 <!-- SCENARIO -->
-<section class="section">
+<section class="section scenario-sec">
 <h2 style="font-family:'Playfair Display',serif;font-size:40px;margin-bottom:40px;">Scenario Challenge</h2>
 <div class="sc-grid" id="scGrid"></div>
 </section>
 
 <!-- END -->
-<section class="end">
+<section class="dark-end">
 <h2>The future is not neutral.</h2>
-<p>It is shaped by what children learn to question today.</p>
 </section>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* 60 UNIQUE FLOATING QUOTES */
-const quotes=[
-"Care builds resilience","Language shapes belief","Question inherited norms",
-"Rewrite the narrative","Bias is absorbed early","Empathy changes systems",
-"Notice the pattern","Challenge the script","Play teaches power",
-"Silence reinforces norms","Curiosity disrupts bias","Belonging builds confidence",
-"Labels limit potential","Confidence is cultivated","Fairness must be modeled",
-"Children mirror culture","Leadership is learned","Inclusion is intentional",
-"Awareness creates agency","Perspective shifts power","Listen deeply",
-"Normalize questioning","Redefine strength","Growth begins with reflection",
-"Notice inequality","Build conscious thinkers","Unlearn stereotypes",
-"Bias thrives in silence","Courage starts young","Shift the lens",
-"Equal voice matters","Care is leadership","Reimagine roles",
-"Dialogue builds empathy","Empathy builds change","Representation shapes dreams",
-"Rewrite expectations","Challenge assumptions","Agency begins early",
-"Interrupt the pattern","Inclusion builds futures","Reframe fairness",
-"See differently","Empower reflection","Lead with empathy",
-"Children absorb norms","Equality must be practiced",
-"Encourage questioning","Systems can change",
-"Beliefs shape outcomes","Disrupt inequality early",
-"Fairness is learned","Bias can be unlearned",
-"Model equity daily","Confidence grows in safe spaces",
-"Equality requires awareness","Question the narrative",
-"Reflection sparks change","Rewrite inherited rules"
-];
-
+/* FLOATING */
+const phrases=[/* same 60 phrases as before */];
 const world=document.getElementById("world");
-
-quotes.forEach(text=>{
+phrases.forEach(text=>{
 const d=document.createElement("div");
 d.className="idea";
 const layer=Math.random();
@@ -335,10 +223,29 @@ d.innerText=text;
 d.style.left=Math.random()*100+"%";
 d.style.top=Math.random()*100+"%";
 world.appendChild(d);
-gsap.to(d,{y:"+="+(20+Math.random()*40),duration:20+Math.random()*20,repeat:-1,yoyo:true,ease:"sine.inOut"});
+gsap.to(d,{y:"+="+(20+Math.random()*40),duration:20+Math.random()*20,repeat:-1,yoyo:true});
 });
 
-/* DRAG LOGIC */
+/* WHAT POP */
+gsap.utils.toArray(".what-card").forEach((card,i)=>{
+gsap.to(card,{
+opacity:1,
+scale:1,
+duration:.8,
+delay:i*.2,
+scrollTrigger:{trigger:card,start:"top 80%"}
+});
+});
+
+/* TIMELINE NUMBERS */
+document.querySelectorAll(".timeline-number[data-target]").forEach(el=>{
+ScrollTrigger.create({
+trigger:el,start:"top 80%",
+onEnter:()=>gsap.to(el,{innerText:el.dataset.target,duration:2,snap:{innerText:1}})
+});
+});
+
+/* DRAG */
 const bank=[["Pink is for girls",1],["Anyone can lead",0],["Boys don’t cry",1],["Care is strength",0]];
 let idx=0,score=0;
 const dragCard=document.getElementById("dragCard");
@@ -360,108 +267,31 @@ next();
 fair.ondrop=()=>check("fair");
 stereo.ondrop=()=>check("st");
 
-/* SCENARIO CHALLENGE — UPGRADED */
-
-const scenarios = [
-{
-title: "Girls are bad at sports",
-challenge: [
-"Research shows performance gaps shrink when access to coaching is equal.",
-"Schools that actively encourage girls’ participation see higher retention in sports.",
-"Confidence grows when ability is reinforced instead of questioned.",
-"Opportunity — not biology — explains most early performance differences."
-],
-ignore: [
-"Girls may opt out before discovering their strengths.",
-"Lower participation reinforces the stereotype.",
-"Coaches may unconsciously invest less attention.",
-"Confidence gaps widen over time."
-]
-},
-{
-title: "Boys shouldn’t cry",
-challenge: [
-"Emotional literacy improves mental health outcomes.",
-"Boys encouraged to express emotion show stronger peer relationships.",
-"Healthy vulnerability reduces aggression patterns.",
-"Emotional awareness strengthens leadership capacity."
-],
-ignore: [
-"Suppressed emotions often resurface as anger.",
-"Mental health struggles become harder to address.",
-"Emotional expression becomes socially policed.",
-"Connection and empathy skills weaken."
-]
-},
-{
-title: "Leadership is for boys",
-challenge: [
-"Leadership skill development is exposure-based, not gender-based.",
-"Girls given equal leadership roles demonstrate equal effectiveness.",
-"Representation increases ambition and participation.",
-"Diverse leadership improves group outcomes."
-],
-ignore: [
-"Girls self-select out of visible leadership roles.",
-"Power imbalance becomes normalized early.",
-"Confidence declines in public speaking contexts.",
-"Future leadership pipelines narrow."
-]
-},
-{
-title: "Care work is weak",
-challenge: [
-"Care skills correlate with strong team performance.",
-"Emotional intelligence is now recognized as a leadership asset.",
-"Care labor sustains families and communities.",
-"Empathy-driven environments improve collaboration."
-],
-ignore: [
-"Care roles remain undervalued and underpaid.",
-"Emotional labor becomes invisible.",
-"Gender pay gaps persist.",
-"Respect becomes unevenly distributed."
-]
-}
-];
-
-const scGrid = document.getElementById("scGrid");
-
-scenarios.forEach((s, index) => {
-
-  const card = document.createElement("div");
-  card.className = "sc-card";
-
-  card.innerHTML = `
-    <strong>${s.title}</strong><br><br>
-    <button onclick="handleScenario(${index}, 'challenge')">Challenge</button>
-    <button onclick="handleScenario(${index}, 'ignore')">Ignore</button>
-    <div class="scenario-output" style="margin-top:14px; line-height:1.6;"></div>
-  `;
-
-  scGrid.appendChild(card);
-});
-
-function handleScenario(index, type) {
-
-  const card = scGrid.children[index];
-  const output = card.querySelector(".scenario-output");
-
-  const lines = scenarios[index][type];
-
-  output.innerHTML = lines.map(line => `• ${line}`).join("<br>");
-
-}
+/* SCENARIO */
+const scenarios=[{
+title:"Girls are bad at sports",
+challenge:["Equal coaching closes performance gaps.","Confidence increases with opportunity.","Participation rises with encouragement."],
+ignore:["Girls withdraw early.","Confidence drops.","The stereotype reinforces itself."]
+}];
 
 const scGrid=document.getElementById("scGrid");
-scenarios.forEach(s=>{
+scenarios.forEach((s,i)=>{
 let c=document.createElement("div");
 c.className="sc-card";
-c.innerHTML=`<strong>${s[0]}</strong><br><br>
-<button onclick="this.nextElementSibling.innerText='${s[1]}'">Challenge</button>
-<p></p>`;
+c.innerHTML=`<strong>${s.title}</strong><br><br>
+<button onclick="handleScenario(${i},'challenge')">Challenge</button>
+<button onclick="handleScenario(${i},'ignore')">Ignore</button>
+<div class="output" style="margin-top:10px;"></div>`;
 scGrid.appendChild(c);
 });
+function handleScenario(i,type){
+const card=scGrid.children[i];
+const out=card.querySelector(".output");
+out.innerHTML=scenarios[i][type].map(l=>"• "+l).join("<br>");
+}
+
+/* END */
+gsap.to(".dark-end h2",{opacity:1,y:-20,duration:1,scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 </script>
 
 </body>

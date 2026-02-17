@@ -19,14 +19,45 @@ body{
   overflow-x:hidden;
 }
 
-/* SECTION BASE */
+/* BASE SECTION */
 .section{
   min-height:100vh;
   padding:120px 8vw;
   border-top:1px solid rgba(255,255,255,.05);
   position:relative;
-  overflow:hidden;
+  z-index:2;
+  backdrop-filter: blur(2px);
 }
+
+/* TRANSLUCENT VARIATIONS */
+.about-sec{
+  background:rgba(21,26,34,0.75);
+}
+
+.problem-sec{
+  background:rgba(26,19,36,0.75);
+}
+
+.what{
+  background:rgba(20,24,33,0.75);
+}
+
+.workshop-sec{
+  background:rgba(23,27,36,0.75);
+}
+
+.drag-sec{
+  background:rgba(17,19,26,0.75);
+}
+
+.scenario-sec{
+  background:rgba(22,16,29,0.75);
+}
+
+.dark-end{
+  background:rgba(0,0,0,0.85);
+}
+
 
 /* SOFT GLOW EFFECT */
 .glow::before{
@@ -121,7 +152,6 @@ h2{
   opacity:0.12;
   font-size:18px;
 }
-
 /* TIMELINE */
 .timeline{
   display:flex;
@@ -653,4 +683,5 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 

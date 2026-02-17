@@ -30,26 +30,30 @@ body{
   position:fixed;
   inset:0;
   z-index:0;
-  pointer-events:none;
+  pointer-events:auto;   /* 🔥 allow hover */
   overflow:hidden;
 }
+
 .idea{
   position:absolute;
   white-space:nowrap;
   font-family:'Inter',sans-serif;
-  transition: all 0.3s ease;
+  transition:all .3s ease;
+  cursor:default;
 }
 
-.idea:hover{
-  opacity:0.6 !important;
-  transform:scale(1.4);
-  color:#ffffff;
-  filter:blur(0px);
-  z-index:5;
-}
 .layer-far{opacity:.03;font-size:14px;filter:blur(1px)}
 .layer-mid{opacity:.06;font-size:16px}
 .layer-near{opacity:.12;font-size:18px}
+
+.idea:hover{
+  opacity:0.8 !important;
+  transform:scale(1.6);
+  filter:blur(0);
+  color:#ffffff;
+  z-index:5;
+}
+
 
 
 
@@ -176,19 +180,20 @@ h2{
 .timeline{
   display:flex;
   justify-content:space-between;
-  gap:40px;
-  text-align:center;
-  flex-wrap:nowrap;        /* 🔥 force single row */
   align-items:center;
+  gap:30px;
+  flex-wrap:nowrap;      /* force single row */
+  overflow-x:auto;       /* prevents breaking */
 }
 
 .timeline-item{
   flex:1;
-  min-width:0;             /* 🔥 remove wrapping trigger */
+  min-width:0;           /* removes wrap trigger */
 }
 
+
 .timeline-number{
-  font-size:68px;
+  font-size:48px;
   font-family:'Bodoni Moda',serif;
   margin-bottom:12px;
 }
@@ -351,8 +356,9 @@ Stereotypes shape play
 <div class="timeline-number" data-target="7">0</div>
 Confidence gaps emerge
 <div class="timeline-item">
-  <div class="timeline-number" id="cycleCounter">0</div>
-  The cycle continues
+<div class="timeline-number" id="cycleCounter">0</div>
+<div style="font-size:16px; opacity:.7;">Age (Years)</div>
+<div style="margin-top:6px;">The cycle continues</div>
 </div>
 </div>
 </section>
@@ -689,6 +695,7 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 
 
 

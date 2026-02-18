@@ -139,6 +139,48 @@ body{
 .drag-sec{background:rgba(17,19,26,.85);}
 .scenario-sec{background:rgba(22,16,29,.85);}
 
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+.about-card{
+  position:relative;
+  background:rgba(255,255,255,0.05);
+  padding:40px;
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:all .4s ease;
+  backdrop-filter:blur(8px);
+}
+
+.about-front{
+  font-family:'Bodoni Moda', serif;
+  font-size:24px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+.about-back{
+  margin-top:20px;
+  font-size:16px;
+  line-height:1.7;
+  opacity:0;
+  transform:translateY(10px);
+  transition:all .4s ease;
+}
+
+.about-card:hover{
+  background:rgba(255,255,255,0.08);
+  transform:translateY(-6px);
+}
+
+.about-card:hover .about-back{
+  opacity:1;
+  transform:translateY(0);
+}
 
 /* ================= HEADINGS ================= */
 h1, h2, h3{
@@ -357,44 +399,38 @@ button{
 <!-- ABOUT -->
 <section class="section about-sec glow">
 <h2>About The Equal Lens</h2>
-<div class="about">
-<p>Bias begins in childhood.</p>
-<p>Children absorb expectations before they understand them.</p>
-<p>We create spaces where invisible norms become visible.</p>
-<p>We replace silence with reflection and curiosity.</p>
-<p>We don’t lecture — we help children notice patterns shaping their world.</p>
+
+<div class="about-grid">
+
+  <div class="about-card">
+    <div class="about-front">Bias begins in childhood.</div>
+    <div class="about-back">
+      Long before adulthood, children internalize patterns, expectations, and invisible hierarchies that shape confidence and identity.
+    </div>
+  </div>
+
+  <div class="about-card">
+    <div class="about-front">Children absorb before they understand.</div>
+    <div class="about-back">
+      Through play, language, and subtle social cues, norms become embedded long before they are questioned.
+    </div>
+  </div>
+
+  <div class="about-card">
+    <div class="about-front">We create spaces to notice.</div>
+    <div class="about-back">
+      Instead of lecturing, we design immersive experiences that allow students to observe bias forming in real time.
+    </div>
+  </div>
+
+  <div class="about-card">
+    <div class="about-front">Awareness changes trajectories.</div>
+    <div class="about-back">
+      When children recognize patterns early, they develop agency to rewrite them.
+    </div>
+  </div>
+
 </div>
-</section>
-
-<section class="section problem-sec glow">
-<h2>The Problem Begins Early</h2>
-
-<div class="timeline">
-
-  <div class="timeline-item">
-    <div class="timeline-number" data-target="3">0</div>
-    Gender recognition begins
-  </div>
-
-  <div class="timeline-item">
-    <div class="timeline-number" data-target="5">0</div>
-    Stereotypes shape play
-  </div>
-
-  <div class="timeline-item">
-    <div class="timeline-number" data-target="7">0</div>
-    Confidence gaps emerge
-  </div>
-
-</div>
-
-<div style="margin-top:80px; text-align:center;">
-  <div class="timeline-number" id="cycleCounter">∞</div>
-  <div style="margin-top:10px; font-size:18px; opacity:.7;">
-    The cycle continues
-  </div>
-</div>
-
 </section>
 
 <!-- WHAT WE DO -->
@@ -759,6 +795,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

@@ -59,7 +59,20 @@ body{
   z-index:10;
 }
 
+.what,
+.workshop-sec{
+  position:relative;
+  z-index:10;   /* above background quotes */
+}
 
+.what h2,
+.workshop-sec h2{
+  color:#ffffff;
+}
+
+.what-card{
+  background:#2a3240;
+}
 
 
 /* ================= INTRO ================= */
@@ -108,8 +121,15 @@ body{
 /* ================= TINTED TRANSLUCENT SECTION COLORS ================= */
 .about-sec{background:rgba(32,38,48,0.35);}
 .problem-sec{background:rgba(48,28,58,0.35);}
-.what{background:rgba(26,40,52,0.35);}
-.workshop-sec{background:rgba(36,32,48,0.35);}
+.what{
+  background:linear-gradient(180deg, #1b2430, #141821);
+}
+
+.workshop-sec{
+  background:linear-gradient(180deg, #2a1f33, #1b1422);
+}
+
+
 .drag-sec{background:rgba(30,36,28,0.4);}
 .scenario-sec{background:rgba(44,24,40,0.4);}
 .dark-end{background:rgba(0,0,0,0.75);}
@@ -870,6 +890,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

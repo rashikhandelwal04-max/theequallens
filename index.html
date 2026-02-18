@@ -30,9 +30,10 @@ body{
   position:fixed;
   inset:0;
   z-index:1;
-  pointer-events:auto;   /* 🔥 allow hover */
+  pointer-events:auto;   /* allow hover */
   overflow:hidden;
 }
+
 
 .idea{
   position:absolute;
@@ -42,16 +43,17 @@ body{
   cursor:default;
 }
 
-.layer-far{opacity:.03;font-size:14px;filter:blur(1px)}
-.layer-mid{opacity:.06;font-size:16px}
+.layer-far{opacity:.04;font-size:14px;filter:blur(1px)}
+.layer-mid{opacity:.07;font-size:16px}
 .layer-near{opacity:.12;font-size:18px}
 
 .idea:hover{
-  opacity:0.8 !important;
+  opacity:1 !important;
   transform:scale(1.6);
   filter:blur(0);
   color:#ffffff;
-  z-index:5;
+  text-shadow:0 0 8px rgba(255,255,255,0.6);
+  z-index:10;
 }
 
 
@@ -84,30 +86,37 @@ body{
   padding:120px 8vw;
   border-top:1px solid rgba(255,255,255,.05);
   position:relative;
+  pointer-events:auto;
   z-index:2;
-  backdrop-filter:blur(2px);
+  backdrop-filter:blur(6px);
 }
 /* ================= TINTED TRANSLUCENT SECTION COLORS ================= */
-
+.about-sec{
+  background:rgba(32,38,48,0.45);
+}
 
 .problem-sec{
-  background:rgba(48, 28, 58, 0.55);   /* deep muted plum */
+  background:rgba(48,28,58,0.45);
 }
 
 .what{
-  background:rgba(26, 40, 52, 0.55);   /* steel teal */
+  background:rgba(26,40,52,0.45);
 }
 
 .workshop-sec{
-  background:rgba(36, 32, 48, 0.55);   /* soft charcoal violet */
+  background:rgba(36,32,48,0.45);
 }
 
 .drag-sec{
-  background:rgba(30, 36, 28, 0.55);   /* muted olive-grey */
+  background:rgba(30,36,28,0.5);
 }
 
 .scenario-sec{
-  background:rgba(44, 24, 40, 0.55);   /* dusty wine */
+  background:rgba(44,24,40,0.5);
+}
+
+.dark-end{
+  background:rgba(0,0,0,0.5);
 }
 
 /* ================= GLOW ================= */
@@ -739,6 +748,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

@@ -29,10 +29,10 @@ body{
 .world{
   position:fixed;
   inset:0;
-  z-index:5;
-  pointer-events:auto;   /* allow hover */
-  overflow:hidden;
+  z-index:1;
+  pointer-events:none; /* container ignores pointer */
 }
+
 
 
 .idea{
@@ -40,8 +40,10 @@ body{
   white-space:nowrap;
   font-family:'Inter',sans-serif;
   transition:all .3s ease;
+  pointer-events:auto;   /* 🔥 only text is interactive */
   cursor:default;
 }
+
 
 .layer-far{opacity:.04;font-size:14px;filter:blur(1px)}
 .layer-mid{opacity:.07;font-size:16px}
@@ -90,34 +92,13 @@ body{
   z-index:2;
 }
 /* ================= TINTED TRANSLUCENT SECTION COLORS ================= */
-.about-sec{
-  background:rgba(32,38,48,0.45);
-}
-
-.problem-sec{
-  background:rgba(48,28,58,0.45);
-}
-
-.what{
-  background:rgba(26,40,52,0.45);
-}
-
-.workshop-sec{
-  background:rgba(36,32,48,0.45);
-}
-
-.drag-sec{
-  background:rgba(30,36,28,0.5);
-}
-
-.scenario-sec{
-  background:rgba(44,24,40,0.5);
-}
-
-.dark-end{
-  background:rgba(0,0,0,0.5);
-}
-
+.about-sec{background:rgba(32,38,48,0.35);}
+.problem-sec{background:rgba(48,28,58,0.35);}
+.what{background:rgba(26,40,52,0.35);}
+.workshop-sec{background:rgba(36,32,48,0.35);}
+.drag-sec{background:rgba(30,36,28,0.4);}
+.scenario-sec{background:rgba(44,24,40,0.4);}
+.dark-end{background:rgba(0,0,0,0.75);}
 /* ================= GLOW ================= */
 .glow::before{
   content:"";
@@ -747,6 +728,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

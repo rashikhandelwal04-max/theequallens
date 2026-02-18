@@ -200,15 +200,16 @@ h2{
 .timeline{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
+  align-items:flex-start;  /* important */
   gap:40px;
-  flex-wrap:nowrap;
 }
 
 .timeline-item{
   flex:1;
-  min-width:0;
   text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
 }
 
 
@@ -364,10 +365,10 @@ Stereotypes shape play
 <div class="timeline-number" data-target="7">0</div>
 Confidence gaps emerge
 <div class="timeline-item">
-<div class="timeline-number" id="cycleCounter">0</div>
-<div style="font-size:16px; opacity:.7;">Age (Years)</div>
-<div style="margin-top:6px;">The cycle continues</div>
-</div>
+  <div class="timeline-number" id="cycleCounter">∞</div>
+  <div style="margin-top:10px; font-size:16px; opacity:.7;">
+    The cycle continues
+  </div>
 </div>
 </section>
 
@@ -731,6 +732,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

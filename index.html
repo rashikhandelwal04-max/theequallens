@@ -117,6 +117,20 @@ body{
   z-index:10;
 }
 
+/* BLOCK BACKGROUND QUOTES IN WHAT + WORKSHOP */
+
+.what::before,
+.workshop-sec::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#141821;   /* solid background for What */
+  z-index:-1;
+}
+
+.workshop-sec::before{
+  background:#1b1422;   /* solid background for Workshop */
+}
 
 /* ================= TINTED TRANSLUCENT SECTION COLORS ================= */
 .about-sec{background:rgba(32,38,48,0.35);}
@@ -890,6 +904,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

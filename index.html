@@ -29,9 +29,10 @@ body{
 .world{
   position:fixed;
   inset:0;
-  z-index:1;
-  pointer-events:none; /* container ignores pointer */
+  z-index:5;         /* above sections */
+  pointer-events:auto;
 }
+
 
 
 
@@ -91,6 +92,13 @@ body{
   pointer-events:auto;
   z-index:2;
 }
+.drag-sec,
+.scenario-sec{
+  position:relative;
+  z-index:10;
+  opacity:.03; /* higher than background */
+}
+
 /* ================= TINTED TRANSLUCENT SECTION COLORS ================= */
 .about-sec{background:rgba(32,38,48,0.35);}
 .problem-sec{background:rgba(48,28,58,0.35);}
@@ -728,6 +736,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

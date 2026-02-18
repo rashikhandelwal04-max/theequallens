@@ -29,8 +29,8 @@ body{
 .world{
   position:fixed;
   inset:0;
-  z-index:1;              /* behind sections */
-  pointer-events:none;    /* DO NOT capture clicks */
+  z-index:5;           /* above sections */
+  pointer-events:auto;
 }
 
 
@@ -79,7 +79,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:3;
+  z-index:10;
   pointer-events:none;
 }
 .line{
@@ -115,6 +115,13 @@ body{
 }
 
 /* BLOCK BACKGROUND QUOTES IN WHAT + WORKSHOP */
+.what,
+.workshop-sec,
+.drag-sec,
+.scenario-sec{
+  position:relative;
+  z-index:10;          /* higher than quotes */
+}
 
 
 .workshop-sec::before{
@@ -887,6 +894,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

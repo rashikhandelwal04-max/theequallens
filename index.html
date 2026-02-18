@@ -139,6 +139,35 @@ body{
 .drag-sec{background:rgba(17,19,26,.85);}
 .scenario-sec{background:rgba(22,16,29,.85);}
 
+.about-exhibit{
+  display:flex;
+  flex-direction:column;
+  gap:120px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.exhibit-line{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(28px,3.5vw,48px);
+  font-weight:500;
+  letter-spacing:1px;
+  opacity:0;
+  transform:translateY(40px);
+  text-align:left;
+}
+
+.exhibit-line:nth-child(even){
+  align-self:flex-end;
+  text-align:right;
+}
+
+.exhibit-line.final{
+  font-size:clamp(32px,4vw,56px);
+  font-weight:600;
+}
+
+
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -396,41 +425,39 @@ button{
 </div>
 <div class="spacer"></div>
 
-<!-- ABOUT -->
+<!-- ABOUT – CONCEPTUAL EXHIBITION -->
 <section class="section about-sec glow">
-<h2>About The Equal Lens</h2>
 
-<div class="about-grid">
+<div class="about-exhibit">
 
-  <div class="about-card">
-    <div class="about-front">Bias begins in childhood.</div>
-    <div class="about-back">
-      Long before adulthood, children internalize patterns, expectations, and invisible hierarchies that shape confidence and identity.
-    </div>
+  <div class="exhibit-line">Bias begins before language.</div>
+
+  <div class="exhibit-line">
+    Children absorb expectation before they understand choice.
   </div>
 
-  <div class="about-card">
-    <div class="about-front">Children absorb before they understand.</div>
-    <div class="about-back">
-      Through play, language, and subtle social cues, norms become embedded long before they are questioned.
-    </div>
+  <div class="exhibit-line">
+    Through play. Through silence. Through repetition.
   </div>
 
-  <div class="about-card">
-    <div class="about-front">We create spaces to notice.</div>
-    <div class="about-back">
-      Instead of lecturing, we design immersive experiences that allow students to observe bias forming in real time.
-    </div>
+  <div class="exhibit-line">
+    Confidence bends quietly.
   </div>
 
-  <div class="about-card">
-    <div class="about-front">Awareness changes trajectories.</div>
-    <div class="about-back">
-      When children recognize patterns early, they develop agency to rewrite them.
-    </div>
+  <div class="exhibit-line">
+    We do not lecture.
+  </div>
+
+  <div class="exhibit-line">
+    We create moments where noticing becomes possible.
+  </div>
+
+  <div class="exhibit-line final">
+    And once seen, patterns cannot remain invisible.
   </div>
 
 </div>
+
 </section>
 
 <!-- WHAT WE DO -->
@@ -667,6 +694,22 @@ scrollTrigger:{trigger:card,start:"top 80%"}
 });
 });
 
+/* ================= ABOUT EXHIBIT ANIMATION ================= */
+
+gsap.utils.toArray(".exhibit-line").forEach(line=>{
+  gsap.to(line,{
+    opacity:1,
+    y:0,
+    duration:1.4,
+    ease:"power3.out",
+    scrollTrigger:{
+      trigger:line,
+      start:"top 85%"
+    }
+  });
+});
+
+
 /* DRAG */
 const bank=[
 ["Pink is for girls",1],
@@ -795,6 +838,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

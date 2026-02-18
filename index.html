@@ -138,15 +138,7 @@ body{
 .workshop-sec{background:rgba(23,27,36,.82);}
 .drag-sec{background:rgba(17,19,26,.85);}
 .scenario-sec{background:rgba(22,16,29,.85);}
-.dark-end{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:rgba(0,0,0,.92);
-}
+
 
 /* ================= HEADINGS ================= */
 h1, h2, h3{
@@ -163,9 +155,7 @@ h2{
   font-size:clamp(34px,4vw,60px);
 }
 
-.end-title{
-  font-size:clamp(60px,6vw,100px);
-}
+
 
 /* Body refinement */
 .about p,
@@ -177,7 +167,22 @@ h2{
   line-height:1.7;
 }
 
-  .dark-end{
+.end-title{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(60px,6vw,100px);
+  font-weight:600;
+  transform:translateY(40px);
+  opacity:0;
+}
+
+.end-sub{
+  margin-top:20px;
+  font-size:18px;
+  transform:translateY(20px);
+  opacity:0;
+}
+
+.dark-end{
   position:relative;
   z-index:2;
   height:100vh;
@@ -189,19 +194,7 @@ h2{
   background:rgba(0,0,0,.92);
 }
 
-.end-title{
-  font-family:'Bodoni Moda', serif;
-  font-size:clamp(60px,6vw,100px);
-  font-weight:600;
-  letter-spacing:1px;
-  opacity:0;
-}
 
-.end-sub{
-  margin-top:20px;
-  font-size:18px;
-  opacity:0;
-}
 
 /* ================= TIMELINE ================= */
 .timeline{
@@ -710,39 +703,35 @@ gsap.from(out,{
 /* END */
 /* ================= ENDING ANIMATION ================= */
 
-gsap.fromTo(".end-title",
-  {opacity:0, y:40},
-  {
-    opacity:1,
-    y:0,
-    duration:1.2,
-    ease:"power3.out",
-    scrollTrigger:{
-      trigger:".dark-end",
-      start:"top 70%",
-      toggleActions:"play none none none"
-    }
-  }
-);
+/* ================= ENDING ANIMATION ================= */
 
-gsap.fromTo(".end-sub",
-  {opacity:0, y:20},
-  {
-    opacity:1,
-    y:0,
-    duration:1,
-    delay:0.3,
-    ease:"power3.out",
-    scrollTrigger:{
-      trigger:".dark-end",
-      start:"top 70%"
-    }
+ScrollTrigger.create({
+  trigger: ".dark-end",
+  start: "top 80%",
+  onEnter: () => {
+
+    gsap.to(".end-title",{
+      opacity:1,
+      y:0,
+      duration:1.2,
+      ease:"power3.out"
+    });
+
+    gsap.to(".end-sub",{
+      opacity:1,
+      y:0,
+      duration:1,
+      delay:0.3,
+      ease:"power3.out"
+    });
+
   }
-);
+});
 </script>
 
 </body>
 </html>
+
 
 
 

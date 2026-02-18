@@ -567,7 +567,7 @@ button{
 <h2>Fair vs Stereotype</h2>
 <div class="bar"><div id="barFill" class="bar-fill"></div></div>
 <p id="scoreText">0 / 4</p>
-<div id="dragCard" class="drag-card" draggable="true"></div>
+<div id="dragCard" class="drag-card"></div>
 <div class="drop" id="fair">Fair</div>
 <div class="drop" id="stereo">Stereotype</div>
 </section>
@@ -766,42 +766,50 @@ gsap.utils.toArray(".exhibit-line").forEach(line=>{
 });
 
 
-/* DRAG */
-const bank=[
+//* ================= MOBILE-SAFE DRAG MATCH ================= */
+
+const bank = [
 ["Pink is for girls",1],
 ["Anyone can lead",0],
 ["Boys don’t cry",1],
 ["Care is strength",0]
 ];
 
-let idx=0,score=0,current;
+let idx = 0;
+let score = 0;
+let current;
 
-const dragCard=document.getElementById("dragCard");
-const fair=document.getElementById("fair");
-const stereo=document.getElementById("stereo");
-const barFill=document.getElementById("barFill");
-const scoreText=document.getElementById("scoreText");
+const dragCard = document.getElementById("dragCard");
+const fair = document.getElementById("fair");
+const stereo = document.getElementById("stereo");
+const barFill = document.getElementById("barFill");
+const scoreText = document.getElementById("scoreText");
 
 function nextPhrase(){
-  current=bank[idx];
-  dragCard.innerText=current[0];
-  idx=(idx+1)%bank.length;
+  current = bank[idx];
+  dragCard.innerText = current[0];
+  idx = (idx + 1) % bank.length;
 }
+
 nextPhrase();
 
-dragCard.ondragstart=e=>e.dataTransfer.setData("text","x");
-fair.ondragover=stereo.ondragover=e=>e.preventDefault();
+/* Instead of dragging, user taps the category */
 
 function check(type){
-  if((type==="fair"&&current[1]===0)||(type==="stereo"&&current[1]===1)){
-    score++;
+  if((type === "fair" && current[1] === 0) ||
+     (type === "stereo" && current[1] === 1)){
+       score++;
   }
-  scoreText.innerText=score+" / 4";
-  barFill.style.width=(score/4*100)+"%";
+
+  scoreText.innerText = score + " / 4";
+  barFill.style.width = (score/4 * 100) + "%";
+
   nextPhrase();
 }
-fair.ondrop=()=>check("fair");
-stereo.ondrop=()=>check("stereo");
+
+fair.addEventListener("click", () => check("fair"));
+stereo.addEventListener("click", () => check("stereo"));
+
 
 /* SCENARIOS */
 const scenarios=[
@@ -894,6 +902,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

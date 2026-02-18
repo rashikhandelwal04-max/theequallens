@@ -89,9 +89,6 @@ body{
 }
 /* ================= TINTED TRANSLUCENT SECTION COLORS ================= */
 
-.about-sec{
-  background:rgba(32, 38, 48, 0.55);   /* cool blue-grey */
-}
 
 .problem-sec{
   background:rgba(48, 28, 58, 0.55);   /* deep muted plum */
@@ -698,15 +695,17 @@ scGrid.appendChild(c);
 });
 
 function handleScenario(i,type){
-const card=scGrid.children[i];
-const out=card.querySelector(".scenario-output");
-out.innerHTML = "<p>" + scenarios[i][type].join(" ") + "</p>";
+  const card = scGrid.children[i];
+  const out = card.querySelector(".scenario-output");
+
+  out.innerHTML = "<p>" + scenarios[i][type].join(" ") + "</p>";
+
+  gsap.from(out,{
+    opacity:0,
+    y:10,
+    duration:0.4
+  });
 }
-gsap.from(out,{
-  opacity:0,
-  y:10,
-  duration:0.4
-});
 
 
 /* END */
@@ -740,6 +739,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

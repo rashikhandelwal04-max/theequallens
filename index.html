@@ -13,6 +13,35 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
+.why-sec{
+  background:rgba(40,30,50,0.45);
+}
+
+.why-content{
+  max-width:900px;
+  margin:0 auto;
+}
+
+.why-content p{
+  font-size:18px;
+  line-height:1.8;
+  margin-bottom:22px;
+}
+
+.why-content ul{
+  margin:20px 0 30px 20px;
+}
+
+.why-content li{
+  margin-bottom:10px;
+}
+
+.contact-info{
+  margin-top:60px;
+  padding-top:30px;
+  border-top:1px solid rgba(255,255,255,.2);
+}
+
 html,body{
   background:#0f1115;
 }
@@ -92,6 +121,46 @@ body{
   opacity:0;
 }
 .spacer{height:230vh}
+.menu-toggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:100;
+  cursor:pointer;
+}
+
+.menu-toggle span{
+  display:block;
+  width:28px;
+  height:2px;
+  background:#fff;
+  margin:6px 0;
+}
+
+.menu-panel{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:250px;
+  height:100vh;
+  background:#111;
+  display:flex;
+  flex-direction:column;
+  padding:80px 30px;
+  transition:right .4s ease;
+  z-index:99;
+}
+
+.menu-panel a{
+  color:#fff;
+  text-decoration:none;
+  margin-bottom:25px;
+  font-size:20px;
+}
+
+.menu-panel.active{
+  right:0;
+}
 
 /* ================= SECTION BASE ================= */
 .section{
@@ -433,6 +502,17 @@ button{
 </head>
 
 <body>
+<div class="menu-toggle" id="menuToggle">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<nav class="menu-panel" id="menuPanel">
+  <a href="#whySection">About</a>
+  <a href="#gamesSection">Games</a>
+  <a href="#joinSection">Join Us</a>
+</nav>
 
 <div class="world" id="world"></div>
 
@@ -516,6 +596,75 @@ button{
 
 </section>
 
+<!-- WHY THE EQUAL LENS -->
+<section class="section why-sec glow" id="whySection">
+
+<h2>Why The Equal Lens</h2>
+
+<div class="why-content">
+
+<p>
+Gender inequality is not a sudden crisis. It is a gradual construction.
+It begins in early childhood — in language, in expectations,
+in subtle reinforcement of roles.
+</p>
+
+<p>
+Globally:
+</p>
+
+<ul>
+<li>1 in 3 women experience physical or sexual violence in their lifetime (WHO).</li>
+<li>Over 200 million girls and women have undergone female genital mutilation (UNICEF).</li>
+<li>Women hold only 26% of parliamentary seats worldwide (UN Women).</li>
+<li>In India, nearly 30% of women report domestic violence (NFHS-5).</li>
+<li>Girls are significantly underrepresented in STEM leadership fields.</li>
+</ul>
+
+<p>
+These statistics are not isolated incidents.
+They reflect systemic patterns that begin forming in childhood.
+</p>
+
+<p>
+Children absorb gender norms before they consciously understand them.
+Through toys, language, media, classrooms, and family roles —
+expectations are silently embedded.
+</p>
+
+<p>
+We believe gender equality should not be taught through
+passive lectures alone.
+</p>
+
+<p>
+Interactive learning — through games, dialogue, and reflection —
+has deeper psychological impact.
+</p>
+
+<p>
+When children notice patterns themselves,
+they build critical thinking.
+When they build critical thinking,
+they develop agency.
+</p>
+
+<p>
+The Equal Lens exists to intervene at the beginning —
+where inequality first takes shape.
+</p>
+
+<div class="contact-info">
+  <h3>Contact Us</h3>
+  <p>Email: connect@theequallens.com</p>
+  <p>Phone: +91 7699996104</p>
+</div>
+
+</div>
+
+</section>
+
+
 <!-- WHAT WE DO -->
 <section class="section what">
 <h2>What We Do</h2>
@@ -527,61 +676,69 @@ button{
 </div>
 </section>
 
-<!-- WORKSHOP -->
-<section class="section workshop-sec">
-<h2>Workshop Activities</h2>
-<div class="work-grid">
-<div class="work-card">
-<img src="activity-ball.jpg">
-<div class="work-overlay">
-<h3>Activity Ball</h3>
-<p>Interactive fairness prompts passed through movement to spark spontaneous reflection.</p>
-</div>
-</div>
-<div class="work-card">
-<img src="game-cards.jpg">
-<div class="work-overlay">
-<h3>Bias Game Cards</h3>
-<p>Students classify everyday statements and uncover embedded stereotypes.</p>
-</div>
-</div>
-<div class="work-card">
-<img src="group-discussion.jpg">
-<div class="work-overlay">
-<h3>Group Dialogue</h3>
-<p>Safe-space conversations encouraging empathy and questioning inherited beliefs.</p>
-</div>
-</div>
-<div class="work-card">
-<img src="workshop1.jpg">
-<div class="work-overlay">
-<h3>Interactive Lab</h3>
-<p>Hands-on simulations revealing structural inequality patterns.</p>
-</div>
-</div>
-</div>
-</section>
+<!-- GAMES SECTION -->
+<section class="section games-sec" id="gamesSection">
 
-<!-- DRAG -->
-<section class="section drag-sec">
-<h2>Fair vs Stereotype</h2>
+<h2>Games</h2>
+
+<div class="games-intro">
+<p>Equality cannot be memorised. It must be experienced.</p>
+<p>These interactive exercises are not tests. They are reflections.</p>
+<p>Through play, children confront assumptions and question stereotypes.</p>
+<p>The goal is not to give the “right answer.” The goal is to notice patterns.</p>
+</div>
+
+<!-- WHAT WE DO CONTENT (Optional keep or move above) -->
+
+<!-- DRAG MATCH -->
+<div class="game-block">
+<h3>Fair vs Stereotype</h3>
 <div class="bar"><div id="barFill" class="bar-fill"></div></div>
 <p id="scoreText">0 / 4</p>
 <div id="dragCard" class="drag-card"></div>
 <div class="drop" id="fair">Fair</div>
 <div class="drop" id="stereo">Stereotype</div>
-</section>
+</div>
 
 <!-- SCENARIO -->
-<section class="section scenario-sec">
-<h2>Scenario Challenge</h2>
+<div class="game-block">
+<h3>Scenario Challenge</h3>
 <div class="sc-grid" id="scGrid"></div>
-</section>
+</div>
 
+</section>
 <!-- END -->
 <section class="dark-end">
 <div class="end-title">The future is not neutral.</div>
 <div class="end-sub">It is shaped by what children learn to question today.</div>
+</section>
+<!-- JOIN US -->
+<section class="section join-sec" id="joinSection">
+
+<h2>Join Us</h2>
+
+<div class="join-intro">
+<p>Change happens in communities.</p>
+<p>By volunteering with The Equal Lens, you become part of a movement reshaping how children understand equality.</p>
+<p>You will work with schools and NGOs to create measurable impact.</p>
+<p>Because when equality is understood young, it becomes lived later.</p>
+</div>
+
+<div class="contact-details">
+<h3>Contact</h3>
+<p>Email: connect@theequallens.com</p>
+<p>Phone: +91 7699996104</p>
+</div>
+
+<form class="join-form">
+<input type="text" placeholder="First Name" required>
+<input type="text" placeholder="Last Name" required>
+<input type="number" placeholder="Age" required>
+<input type="email" placeholder="Email Address" required>
+<input type="text" placeholder="Phone Number" required>
+<button type="submit">Become a Volunteer</button>
+</form>
+
 </section>
 
 <script>
@@ -688,20 +845,44 @@ quotes.forEach(text => {
 });
 
 
-/* INTRO */
-const introTL=gsap.timeline({
-scrollTrigger:{trigger:".spacer",start:"top top",end:"+=2200",scrub:true,pin:true}
+// Make first line visible immediately
+gsap.set("#l1", {opacity:1});
+
+// Scroll sequence
+const introTL = gsap.timeline({
+  scrollTrigger:{
+    trigger:".spacer",
+    start:"top top",
+    end:"+=2200",
+    scrub:true,
+    pin:".narrative"
+  }
 });
-["#l1","#l2","#l3","#l4","#l5","#l6","#s1","#s2"].forEach(id=>{
-introTL.to(id,{opacity:1,duration:.5})
-       .to(id,{opacity:0,duration:.5},">+0.6");
+
+["#l2","#l3","#l4","#l5","#l6","#s1","#s2"].forEach(id=>{
+  introTL.to(id,{opacity:1,duration:0.5})
+         .to(id,{opacity:0,duration:0.5},">+0.6");
 });
+
 
 /* ABOUT */
 gsap.utils.toArray(".about p").forEach(p=>{
 gsap.to(p,{opacity:1,y:0,duration:1,
 scrollTrigger:{trigger:p,start:"top 80%"}});
 });
+
+gsap.utils.toArray(".why-content p, .why-content li").forEach(el=>{
+  gsap.from(el,{
+    opacity:0,
+    y:40,
+    duration:1.2,
+    scrollTrigger:{
+      trigger:el,
+      start:"top 85%"
+    }
+  });
+});
+
 
 /* TIMELINE */
 document.querySelectorAll(".timeline-number[data-target]").forEach(el=>{
@@ -952,27 +1133,3 @@ ScrollTrigger.create({
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -29,7 +29,7 @@ body{
 .world{
   position:fixed;
   inset:0;
-  z-index:0;
+  z-index:1;
   pointer-events:auto;   /* 🔥 allow hover */
   overflow:hidden;
 }
@@ -180,16 +180,17 @@ h2{
 .timeline{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  gap:30px;
-  flex-wrap:nowrap;      /* force single row */
-  overflow-x:auto;       /* prevents breaking */
+  align-items:flex-start;
+  gap:40px;
+  flex-wrap:nowrap;
 }
 
 .timeline-item{
   flex:1;
-  min-width:0;           /* removes wrap trigger */
+  min-width:0;
+  text-align:center;
 }
+
 
 
 .timeline-number{
@@ -683,8 +684,14 @@ scGrid.appendChild(c);
 function handleScenario(i,type){
 const card=scGrid.children[i];
 const out=card.querySelector(".scenario-output");
-out.innerHTML=scenarios[i][type].map(l=>"• "+l).join("<br>");
+out.innerHTML = "<p>" + scenarios[i][type].join(" ") + "</p>";
 }
+gsap.from(out,{
+  opacity:0,
+  y:10,
+  duration:0.4
+});
+
 
 /* END */
 gsap.to(".end-title",{opacity:1,y:-30,duration:1.4,
@@ -695,6 +702,7 @@ scrollTrigger:{trigger:".dark-end",start:"top 70%"}});
 
 </body>
 </html>
+
 
 
 

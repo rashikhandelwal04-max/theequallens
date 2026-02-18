@@ -766,13 +766,13 @@ gsap.utils.toArray(".exhibit-line").forEach(line=>{
 });
 
 
-//* ================= MOBILE-SAFE DRAG MATCH ================= */
+/* ================= UNIVERSAL DRAG MATCH ================= */
 
 const bank = [
-["Pink is for girls",1],
-["Anyone can lead",0],
-["Boys don’t cry",1],
-["Care is strength",0]
+  ["Pink is for girls",1],
+  ["Anyone can lead",0],
+  ["Boys don’t cry",1],
+  ["Care is strength",0]
 ];
 
 let idx = 0;
@@ -790,10 +790,64 @@ function nextPhrase(){
   dragCard.innerText = current[0];
   idx = (idx + 1) % bank.length;
 }
-
 nextPhrase();
 
-/* Instead of dragging, user taps the category */
+/* DESKTOP DRAG */
+
+dragCard.setAttribute("draggable", "true");
+
+dragCard.addEventListener("dragstart", e => {
+  e.dataTransfer.setData("text/plain", "dragging");
+});
+
+[fair, stereo].forEach(box => {
+  box.addEventListener("dragover", e => e.preventDefault());
+  box.addEventListener("drop", () => {
+    check(box.id === "fair" ? "fair" : "stereo");
+  });
+});
+
+/* MOBILE TOUCH DRAG */
+
+let isDragging = false;
+
+dragCard.addEventListener("touchstart", e => {
+  isDragging = true;
+});
+
+dragCard.addEventListener("touchmove", e => {
+  if (!isDragging) return;
+
+  const touch = e.touches[0];
+  dragCard.style.position = "fixed";
+  dragCard.style.left = touch.clientX - dragCard.offsetWidth/2 + "px";
+  dragCard.style.top = touch.clientY - dragCard.offsetHeight/2 + "px";
+});
+
+dragCard.addEventListener("touchend", e => {
+  isDragging = false;
+
+  const rectFair = fair.getBoundingClientRect();
+  const rectStereo = stereo.getBoundingClientRect();
+  const rectCard = dragCard.getBoundingClientRect();
+
+  const centerX = rectCard.left + rectCard.width/2;
+  const centerY = rectCard.top + rectCard.height/2;
+
+  if (centerX > rectFair.left && centerX < rectFair.right &&
+      centerY > rectFair.top && centerY < rectFair.bottom) {
+      check("fair");
+  }
+
+  if (centerX > rectStereo.left && centerX < rectStereo.right &&
+      centerY > rectStereo.top && centerY < rectStereo.bottom) {
+      check("stereo");
+  }
+
+  dragCard.style.position = "static";
+});
+
+/* CHECK LOGIC */
 
 function check(type){
   if((type === "fair" && current[1] === 0) ||
@@ -806,10 +860,6 @@ function check(type){
 
   nextPhrase();
 }
-
-fair.addEventListener("click", () => check("fair"));
-stereo.addEventListener("click", () => check("stereo"));
-
 
 /* SCENARIOS */
 const scenarios=[
@@ -902,6 +952,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 

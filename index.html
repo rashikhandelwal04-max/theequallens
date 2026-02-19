@@ -89,6 +89,9 @@ body{
   z-index:10;
 }
 
+.menu-panel{
+  overflow-y:auto;
+}
 
 
 .what h2,
@@ -520,10 +523,144 @@ button{
 </div>
 
 <nav class="menu-panel" id="menuPanel">
-  <a href="#whySection">About</a>
+
+  <a href="#whySection">Who Are We</a>
   <a href="#gamesSection">Games</a>
   <a href="#joinSection">Join Us</a>
+
+  <div class="menu-content">
+
+    <!-- ================= Who Are We ================= -->
+    <section class="section why-sec glow" id="whySection">
+
+      <h2>Who Are We</h2>
+
+      <div class="why-content">
+
+        <p>
+        Gender inequality is not a sudden crisis. It is a gradual construction.
+        It begins in early childhood — in language, in expectations,
+        in subtle reinforcement of roles.
+        </p>
+
+        <p>Globally:</p>
+
+        <ul>
+          <li>1 in 3 women experience physical or sexual violence in their lifetime (WHO).</li>
+          <li>Over 200 million girls and women have undergone female genital mutilation (UNICEF).</li>
+          <li>Women hold only 26% of parliamentary seats worldwide (UN Women).</li>
+          <li>In India, nearly 30% of women report domestic violence (NFHS-5).</li>
+          <li>Girls are significantly underrepresented in STEM leadership fields.</li>
+        </ul>
+
+        <p>
+        These statistics are not isolated incidents.
+        They reflect systemic patterns that begin forming in childhood.
+        </p>
+
+        <p>
+        Children absorb gender norms before they consciously understand them.
+        Through toys, language, media, classrooms, and family roles —
+        expectations are silently embedded.
+        </p>
+
+        <p>
+        We believe gender equality should not be taught through
+        passive lectures alone.
+        </p>
+
+        <p>
+        Interactive learning — through games, dialogue, and reflection —
+        has deeper psychological impact.
+        </p>
+
+        <p>
+        When children notice patterns themselves,
+        they build critical thinking.
+        When they build critical thinking,
+        they develop agency.
+        </p>
+
+        <p>
+        The Equal Lens exists to intervene at the beginning —
+        where inequality first takes shape.
+        </p>
+
+        <div class="contact-info">
+          <h3>Contact Us</h3>
+          <p>Email: connect@theequallens.com</p>
+          <p>Phone: +91 7699996104</p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ================= GAMES SECTION ================= -->
+    <section class="section games-sec" id="gamesSection">
+
+      <h2>Games</h2>
+
+      <div class="games-intro">
+        <p>Equality cannot be memorised. It must be experienced.</p>
+        <p>These interactive exercises are not tests. They are reflections.</p>
+        <p>Through play, children confront assumptions and question stereotypes.</p>
+        <p>The goal is not to give the “right answer.” The goal is to notice patterns.</p>
+      </div>
+
+      <!-- DRAG MATCH -->
+      <div class="game-block">
+        <h3>Fair vs Stereotype</h3>
+        <div class="bar"><div id="barFill" class="bar-fill"></div></div>
+        <p id="scoreText">0 / 4</p>
+        <div id="dragCard" class="drag-card"></div>
+        <div class="drop" id="fair">Fair</div>
+        <div class="drop" id="stereo">Stereotype</div>
+      </div>
+
+      <!-- SCENARIO -->
+      <div class="game-block">
+        <h3>Scenario Challenge</h3>
+        <div class="sc-grid" id="scGrid"></div>
+      </div>
+
+    </section>
+
+
+    <!-- ================= JOIN US SECTION ================= -->
+    <section class="section join-sec" id="joinSection">
+
+      <h2>Join Us</h2>
+
+      <div class="join-intro">
+        <p>Change happens in communities.</p>
+        <p>By volunteering with The Equal Lens, you become part of a movement reshaping how children understand equality.</p>
+        <p>You will work with schools and NGOs to create measurable impact.</p>
+        <p>Because when equality is understood young, it becomes lived later.</p>
+      </div>
+
+      <div class="contact-details">
+        <h3>Contact</h3>
+        <p>Email: connect@theequallens.com</p>
+        <p>Phone: +91 7699996104</p>
+      </div>
+
+      <form class="join-form">
+        <input type="text" placeholder="First Name" required>
+        <input type="text" placeholder="Last Name" required>
+        <input type="number" placeholder="Age" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="text" placeholder="Phone Number" required>
+        <button type="submit">Become a Volunteer</button>
+      </form>
+
+    </section>
+
+  </div>
+
 </nav>
+
+
 
 <div class="world" id="world"></div>
 
@@ -607,74 +744,6 @@ button{
 
 </section>
 
-<!-- WHY THE EQUAL LENS -->
-<section class="section why-sec glow" id="whySection">
-
-<h2>Why The Equal Lens</h2>
-
-<div class="why-content">
-
-<p>
-Gender inequality is not a sudden crisis. It is a gradual construction.
-It begins in early childhood — in language, in expectations,
-in subtle reinforcement of roles.
-</p>
-
-<p>
-Globally:
-</p>
-
-<ul>
-<li>1 in 3 women experience physical or sexual violence in their lifetime (WHO).</li>
-<li>Over 200 million girls and women have undergone female genital mutilation (UNICEF).</li>
-<li>Women hold only 26% of parliamentary seats worldwide (UN Women).</li>
-<li>In India, nearly 30% of women report domestic violence (NFHS-5).</li>
-<li>Girls are significantly underrepresented in STEM leadership fields.</li>
-</ul>
-
-<p>
-These statistics are not isolated incidents.
-They reflect systemic patterns that begin forming in childhood.
-</p>
-
-<p>
-Children absorb gender norms before they consciously understand them.
-Through toys, language, media, classrooms, and family roles —
-expectations are silently embedded.
-</p>
-
-<p>
-We believe gender equality should not be taught through
-passive lectures alone.
-</p>
-
-<p>
-Interactive learning — through games, dialogue, and reflection —
-has deeper psychological impact.
-</p>
-
-<p>
-When children notice patterns themselves,
-they build critical thinking.
-When they build critical thinking,
-they develop agency.
-</p>
-
-<p>
-The Equal Lens exists to intervene at the beginning —
-where inequality first takes shape.
-</p>
-
-<div class="contact-info">
-  <h3>Contact Us</h3>
-  <p>Email: connect@theequallens.com</p>
-  <p>Phone: +91 7699996104</p>
-</div>
-
-</div>
-
-</section>
-
 
 <!-- WHAT WE DO -->
 <section class="section what">
@@ -687,73 +756,15 @@ where inequality first takes shape.
 </div>
 </section>
 
-<!-- GAMES SECTION -->
-<section class="section games-sec" id="gamesSection">
-
-<h2>Games</h2>
-
-<div class="games-intro">
-<p>Equality cannot be memorised. It must be experienced.</p>
-<p>These interactive exercises are not tests. They are reflections.</p>
-<p>Through play, children confront assumptions and question stereotypes.</p>
-<p>The goal is not to give the “right answer.” The goal is to notice patterns.</p>
-</div>
-
-<!-- WHAT WE DO CONTENT (Optional keep or move above) -->
-
-<!-- DRAG MATCH -->
-<div class="game-block">
-<h3>Fair vs Stereotype</h3>
-<div class="bar"><div id="barFill" class="bar-fill"></div></div>
-<p id="scoreText">0 / 4</p>
-<div id="dragCard" class="drag-card"></div>
-<div class="drop" id="fair">Fair</div>
-<div class="drop" id="stereo">Stereotype</div>
-</div>
-
-<!-- SCENARIO -->
-<div class="game-block">
-<h3>Scenario Challenge</h3>
-<div class="sc-grid" id="scGrid"></div>
-</div>
-
-</section>
 <!-- END -->
 <section class="dark-end">
 <div class="end-title">The future is not neutral.</div>
 <div class="end-sub">It is shaped by what children learn to question today.</div>
 </section>
-<!-- JOIN US -->
-<section class="section join-sec" id="joinSection">
-
-<h2>Join Us</h2>
-
-<div class="join-intro">
-<p>Change happens in communities.</p>
-<p>By volunteering with The Equal Lens, you become part of a movement reshaping how children understand equality.</p>
-<p>You will work with schools and NGOs to create measurable impact.</p>
-<p>Because when equality is understood young, it becomes lived later.</p>
-</div>
-
-<div class="contact-details">
-<h3>Contact</h3>
-<p>Email: connect@theequallens.com</p>
-<p>Phone: +91 7699996104</p>
-</div>
-
-<form class="join-form">
-<input type="text" placeholder="First Name" required>
-<input type="text" placeholder="Last Name" required>
-<input type="number" placeholder="Age" required>
-<input type="email" placeholder="Email Address" required>
-<input type="text" placeholder="Phone Number" required>
-<button type="submit">Become a Volunteer</button>
-</form>
-
-</section>
-
 <script>
 gsap.registerPlugin(ScrollTrigger);
+
+
 /* ================= 60 UNIQUE FASHION-STYLE BACKGROUND QUOTES ================= */
 
 const quotes = [
@@ -1002,6 +1013,14 @@ dragCard.addEventListener("dragstart", e => {
     check(box.id === "fair" ? "fair" : "stereo");
   });
 });
+/* ================= MENU TOGGLE ================= */
+
+const menuToggle = document.getElementById("menuToggle");
+const menuPanel = document.getElementById("menuPanel");
+
+menuToggle.addEventListener("click", () => {
+  menuPanel.classList.toggle("active");
+});
 
 /* MOBILE TOUCH DRAG */
 
@@ -1148,6 +1167,7 @@ ScrollTrigger.create({
 
 </body>
 </html>
+
 
 
 
